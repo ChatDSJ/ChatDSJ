@@ -2,7 +2,7 @@ import unittest
 import os
 import logging
 from unittest.mock import MagicMock, patch
-from app.slack.app import handle_mention, get_chatgpt_response, get_channel_history, format_conversation_history
+from app.slack.app import handle_mention, get_chatgpt_response, get_channel_history, format_conversation_history_for_openai as format_conversation_history
 
 class TestSlackBot(unittest.TestCase):
     def setUp(self):
@@ -37,13 +37,17 @@ class TestSlackBot(unittest.TestCase):
         }
 
     @patch('app.slack.app.get_channel_history')
-    @patch('app.slack.app.format_conversation_history')
+    @patch('app.slack.app.format_conversation_history_for_openai')
     @patch('app.slack.app.get_chatgpt_response')
     def test_handle_mention_end_to_end(self, mock_get_chatgpt_response, mock_format_conversation, mock_get_channel_history):
         """Test the entire flow from receiving a mention to sending a response"""
         # Setup mocks
         mock_get_channel_history.return_value = self.mock_messages
-        mock_format_conversation.return_value = "Test User: Hello everyone\nAnother User: How's it going?\nTest User: I'm working on a project"
+        mock_format_conversation.return_value = [
+            {"role": "user", "content": "Test User: Hello everyone"},
+            {"role": "user", "content": "Another User: How's it going?"},
+            {"role": "user", "content": "Test User: I'm working on a project"}
+        ]
         mock_get_chatgpt_response.return_value = "I'm having trouble thinking right now. Please try again later."
         
         # Call the function
@@ -70,7 +74,11 @@ class TestSlackBot(unittest.TestCase):
         
         # Format conversation history using the real function
         conversation_history = format_conversation_history(messages, self.mock_client)
-        self.assertIn("Test User: Hello everyone", conversation_history)
+        self.assertIsInstance(conversation_history, list)
+        if conversation_history:
+            self.assertIsInstance(conversation_history[0], dict)
+            self.assertIn("role", conversation_history[0])
+            self.assertIn("content", conversation_history[0])
         
         # Get ChatGPT response using the real function
         response = get_chatgpt_response(conversation_history, self.event["text"])
@@ -84,7 +92,7 @@ class TestSlackBot(unittest.TestCase):
         
         # Now simulate the full handle_mention flow with our mocks
         with patch('app.slack.app.get_channel_history', return_value=messages):
-            with patch('app.slack.app.format_conversation_history', return_value=conversation_history):
+            with patch('app.slack.app.format_conversation_history_for_openai', return_value=conversation_history):
                 # Call the actual handle_mention function
                 handle_mention(self.event, self.mock_say, self.mock_client)
                 
