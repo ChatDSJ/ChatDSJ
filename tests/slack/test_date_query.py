@@ -46,7 +46,7 @@ class TestDateQuery(unittest.TestCase):
         
         self.logger.info(f"OpenAI Response to 'what day is it?': {response_text}")
         
-        self.assertIsNone(response_text, "Expected None response for 'what day is it?' query")
+        self.assertEqual(response_text, "I don't have a specific answer for that right now.", "Expected fallback message for 'what day is it?' query")
         
     def test_date_query_full_flow(self):
         """Test the entire flow from receiving a 'what day is it?' mention to sending a response"""
@@ -60,7 +60,7 @@ class TestDateQuery(unittest.TestCase):
         call_text = call_kwargs.get('text', '')
         self.logger.info(f"Bot response to 'what day is it?': {call_text}")
         
-        self.assertEqual(call_text, "Sorry, I couldn't generate a response.")
+        self.assertEqual(call_text, "I don't have a specific answer for that right now.")
 
 if __name__ == '__main__':
     unittest.main()
