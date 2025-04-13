@@ -95,6 +95,7 @@ def format_conversation_history(messages, client):
 def get_chatgpt_response(conversation_history, current_message):
     """Get a response from ChatGPT based on the conversation history and current message"""
     if not openai_client:
+        logger.error("OpenAI client not initialized")
         return "I'm having trouble connecting to my brain right now. Please try again later."
 
     try:
@@ -110,8 +111,17 @@ def get_chatgpt_response(conversation_history, current_message):
         )
         return response.choices[0].message.content
     except Exception as e:
-        logger.error(f"Error getting ChatGPT response: {e}")
-        return "I'm having trouble thinking right now. Please try again later."
+        error_message = str(e)
+        logger.error(f"Error getting ChatGPT response: {error_message}")
+        
+        if "authenticat" in error_message.lower() or "api key" in error_message.lower():
+            return "I'm having trouble with my API credentials. Please contact an administrator."
+        elif "rate limit" in error_message.lower() or "too many requests" in error_message.lower():
+            return "I'm a bit overloaded right now. Please try again in a few moments."
+        elif "timeout" in error_message.lower() or "connect" in error_message.lower():
+            return "I'm having trouble connecting to my brain. Please check your internet connection and try again."
+        else:
+            return "I'm having trouble thinking right now. Please try again later."
 
 @app.event("app_mention")
 def handle_mention(event, say, client):
