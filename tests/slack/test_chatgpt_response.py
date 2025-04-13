@@ -23,9 +23,10 @@ class TestChatGPTResponse(unittest.TestCase):
         # This test reproduces the exact error happening in production
         response = get_chatgpt_response(self.conversation_history, self.current_message)
         self.logger.info(f"Response: {response}")
-        # The response should be the error message because the web_search tool is misconfigured
-        self.assertEqual(response, "I'm having trouble thinking right now. Please try again later.",
-                        "Should get error message due to missing tools[0].function parameter")
+        self.assertNotEqual(response, "I'm having trouble thinking right now. Please try again later.",
+                        "Should get a successful response now that the tools parameter is fixed")
+        self.assertIsNotNone(response)
+        self.assertTrue(len(response) > 0)
         
     def test_get_chatgpt_response_without_tools(self):
         """Test without the problematic tools parameter"""

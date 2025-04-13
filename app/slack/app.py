@@ -104,7 +104,23 @@ def get_chatgpt_response(conversation_history, current_message):
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": f"Conversation history:\n{conversation_history}\n\nCurrent message: {current_message}"}
             ],
-            tools=[{"type": "web_search"}],
+            tools=[{
+                "type": "function",
+                "function": {
+                    "name": "web_search",
+                    "description": "Search the web for information",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "query": {
+                                "type": "string",
+                                "description": "The search query"
+                            }
+                        },
+                        "required": ["query"]
+                    }
+                }
+            }],
             tool_choice="auto",
             max_tokens=1000
         )
