@@ -209,6 +209,52 @@ def get_channel_stats(channel_id):
         }
     
     return channel_data[channel_id]
+
+def get_chatgpt_response(conversation_history, current_message):
+    """Get a response from ChatGPT based on the conversation history and current message"""
+    if not openai_client:
+        return "I'm having trouble connecting to my brain right now. Please try again later."
+
+    try:
+        response = openai_client.chat.completions.create(
+            model="gpt-4o",
+            messages=[
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": f"Conversation history:\n{conversation_history}\n\nCurrent message: {current_message}"}
+            ],
+            tools=[{
+                "type": "function",
+                "function": {
+                    "name": "web_search",
+                    "description": "Search the web for information",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "query": {
+                                "type": "string",
+                                "description": "The search query"
+                            }
+                        },
+                        "required": ["query"]
+                    }
+                }
+            }],
+            tool_choice="auto",
+            max_tokens=1000
+        )
+        return response.choices[0].message.content
+    except Exception as e:
+        error_message = str(e)
+        logger.error(f"Error getting ChatGPT response: {error_message}")
+        
+        if "authenticat" in error_message.lower() or "api key" in error_message.lower():
+            return "I'm having trouble with my API credentials. Please contact an administrator."
+        elif "rate limit" in error_message.lower() or "too many requests" in error_message.lower():
+            return "I'm a bit overloaded right now. Please try again in a few moments."
+        elif "timeout" in error_message.lower() or "connect" in error_message.lower():
+            return "I'm having trouble connecting to my brain. Please check your internet connection and try again."
+        else:
+            return "I'm having trouble thinking right now. Please try again later."
 @app.event("app_mention")
 def handle_mention(event, say, client, logger):
     if IS_DUMMY_APP:
