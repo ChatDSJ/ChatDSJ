@@ -104,6 +104,8 @@ def get_chatgpt_response(conversation_history, current_message):
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": f"Conversation history:\n{conversation_history}\n\nCurrent message: {current_message}"}
             ],
+            tools=[{"type": "web_search"}],
+            tool_choice="auto",
             max_tokens=1000
         )
         return response.choices[0].message.content
