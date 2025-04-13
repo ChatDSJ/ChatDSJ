@@ -1,8 +1,9 @@
 import unittest
 import os
 import logging
+import re
 from unittest.mock import MagicMock, patch
-from app.slack.app import handle_mention, get_chatgpt_response, get_channel_history, format_conversation_history_for_openai as format_conversation_history
+from app.slack.app import handle_mention, get_channel_history, format_conversation_history_for_openai as format_conversation_history, get_openai_response, bot_user_id
 
 class TestSlackBot(unittest.TestCase):
     def setUp(self):
@@ -38,8 +39,8 @@ class TestSlackBot(unittest.TestCase):
 
     @patch('app.slack.app.get_channel_history')
     @patch('app.slack.app.format_conversation_history_for_openai')
-    @patch('app.slack.app.get_chatgpt_response')
-    def test_handle_mention_end_to_end(self, mock_get_chatgpt_response, mock_format_conversation, mock_get_channel_history):
+    @patch('app.slack.app.get_openai_response')
+    def test_handle_mention_end_to_end(self, mock_get_openai_response, mock_format_conversation, mock_get_channel_history):
         """Test the entire flow from receiving a mention to sending a response"""
         # Setup mocks
         mock_get_channel_history.return_value = self.mock_messages
@@ -48,7 +49,7 @@ class TestSlackBot(unittest.TestCase):
             {"role": "user", "content": "Another User: How's it going?"},
             {"role": "user", "content": "Test User: I'm working on a project"}
         ]
-        mock_get_chatgpt_response.return_value = "I'm having trouble thinking right now. Please try again later."
+        mock_get_openai_response.return_value = ("I'm having trouble thinking right now. Please try again later.", None)
         
         # Call the function
         handle_mention(self.event, self.mock_say, self.mock_client, self.logger)
@@ -56,8 +57,8 @@ class TestSlackBot(unittest.TestCase):
         # Verify the flow
         mock_get_channel_history.assert_called_once_with(self.mock_client, "C12345", limit=1000)
         mock_format_conversation.assert_called_once_with(self.mock_messages, self.mock_client)
-        mock_get_chatgpt_response.assert_called_once()
-        self.mock_say.assert_called_once_with("I'm having trouble thinking right now. Please try again later.")
+        mock_get_openai_response.assert_called_once()
+        self.mock_say.assert_called_once_with(text="I'm having trouble thinking right now. Please try again later.", thread_ts=None)
     
     def test_real_slack_bot_functionality(self):
         """Test the actual Slack bot functionality with real components"""
@@ -80,26 +81,27 @@ class TestSlackBot(unittest.TestCase):
             self.assertIn("role", conversation_history[0])
             self.assertIn("content", conversation_history[0])
         
-        # Get ChatGPT response using the real function
-        response = get_chatgpt_response(conversation_history, self.event["text"])
+        prompt = re.sub(f"<@{bot_user_id}>", "", self.event["text"]).strip()
+        response_text, usage = get_openai_response(conversation_history, prompt, web_search=True)
         
-        self.assertNotEqual(response, "I'm having trouble thinking right now. Please try again later.")
-        self.assertIsNotNone(response)
-        self.assertTrue(len(response) > 0)
+        self.assertNotEqual(response_text, "I'm having trouble thinking right now. Please try again later.")
+        self.assertIsNotNone(response_text)
+        self.assertTrue(len(response_text) > 0)
         
         # Log the response for debugging
-        self.logger.info(f"ChatGPT Response: {response}")
+        self.logger.info(f"ChatGPT Response: {response_text}")
         
         # Now simulate the full handle_mention flow with our mocks
         with patch('app.slack.app.get_channel_history', return_value=messages):
             with patch('app.slack.app.format_conversation_history_for_openai', return_value=conversation_history):
-                # Call the actual handle_mention function
-                handle_mention(self.event, self.mock_say, self.mock_client, self.logger)
-                
-                self.assertTrue(self.mock_say.called)
-                if self.mock_say.call_args and self.mock_say.call_args[0]:
-                    call_args = self.mock_say.call_args[0][0]
-                    self.assertNotEqual(call_args, "I'm having trouble thinking right now. Please try again later.")
+                with patch('app.slack.app.get_openai_response', return_value=(response_text, usage)):
+                    # Call the actual handle_mention function
+                    handle_mention(self.event, self.mock_say, self.mock_client, self.logger)
+                    
+                    self.assertTrue(self.mock_say.called)
+                    if self.mock_say.call_args and self.mock_say.call_args[0]:
+                        call_args = self.mock_say.call_args[0][0]
+                        self.assertNotEqual(call_args, "I'm having trouble thinking right now. Please try again later.")
 
 if __name__ == '__main__':
     unittest.main()
