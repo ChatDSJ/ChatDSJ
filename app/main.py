@@ -26,9 +26,11 @@ from app.slack.app import app as slack_app
 @app.on_event("startup")
 async def startup_event():
     # Check if Slack credentials are set
-    if os.environ.get("SLACK_BOT_TOKEN") and os.environ.get("SLACK_SIGNING_SECRET"):
+    if os.environ.get("SLACK_BOT_TOKEN") and os.environ.get("SLACK_SIGNING_SECRET") and os.environ.get("SLACK_APP_TOKEN"):
         def start_slack_app():
-            slack_app.start(port=3000)
+            from slack_bolt.adapter.socket_mode import SocketModeHandler
+            handler = SocketModeHandler(slack_app, os.environ.get("SLACK_APP_TOKEN"))
+            handler.start()
         
         # Start the Slack app in a separate thread
         threading.Thread(target=start_slack_app, daemon=True).start()
