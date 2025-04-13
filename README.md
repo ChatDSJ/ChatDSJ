@@ -66,11 +66,12 @@ poetry install
    - Go to "Socket Mode" and enable it, then generate an App-Level Token (starts with xapp-)
    - Install the app to your workspace
 
-3. Create a `.env` file with your Slack credentials:
+3. Create a `.env` file with your Slack and OpenAI credentials:
 ```
 SLACK_BOT_TOKEN=xoxb-your-token
 SLACK_SIGNING_SECRET=your-signing-secret
 SLACK_APP_TOKEN=xapp-your-app-token
+OPENAI_API_KEY=your-openai-api-key
 ```
 
 4. Run the server:
