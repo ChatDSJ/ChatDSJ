@@ -75,8 +75,9 @@ class TestSlackBot(unittest.TestCase):
         # Get ChatGPT response using the real function
         response = get_chatgpt_response(conversation_history, self.event["text"])
         
-        # Verify that we get the error message due to the tools parameter issue
-        self.assertEqual(response, "I'm having trouble thinking right now. Please try again later.")
+        self.assertNotEqual(response, "I'm having trouble thinking right now. Please try again later.")
+        self.assertIsNotNone(response)
+        self.assertTrue(len(response) > 0)
         
         # Log the response for debugging
         self.logger.info(f"ChatGPT Response: {response}")
@@ -87,8 +88,9 @@ class TestSlackBot(unittest.TestCase):
                 # Call the actual handle_mention function
                 handle_mention(self.event, self.mock_say, self.mock_client)
                 
-                # Verify that the say function was called with the error message
-                self.mock_say.assert_called_once_with("I'm having trouble thinking right now. Please try again later.")
+                self.mock_say.assert_called_once()
+                call_args = self.mock_say.call_args[0][0]
+                self.assertNotEqual(call_args, "I'm having trouble thinking right now. Please try again later.")
 
 if __name__ == '__main__':
     unittest.main()
