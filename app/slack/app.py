@@ -244,11 +244,14 @@ def handle_mention(event, say, client, logger):
 
     update_channel_stats(channel_id, user_id, message_ts)
 
-    use_web_search = "search the web" in prompt.lower() or "look up" in prompt.lower()
+    use_web_search = True # Enable web search by default
 
-    history = get_channel_history(client, channel_id, limit=20) # Limit history for context
+    history = get_channel_history(client, channel_id, limit=1000) # Fetch up to 1000 messages
+    history_limit_reached = len(history) == 1000
     history_formatted = format_conversation_history_for_openai(history, client)
-    response_text, usage = get_openai_response(history_formatted, prompt, web_search=use_web_search)
+    response_text, usage = get_openai_response(history_formatted, prompt, web_search=True)
+    if history_limit_reached:
+        response_text = "(Note: I could only access the last 1000 messages in this channel for context.)\n\n" + (response_text or "")
 
     if response_text:
         say_result = say(text=response_text, thread_ts=thread_ts) # Reply in thread if applicable
@@ -309,9 +312,9 @@ def handle_message_events(event, say, client, logger):
             say(text=emoji_text, thread_ts=thread_ts)
             return
 
-        use_web_search = "search the web" in text.lower() or "look up" in text.lower()
+        use_web_search = True # Enable web search by default
         # history_formatted = format_conversation_history_for_openai(history, client)
-        response_text, usage = get_openai_response([], text, web_search=use_web_search) # No history for DMs for now
+        response_text, usage = get_openai_response([], text, web_search=True) # No history for DMs for now
 
         if response_text:
             say_result = say(text=response_text, thread_ts=thread_ts)
