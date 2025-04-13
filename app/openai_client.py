@@ -41,7 +41,18 @@ def get_chat_completion(prompt: str, conversation_history: Optional[List[Dict[st
 
     tools = []
     if use_web_search:
-        tools.append({"type": "web_search"}) # Note: As of latest OpenAI docs, this is how web_search is enabled.
+        tools.append({
+            "type": "function",
+            "function": {
+                "name": "web_search",
+                "description": "Search the web for current information",
+                "parameters": {
+                    "type": "object",
+                    "properties": {},
+                    "required": []
+                }
+            }
+        })
 
     try:
         response = client.chat.completions.create(

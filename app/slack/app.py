@@ -152,7 +152,18 @@ def format_conversation_history_for_openai(messages: List[Dict[str, Any]], clien
 def get_openai_response(hist_openai_fmt: List[Dict[str, str]], prompt: str, web_search: bool = False) -> Tuple[Optional[str], Optional[Dict[str, Any]]]:
     if not openai_client: return "My OpenAI brain is offline.", None
     messages = [{"role": "system", "content": SYSTEM_PROMPT}, *hist_openai_fmt, {"role": "user", "content": prompt}]
-    tools = [{"type": "web_search"}] if web_search else None
+    tools = [{
+        "type": "function",
+        "function": {
+            "name": "web_search",
+            "description": "Search the web for current information",
+            "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": []
+            }
+        }
+    }] if web_search else None
     try:
         logger.debug(f"Sending request to OpenAI model {OPENAI_MODEL} with web_search={web_search}...")
         response = openai_client.chat.completions.create(model=OPENAI_MODEL, messages=messages, tools=tools, max_tokens=1500)
