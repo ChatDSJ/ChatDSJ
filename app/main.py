@@ -25,7 +25,7 @@ from app.slack.app import app as slack_app
 @app.on_event("startup")
 async def startup_event():
     # Check if Slack credentials are set
-    if os.environ.get("SLACK_BOT_TOKEN") and os.environ.get("SLACK_SIGNING_SECRET") and os.environ.get("SLACK_APP_TOKEN"):
+    if os.environ.get("SLACK_BOT_TOKEN") and os.environ.get("SLACK_SIGNING_TOKEN") and os.environ.get("SLACK_APP_TOKEN"):
         try:
             if not hasattr(slack_app, 'logger'):
                 print("Using dummy Slack app, skipping Socket Mode initialization")
@@ -50,8 +50,8 @@ async def healthz():
 
 @app.get("/test-chatgpt")
 async def test_chatgpt():
-    from app.slack.app import get_chatgpt_response
-    conversation_history = "User1: Hello everyone\nUser2: How's it going?\nUser1: I'm working on a project"
-    current_message = "@ChatDSJ Can you help me with my Python code?"
-    response = get_chatgpt_response(conversation_history, current_message)
+    from app.slack.app import get_openai_response, format_conversation_history_for_openai
+    test_prompt = "Can you help me with my Python code?"
+    response_text, usage = get_openai_response([], test_prompt) # Pass empty history for simplicity
+    response = {"response": response_text, "usage": usage}
     return {"response": response}
