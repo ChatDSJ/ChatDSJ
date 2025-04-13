@@ -151,30 +151,46 @@ def format_conversation_history_for_openai(messages: List[Dict[str, Any]], clien
 
 def get_openai_response(hist_openai_fmt: List[Dict[str, str]], prompt: str, web_search: bool = False) -> Tuple[Optional[str], Optional[Dict[str, Any]]]:
     if not openai_client: return "My OpenAI brain is offline.", None
-    messages = [{"role": "system", "content": SYSTEM_PROMPT}, *hist_openai_fmt, {"role": "user", "content": prompt}]
-    tools = [{
-        "type": "function",
-        "function": {
-            "name": "web_search",
-            "description": "Search the web for current information",
-            "parameters": {
-                "type": "object",
-                "properties": {},
-                "required": []
-            }
-        }
-    }] if web_search else None
+    
     try:
         logger.debug(f"Sending request to OpenAI model {OPENAI_MODEL} with web_search={web_search}...")
-        response = openai_client.chat.completions.create(model=OPENAI_MODEL, messages=messages, tools=tools, max_tokens=1500)
-        msg = response.choices[0].message
-        if msg.tool_calls: logger.info(f"OpenAI response included tool calls: {msg.tool_calls}")
-        content = msg.content
-        usage = response.usage.model_dump() if response.usage else None
-        if usage: update_usage_tracking(usage, OPENAI_MODEL)
-        return content, usage
+        
+        if web_search:
+            conversation_text = ""
+            for msg in hist_openai_fmt:
+                conversation_text += f"{msg['content']}\n"
+            
+            input_text = f"{SYSTEM_PROMPT}\n\nConversation history:\n{conversation_text}\n\nCurrent message: {prompt}"
+            
+            response = openai_client.responses.create(
+                model=OPENAI_MODEL,
+                tools=[{"type": "web_search_preview"}],
+                input=input_text
+            )
+            
+            content = response.output_text
+            
+            usage = None
+            if hasattr(response, 'usage'):
+                usage = response.usage.model_dump() if response.usage else None
+                if usage: update_usage_tracking(usage, OPENAI_MODEL)
+            
+            return content, usage
+        else:
+            messages = [{"role": "system", "content": SYSTEM_PROMPT}, *hist_openai_fmt, {"role": "user", "content": prompt}]
+            response = openai_client.chat.completions.create(
+                model=OPENAI_MODEL, 
+                messages=messages, 
+                max_tokens=1500
+            )
+            
+            content = response.choices[0].message.content
+            usage = response.usage.model_dump() if response.usage else None
+            if usage: update_usage_tracking(usage, OPENAI_MODEL)
+            
+            return content, usage
     except Exception as e:
-        logger.error(f"Error getting OpenAI completion: {e}")
+        logger.error(f"Error getting OpenAI response: {e}")
         return f"Sorry, error processing request with OpenAI: {e}", None
 
 def record_bot_message(say_result: Optional[Dict[str, Any]]):
