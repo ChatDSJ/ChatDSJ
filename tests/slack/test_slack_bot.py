@@ -51,7 +51,7 @@ class TestSlackBot(unittest.TestCase):
         mock_get_chatgpt_response.return_value = "I'm having trouble thinking right now. Please try again later."
         
         # Call the function
-        handle_mention(self.event, self.mock_say, self.mock_client)
+        handle_mention(self.event, self.mock_say, self.mock_client, self.logger)
         
         # Verify the flow
         mock_get_channel_history.assert_called_once_with(self.mock_client, "C12345")
@@ -94,7 +94,7 @@ class TestSlackBot(unittest.TestCase):
         with patch('app.slack.app.get_channel_history', return_value=messages):
             with patch('app.slack.app.format_conversation_history_for_openai', return_value=conversation_history):
                 # Call the actual handle_mention function
-                handle_mention(self.event, self.mock_say, self.mock_client)
+                handle_mention(self.event, self.mock_say, self.mock_client, self.logger)
                 
                 self.mock_say.assert_called_once()
                 call_args = self.mock_say.call_args[0][0]
