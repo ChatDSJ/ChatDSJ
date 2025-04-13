@@ -26,14 +26,32 @@ from app.slack.app import app as slack_app
 async def startup_event():
     # Check if Slack credentials are set
     if os.environ.get("SLACK_BOT_TOKEN") and os.environ.get("SLACK_SIGNING_SECRET") and os.environ.get("SLACK_APP_TOKEN"):
-        def start_slack_app():
-            from slack_bolt.adapter.socket_mode import SocketModeHandler
-            handler = SocketModeHandler(slack_app, os.environ.get("SLACK_APP_TOKEN"))
-            handler.start()
-        
-        # Start the Slack app in a separate thread
-        threading.Thread(target=start_slack_app, daemon=True).start()
+        try:
+            if not hasattr(slack_app, 'logger'):
+                print("Using dummy Slack app, skipping Socket Mode initialization")
+                return
+                
+            def start_slack_app():
+                from slack_bolt.adapter.socket_mode import SocketModeHandler
+                handler = SocketModeHandler(slack_app, os.environ.get("SLACK_APP_TOKEN"))
+                handler.start()
+            
+            # Start the Slack app in a separate thread
+            threading.Thread(target=start_slack_app, daemon=True).start()
+            print("Slack bot started successfully")
+        except Exception as e:
+            print(f"Failed to start Slack bot: {e}")
+    else:
+        print("Slack credentials not set, skipping Slack bot initialization")
 
 @app.get("/healthz")
 async def healthz():
     return {"status": "ok"}
+
+@app.get("/test-chatgpt")
+async def test_chatgpt():
+    from app.slack.app import get_chatgpt_response
+    conversation_history = "User1: Hello everyone\nUser2: How's it going?\nUser1: I'm working on a project"
+    current_message = "@ChatDSJ Can you help me with my Python code?"
+    response = get_chatgpt_response(conversation_history, current_message)
+    return {"response": response}
