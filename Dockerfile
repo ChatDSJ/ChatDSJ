@@ -12,7 +12,7 @@ COPY pyproject.toml poetry.lock ./
 RUN poetry config virtualenvs.create false
 
 # Install dependencies
-RUN poetry install --without dev
+RUN poetry install --no-interaction
 
 # Copy application code
 COPY . .
