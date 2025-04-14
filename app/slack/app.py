@@ -16,9 +16,9 @@ logger = logging.getLogger(__name__)
 
 try:
     slack_bot_token = os.environ.get("SLACK_BOT_TOKEN")
-    slack_signing_secret = os.environ.get("SLACK_SIGNING_TOKEN")
+    slack_signing_secret = os.environ.get("SLACK_SIGNING_SECRET")
     if not slack_bot_token or not slack_signing_secret:
-        raise ValueError("SLACK_BOT_TOKEN and SLACK_SIGNING_TOKEN must be set")
+        raise ValueError("SLACK_BOT_TOKEN and SLACK_SIGNING_SECRET must be set")
     app = App(token=slack_bot_token, signing_secret=slack_signing_secret)
     logger.info("Slack app initialized successfully")
     IS_DUMMY_APP = False
@@ -56,7 +56,7 @@ if not IS_DUMMY_APP:
     try:
         auth_test_result = app.client.auth_test()
         bot_user_id = auth_test_result.get("user_id")
-        if bot_user_id: logger.info(f"Bot User ID fetched: {bot_user_id}")
+        if bot_user_id: logger.info(f"Bot User ID fetched: {bot_user_id} (Test Bot)")
         else: logger.error("Could not get bot_user_id from auth.test result.")
     except Exception as e: logger.error(f"Error fetching bot user ID: {e}")
 
