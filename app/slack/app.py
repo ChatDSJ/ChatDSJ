@@ -56,7 +56,7 @@ if not IS_DUMMY_APP:
     try:
         auth_test_result = app.client.auth_test()
         bot_user_id = auth_test_result.get("user_id")
-        if bot_user_id: logger.info(f"Bot User ID fetched: {bot_user_id}")
+        if bot_user_id: logger.info(f"Bot User ID fetched: {bot_user_id} (Test Bot)")
         else: logger.error("Could not get bot_user_id from auth.test result.")
     except Exception as e: logger.error(f"Error fetching bot user ID: {e}")
 
