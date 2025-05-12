@@ -2,6 +2,12 @@ import os
 import random
 import re
 import logging
+import nltk
+
+nltk_data_dir = os.path.expanduser('~/nltk_data')
+if nltk_data_dir not in nltk.data.path:
+    nltk.data.path.insert(0, nltk_data_dir)
+
 from loguru import logger
 from datetime import datetime
 from collections import defaultdict
@@ -17,7 +23,8 @@ from services.cached_notion_service import (
     get_user_preferred_name_from_properties
 )
 from handler.memory_handler import handle_memory_instruction
-from services.notion_parser import NotionContextManager 
+from services.notion_parser import NotionContextManager
+from config.settings import get_settings
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -53,19 +60,12 @@ RUDE_PHRASES = [ # This list is defined but not currently used in the bot's resp
 # --- FIX 1: Ensure the correct, detailed SYSTEM_PROMPT is used ---
 # The single, authoritative definition of SYSTEM_PROMPT.
 # The previous duplicate definition that overwrote this has been removed.
-SYSTEM_PROMPT = os.getenv(
-    "OPENAI_SYSTEM_PROMPT",
-    "You are an assistant embedded in a Slack channel. Your primary job is to answer the user's most recent question directly and concisely. "
-    "Review the provided message history to understand the immediate context of the user's question. "
-    "If the user's question is *explicitly about past discussions* in the channel (e.g., 'was X discussed before?', 'what did Y say about Z?'), "
-    "then you should thoroughly search the history to answer. When specifically asked if a topic was discussed previously, "
-    "you must explicitly look for *any* messages referencing it, even once, in the history. "
-    "For general queries like 'has any X been discussed?', try to identify substantive discussions first, but also consider brief mentions if no clear discussion is found."
-    "For all other questions, prioritize the current user's direct query. "
-    "If the user offers a compliment or engages in simple social interaction, respond politely and briefly (e.g., 'Thank you!', 'You're welcome!')."
-)
+SYSTEM_PROMPT = get_settings().openai_system_prompt
 OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+
+logger.info(f"Loaded prompt:\n{get_settings().openai_system_prompt}")
+
 
 MODEL_PRICING = { # Prices per 1M tokens
     "gpt-4o": {"prompt": 5.00, "completion": 15.00},

@@ -1,7 +1,9 @@
 from typing import Dict, List, Any, Optional, Tuple
 import re
 from loguru import logger
+import string
 from collections import Counter
+import nltk
 
 class HistoryManager:
     """
@@ -89,50 +91,51 @@ class HistoryManager:
     
     def extract_search_terms(self, prompt: str) -> List[str]:
         """
-        Extract search terms from the prompt.
-        
-        Args:
-            prompt: The user's query
-            
-        Returns:
-            List of search terms
+        Extracts key search terms from a prompt using NLTK NER and fallback strategies.
+        Returns a deduplicated, lowercased list of terms.
         """
-        search_terms = []
-        
-        # Try pattern matching first
-        for pattern in self.search_term_patterns:
-            matches = re.findall(pattern, prompt.lower())
-            if matches:
-                search_terms.extend(matches)
-        
-        # If no patterns match, fall back to keyword extraction
-        if not search_terms:
-            # Remove stop words and extract keywords
-            words = prompt.lower().split()
-            stop_words = ["the", "a", "an", "and", "or", "but", "if", "then", 
-                          "is", "are", "was", "were", "be", "been", "being",
-                          "this", "that", "these", "those", "do", "does", "did",
-                          "has", "have", "had", "about", "for", "in", "to", "from",
-                          "with", "without", "by", "at", "on", "off"]
-                          
-            filtered_words = [word for word in words if word not in stop_words 
-                              and len(word) > 3]
-            
-            # Count word frequency
-            word_counts = Counter(filtered_words)
-            
-            # Get most common words as search terms
-            search_terms = [word for word, _ in word_counts.most_common(3)]
-        
-        # Ensure we have at least some search terms
-        if not search_terms:
-            # Extract nouns as a fallback (simplified approach)
-            words = prompt.split()
-            search_terms = [word for word in words if len(word) > 4][:3]
-        
-        logger.info(f"Extracted search terms: {search_terms}")
-        return search_terms
-    
+        logger.info(f"[extract_search_terms] Starting search term extraction for prompt: {prompt}")
+        cleaned = prompt.translate(str.maketrans("", "", string.punctuation)).strip()
+
+        stop_words = {
+            "the", "a", "an", "and", "or", "but", "if", "then", 
+            "is", "are", "was", "were", "be", "been", "being",
+            "this", "that", "these", "those", "do", "does", "did",
+            "has", "have", "had", "about", "for", "in", "to", "from",
+            "with", "without", "by", "at", "on", "off"
+        }
+
+        named_entities = []
+        try:
+            tokens = nltk.word_tokenize(cleaned)
+            pos_tags = nltk.pos_tag(tokens)
+            tree = nltk.ne_chunk(pos_tags, binary=False)
+            for subtree in tree:
+                if hasattr(subtree, 'label'):
+                    entity = " ".join(word for word, _ in subtree.leaves())
+                    named_entities.append(entity.lower())
+            logger.info(f"[extract_search_terms] Named entities found: {named_entities}")
+        except Exception as e:
+            logger.warning(f"[extract_search_terms] NLTK entity extraction failed: {e}")
+
+        fallback_terms = []
+        try:
+            words = cleaned.lower().split()
+            filtered = [w for w in words if w not in stop_words and len(w) > 3]
+            word_counts = Counter(filtered)
+            fallback_terms = [word for word, _ in word_counts.most_common(5)]
+            logger.info(f"[extract_search_terms] Fallback keyword terms: {fallback_terms}")
+        except Exception as e:
+            logger.warning(f"[extract_search_terms] Fallback keyword extraction failed: {e}")
+
+        combined = set()
+        for term in named_entities + fallback_terms:
+            combined.update(term.lower().split())
+
+        final_terms = sorted(combined)
+        logger.info(f"[extract_search_terms] Final search terms: {final_terms}")
+        return final_terms
+
     def extract_time_frame(self, prompt: str) -> Optional[str]:
         """
         Extract time frame information from the prompt.
@@ -192,6 +195,7 @@ class HistoryManager:
                 text = msg.get("text", "").lower()
                 score = sum(term.lower() in text for term in search_terms)
                 if score > 0:
+                    logger.debug(f"Matched message: {text} with score {score}")
                     scored_messages.append((msg, score))
             
             # Sort by relevance score
@@ -381,7 +385,7 @@ class HistoryManager:
                              user_display_names: Dict[str, str],
                              bot_user_id: str) -> str:
         """Format messages in chronological order."""
-        parts = ["=== CONVERSATION HISTORY ==="]
+        parts = ["=== MATCHED MESSAGES FROM CHANNEL HISTORY ==="]
         
         # Sort messages by timestamp
         sorted_messages = sorted(messages, key=lambda m: float(m.get("ts", "0")))
