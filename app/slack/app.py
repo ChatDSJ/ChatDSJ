@@ -9,13 +9,14 @@ from typing import Optional, Dict, Any, Tuple, List
 from slack_bolt import App
 from slack_sdk.errors import SlackApiError
 from openai import OpenAI
-from services.notion_service import (
+from services.cached_notion_service import (
     get_user_notion_page_content,
     handle_nickname_command,
     get_user_page_properties,
     get_user_preferred_name_from_properties
 )
-from services.memory_handler import handle_memory_instruction
+from handler.memory_handler import handle_memory_instruction
+from services.notion_parser import NotionContextManager 
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -244,11 +245,14 @@ def create_slack_app():
             user_context_parts.append(f"The user's preferred name is: {preferred_name}.")
             logger.info(f"Using preferred name from Notion property: {preferred_name}")
         
-        if user_page_body_content and user_page_body_content.strip():
-            user_context_parts.append(f"Other known facts and preferences for this user:\n{user_page_body_content.strip()}")
-            logger.info(f"Fetched Notion page body context for user {user_id} (length: {len(user_page_body_content)}).")
-        
-        final_user_specific_context = "\n".join(user_context_parts)
+        notion_context_manager = NotionContextManager()
+
+        final_user_specific_context = notion_context_manager.build_openai_system_prompt(
+            base_prompt="",
+            notion_content=user_page_body_content or "",
+            preferred_name=preferred_name,
+            db_properties=user_properties
+        )
         if not final_user_specific_context:
             logger.info(f"No specific Notion context (name or page body) found for user {user_id}.")
             final_user_specific_context = "" # Ensure empty string if nothing found

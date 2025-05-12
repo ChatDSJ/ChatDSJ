@@ -174,7 +174,8 @@ class ContextResponseAction(Action):
     
     async def execute(self, request: ActionRequest) -> ActionResponse:
         """
-        Execute the context response action.
+        Execute the context response action with direct Notion context inclusion.
+        Uses an approach similar to the previously working implementation.
         
         Args:
             request: The action request
@@ -190,16 +191,33 @@ class ContextResponseAction(Action):
                     error="Required services not available"
                 )
             
+            # Try to handle memory instruction first
+            memory_response = await asyncio.to_thread(
+                self.services.notion_service.handle_memory_instruction,
+                request.user_id,
+                request.prompt
+            )
+
+            if memory_response:
+                return ActionResponse(
+                    success=True,
+                    message=memory_response,
+                    thread_ts=request.thread_ts
+                )
+            
+            # Fetch conversation history
             # Determine if this is a new channel question or in a thread
             is_new_main_channel_question = request.thread_ts is None
+            
+            # Keywords indicating a request about past discussions
+            history_query_keywords = [
+                "discussed", "discussion", "mentioned", "talked about", "said about",
+                "summarize", "summary", "what was said", "history of", "previously on"
+            ]
             
             # Fetch appropriate history based on the context
             if is_new_main_channel_question:
                 # Check if asking about past history
-                history_query_keywords = [
-                    "discussed", "discussion", "mentioned", "talked about", "said about",
-                    "summarize", "summary", "what was said", "history of", "previously on"
-                ]
                 is_querying_history = any(keyword.lower() in request.prompt.lower() for keyword in history_query_keywords)
                 
                 # If asking about history, fetch more messages
@@ -224,7 +242,7 @@ class ContextResponseAction(Action):
                     1000
                 )
             
-            # Merge and deduplicate history
+            # Merge and deduplicate history - exactly as in the working version
             merged_messages = []
             if thread_history:
                 thread_message_timestamps = {msg["ts"] for msg in thread_history}
@@ -236,7 +254,7 @@ class ContextResponseAction(Action):
             else:
                 merged_messages = channel_history
             
-            # Build user display names dictionary for formatting
+            # Build user display names dictionary
             user_display_names = {}
             for msg in merged_messages:
                 user_id = msg.get("user") or msg.get("bot_id")
@@ -254,7 +272,10 @@ class ContextResponseAction(Action):
                 self.services.slack_service.bot_user_id
             )
             
-            # Get user-specific context from Notion
+            # Get user-specific context from Notion - using the approach from the working version
+            logger.info(f"Fetching Notion context for user {request.user_id}")
+            
+            # Get both page content and properties, as in the working version
             user_page_content = await asyncio.to_thread(
                 self.services.notion_service.get_user_page_content,
                 request.user_id
@@ -264,7 +285,18 @@ class ContextResponseAction(Action):
                 request.user_id
             )
             
-            # Construct user context
+            # Log what we found
+            if user_page_content:
+                logger.info(f"Retrieved Notion page content for user {request.user_id} (length: {len(user_page_content)})")
+            else:
+                logger.warning(f"No Notion page content found for user {request.user_id}")
+                
+            if user_preferred_name:
+                logger.info(f"Retrieved preferred name for user {request.user_id}: {user_preferred_name}")
+            else:
+                logger.warning(f"No preferred name found for user {request.user_id}")
+            
+            # Construct user context in parts, similar to the working version
             user_context_parts = []
             if user_preferred_name:
                 user_context_parts.append(f"The user's preferred name is: {user_preferred_name}.")
@@ -276,24 +308,14 @@ class ContextResponseAction(Action):
             
             user_specific_context = "\n".join(user_context_parts) if user_context_parts else None
             
-            # Try to classify and store memory if applicable
-            from services.memory_handler import handle_memory_instruction
-
-            memory_response = await asyncio.to_thread(
-                handle_memory_instruction,
-                request.user_id,
-                request.prompt,
-                self.services.notion_service  # Make sure this is the CachedNotionService instance
-            )
-
-            if memory_response:
-                return ActionResponse(
-                    success=True,
-                    message=memory_response,
-                    thread_ts=request.thread_ts
-                )
-
-            # Generate response
+            # Log the context we're sending to OpenAI
+            if user_specific_context:
+                logger.info(f"Sending user-specific context to OpenAI (length: {len(user_specific_context)})")
+                logger.debug(f"Context content: {user_specific_context[:500]}...")
+            else:
+                logger.warning("No user-specific context to send to OpenAI")
+            
+            # Generate response using direct approach
             response_text, usage = await self.services.openai_service.get_completion_async(
                 prompt=request.prompt,
                 conversation_history=formatted_history,
@@ -321,7 +343,7 @@ class ContextResponseAction(Action):
                 message="I encountered an error while processing your request.",
                 thread_ts=request.thread_ts
             )
-
+    
 class RetrieveSummarizeAction(Action):
     """
     Action for retrieving and summarizing web content.
@@ -364,6 +386,20 @@ class RetrieveSummarizeAction(Action):
                 return ActionResponse(
                     success=False,
                     error="Required services not available"
+                )
+            
+            # Try to handle as a memory instruction first
+            memory_response = await asyncio.to_thread(
+                self.services.notion_service.handle_memory_instruction,
+                request.user_id,
+                request.prompt
+            )
+            
+            if memory_response:
+                return ActionResponse(
+                    success=True,
+                    message=memory_response,
+                    thread_ts=request.thread_ts
                 )
             
             # Extract URL from text

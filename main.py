@@ -6,7 +6,7 @@ import re
 from loguru import logger
 
 from config.settings import get_settings
-from services.openai_service import OpenAIService
+from handler.openai_service import OpenAIService
 from services.cached_notion_service import CachedNotionService
 from services.slack_service import SlackService
 from actions.action_framework import ServiceContainer, ActionRequest, ActionRouter
