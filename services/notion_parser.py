@@ -2,6 +2,37 @@ from enum import Enum
 from typing import Dict, List, Optional, Set, Any, Tuple
 from dataclasses import dataclass
 import re
+from loguru import logger
+
+def get_user_context_for_llm(notion_service, slack_user_id: str, base_prompt: str = "") -> str:
+    """
+    Get user context formatted for an LLM prompt.
+    
+    Args:
+        notion_service: The Notion service
+        slack_user_id: The Slack user ID
+        base_prompt: Optional base prompt to include
+        
+    Returns:
+        Formatted context string
+    """
+    # Get user data from Notion
+    user_page_content = notion_service.get_user_page_content(slack_user_id)
+    user_properties = notion_service.get_user_page_properties(slack_user_id)
+    preferred_name = notion_service.get_user_preferred_name(slack_user_id)
+    
+    # Create context manager
+    context_manager = NotionContextManager()
+    
+    # Build context string
+    context_string = context_manager.build_openai_system_prompt(
+        base_prompt=base_prompt,
+        notion_content=user_page_content or "",
+        preferred_name=preferred_name,
+        db_properties=user_properties
+    )
+    
+    return context_string
 
 class InstructionType(Enum):
     """Classification of different types of instructions in the Notion profile."""
@@ -197,18 +228,42 @@ class NotionContextManager:
         """Initialize the context manager."""
         self.parser = NotionProfileParser()
     
-    def process_notion_content(self, content: str) -> Dict[str, Any]:
-        """
-        Process raw Notion content into structured components for an LLM prompt.
+    def parse_notion_content(self, content: str) -> Dict[str, Any]:
+        """Parse structured Notion content by sections."""
+        instructions = []
+        current_section = "General"
+        raw_sections = {}
         
-        Args:
-            content: The raw Notion page content
+        # Split into lines and process each line
+        lines = content.split("\n")
+        for i, line in enumerate(lines):
+            line = line.strip()
+            if not line:
+                continue
             
-        Returns:
-            Dictionary with structured components
-        """
-        # Parse the content
-        instructions = self.parser.parse_notion_content(content)
+            # Check for section headers (like "Projects", "Preferences", etc.)
+            if (line.endswith(":") or 
+                line in ["Projects", "Preferences", "Known Facts", "Instructions"] or
+                (i > 0 and lines[i-1].strip() == "")):  # Section header might not have colon
+                
+                # If it looks like a main header (capitalized, no bullet)
+                if not line.startswith("*") and (line[0].isupper() if line else False):
+                    current_section = line.rstrip(":")
+                    if current_section not in raw_sections:
+                        raw_sections[current_section] = []
+                    continue
+            
+            # Add to current section's raw content
+            if current_section in raw_sections:
+                raw_sections[current_section].append(line)
+            
+            # Process bullet points
+            if line.startswith("*") or line.startswith("-") or line.startswith("•"):
+                item_text = line[1:].strip()
+                raw_sections.setdefault(current_section, []).append(item_text)
+                instruction = self._classify_instruction(item_text, current_section)
+                if instruction:
+                    instructions.append(instruction)
         
         # Group by type
         profile_data = []
@@ -223,20 +278,37 @@ class NotionContextManager:
             elif instruction.type == InstructionType.APP_INSTRUCTION:
                 app_instructions.append(instruction)
         
-        # Sort preferences by priority (highest first)
+        # Sort preferences by priority
         preferences.sort(key=lambda x: x.priority, reverse=True)
         
-        # Build structured components
-        result = {
+        return {
             "profile_data": profile_data,
             "preferences": preferences,
             "app_instructions": app_instructions,
             "has_verse_preference": any("rhymed verse" in p.content.lower() for p in preferences),
-            "has_format_preference": any(("bullet" in p.content.lower() or "concise" in p.content.lower()) for p in preferences)
+            "has_format_preference": any(("bullet" in p.content.lower() or "concise" in p.content.lower()) for p in preferences),
+            "raw_sections": raw_sections
         }
+
+    def format_original_sections(self, raw_sections: Dict[str, List[str]]) -> str:
+        """Format the raw sections to preserve original structure."""
+        formatted = []
         
-        return result
-    
+        for section_name, lines in raw_sections.items():
+            if not lines:
+                continue
+                
+            formatted.append(f"## {section_name}")
+            for line in lines:
+                # Preserve bullet points
+                if line.startswith("*") or line.startswith("-") or line.startswith("•"):
+                    formatted.append(line)
+                else:
+                    formatted.append(f"* {line}")
+            formatted.append("")  # Empty line between sections
+        
+        return "\n".join(formatted)
+
     def generate_profile_context(self, profile_data: List[ParsedInstruction]) -> str:
         """
         Generate user profile context string.
@@ -288,82 +360,220 @@ class NotionContextManager:
         
         return "\n".join(parts)
     
+    def extract_structured_fields(self, db_properties: Optional[Dict[str, Any]]) -> List[str]:
+        """
+        Extract structured fields from database properties.
+        
+        Args:
+            db_properties: Dictionary of database properties
+            
+        Returns:
+            List of formatted field strings
+        """
+        structured_facts = []
+        if not db_properties:
+            logger.debug("No database properties provided for structured fields")
+            return structured_facts
+            
+        for field_name, prop in db_properties.items():
+            field_type = prop.get("type")
+            if field_type == "rich_text":
+                texts = prop.get("rich_text", [])
+                if texts:
+                    value = texts[0].get("plain_text", "").strip()
+                    if value:
+                        # Skip preferred name to avoid duplication
+                        if field_name == "PreferredName":
+                            logger.debug(f"Skipping PreferredName in structured fields to avoid duplication")
+                            continue
+                        structured_facts.append(f"{field_name}: {value}")
+                        logger.debug(f"Added rich_text field: {field_name} = {value}")
+            elif field_type == "title":
+                titles = prop.get("title", [])
+                if titles:
+                    value = titles[0].get("plain_text", "").strip()
+                    if value:
+                        structured_facts.append(f"{field_name}: {value}")
+                        logger.debug(f"Added title field: {field_name} = {value}")
+            elif field_type == "select":
+                value = prop.get("select", {}).get("name", "")
+                if value:
+                    structured_facts.append(f"{field_name}: {value}")
+                    logger.debug(f"Added select field: {field_name} = {value}")
+            elif field_type == "multi_select":
+                values = [v.get("name", "") for v in prop.get("multi_select", [])]
+                if values:
+                    structured_facts.append(f"{field_name}: {', '.join(values)}")
+                    logger.debug(f"Added multi_select field: {field_name} = {', '.join(values)}")
+        
+        logger.debug(f"Structured fields included in prompt: {structured_facts}")
+        return structured_facts
+
+    def process_notion_content(self, content: str) -> Dict[str, Any]:
+        """
+        Process raw Notion content into structured components for an LLM prompt.
+        
+        Args:
+            content: The raw Notion page content
+            
+        Returns:
+            Dictionary with structured components
+        """
+        if not content:
+            return {
+                "profile_data": [],
+                "preferences": [],
+                "app_instructions": [],
+                "raw_sections": {}
+            }
+        
+        # Extract sections
+        raw_sections = {}
+        current_section = "General"
+        
+        # Split into lines and process each line
+        lines = content.split("\n")
+        for line in lines:
+            line = line.strip()
+            if not line:
+                continue
+            
+            # Check for main section headers
+            if line in ["Projects", "Preferences", "Known Facts", "Instructions"]:
+                current_section = line
+                raw_sections[current_section] = []
+                continue
+            
+            # Add to current section
+            if current_section not in raw_sections:
+                raw_sections[current_section] = []
+            
+            raw_sections[current_section].append(line)
+        
+        # For backward compatibility, simulate the old profile_data and preferences structure
+        profile_data = []
+        preferences = []
+        
+        # Extract any preferences from the Preferences section
+        if "Preferences" in raw_sections:
+            for line in raw_sections["Preferences"]:
+                if line.startswith("*") or line.startswith("-") or line.startswith("•"):
+                    pref_text = line[1:].strip()
+                    preferences.append(
+                        ParsedInstruction(
+                            type=InstructionType.USER_PREFERENCE,
+                            content=pref_text,
+                            original_text=line,
+                            section="Preferences",
+                            priority=50  # Give all preferences equal priority
+                        )
+                    )
+                else:
+                    preferences.append(
+                        ParsedInstruction(
+                            type=InstructionType.USER_PREFERENCE,
+                            content=line,
+                            original_text=line,
+                            section="Preferences",
+                            priority=50
+                        )
+                    )
+        
+        # Extract any instructions for app behavior
+        app_instructions = []
+        if "Instructions" in raw_sections:
+            for line in raw_sections["Instructions"]:
+                app_instructions.append(
+                    ParsedInstruction(
+                        type=InstructionType.APP_INSTRUCTION,
+                        content=line,
+                        original_text=line,
+                        section="Instructions"
+                    )
+                )
+        
+        # Return processed content
+        return {
+            "profile_data": profile_data,
+            "preferences": preferences,
+            "app_instructions": app_instructions,
+            "raw_sections": raw_sections
+        }
+
     def build_openai_system_prompt(
         self, 
         base_prompt: str, 
         notion_content: str,
         preferred_name: Optional[str] = None,
-        db_properties: Optional[Dict[str, Any]] = None  # ⬅️ NEW ARG
+        db_properties: Optional[Dict[str, Any]] = None
     ) -> str:
-        """
-        Build a complete system prompt with structured Notion content.
-        
-        Args:
-            base_prompt: The base system prompt
-            notion_content: Raw Notion content
-            preferred_name: User's preferred name
-            
-        Returns:
-            Complete system prompt
-        """
+        """Build a complete system prompt with ALL Notion content."""
         # Process the Notion content
         processed = self.process_notion_content(notion_content)
         
+        # Extract structured fields from DB properties
+        structured_facts = self.extract_structured_fields(db_properties)
+        
         # Build the prompt components
         components = [base_prompt]
-
+        
+        # Add structured database properties
         if structured_facts:
-            components.append("\n\n--- STRUCTURED USER FIELDS FROM NOTION DATABASE ---")
+            components.append("\n\n=== USER DATABASE PROPERTIES ===")
             for fact in structured_facts:
                 components.append(f"* {fact}")
-            components.append("--- END STRUCTURED USER FIELDS ---")
-
+            components.append("=== END USER DATABASE PROPERTIES ===")
         
-        # Add user profile information
-        profile_context = self.generate_profile_context(processed["profile_data"])
-        if profile_context:
-            components.append("\n\n--- USER PROFILE INFORMATION ---")
-            if preferred_name:
-                components.append(f"This user's preferred name is: {preferred_name}")
-            components.append(profile_context)
-            components.append("--- END USER PROFILE INFORMATION ---")
+        # Add preferred name prominently
+        if preferred_name:
+            components.append(f"\n⭐ This user's preferred name is: {preferred_name} ⭐")
         
-        # Add user preferences with strong emphasis
-        if processed["preferences"]:
-            preference_directives = self.generate_preference_directives(processed["preferences"])
-            components.append("\n\n!!! USER PREFERENCE DIRECTIVES - FOLLOW THESE EXACTLY !!!")
-            components.append(preference_directives)
-            components.append("!!! END USER PREFERENCE DIRECTIVES !!!")
+        # Add all the content sections with their original structure
+        if processed.get("raw_sections"):
+            components.append("\n=== USER PROFILE CONTENT ===")
             
-            # Add special emphasis for verse preference if present
-            if processed["has_verse_preference"]:
-                components.append("\nIMPORTANT: YOU MUST WRITE YOUR RESPONSES IN RHYMED VERSE.\n")
+            # First add the sections we specifically care about in a specific order
+            priority_sections = ["Preferences", "Projects", "Known Facts", "Instructions"]
+            
+            for section in priority_sections:
+                if section in processed["raw_sections"]:
+                    components.append(f"\n## {section}")
+                    for line in processed["raw_sections"][section]:
+                        if not line.startswith("*") and not line.startswith("-") and not line.startswith("•"):
+                            components.append(f"* {line}")
+                        else:
+                            components.append(line)
+            
+            # Then add any remaining sections
+            for section, lines in processed["raw_sections"].items():
+                if section not in priority_sections and lines:
+                    components.append(f"\n## {section}")
+                    for line in lines:
+                        if not line.startswith("*") and not line.startswith("-") and not line.startswith("•"):
+                            components.append(f"* {line}")
+                        else:
+                            components.append(line)
+                            
+            components.append("=== END USER PROFILE CONTENT ===")
         
-        # Extract structured fields from DB properties
-        structured_facts = []
-        if db_properties:
-            for field_name, prop in db_properties.items():
-                field_type = prop.get("type")
-                if field_type == "rich_text":
-                    texts = prop.get("rich_text", [])
-                    if texts:
-                        value = texts[0].get("plain_text", "").strip()
-                        if value:
-                            structured_facts.append(f"{field_name}: {value}")
-                elif field_type == "title":
-                    titles = prop.get("title", [])
-                    if titles:
-                        value = titles[0].get("plain_text", "").strip()
-                        if value:
-                            structured_facts.append(f"{field_name}: {value}")
-                elif field_type == "select":
-                    value = prop.get("select", {}).get("name", "")
-                    if value:
-                        structured_facts.append(f"{field_name}: {value}")
-                elif field_type == "multi_select":
-                    values = [v.get("name", "") for v in prop.get("multi_select", [])]
-                    if values:
-                        structured_facts.append(f"{field_name}: {', '.join(values)}")
-
+        # If we somehow missed content, include it as a fallback
+        raw_content_present = bool(processed.get("raw_sections"))
+        generated_content_size = sum(len(component) for component in components)
+        
+        if notion_content and not raw_content_present and len(notion_content) > 100:
+            if generated_content_size < len(notion_content) * 0.5:
+                logger.warning(f"Content parsing may have failed. Including raw content as fallback.")
+                components.append("\n=== RAW USER CONTENT (FALLBACK) ===")
+                components.append(notion_content)
+                components.append("=== END RAW USER CONTENT ===")
+        
         # Complete prompt
-        return "\n".join(components)
+        final_prompt = "\n".join(components)
+        logger.debug(f"Final prompt length: {len(final_prompt)} characters")
+        
+        # Log sections found for debugging
+        if processed.get("raw_sections"):
+            section_names = list(processed["raw_sections"].keys())
+            logger.debug(f"Content sections found: {section_names}")
+        
+        return final_prompt

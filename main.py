@@ -182,6 +182,82 @@ async def test_openai():
     except Exception as e:
         logger.error(f"OpenAI API test error: {e}")
         return {"status": "error", "message": str(e)}
+    
+@app.get("/api/diagnose-user-context/{slack_user_id}")
+async def diagnose_user_context(slack_user_id: str):
+    """Diagnostic endpoint to see what context would be generated."""
+    try:
+        # Get the raw data
+        user_page_content = await asyncio.to_thread(
+            notion_service.get_user_page_content,
+            slack_user_id
+        )
+        
+        user_properties = await asyncio.to_thread(
+            notion_service.get_user_page_properties,
+            slack_user_id
+        )
+        
+        preferred_name = await asyncio.to_thread(
+            notion_service.get_user_preferred_name,
+            slack_user_id
+        )
+        
+        # Generate context
+        from utils.context_builder import get_user_context_for_llm
+        
+        context = await asyncio.to_thread(
+            get_user_context_for_llm,
+            notion_service,
+            slack_user_id
+        )
+        
+        # Prepare diagnostic info
+        property_fields = []
+        if user_properties:
+            for key, prop in user_properties.items():
+                prop_type = prop.get("type", "unknown")
+                if prop_type == "rich_text":
+                    value = prop.get("rich_text", [])
+                    if value:
+                        text = value[0].get("plain_text", "")
+                        property_fields.append(f"{key}: {text} ({prop_type})")
+                elif prop_type == "select":
+                    value = prop.get("select", {}).get("name", "")
+                    property_fields.append(f"{key}: {value} ({prop_type})")
+        
+        # Extract sections from page content
+        sections = {}
+        current_section = "General"
+        if user_page_content:
+            for line in user_page_content.split("\n"):
+                line = line.strip()
+                if not line:
+                    continue
+                    
+                # Check for section headers
+                if line in ["Projects", "Preferences", "Known Facts", "Instructions"]:
+                    current_section = line
+                    sections[current_section] = []
+                elif current_section in sections:
+                    sections[current_section].append(line)
+        
+        # Return diagnostic info
+        return {
+            "user_id": slack_user_id,
+            "preferred_name": preferred_name,
+            "properties_count": len(user_properties) if user_properties else 0,
+            "property_fields": property_fields,
+            "content_length": len(user_page_content) if user_page_content else 0,
+            "sections_found": list(sections.keys()),
+            "section_items": {k: len(v) for k, v in sections.items()},
+            "context_length": len(context),
+            "context_preview": context[:500] + "..." if len(context) > 500 else context,
+            "content_inclusion_ratio": len(context) / len(user_page_content) if user_page_content else 0
+        }
+    except Exception as e:
+        logger.error(f"Error in diagnostic endpoint: {e}", exc_info=True)
+        return {"error": str(e)}
 
 # Main entry point
 if __name__ == "__main__":

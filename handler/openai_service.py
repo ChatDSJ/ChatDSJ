@@ -209,8 +209,7 @@ class OpenAIService:
                 f"{user_specific_context.strip()}\n"
                 f"=== END USER-SPECIFIC CONTEXT & PREFERENCES ===\n\n"
                 f"IMPORTANT: You MUST incorporate the above user-specific information into your response. "
-                f"If the user has specific instructions like 'Always write answers in rhymed verse', "
-                f"you MUST follow those instructions without fail."
+                f"If the user has specific preferences or instructions, you MUST follow them without fail."
             )
 
         # Add linked Notion content if available

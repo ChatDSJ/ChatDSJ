@@ -37,6 +37,11 @@ class ServiceContainer:
         self.web_service = web_service
         self.youtube_service = youtube_service
         
+        # Inject the NotionContextManager into OpenAIService if both services are available
+        if self.notion_service and self.openai_service and not hasattr(self.openai_service, 'notion_context_manager'):
+            from services.notion_parser import NotionContextManager
+            self.openai_service.notion_context_manager = NotionContextManager()
+        
         logger.info("ServiceContainer initialized with available services")
     
     def validate_required_services(self, service_names: List[str]) -> bool:
@@ -205,58 +210,21 @@ class ContextResponseAction(Action):
                     thread_ts=request.thread_ts
                 )
             
-            # Fetch conversation history
-            # Determine if this is a new channel question or in a thread
-            is_new_main_channel_question = request.thread_ts is None
+            # Import and initialize history manager
+            from utils.history_manager import HistoryManager
+            history_manager = HistoryManager()
             
-            # Keywords indicating a request about past discussions
-            history_query_keywords = [
-                "discussed", "discussion", "mentioned", "talked about", "said about",
-                "summarize", "summary", "what was said", "history of", "previously on"
-            ]
-            
-            # Fetch appropriate history based on the context
-            if is_new_main_channel_question:
-                # Check if asking about past history
-                is_querying_history = any(keyword.lower() in request.prompt.lower() for keyword in history_query_keywords)
-                
-                # If asking about history, fetch more messages
-                limit = 1000 if is_querying_history else 50
-                channel_history = await asyncio.to_thread(
-                    self.services.slack_service.fetch_channel_history,
-                    request.channel_id, 
-                    limit
-                )
-                thread_history = []
-            else:
-                # This is in a thread
-                channel_history = await asyncio.to_thread(
-                    self.services.slack_service.fetch_channel_history,
-                    request.channel_id, 
-                    1000
-                )
-                thread_history = await asyncio.to_thread(
-                    self.services.slack_service.fetch_thread_history,
-                    request.channel_id, 
-                    request.thread_ts,
-                    1000
-                )
-            
-            # Merge and deduplicate history - exactly as in the working version
-            merged_messages = []
-            if thread_history:
-                thread_message_timestamps = {msg["ts"] for msg in thread_history}
-                merged_messages.extend(thread_history)
-                # Add channel messages not already in the thread history
-                for msg in channel_history:
-                    if msg["ts"] not in thread_message_timestamps:
-                        merged_messages.append(msg)
-            else:
-                merged_messages = channel_history
+            # Retrieve and filter history based on query type
+            filtered_messages, query_params = await history_manager.retrieve_and_filter_history(
+                self.services.slack_service,
+                request.channel_id,
+                request.thread_ts,
+                request.prompt
+            )
             
             # Build user display names dictionary
             user_display_names = {}
-            for msg in merged_messages:
+            for msg in filtered_messages:
                 user_id = msg.get("user") or msg.get("bot_id")
                 if user_id and user_id not in user_display_names:
                     user_display_names[user_id] = await asyncio.to_thread(
@@ -264,56 +232,53 @@ class ContextResponseAction(Action):
                         user_id
                     )
             
-            # Format history for OpenAI
-            formatted_history = await asyncio.to_thread(
-                self.services.openai_service._format_conversation_for_openai,
-                merged_messages,
+            # Format the filtered messages based on query type
+            formatted_history_text = history_manager.format_history_for_prompt(
+                filtered_messages,
+                query_params,
                 user_display_names,
                 self.services.slack_service.bot_user_id
             )
             
-            # Get user-specific context from Notion - using the approach from the working version
+            # Format history for OpenAI using standard method
+            formatted_history = await asyncio.to_thread(
+                self.services.openai_service._format_conversation_for_openai,
+                filtered_messages,
+                user_display_names,
+                self.services.slack_service.bot_user_id
+            )
+            
+            # Get user-specific context from Notion
             logger.info(f"Fetching Notion context for user {request.user_id}")
             
-            # Get both page content and properties, as in the working version
+            # Get both page content and properties
             user_page_content = await asyncio.to_thread(
                 self.services.notion_service.get_user_page_content,
                 request.user_id
             )
+            
+            user_page_properties = await asyncio.to_thread(
+                self.services.notion_service.get_user_page_properties,
+                request.user_id
+            )
+            
             user_preferred_name = await asyncio.to_thread(
                 self.services.notion_service.get_user_preferred_name,
                 request.user_id
             )
             
-            # Log what we found
-            if user_page_content:
-                logger.info(f"Retrieved Notion page content for user {request.user_id} (length: {len(user_page_content)})")
-            else:
-                logger.warning(f"No Notion page content found for user {request.user_id}")
-                
-            if user_preferred_name:
-                logger.info(f"Retrieved preferred name for user {request.user_id}: {user_preferred_name}")
-            else:
-                logger.warning(f"No preferred name found for user {request.user_id}")
+            # Use enhanced context builder to emphasize preferences
+            from utils.context_builder import get_enhanced_user_context
+            user_specific_context = await asyncio.to_thread(
+                get_enhanced_user_context,
+                self.services.notion_service,
+                request.user_id,
+                ""  # No base prompt needed, it will be added in get_completion_async
+            )
             
-            # Construct user context in parts, similar to the working version
-            user_context_parts = []
-            if user_preferred_name:
-                user_context_parts.append(f"The user's preferred name is: {user_preferred_name}.")
-            
-            if user_page_content and user_page_content.strip():
-                user_context_parts.append(
-                    f"Other known facts and preferences for this user:\n{user_page_content.strip()}"
-                )
-            
-            user_specific_context = "\n".join(user_context_parts) if user_context_parts else None
-            
-            # Log the context we're sending to OpenAI
-            if user_specific_context:
-                logger.info(f"Sending user-specific context to OpenAI (length: {len(user_specific_context)})")
-                logger.debug(f"Context content: {user_specific_context[:500]}...")
-            else:
-                logger.warning("No user-specific context to send to OpenAI")
+            # Log summary of chat history processing
+            logger.info(f"History retrieval mode: {query_params.get('mode', 'unknown')}")
+            logger.info(f"Retrieved {len(filtered_messages)} relevant messages")
             
             # Generate response using direct approach
             response_text, usage = await self.services.openai_service.get_completion_async(

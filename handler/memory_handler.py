@@ -108,6 +108,24 @@ class MemoryHandler:
             if re.search(pattern, lowered):
                 return "unknown", None  # This is a question, not a memory instruction
         
+        # Enhanced patterns for remembering facts
+        remembering_patterns = [
+            # Classic "remember that..."
+            r"(?:remember|note|keep in mind) (?:that|this)?\s*(.+)",
+            
+            # "Add this fact..."
+            r"(?:add|store|save|write down)\s+(?:this|that|the following)?\s*(?:fact|information|detail)(?:\s*:|about me)?[:\s]*(.+)",
+            
+            # Simple statements that should be remembered
+            r"(?:i|I)\s+(?:am|have|like|prefer|want|need|work|live|reside)\s+(.+)"
+        ]
+        
+        # Check all remembering patterns
+        for pattern in remembering_patterns:
+            match = re.search(pattern, text, re.IGNORECASE)
+            if match:
+                return "known_fact", match.group(1).strip()
+        
         # Clean up common greetings and bot mentions
         cleaned_text = text.strip()
         greeting_patterns = [
@@ -129,33 +147,33 @@ class MemoryHandler:
             todo_text = todo_match.group(1).strip() if todo_match else cleaned_text
             return "todo", todo_text
         
-        # Explicit statements that should be remembered
-        if "remember that" in lowered or "note that" in lowered:
-            fact_text = re.sub(r"^remember that\s+", "", cleaned_text, flags=re.IGNORECASE)
-            fact_text = re.sub(r"^note that\s+", "", fact_text, flags=re.IGNORECASE)
-            return "known_fact", fact_text
-        
-        # Nickname setting
-        if (re.search(r"\bcall me\b", lowered) or 
-            re.search(r"\bmy name is\b", lowered) or 
-            re.search(r"\bi am called\b", lowered)):
-            name_match = re.search(r"(?:call me|my name is|i am called)\s+['\"]?([^'\"]+)['\"]?", lowered)
-            if name_match:
-                return "nickname", name_match.group(1).strip()
-            return "nickname", cleaned_text
-        
-        # Projects with explicit markers
+        # Enhanced project-related patterns
         if "my new project is" in lowered:
             project_text = re.sub(r".*?my new project is\s+", "", cleaned_text, flags=re.IGNORECASE)
             return "project_replace", project_text
         
-        if "add project" in lowered:
-            project_text = re.sub(r".*?add project\s+", "", cleaned_text, flags=re.IGNORECASE)
+        if re.search(r"\badd project\b", lowered):
+            project_text = re.sub(r".*?\badd project\b\s+", "", cleaned_text, flags=re.IGNORECASE)
             return "project_add", project_text
         
-        # Facts with explicit first-person statements about location
+        # Enhanced preference patterns
+        preference_patterns = [
+            r"\bi prefer\b",
+            r"\bi (?:like|love|enjoy|hate|dislike)\b",
+            r"\bmy preference is\b"
+        ]
+        
+        for pattern in preference_patterns:
+            if re.search(pattern, lowered):
+                # Extract the preference content
+                match = re.search(r"(?:prefer|like|love|enjoy|hate|dislike|preference is)\s+(.+)", lowered)
+                if match:
+                    return "preference", match.group(1).strip()
+                return "preference", cleaned_text
+        
+        # Location-specific patterns
         location_match = re.search(r"\bi (?:work|live|am from|was born in|reside in|moved to)\s+(.*?)(?:\.|\s*$)", lowered)
-        if location_match and not re.search(r"\bwhere\s+(?:do|does)\s+i\b", lowered):
+        if location_match:
             location_type = "work_location" if "work" in location_match.group(0) else "home_location"
             location_text = location_match.group(1).strip()
             
@@ -168,19 +186,10 @@ class MemoryHandler:
                 
             return location_type, clean_fact
         
-        # Preferences with explicit first-person statements
-        if (re.search(r"\bi prefer\b", lowered) or 
-            re.search(r"\bi (?:like|love|enjoy|hate|dislike)\b", lowered) or 
-            re.search(r"\bmy preference is\b", lowered)):
-            return "preference", cleaned_text
-        
-        # General facts with first-person statements
-        if re.search(r"\bi (?:[a-z]+)\b", lowered) and not re.search(r"\bi (?:want|need|would like|am looking for)\b", lowered):
-            return "known_fact", cleaned_text
-        
         # No pattern matched
+        logger.debug(f"No memory instruction pattern matched for: {text}")
         return "unknown", None
-    
+
     def update_user_name(self, slack_user_id: str, name: str) -> bool:
         """
         Update a user's preferred name.
@@ -340,19 +349,19 @@ class MemoryHandler:
             logger.error(f"Error updating location for {slack_user_id}: {e}", exc_info=True)
             return False
     
-    def add_known_fact(self, slack_user_id: str, fact: str) -> bool:
+    def add_known_fact(self, slack_user_id: str, fact_text: str) -> bool:
         """
         Add a fact to the Known Facts section.
         
         Args:
             slack_user_id: The Slack user ID
-            fact: The fact to add
+            fact_text: The fact to add
             
         Returns:
             True if successful, False otherwise
         """
         try:
-            # 1. Get the page ID
+            # Get or create user page
             page_id = self.notion_service.get_user_page_id(slack_user_id)
             if not page_id:
                 # Create a new user page if it doesn't exist
@@ -365,34 +374,101 @@ class MemoryHandler:
                 if not page_id:
                     return False
             
-            # 2. Find the Known Facts section
-            known_facts_section_block = self._find_section_block(page_id, SectionType.KNOWN_FACTS.value)
-            if not known_facts_section_block:
-                # Create the Known Facts section if it doesn't exist
-                known_facts_section_block = self._create_section(page_id, SectionType.KNOWN_FACTS.value)
+            # First, check if the Known Facts section already exists
+            known_facts_section = self._find_section_block(page_id, "Known Facts")
             
-            # 3. Add the new fact as a bullet point
-            self.notion_service.client.blocks.children.append(
-                block_id=known_facts_section_block.get("id"),
-                children=[{
-                    "object": "block",
-                    "type": "bulleted_list_item",
-                    "bulleted_list_item": {
-                        "rich_text": [{
-                            "type": "text",
-                            "text": {"content": fact}
-                        }]
-                    }
-                }]
-            )
+            if known_facts_section:
+                # Add to existing Known Facts section
+                try:
+                    # Get existing children of this section to see if we can append
+                    children_response = self.notion_service.client.blocks.children.list(
+                        block_id=known_facts_section.get("id")
+                    )
+                    
+                    # Create a new bullet point after the section header
+                    self.notion_service.client.blocks.children.append(
+                        block_id=page_id,  # Append to page instead of section
+                        children=[
+                            {
+                                "object": "block",
+                                "type": "bulleted_list_item",
+                                "bulleted_list_item": {
+                                    "rich_text": [{
+                                        "type": "text",
+                                        "text": {"content": fact_text}
+                                    }]
+                                }
+                            }
+                        ]
+                    )
+                    
+                    logger.info(f"Added fact to Known Facts section for user {slack_user_id}: {fact_text}")
+                except Exception as section_error:
+                    # If we can't append to the section (which seems to be the issue), create a new bullet directly on the page
+                    logger.warning(f"Could not append to Known Facts section: {section_error}. Trying alternative approach.")
+                    
+                    # Add directly to the page
+                    self.notion_service.client.blocks.children.append(
+                        block_id=page_id,
+                        children=[
+                            {
+                                "object": "block",
+                                "type": "bulleted_list_item",
+                                "bulleted_list_item": {
+                                    "rich_text": [{
+                                        "type": "text",
+                                        "text": {"content": fact_text}
+                                    }]
+                                }
+                            }
+                        ]
+                    )
+                    
+                    logger.info(f"Added fact directly to page for user {slack_user_id}: {fact_text}")
+            else:
+                # Create a new Known Facts section
+                logger.info(f"Creating new Known Facts section for user {slack_user_id}")
+                
+                try:
+                    # Add section header and first bullet
+                    self.notion_service.client.blocks.children.append(
+                        block_id=page_id,
+                        children=[
+                            {
+                                "object": "block",
+                                "type": "heading_2",
+                                "heading_2": {
+                                    "rich_text": [{
+                                        "type": "text",
+                                        "text": {"content": "Known Facts"}
+                                    }]
+                                }
+                            },
+                            {
+                                "object": "block",
+                                "type": "bulleted_list_item",
+                                "bulleted_list_item": {
+                                    "rich_text": [{
+                                        "type": "text",
+                                        "text": {"content": fact_text}
+                                    }]
+                                }
+                            }
+                        ]
+                    )
+                    
+                    logger.info(f"Created Known Facts section with first fact: {fact_text}")
+                except Exception as create_error:
+                    logger.error(f"Failed to create Known Facts section: {create_error}", exc_info=True)
+                    return False
             
             # Invalidate cache
             self.notion_service.invalidate_user_cache(slack_user_id)
             
             return True
-        
+            
         except Exception as e:
-            logger.error(f"Error adding known fact for {slack_user_id}: {e}", exc_info=True)
+            logger.error(f"Error adding known fact for user {slack_user_id}: {e}", exc_info=True)
             return False
     
     def add_preference(self, slack_user_id: str, preference: str) -> bool:
