@@ -9,12 +9,13 @@ from typing import Optional, Dict, Any, Tuple, List
 from slack_bolt import App
 from slack_sdk.errors import SlackApiError
 from openai import OpenAI
-from app.services.notion_service import (
+from services.notion_service import (
     get_user_notion_page_content,
     handle_nickname_command,
-    get_user_page_properties,             # New import
-    get_user_preferred_name_from_properties # New import
+    get_user_page_properties,
+    get_user_preferred_name_from_properties
 )
+from services.memory_handler import handle_memory_instruction
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -171,6 +172,17 @@ def create_slack_app():
             if nickname_stored_successfully:
                  update_channel_stats(channel_id, user_id, message_ts) 
                  return
+            
+        # --- MILESTONE 3: Memory instruction handling (Facts / Preferences) ---
+        memory_response = handle_memory_instruction(
+            user_id,
+            prompt,
+            notion_service  # Pass the actual CachedNotionService instance
+        )
+        if memory_response:
+            say(text=memory_response, thread_ts=reply_thread_ts)
+            update_channel_stats(channel_id, user_id, message_ts)
+            return
 
         # Fetch full channel history (up to a practical limit)
         def fetch_channel_history_internal(channel_id_param, client_param, limit=1000):
@@ -319,7 +331,7 @@ def create_slack_app():
 
         except Exception as e:
             logger.error(f"OpenAI call failed: {e}", exc_info=True)
-            say(text=f"Oops! I encountered an issue while processing your request with my AI brain: {e}", thread_ts=thread_ts)
+            say(text=f"Oops! I encountered an issue while processing your request with my AI brain: {e}", thread_ts=reply_thread_ts)
             return
 
         # Milestone 1 & 2: Post response back

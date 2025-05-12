@@ -1,0 +1,266 @@
+2025-05-12 09:18:02.215 | INFO     | main:<module>:27 - Starting application in development mode
+2025-05-12 09:18:02.314 | INFO     | services.openai_service:_init_clients:50 - OpenAI clients initialized successfully
+2025-05-12 09:18:02.314 | INFO     | services.openai_service:__init__:43 - OpenAI service initialized with model gpt-4o
+2025-05-12 09:18:02.341 | INFO     | services.cached_notion_service:__init__:65 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-12 09:18:02.873 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-12 09:18:03.074 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-12 09:18:03.074 | INFO     | actions.action_framework:__init__:40 - ServiceContainer initialized with available services
+2025-05-12 09:18:03.083 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-12 09:18:03.083 | INFO     | main:startup_event:150 - Slack bot started in socket mode.
+2025-05-12 09:18:03.110 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-12 09:18:27.564 | ERROR    | main:handle_mention:132 - Error handling mention: 'CachedNotionService' object has no attribute 'handle_nickname_command'
+2025-05-12 09:20:06.298 | INFO     | main:<module>:27 - Starting application in development mode
+2025-05-12 09:20:06.461 | INFO     | services.openai_service:_init_clients:50 - OpenAI clients initialized successfully
+2025-05-12 09:20:06.461 | INFO     | services.openai_service:__init__:43 - OpenAI service initialized with model gpt-4o
+2025-05-12 09:20:06.496 | INFO     | services.cached_notion_service:__init__:65 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-12 09:20:07.176 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-12 09:20:07.399 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-12 09:20:07.400 | INFO     | actions.action_framework:__init__:40 - ServiceContainer initialized with available services
+2025-05-12 09:20:07.402 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-12 09:20:07.403 | INFO     | main:startup_event:150 - Slack bot started in socket mode.
+2025-05-12 09:20:07.435 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-12 09:20:19.989 | INFO     | main:<module>:27 - Starting application in development mode
+2025-05-12 09:20:20.074 | INFO     | services.openai_service:_init_clients:50 - OpenAI clients initialized successfully
+2025-05-12 09:20:20.074 | INFO     | services.openai_service:__init__:43 - OpenAI service initialized with model gpt-4o
+2025-05-12 09:20:20.098 | INFO     | services.cached_notion_service:__init__:66 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-12 09:20:20.644 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-12 09:20:20.858 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-12 09:20:20.858 | INFO     | actions.action_framework:__init__:40 - ServiceContainer initialized with available services
+2025-05-12 09:20:20.860 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-12 09:20:20.861 | INFO     | main:startup_event:150 - Slack bot started in socket mode.
+2025-05-12 09:20:20.889 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-12 09:20:42.084 | INFO     | actions.action_framework:__init__:694 - ActionRouter initialized with 4 actions
+2025-05-12 09:20:42.088 | INFO     | actions.action_framework:_get_action_for_text:708 - Selected action ContextResponseAction for message: <@U08RG89NFK7> are you fully operational like the ...
+2025-05-12 09:20:42.089 | INFO     | services.slack_service:fetch_channel_history:172 - Fetching channel history for C08S6PE143A (limit: 1000)...
+2025-05-12 09:20:42.673 | INFO     | services.slack_service:fetch_channel_history:192 - Fetched 90 messages from channel C08S6PE143A.
+2025-05-12 09:20:42.673 | INFO     | services.slack_service:fetch_thread_history:204 - Fetching thread history for C08S6PE143A, ts: 1747056041.910509 (limit: 1000)...
+2025-05-12 09:20:42.944 | INFO     | services.slack_service:fetch_thread_history:225 - Fetched 1 messages from thread 1747056041.910509.
+2025-05-12 09:20:44.401 | INFO     | services.cached_notion_service:get_user_page_content:366 - Retrieved Notion page content for user U089YKL1T4H (length: 845)
+2025-05-12 09:20:44.704 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-12 09:20:47.835 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-12 09:20:47.840 | INFO     | services.openai_service:get_completion_async:151 - Sending 4756 tokens to OpenAI async. Model: gpt-4o
+2025-05-12 09:21:43.168 | INFO     | actions.action_framework:__init__:694 - ActionRouter initialized with 4 actions
+2025-05-12 09:21:43.173 | INFO     | actions.action_framework:_get_action_for_text:708 - Selected action ContextResponseAction for message: What's my nickname, <@U08RG89NFK7>?...
+2025-05-12 09:21:43.173 | INFO     | services.slack_service:fetch_channel_history:172 - Fetching channel history for C08S6PE143A (limit: 1000)...
+2025-05-12 09:21:43.859 | INFO     | services.slack_service:fetch_channel_history:192 - Fetched 90 messages from channel C08S6PE143A.
+2025-05-12 09:21:43.859 | INFO     | services.slack_service:fetch_thread_history:204 - Fetching thread history for C08S6PE143A, ts: 1747056041.910509 (limit: 1000)...
+2025-05-12 09:21:44.164 | INFO     | services.slack_service:fetch_thread_history:225 - Fetched 3 messages from thread 1747056041.910509.
+2025-05-12 09:21:44.166 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-12 09:21:44.178 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-12 09:21:44.183 | INFO     | services.openai_service:get_completion_async:151 - Sending 4803 tokens to OpenAI async. Model: gpt-4o
+2025-05-12 09:22:15.944 | INFO     | actions.action_framework:__init__:694 - ActionRouter initialized with 4 actions
+2025-05-12 09:22:15.955 | INFO     | actions.action_framework:_get_action_for_text:708 - Selected action ContextResponseAction for message: <@U08RG89NFK7> what projects am I working on?...
+2025-05-12 09:22:15.956 | INFO     | services.slack_service:fetch_channel_history:172 - Fetching channel history for C08S6PE143A (limit: 1000)...
+2025-05-12 09:22:16.455 | INFO     | services.slack_service:fetch_channel_history:192 - Fetched 91 messages from channel C08S6PE143A.
+2025-05-12 09:22:16.456 | INFO     | services.slack_service:fetch_thread_history:204 - Fetching thread history for C08S6PE143A, ts: 1747056135.741959 (limit: 1000)...
+2025-05-12 09:22:16.705 | INFO     | services.slack_service:fetch_thread_history:225 - Fetched 1 messages from thread 1747056135.741959.
+2025-05-12 09:22:16.707 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-12 09:22:16.717 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-12 09:22:16.722 | INFO     | services.openai_service:get_completion_async:151 - Sending 4780 tokens to OpenAI async. Model: gpt-4o
+2025-05-12 09:23:13.731 | INFO     | actions.action_framework:__init__:694 - ActionRouter initialized with 4 actions
+2025-05-12 09:23:13.734 | INFO     | actions.action_framework:_get_action_for_text:708 - Selected action ContextResponseAction for message: <@U08RG89NFK7> what do you remember about me?...
+2025-05-12 09:23:13.734 | INFO     | services.slack_service:fetch_channel_history:172 - Fetching channel history for C08S6PE143A (limit: 1000)...
+2025-05-12 09:23:14.172 | INFO     | services.slack_service:fetch_channel_history:192 - Fetched 92 messages from channel C08S6PE143A.
+2025-05-12 09:23:14.172 | INFO     | services.slack_service:fetch_thread_history:204 - Fetching thread history for C08S6PE143A, ts: 1747056193.505699 (limit: 1000)...
+2025-05-12 09:23:14.395 | INFO     | services.slack_service:fetch_thread_history:225 - Fetched 1 messages from thread 1747056193.505699.
+2025-05-12 09:23:14.396 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-12 09:23:14.403 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-12 09:23:14.408 | INFO     | services.openai_service:get_completion_async:151 - Sending 4806 tokens to OpenAI async. Model: gpt-4o
+2025-05-12 09:24:38.338 | INFO     | services.cached_notion_service:store_user_nickname:503 - Updating Notion page for user U089YKL1T4H with nickname: EL ROJO
+2025-05-12 09:24:52.428 | INFO     | services.cached_notion_service:invalidate_user_cache:110 - Cache invalidated for user U089YKL1T4H
+2025-05-12 09:25:45.645 | INFO     | main:<module>:27 - Starting application in development mode
+2025-05-12 09:25:45.830 | INFO     | services.openai_service:_init_clients:50 - OpenAI clients initialized successfully
+2025-05-12 09:25:45.830 | INFO     | services.openai_service:__init__:43 - OpenAI service initialized with model gpt-4o
+2025-05-12 09:25:45.857 | INFO     | services.cached_notion_service:__init__:66 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-12 09:25:46.713 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-12 09:25:46.925 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-12 09:25:46.925 | INFO     | actions.action_framework:__init__:40 - ServiceContainer initialized with available services
+2025-05-12 09:25:46.929 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-12 09:25:46.929 | INFO     | main:startup_event:150 - Slack bot started in socket mode.
+2025-05-12 09:25:46.950 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-12 09:25:54.637 | INFO     | main:<module>:27 - Starting application in development mode
+2025-05-12 09:25:54.745 | INFO     | services.openai_service:_init_clients:50 - OpenAI clients initialized successfully
+2025-05-12 09:25:54.745 | INFO     | services.openai_service:__init__:43 - OpenAI service initialized with model gpt-4o
+2025-05-12 09:25:54.766 | INFO     | services.cached_notion_service:__init__:66 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-12 09:25:55.296 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-12 09:25:55.495 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-12 09:25:55.495 | INFO     | actions.action_framework:__init__:40 - ServiceContainer initialized with available services
+2025-05-12 09:25:55.497 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-12 09:25:55.497 | INFO     | main:startup_event:150 - Slack bot started in socket mode.
+2025-05-12 09:25:55.515 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-12 09:26:22.998 | INFO     | main:<module>:27 - Starting application in development mode
+2025-05-12 09:26:23.086 | INFO     | services.openai_service:_init_clients:50 - OpenAI clients initialized successfully
+2025-05-12 09:26:23.086 | INFO     | services.openai_service:__init__:43 - OpenAI service initialized with model gpt-4o
+2025-05-12 09:26:23.129 | INFO     | services.cached_notion_service:__init__:66 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-12 09:26:23.601 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-12 09:26:23.824 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-12 09:26:23.825 | INFO     | actions.action_framework:__init__:40 - ServiceContainer initialized with available services
+2025-05-12 09:26:23.827 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-12 09:26:23.827 | INFO     | main:startup_event:150 - Slack bot started in socket mode.
+2025-05-12 09:26:23.856 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-12 09:27:11.313 | INFO     | main:<module>:27 - Starting application in development mode
+2025-05-12 09:27:11.403 | INFO     | services.openai_service:_init_clients:50 - OpenAI clients initialized successfully
+2025-05-12 09:27:11.403 | INFO     | services.openai_service:__init__:43 - OpenAI service initialized with model gpt-4o
+2025-05-12 09:27:11.424 | INFO     | services.cached_notion_service:__init__:66 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-12 09:27:12.004 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-12 09:27:12.217 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-12 09:27:12.218 | INFO     | actions.action_framework:__init__:40 - ServiceContainer initialized with available services
+2025-05-12 09:27:12.220 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-12 09:27:12.221 | INFO     | main:startup_event:150 - Slack bot started in socket mode.
+2025-05-12 09:27:12.243 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-12 09:28:06.254 | INFO     | actions.action_framework:__init__:694 - ActionRouter initialized with 4 actions
+2025-05-12 09:28:06.403 | INFO     | actions.action_framework:_get_action_for_text:708 - Selected action ContextResponseAction for message: <@U08RG89NFK7> I work remotely from Spain....
+2025-05-12 09:28:06.405 | INFO     | services.slack_service:fetch_channel_history:172 - Fetching channel history for C08S6PE143A (limit: 1000)...
+2025-05-12 09:28:06.954 | INFO     | services.slack_service:fetch_channel_history:192 - Fetched 93 messages from channel C08S6PE143A.
+2025-05-12 09:28:06.955 | INFO     | services.slack_service:fetch_thread_history:204 - Fetching thread history for C08S6PE143A, ts: 1747056485.309709 (limit: 1000)...
+2025-05-12 09:28:07.186 | INFO     | services.slack_service:fetch_thread_history:225 - Fetched 1 messages from thread 1747056485.309709.
+2025-05-12 09:28:08.591 | INFO     | services.cached_notion_service:get_user_page_content:366 - Retrieved Notion page content for user U089YKL1T4H (length: 845)
+2025-05-12 09:28:08.919 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-12 09:28:09.247 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-12 09:28:09.254 | INFO     | services.openai_service:get_completion_async:151 - Sending 4829 tokens to OpenAI async. Model: gpt-4o
+2025-05-12 09:30:49.893 | INFO     | main:<module>:27 - Starting application in development mode
+2025-05-12 09:30:49.974 | INFO     | services.openai_service:_init_clients:50 - OpenAI clients initialized successfully
+2025-05-12 09:30:49.974 | INFO     | services.openai_service:__init__:43 - OpenAI service initialized with model gpt-4o
+2025-05-12 09:30:49.998 | INFO     | services.cached_notion_service:__init__:66 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-12 09:30:50.767 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-12 09:30:50.973 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-12 09:30:50.973 | INFO     | actions.action_framework:__init__:40 - ServiceContainer initialized with available services
+2025-05-12 09:30:50.975 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-12 09:30:50.976 | INFO     | main:startup_event:150 - Slack bot started in socket mode.
+2025-05-12 09:30:51.000 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-12 09:33:10.521 | INFO     | main:<module>:27 - Starting application in development mode
+2025-05-12 09:33:10.631 | INFO     | services.openai_service:_init_clients:50 - OpenAI clients initialized successfully
+2025-05-12 09:33:10.631 | INFO     | services.openai_service:__init__:43 - OpenAI service initialized with model gpt-4o
+2025-05-12 09:33:10.654 | INFO     | services.cached_notion_service:__init__:66 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-12 09:33:11.369 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-12 09:33:11.592 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-12 09:33:11.592 | INFO     | actions.action_framework:__init__:40 - ServiceContainer initialized with available services
+2025-05-12 09:33:11.594 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-12 09:33:11.595 | INFO     | main:startup_event:150 - Slack bot started in socket mode.
+2025-05-12 09:33:11.618 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-12 09:33:59.470 | INFO     | main:<module>:27 - Starting application in development mode
+2025-05-12 09:33:59.559 | INFO     | services.openai_service:_init_clients:50 - OpenAI clients initialized successfully
+2025-05-12 09:33:59.560 | INFO     | services.openai_service:__init__:43 - OpenAI service initialized with model gpt-4o
+2025-05-12 09:33:59.580 | INFO     | services.cached_notion_service:__init__:66 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-12 09:34:00.071 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-12 09:34:00.285 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-12 09:34:00.285 | INFO     | actions.action_framework:__init__:40 - ServiceContainer initialized with available services
+2025-05-12 09:34:00.287 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-12 09:34:00.288 | INFO     | main:startup_event:150 - Slack bot started in socket mode.
+2025-05-12 09:34:00.313 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-12 09:34:31.034 | INFO     | actions.action_framework:__init__:694 - ActionRouter initialized with 4 actions
+2025-05-12 09:34:31.053 | INFO     | actions.action_framework:_get_action_for_text:708 - Selected action ContextResponseAction for message: <@U08RG89NFK7> I work remotely from Spain....
+2025-05-12 09:34:31.056 | INFO     | services.slack_service:fetch_channel_history:172 - Fetching channel history for C08S6PE143A (limit: 1000)...
+2025-05-12 09:34:31.509 | INFO     | services.slack_service:fetch_channel_history:192 - Fetched 94 messages from channel C08S6PE143A.
+2025-05-12 09:34:31.509 | INFO     | services.slack_service:fetch_thread_history:204 - Fetching thread history for C08S6PE143A, ts: 1747056869.982989 (limit: 1000)...
+2025-05-12 09:34:31.757 | INFO     | services.slack_service:fetch_thread_history:225 - Fetched 1 messages from thread 1747056869.982989.
+2025-05-12 09:34:34.151 | INFO     | services.cached_notion_service:get_user_page_content:366 - Retrieved Notion page content for user U089YKL1T4H (length: 845)
+2025-05-12 09:34:35.382 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-12 09:34:35.726 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-12 09:34:35.730 | INFO     | services.openai_service:get_completion_async:151 - Sending 4854 tokens to OpenAI async. Model: gpt-4o
+2025-05-12 09:43:53.131 | INFO     | main:<module>:27 - Starting application in development mode
+2025-05-12 09:43:53.227 | INFO     | services.openai_service:_init_clients:50 - OpenAI clients initialized successfully
+2025-05-12 09:43:53.228 | INFO     | services.openai_service:__init__:43 - OpenAI service initialized with model gpt-4o
+2025-05-12 09:43:53.256 | INFO     | services.cached_notion_service:__init__:66 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-12 09:43:55.947 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-12 09:43:56.159 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-12 09:43:56.160 | INFO     | actions.action_framework:__init__:40 - ServiceContainer initialized with available services
+2025-05-12 09:43:56.162 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-12 09:43:56.162 | INFO     | main:startup_event:150 - Slack bot started in socket mode.
+2025-05-12 09:43:56.187 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-12 09:44:53.865 | INFO     | main:<module>:27 - Starting application in development mode
+2025-05-12 09:44:53.954 | INFO     | services.openai_service:_init_clients:50 - OpenAI clients initialized successfully
+2025-05-12 09:44:53.954 | INFO     | services.openai_service:__init__:43 - OpenAI service initialized with model gpt-4o
+2025-05-12 09:44:53.975 | INFO     | services.cached_notion_service:__init__:66 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-12 09:44:54.445 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-12 09:44:54.645 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-12 09:44:54.646 | INFO     | actions.action_framework:__init__:40 - ServiceContainer initialized with available services
+2025-05-12 09:44:54.648 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-12 09:44:54.649 | INFO     | main:startup_event:150 - Slack bot started in socket mode.
+2025-05-12 09:44:54.680 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-12 09:45:27.956 | INFO     | actions.action_framework:__init__:694 - ActionRouter initialized with 4 actions
+2025-05-12 09:45:27.966 | INFO     | actions.action_framework:_get_action_for_text:708 - Selected action ContextResponseAction for message: Hey <@U08RG89NFK7> I work remotely from Greece...
+2025-05-12 09:45:27.967 | INFO     | services.slack_service:fetch_channel_history:172 - Fetching channel history for C08S6PE143A (limit: 1000)...
+2025-05-12 09:45:28.619 | INFO     | services.slack_service:fetch_channel_history:192 - Fetched 95 messages from channel C08S6PE143A.
+2025-05-12 09:45:28.619 | INFO     | services.slack_service:fetch_thread_history:204 - Fetching thread history for C08S6PE143A, ts: 1747057526.867569 (limit: 1000)...
+2025-05-12 09:45:28.850 | INFO     | services.slack_service:fetch_thread_history:225 - Fetched 1 messages from thread 1747057526.867569.
+2025-05-12 09:45:32.743 | INFO     | services.cached_notion_service:get_user_page_content:366 - Retrieved Notion page content for user U089YKL1T4H (length: 845)
+2025-05-12 09:45:34.334 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-12 09:45:34.657 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-12 09:45:34.662 | INFO     | services.openai_service:get_completion_async:151 - Sending 4880 tokens to OpenAI async. Model: gpt-4o
+2025-05-12 09:46:04.063 | INFO     | actions.action_framework:__init__:694 - ActionRouter initialized with 4 actions
+2025-05-12 09:46:04.070 | INFO     | actions.action_framework:_get_action_for_text:708 - Selected action ContextResponseAction for message: Yes <@U08RG89NFK7> please update that...
+2025-05-12 09:46:04.071 | INFO     | services.slack_service:fetch_channel_history:172 - Fetching channel history for C08S6PE143A (limit: 1000)...
+2025-05-12 09:46:04.517 | INFO     | services.slack_service:fetch_channel_history:192 - Fetched 95 messages from channel C08S6PE143A.
+2025-05-12 09:46:04.517 | INFO     | services.slack_service:fetch_thread_history:204 - Fetching thread history for C08S6PE143A, ts: 1747057526.867569 (limit: 1000)...
+2025-05-12 09:46:04.782 | INFO     | services.slack_service:fetch_thread_history:225 - Fetched 3 messages from thread 1747057526.867569.
+2025-05-12 09:46:04.783 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-12 09:46:04.790 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-12 09:46:04.795 | INFO     | services.openai_service:get_completion_async:151 - Sending 4952 tokens to OpenAI async. Model: gpt-4o
+2025-05-12 09:50:06.398 | INFO     | main:<module>:27 - Starting application in development mode
+2025-05-12 09:50:06.531 | INFO     | services.openai_service:_init_clients:50 - OpenAI clients initialized successfully
+2025-05-12 09:50:06.531 | INFO     | services.openai_service:__init__:43 - OpenAI service initialized with model gpt-4o
+2025-05-12 09:50:06.551 | INFO     | services.cached_notion_service:__init__:66 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-12 09:50:07.077 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-12 09:50:07.316 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-12 09:50:07.316 | INFO     | actions.action_framework:__init__:40 - ServiceContainer initialized with available services
+2025-05-12 09:50:07.318 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-12 09:50:07.318 | INFO     | main:startup_event:150 - Slack bot started in socket mode.
+2025-05-12 09:50:07.342 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-12 09:50:27.229 | INFO     | actions.action_framework:__init__:711 - ActionRouter initialized with 4 actions
+2025-05-12 09:50:27.236 | INFO     | actions.action_framework:_get_action_for_text:725 - Selected action ContextResponseAction for message: <@U08RG89NFK7> I work remotely from Berlin....
+2025-05-12 09:50:27.237 | INFO     | services.slack_service:fetch_channel_history:172 - Fetching channel history for C08S6PE143A (limit: 1000)...
+2025-05-12 09:50:27.792 | INFO     | services.slack_service:fetch_channel_history:192 - Fetched 96 messages from channel C08S6PE143A.
+2025-05-12 09:50:27.793 | INFO     | services.slack_service:fetch_thread_history:204 - Fetching thread history for C08S6PE143A, ts: 1747057826.867489 (limit: 1000)...
+2025-05-12 09:50:28.036 | INFO     | services.slack_service:fetch_thread_history:225 - Fetched 1 messages from thread 1747057826.867489.
+2025-05-12 09:50:30.776 | INFO     | services.cached_notion_service:get_user_page_content:366 - Retrieved Notion page content for user U089YKL1T4H (length: 845)
+2025-05-12 09:50:30.969 | ERROR    | actions.action_framework:execute:317 - Error in ContextResponseAction: No module named 'app.services'
+2025-05-12 09:50:30.969 | ERROR    | main:handle_mention:119 - Action failed: No module named 'app.services'
+2025-05-12 09:51:17.760 | INFO     | main:<module>:27 - Starting application in development mode
+2025-05-12 09:51:17.894 | INFO     | services.openai_service:_init_clients:50 - OpenAI clients initialized successfully
+2025-05-12 09:51:17.894 | INFO     | services.openai_service:__init__:43 - OpenAI service initialized with model gpt-4o
+2025-05-12 09:51:17.932 | INFO     | services.cached_notion_service:__init__:66 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-12 09:51:18.521 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-12 09:51:18.737 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-12 09:51:18.738 | INFO     | actions.action_framework:__init__:40 - ServiceContainer initialized with available services
+2025-05-12 09:51:18.740 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-12 09:51:18.741 | INFO     | main:startup_event:150 - Slack bot started in socket mode.
+2025-05-12 09:51:18.768 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-12 09:51:37.610 | INFO     | actions.action_framework:__init__:711 - ActionRouter initialized with 4 actions
+2025-05-12 09:51:37.618 | INFO     | actions.action_framework:_get_action_for_text:725 - Selected action ContextResponseAction for message: <@U08RG89NFK7> I work remotely from Berlin....
+2025-05-12 09:51:37.618 | INFO     | services.slack_service:fetch_channel_history:172 - Fetching channel history for C08S6PE143A (limit: 1000)...
+2025-05-12 09:51:38.176 | INFO     | services.slack_service:fetch_channel_history:192 - Fetched 97 messages from channel C08S6PE143A.
+2025-05-12 09:51:38.177 | INFO     | services.slack_service:fetch_thread_history:204 - Fetching thread history for C08S6PE143A, ts: 1747057896.316829 (limit: 1000)...
+2025-05-12 09:51:38.404 | INFO     | services.slack_service:fetch_thread_history:225 - Fetched 1 messages from thread 1747057896.316829.
+2025-05-12 09:51:40.936 | INFO     | services.cached_notion_service:get_user_page_content:366 - Retrieved Notion page content for user U089YKL1T4H (length: 845)
+2025-05-12 09:51:41.411 | ERROR    | actions.action_framework:execute:317 - Error in ContextResponseAction: No module named 'app.services'
+2025-05-12 09:51:41.411 | ERROR    | main:handle_mention:119 - Action failed: No module named 'app.services'
+2025-05-12 09:52:44.842 | INFO     | main:<module>:27 - Starting application in development mode
+2025-05-12 09:52:44.945 | INFO     | services.openai_service:_init_clients:50 - OpenAI clients initialized successfully
+2025-05-12 09:52:44.946 | INFO     | services.openai_service:__init__:43 - OpenAI service initialized with model gpt-4o
+2025-05-12 09:52:44.979 | INFO     | services.cached_notion_service:__init__:66 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-12 09:52:45.524 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-12 09:52:45.742 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-12 09:52:45.743 | INFO     | actions.action_framework:__init__:40 - ServiceContainer initialized with available services
+2025-05-12 09:52:45.745 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-12 09:52:45.745 | INFO     | main:startup_event:150 - Slack bot started in socket mode.
+2025-05-12 09:52:45.775 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-12 09:52:59.473 | INFO     | main:<module>:27 - Starting application in development mode
+2025-05-12 09:52:59.562 | INFO     | services.openai_service:_init_clients:50 - OpenAI clients initialized successfully
+2025-05-12 09:52:59.562 | INFO     | services.openai_service:__init__:43 - OpenAI service initialized with model gpt-4o
+2025-05-12 09:52:59.584 | INFO     | services.cached_notion_service:__init__:66 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-12 09:53:00.166 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-12 09:53:00.373 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-12 09:53:00.374 | INFO     | actions.action_framework:__init__:40 - ServiceContainer initialized with available services
+2025-05-12 09:53:00.377 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-12 09:53:00.377 | INFO     | main:startup_event:150 - Slack bot started in socket mode.
+2025-05-12 09:53:00.397 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-12 09:53:10.077 | INFO     | actions.action_framework:__init__:711 - ActionRouter initialized with 4 actions
+2025-05-12 09:53:10.079 | INFO     | actions.action_framework:_get_action_for_text:725 - Selected action ContextResponseAction for message: <@U08RG89NFK7> I work remotely from Berlin....
+2025-05-12 09:53:10.079 | INFO     | services.slack_service:fetch_channel_history:172 - Fetching channel history for C08S6PE143A (limit: 1000)...
+2025-05-12 09:53:10.532 | INFO     | services.slack_service:fetch_channel_history:192 - Fetched 98 messages from channel C08S6PE143A.
+2025-05-12 09:53:10.532 | INFO     | services.slack_service:fetch_thread_history:204 - Fetching thread history for C08S6PE143A, ts: 1747057989.167959 (limit: 1000)...
+2025-05-12 09:53:10.768 | INFO     | services.slack_service:fetch_thread_history:225 - Fetched 1 messages from thread 1747057989.167959.
+2025-05-12 09:53:13.190 | INFO     | services.cached_notion_service:get_user_page_content:366 - Retrieved Notion page content for user U089YKL1T4H (length: 845)
+2025-05-12 09:53:13.473 | ERROR    | actions.action_framework:execute:317 - Error in ContextResponseAction: 'CachedNotionService' object has no attribute 'append_fact_to_user_page'
+2025-05-12 09:53:13.473 | ERROR    | main:handle_mention:119 - Action failed: 'CachedNotionService' object has no attribute 'append_fact_to_user_page'

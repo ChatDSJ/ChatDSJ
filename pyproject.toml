@@ -8,12 +8,18 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.12"
 fastapi = {extras = ["standard"], version = "^0.115.12"}
-psycopg = {extras = ["binary"], version = "^3.2.6"}
+uvicorn = "^0.27.0"
 slack-bolt = "^1.23.0"
-python-dotenv = "^1.1.0"
 slack-sdk = {extras = ["socket-mode"], version = "^3.35.0"}
+python-dotenv = "^1.1.0"
+pydantic = "^2.0.0"
+pydantic-settings = "^2.0.0"
 openai = "^1.73.0"
-notion-client = "^2.0.0" # Or the latest version, check PyPI
+notion-client = "^2.0.0"
+loguru = "^0.7.0"
+tiktoken = "^0.5.2"  # For token counting
+tenacity = "^8.2.0"  # For retries
+cachetools = "^5.3.0"  # For caching
 
 [build-system]
 requires = ["poetry-core"]
