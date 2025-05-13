@@ -293,22 +293,37 @@ def create_slack_app():
             else:
                 logger.warning("Context indicates a thread, but event['thread_ts'] is missing.")
 
-        # Merge and deduplicate
+        # This question is a reply within an existing thread
+        is_new_main_channel_question = not event.get("thread_ts")
+        if not is_new_main_channel_question:
+            logger.info("Question is within a thread. Fetching extensive channel and specific thread history.")
+            channel_history_messages = fetch_channel_history_internal(channel_id, client, limit=1000)
+            if event.get("thread_ts"):
+                thread_history_messages = fetch_thread_history_internal(channel_id, event["thread_ts"], client, limit=1000)
+            else:
+                logger.warning("Context indicates a thread, but event['thread_ts'] is missing.")
+
+        # Merge and deduplicate - MOST IMPORTANT SECTION
+        # In both main channel and thread questions: prioritize THREAD messages first
         merged_messages = []
-        if thread_history_messages: # Prioritize thread history if available
+        if thread_history_messages:
+            # In thread: PRIORITIZE thread messages first
             thread_message_timestamps = {msg["ts"] for msg in thread_history_messages}
-            merged_messages.extend(thread_history_messages)
+            merged_messages.extend(thread_history_messages) # THREAD MESSAGES added FIRST
             # Add channel messages not already in the thread history
             for msg in channel_history_messages:
                 if msg["ts"] not in thread_message_timestamps:
                     merged_messages.append(msg)
-        else: # No thread history (e.g., new main channel question)
-            merged_messages = channel_history_messages
+        else:
+            merged_messages = channel_history_messages # MAIN channel messages
 
         logger.info(f"Total messages for context after merging/deduplication: {len(merged_messages)}")
 
+        # *** IMPORTANT: Pass the final merged history to the formatting function ***
         formatted_history = format_conversation_history_for_openai(merged_messages, client)
+
         logger.info(f"Formatted OpenAI history contains {len(formatted_history)} segments.")
+        
         if formatted_history:
             for i, msg_seg in enumerate(formatted_history[-5:], 1): # Log last 5 segments
                 logger.debug(f"[OpenAI History Sample {i}] Role: {msg_seg['role']} | Content: {str(msg_seg['content'])[:100]}")

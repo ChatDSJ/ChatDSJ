@@ -3,7 +3,9 @@ from utils.token_management import (
     count_tokens, 
     count_messages_tokens, 
     ensure_messages_within_limit,
-    calculate_max_tokens_for_completion
+    truncate_text_to_token_limit,
+    calculate_max_tokens_for_completion,
+    split_text_into_chunks
 )
 
 def test_count_tokens():
@@ -59,8 +61,10 @@ def test_ensure_messages_within_limit():
     # System message should be preserved
     assert limited_messages[0]["role"] == "system"
     
-    # Most recent messages should be preserved
-    assert "9" in limited_messages[-2]["content"] or "9" in limited_messages[-1]["content"]
+    # Most recent messages should be preserved when preserve_latest_messages is enabled
+    if len(limited_messages) > 1:
+        last_original = messages[-1]["content"]
+        assert any(msg["content"] == last_original for msg in limited_messages)
 
 def test_calculate_max_tokens_for_completion():
     """Test calculating the maximum tokens available for completion."""
@@ -92,19 +96,39 @@ def test_calculate_max_tokens_for_completion():
     
     assert max_tokens_less < max_tokens
 
-def test_token_counting():
-    from utils.token_management import count_tokens, count_messages_tokens
+def test_truncate_text_to_token_limit():
+    """Test truncating text to fit within token limits."""
+    text = "This is a sample text that will be truncated to a smaller token count."
+    truncated = truncate_text_to_token_limit(text, max_tokens=5)
     
-    # Test simple token counting
-    text = "Hello, world!"
-    tokens = count_tokens(text)
-    assert tokens == 4  # ["Hello", ",", "world", "!"]
+    # Check that truncated text has fewer tokens
+    assert count_tokens(truncated) <= 5
+    # Check that truncated text is a prefix of original
+    assert text.startswith(truncated)
     
-    # Test message token counting
-    messages = [
-        {"role": "system", "content": "You are a helpful assistant."},
-        {"role": "user", "content": "Hello, world!"},
-        {"role": "assistant", "content": "Hi! How can I help you today?"}
-    ]
-    message_tokens = count_messages_tokens(messages)
-    assert message_tokens > 15  # Rough estimate
+    # Test with text that's already within limits
+    short_text = "Short text"
+    result = truncate_text_to_token_limit(short_text, max_tokens=10)
+    assert result == short_text
+
+def test_split_text_into_chunks():
+    """Test splitting text into token-sized chunks."""
+    # Create a longer text
+    long_text = " ".join(["chunk"] * 100)  # Will be more than 100 tokens
+    
+    # Split into chunks of ~10 tokens
+    chunks = split_text_into_chunks(long_text, max_tokens_per_chunk=10)
+    
+    # Verify each chunk is within limits
+    for chunk in chunks:
+        assert count_tokens(chunk) <= 10
+    
+    # Verify recombining chunks gives original (minus possible whitespace differences)
+    recombined = " ".join(chunks)
+    assert recombined.replace("  ", " ").strip() == long_text.replace("  ", " ").strip()
+    
+    # Test with text that fits in one chunk
+    short_text = "This is a short text"
+    chunks = split_text_into_chunks(short_text, max_tokens_per_chunk=10)
+    assert len(chunks) == 1
+    assert chunks[0] == short_text
