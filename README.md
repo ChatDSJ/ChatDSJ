@@ -42,7 +42,10 @@ poetry install
                    "app_mentions:read",
                    "channels:history",
                    "chat:write",
-                   "users:read"
+                   "users:read",
+                   "groups:history",
+                   "rections:read",
+                   "reactions:write"
                ]
            }
        },

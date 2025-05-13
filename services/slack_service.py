@@ -91,6 +91,60 @@ class SlackService:
             return re.sub(bot_mention_pattern, "", text).strip()
         return text.strip()
     
+    def add_reaction(self, channel_id: str, timestamp: str, emoji: str) -> bool:
+        """Add a reaction to a message.
+        
+        Args:
+            channel_id: The channel ID
+            timestamp: The message timestamp
+            emoji: The emoji name (without colons)
+            
+        Returns:
+            True if successful, False otherwise
+        """
+        if self.is_dummy:
+            logger.info(f"Would add reaction :{emoji}: to message {timestamp} in {channel_id}")
+            return True
+            
+        try:
+            self.app.client.reactions_add(
+                channel=channel_id,
+                timestamp=timestamp,
+                name=emoji
+            )
+            logger.debug(f"Added reaction :{emoji}: to message {timestamp}")
+            return True
+        except Exception as e:
+            logger.error(f"Failed to add reaction :{emoji}: to message {timestamp}: {e}")
+            return False
+
+    def remove_reaction(self, channel_id: str, timestamp: str, emoji: str) -> bool:
+        """Remove a reaction from a message.
+        
+        Args:
+            channel_id: The channel ID
+            timestamp: The message timestamp
+            emoji: The emoji name (without colons)
+            
+        Returns:
+            True if successful, False otherwise
+        """
+        if self.is_dummy:
+            logger.info(f"Would remove reaction :{emoji}: from message {timestamp} in {channel_id}")
+            return True
+            
+        try:
+            self.app.client.reactions_remove(
+                channel=channel_id,
+                timestamp=timestamp,
+                name=emoji
+            )
+            logger.debug(f"Removed reaction :{emoji}: from message {timestamp}")
+            return True
+        except Exception as e:
+            logger.error(f"Failed to remove reaction :{emoji}: from message {timestamp}: {e}")
+            return False
+
     def send_ephemeral_message(self, channel_id: str, user_id: str, text: str) -> bool:
         """Send an ephemeral message visible only to the user."""
         if self.is_dummy:

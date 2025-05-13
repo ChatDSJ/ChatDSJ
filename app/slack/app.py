@@ -138,15 +138,15 @@ def create_slack_app():
 
         is_new_main_channel_question = not event.get("thread_ts") # True if not in a thread
 
-        # Milestone 1 & 2: Ephemeral acknowledgment
+        # Add "thinking" reaction instead of ephemeral message
         try:
-            client.chat_postEphemeral(
+            client.reactions_add(
                 channel=channel_id,
-                user=user_id,
-                text="I heard you! I'm working on a response... 🧠"
+                timestamp=message_ts,
+                name="thinking_face"
             )
         except Exception as e:
-            logger.warning(f"Failed to send ephemeral message: {e}")
+            logger.warning(f"Failed to add thinking reaction: {e}")
 
         # --- MILESTONE 3: Handle Nickname Command ---
         # The functions from notion_service will handle checks for notion_client internally
@@ -323,7 +323,7 @@ def create_slack_app():
         formatted_history = format_conversation_history_for_openai(merged_messages, client)
 
         logger.info(f"Formatted OpenAI history contains {len(formatted_history)} segments.")
-        
+
         if formatted_history:
             for i, msg_seg in enumerate(formatted_history[-5:], 1): # Log last 5 segments
                 logger.debug(f"[OpenAI History Sample {i}] Role: {msg_seg['role']} | Content: {str(msg_seg['content'])[:100]}")
@@ -359,6 +359,21 @@ def create_slack_app():
         else:
             # This case might occur if OpenAI returns an empty content string but no exception.
             say(text="I'm sorry, I couldn't generate a response for that.", thread_ts=thread_ts)
+
+        # When done, remove thinking reaction and add success indicator
+        try:
+            client.reactions_remove(
+                channel=channel_id,
+                timestamp=message_ts,
+                name="thinking_face"
+            )
+            client.reactions_add(
+                channel=channel_id,
+                timestamp=message_ts,
+                name="white_check_mark"
+            )
+        except Exception as e:
+            logger.warning(f"Failed to update reactions: {e}")
 
         update_channel_stats(channel_id, user_id, message_ts)
 

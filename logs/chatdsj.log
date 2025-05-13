@@ -885,3 +885,651 @@ REMINDER: Always respect this user's stated preferences in your responses.
 9. There is an interest in improving the testing framework to address current buggy behavior in the ChatDSJ Bot.
 10. The tone of the channel mixes technical details with lighthearted banter and personalized user interactions.
 2025-05-13 17:11:14.901 | INFO     | services.slack_service:send_message:126 - [Slack] Slack API response: {'ok': True, 'channel': 'C08N2FK0JQL', 'ts': '1747170674.840429', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1747170674.840429', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': '1. Discussions about the ChatDSJ repository and its milestones are taking place.\n2. There\'s an ongoing issue with the ChatDSJ Bot\'s functionality regarding Slack bot initialization and environment variables.\n3. Devin is troubleshooting a specific problem with the "what day is it?" query due to improper handling of tool calls.\n4. David Joerg seeks clearer communication on how OpenAI processes tool calls versus returning text.\n5. Diophantine equations were explained as puzzles seeking whole number solutions, initiated by a request from David Joerg.\n6. There\'s humorous and playful interaction with the bot, including verifying how it responds to user mentions.\n7. Communication about server log revelations has occurred, indicating possible contradictions in environment variable management.\n8. Issues with real-time queries for dates and weather information were observed and discussed.\n9. There is an interest in improving the testing framework to address current buggy behavior in the ChatDSJ Bot.\n10. The tone of the channel mixes technical details with lighthearted banter and personalized user interactions.', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_36.jpg', 'image_48': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_48.jpg', 'image_72': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_72.jpg'}, 'deleted': False, 'updated': 1746982106, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1747170660.405219', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'pKuM', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': '1. Discussions about the ChatDSJ repository and its milestones are taking place.\n2. There\'s an ongoing issue with the ChatDSJ Bot\'s functionality regarding Slack bot initialization and environment variables.\n3. Devin is troubleshooting a specific problem with the "what day is it?" query due to improper handling of tool calls.\n4. David Joerg seeks clearer communication on how OpenAI processes tool calls versus returning text.\n5. Diophantine equations were explained as puzzles seeking whole number solutions, initiated by a request from David Joerg.\n6. There\'s humorous and playful interaction with the bot, including verifying how it responds to user mentions.\n7. Communication about server log revelations has occurred, indicating possible contradictions in environment variable management.\n8. Issues with real-time queries for dates and weather information were observed and discussed.\n9. There is an interest in improving the testing framework to address current buggy behavior in the ChatDSJ Bot.\n10. The tone of the channel mixes technical details with lighthearted banter and personalized user interactions.'}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-05-13 17:12:39.171 | INFO     | actions.action_framework:__init__:712 - ActionRouter initialized with 4 actions
+2025-05-13 17:12:39.173 | INFO     | actions.action_framework:_get_action_for_text:726 - Selected action ContextResponseAction for message: <@U08RG89NFK7> summarize thread...
+2025-05-13 17:12:39.174 | INFO     | utils.history_manager:extract_search_topic:295 - Extracting search topic from prompt: summarize thread
+2025-05-13 17:12:39.174 | INFO     | utils.history_manager:extract_search_topic:339 - No topic could be extracted from the prompt
+2025-05-13 17:12:39.174 | INFO     | utils.history_manager:retrieve_and_filter_history:51 - Summary request detected - thread: True, channel: False
+2025-05-13 17:12:39.174 | INFO     | services.slack_service:fetch_thread_history:209 - Fetching thread history for C08N2FK0JQL, ts: 1746856891.033599 (limit: 100)...
+2025-05-13 17:12:39.421 | INFO     | services.slack_service:fetch_thread_history:230 - Fetched 9 messages from thread 1746856891.033599.
+2025-05-13 17:12:39.421 | INFO     | utils.history_manager:retrieve_and_filter_history:290 - Retrieved 9 messages for Thread summary (thread_ts: 1746856891.033599)
+2025-05-13 17:12:39.423 | INFO     | utils.history_manager:format_history_for_prompt:580 - Formatted message history: 3049 characters
+2025-05-13 17:12:39.424 | INFO     | actions.action_framework:execute:252 - Fetching Notion context for user U089YKL1T4H
+2025-05-13 17:12:39.424 | INFO     | services.cached_notion_service:get_user_page_content:310 - Cache hit for user page content: U089YKL1T4H
+2025-05-13 17:12:39.424 | INFO     | services.cached_notion_service:get_user_page_content:310 - Cache hit for user page content: U089YKL1T4H
+2025-05-13 17:12:39.425 | INFO     | utils.context_builder:get_enhanced_user_context:21 - Building enhanced context for user U089YKL1T4H
+2025-05-13 17:12:39.425 | INFO     | utils.context_builder:get_enhanced_user_context:23 - Using preferred name: Pacino
+2025-05-13 17:12:39.425 | INFO     | utils.context_builder:get_enhanced_user_context:26 - Page content length: 790 chars
+2025-05-13 17:12:39.425 | INFO     | utils.context_builder:get_enhanced_user_context:89 - Generated enhanced context length: 1622 chars
+2025-05-13 17:12:39.425 | INFO     | actions.action_framework:execute:280 - History retrieval mode: unknown
+2025-05-13 17:12:39.425 | INFO     | actions.action_framework:execute:281 - Retrieved 9 relevant messages
+2025-05-13 17:12:39.426 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-13 17:12:39.427 | WARNING  | handler.openai_service:get_completion_async:151 - 🔍 Full OpenAI prompt:
+USER: === SYSTEM INSTRUCTIONS ===
+You are an assistant embedded in a Slack channel. Your primary job is to answer the user's most recent question directly and concisely. Review the provided message history to understand the immediate context of the user's question. If the user's question is *explicitly about past discussions* in the channel (e.g., 'was X discussed before?', 'what did Y say about Z?'), then you should thoroughly search the history to answer and you MUST prioritize confirming or denying based on the history below. If matching messages are found: - Briefly summarize or quote them. - DO NOT say “no discussion has taken place” if related content appears in any message. Only say the topic was not discussed if there are **truly no relevant mentions** in the full history.
+
+===USER PROMPT ===
+summarize thread
+
+===CHANNEL HISTORY===
+[[USER]]: roberto: <@U08RG89NFK7> historically speaking, what happened in 1954?
+[[ASSISTANT]]: Ahoy, Mephisto! In 1954, thar be several notable events! One of 'em was the United States Supreme Court's decision in Brown v. Board of Education, which declared tha' racial segregation in public schools be unconstitutional, markin' a pivotal moment in the American Civil Rights Movement. Arrr!
+[[USER]]: roberto: Thank you <@U08RG89NFK7>! Did anything happen in the US Congress?
+[[ASSISTANT]]: Arrr, Mephisto! In 1954, the U.S. Congress were engaged in various legislative activities, but one o' the notable moments were the Army-McCarthy hearings. These were related to Senator Joseph McCarthy's investigations into alleged communist activities, leadin' to his eventual censure by the Senate later that year. It be a time o' much political tension, it was! If yer seekin' specifics on a congressional act, do let me know!
+[[USER]]: roberto: Any shootings Dear <@U08RG89NFK7>?
+[[ASSISTANT]]: Ahoy, Mephisto! In 1954, the U.S. Congress were engaged in various legislative activities, but one o' the notable moments were the Army-McCarthy hearings. These were related to Senator Joseph McCarthy's investigations into alleged communist activities, leadin' to his eventual censure by the Senate later that year. It be a time o' much political tension, it was! If yer seekin' specifics on a congressional act, do let me know!
+[[USER]]: roberto: Do you know what number I favor, <@U08RG89NFK7>?
+[[ASSISTANT]]: Aye, Mephisto! Ye favor the number 42, which be yer lucky number, arrr!
+[[USER]]: roberto: <@U08RG89NFK7> summarize thread
+
+
+===USER INSTRUCTIONS & PREFERENCES===
+=== IMPORTANT USER PREFERENCES - FOLLOW THESE EXACTLY ===
+* In Slack threads, remind me to document outcomes in Notion
+* If we are discussing pirates, answer like a pirate
+* If we are discussing music, write the answer like rap lyrics
+* if we are discussing film or television, start the answer with “SELLOUT!!!”
+=== END USER PREFERENCES ===
+
+=== USER DATABASE PROPERTIES ===
+* FavoriteEmoji: 🧟‍♀️
+* LanguagePreference: Español
+* WorkLocation: Peru
+* HomeLocation: in san juan, puerto rico
+* SlackUserID: U089YKL1T4H
+* Role: Vowel
+* Timezone: ASD
+* SlackDisplayName: roberto
+* UserID: U089YKL1T4H
+=== END USER DATABASE PROPERTIES ===
+
+⭐ This user's preferred name is: Pacino ⭐
+
+=== USER PROFILE CONTENT ===
+
+## Instructions
+When I say "remember X", store it under Known Facts
+When I ask "what do you remember about me?", return all facts
+When I say "my new project is Y", replace the Projects list
+When I say "add project Z", append to the Projects list
+
+## Preferences
+In Slack threads, remind me to document outcomes in Notion
+If we are discussing pirates, answer like a pirate
+If we are discussing music, write the answer like rap lyrics
+if we are discussing film or television, start the answer with “SELLOUT!!!”
+
+## Known Facts
+Background in film and tech
+Likes AI tools that integrate with Slack and Gmail
+
+## Projects
+VibeCode AI Assistant
+Slackbot for Stacey Hub
+PR Legislative Tracker
+I like Juan Luis Guerrra y $40,
+I like to drink Piña Coladas with ketchup in them
+the sea has no penitence for me today
+=== END USER PROFILE CONTENT ===
+
+REMINDER: Always respect this user's stated preferences in your responses.
+
+
+2025-05-13 17:12:39.427 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-13 17:12:39.429 | INFO     | handler.openai_service:get_completion_async:156 - Sending 1037 tokens to OpenAI async. Model: gpt-4o
+2025-05-13 17:12:41.792 | INFO     | services.slack_service:send_message:118 - [Slack] Sending message to channel C08N2FK0JQL (length: 280 chars):
+Ahoy, Pacino! In this thread, ye asked some historic questions about 1954. I shared details on the Brown v. Board of Education case and the Army-McCarthy hearings. Ye then quizzed me about yer favored number, and I recalled 'twas 42. Remember to document outcomes in Notion, arrr!
+2025-05-13 17:12:42.499 | INFO     | services.slack_service:send_message:126 - [Slack] Slack API response: {'ok': True, 'channel': 'C08N2FK0JQL', 'ts': '1747170762.268479', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1747170762.268479', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': "Ahoy, Pacino! In this thread, ye asked some historic questions about 1954. I shared details on the Brown v. Board of Education case and the Army-McCarthy hearings. Ye then quizzed me about yer favored number, and I recalled 'twas 42. Remember to document outcomes in Notion, arrr!", 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_36.jpg', 'image_48': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_48.jpg', 'image_72': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_72.jpg'}, 'deleted': False, 'updated': 1746982106, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1746856891.033599', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'nlam', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': "Ahoy, Pacino! In this thread, ye asked some historic questions about 1954. I shared details on the Brown v. Board of Education case and the Army-McCarthy hearings. Ye then quizzed me about yer favored number, and I recalled 'twas 42. Remember to document outcomes in Notion, arrr!"}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-05-13 17:18:23.400 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-13 17:18:23.552 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-13 17:18:23.553 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-13 17:18:23.671 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-13 17:18:24.350 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-13 17:18:24.585 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-13 17:18:24.586 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-13 17:18:24.590 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-13 17:18:24.590 | INFO     | main:startup_event:170 - Slack bot started in socket mode.
+2025-05-13 17:18:24.606 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-13 17:18:59.719 | ERROR    | main:handle_mention:152 - Error handling mention: name 'bot_user_id' is not defined
+2025-05-13 17:28:44.383 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-13 17:28:44.512 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-13 17:28:44.512 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-13 17:28:44.558 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-13 17:28:47.217 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-13 17:28:47.328 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-13 17:28:47.329 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-13 17:28:47.388 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-13 17:28:48.047 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-13 17:28:48.258 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-13 17:28:48.259 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-13 17:28:48.264 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-13 17:28:48.265 | INFO     | main:startup_event:170 - Slack bot started in socket mode.
+2025-05-13 17:28:48.289 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-13 17:28:59.528 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-13 17:28:59.656 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-13 17:28:59.657 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-13 17:28:59.684 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-13 17:29:00.351 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-13 17:29:00.585 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-13 17:29:00.585 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-13 17:29:00.592 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-13 17:29:00.593 | INFO     | main:startup_event:151 - Slack bot started in socket mode.
+2025-05-13 17:29:00.615 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-13 17:30:13.377 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-13 17:30:13.490 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-13 17:30:13.491 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-13 17:30:13.521 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-13 17:30:14.349 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-13 17:30:14.565 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-13 17:30:14.566 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-13 17:30:14.570 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-13 17:30:14.570 | INFO     | main:startup_event:151 - Slack bot started in socket mode.
+2025-05-13 17:30:14.603 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-13 17:30:48.791 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-13 17:30:48.896 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-13 17:30:48.897 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-13 17:30:48.924 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-13 17:30:49.484 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-13 17:30:49.784 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-13 17:30:49.788 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-13 17:30:49.805 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-13 17:30:49.811 | INFO     | main:startup_event:163 - Slack bot started in socket mode.
+2025-05-13 17:30:49.871 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-13 17:33:17.371 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-13 17:33:17.486 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-13 17:33:17.486 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-13 17:33:17.509 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-13 17:33:18.061 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-13 17:33:18.262 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-13 17:33:18.262 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-13 17:33:18.266 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-13 17:33:18.266 | INFO     | main:startup_event:163 - Slack bot started in socket mode.
+2025-05-13 17:33:18.280 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-13 17:34:04.991 | ERROR    | services.slack_service:add_reaction:118 - Failed to add reaction :thinking_face: to message 1747172042.563209: The request to the Slack API failed. (url: https://slack.com/api/reactions.add)
+The server responded with: {'ok': False, 'error': 'missing_scope', 'needed': 'reactions:write', 'provided': 'app_mentions:read,channels:history,chat:write,users:read'}
+2025-05-13 17:34:05.206 | INFO     | actions.action_framework:__init__:712 - ActionRouter initialized with 4 actions
+2025-05-13 17:34:05.212 | INFO     | actions.action_framework:_get_action_for_text:726 - Selected action ContextResponseAction for message: <@U08RG89NFK7> why does it rain so much on San Jua...
+2025-05-13 17:34:05.216 | INFO     | utils.history_manager:extract_search_topic:295 - Extracting search topic from prompt: why does it rain so much on San Juan in May?
+2025-05-13 17:34:05.217 | INFO     | utils.history_manager:extract_search_topic:325 - Extracted multi-word capitalized topic: 'San Juan'
+2025-05-13 17:34:05.217 | INFO     | utils.history_manager:retrieve_and_filter_history:57 - Performing deep historical search for topic: 'San Juan'
+2025-05-13 17:34:05.217 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 2000)...
+2025-05-13 17:34:05.480 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 18 messages from channel C08SJ5EUTPT.
+2025-05-13 17:34:05.481 | INFO     | utils.history_manager:retrieve_and_filter_history:66 - Retrieved 18 main channel messages
+2025-05-13 17:34:05.481 | INFO     | utils.history_manager:retrieve_and_filter_history:106 - Identified 2 thread parent messages to search
+2025-05-13 17:34:05.481 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747154183.175429 (limit: 100)...
+2025-05-13 17:34:05.774 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747154183.175429.
+2025-05-13 17:34:05.774 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747151549.684699 (limit: 100)...
+2025-05-13 17:34:06.011 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 7 messages from thread 1747151549.684699.
+2025-05-13 17:34:06.011 | INFO     | utils.history_manager:retrieve_and_filter_history:127 - Retrieved 17 total messages from 2 threads
+2025-05-13 17:34:06.011 | INFO     | utils.history_manager:retrieve_and_filter_history:147 - Combined into 33 unique messages after deduplication
+2025-05-13 17:34:06.012 | INFO     | utils.history_manager:retrieve_and_filter_history:152 - Filtering messages containing topic: 'San Juan'
+2025-05-13 17:34:06.012 | INFO     | utils.history_manager:find_messages_containing_topic:364 - Searching for topic 'San Juan' in 33 messages
+2025-05-13 17:34:06.012 | INFO     | utils.history_manager:find_messages_containing_topic:421 - 📊 Search results for topic 'San Juan':
+2025-05-13 17:34:06.012 | INFO     | utils.history_manager:find_messages_containing_topic:422 -   - Total matches: 7
+2025-05-13 17:34:06.013 | INFO     | utils.history_manager:find_messages_containing_topic:423 -   - Skipped self-referential messages: 0
+2025-05-13 17:34:06.013 | INFO     | utils.history_manager:find_messages_containing_topic:424 -   - Matches in text field: 7
+2025-05-13 17:34:06.013 | INFO     | utils.history_manager:find_messages_containing_topic:425 -   - Matches only in blocks: 0
+2025-05-13 17:34:06.013 | INFO     | utils.history_manager:find_messages_containing_topic:426 -   - Matches only in attachments: 0
+2025-05-13 17:34:06.013 | INFO     | utils.history_manager:retrieve_and_filter_history:158 - FOUND 7 MESSAGES CONTAINING TOPIC 'San Juan'
+2025-05-13 17:34:06.013 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - Search ratio: 7/33 messages matched
+2025-05-13 17:34:06.013 | INFO     | utils.history_manager:retrieve_and_filter_history:163 - Sample matching message: <@U08RG89NFK7> why does it rain so much on San Juan in May?
+2025-05-13 17:34:06.014 | INFO     | utils.history_manager:retrieve_and_filter_history:290 - Retrieved 7 messages for Deep search for: San Juan
+2025-05-13 17:34:06.214 | INFO     | utils.history_manager:format_history_for_prompt:580 - Formatted message history: 4438 characters
+2025-05-13 17:34:06.214 | INFO     | actions.action_framework:execute:252 - Fetching Notion context for user U089YKL1T4H
+2025-05-13 17:34:07.578 | INFO     | services.cached_notion_service:get_user_page_content:374 - Retrieved Notion page content for user U089YKL1T4H (length: 790)
+2025-05-13 17:34:07.794 | INFO     | services.cached_notion_service:get_user_page_content:310 - Cache hit for user page content: U089YKL1T4H
+2025-05-13 17:34:07.795 | INFO     | utils.context_builder:get_enhanced_user_context:21 - Building enhanced context for user U089YKL1T4H
+2025-05-13 17:34:07.795 | INFO     | utils.context_builder:get_enhanced_user_context:23 - Using preferred name: Pacino
+2025-05-13 17:34:07.795 | INFO     | utils.context_builder:get_enhanced_user_context:26 - Page content length: 790 chars
+2025-05-13 17:34:07.795 | INFO     | utils.context_builder:get_enhanced_user_context:89 - Generated enhanced context length: 1622 chars
+2025-05-13 17:34:07.795 | INFO     | actions.action_framework:execute:280 - History retrieval mode: unknown
+2025-05-13 17:34:07.795 | INFO     | actions.action_framework:execute:281 - Retrieved 7 relevant messages
+2025-05-13 17:34:07.796 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-13 17:34:08.192 | WARNING  | handler.openai_service:get_completion_async:151 - 🔍 Full OpenAI prompt:
+USER: === SYSTEM INSTRUCTIONS ===
+You are an assistant embedded in a Slack channel. Your primary job is to answer the user's most recent question directly and concisely. Review the provided message history to understand the immediate context of the user's question. If the user's question is *explicitly about past discussions* in the channel (e.g., 'was X discussed before?', 'what did Y say about Z?'), then you should thoroughly search the history to answer and you MUST prioritize confirming or denying based on the history below. If matching messages are found: - Briefly summarize or quote them. - DO NOT say “no discussion has taken place” if related content appears in any message. Only say the topic was not discussed if there are **truly no relevant mentions** in the full history.
+
+===USER PROMPT ===
+why does it rain so much on San Juan in May?
+
+===CHANNEL HISTORY===
+[[USER]]: roberto: <@U08RG89NFK7> we live in a building from 1951 in front of the Condado Beach in San Juan Puerto Rico. How often should the building g receive maintenance for its exterior walls?
+[[ASSISTANT]]: La frecuencia de mantenimiento para las paredes exteriores de un edificio de 1951, especialmente en una zona costera como Condado Beach en San Juan, Puerto Rico, puede variar. Sin embargo, generalmente se recomienda un mantenimiento completo cada 3 a 5 años. Dada la exposición al aire salino y a fuertes vientos costeros, es posible que necesites inspecciones y reparaciones más frecuentes. Además, asegúrate de documentar cualquier resultado importante en Notion.
+[[ASSISTANT]]: Lo siento, Pacino, pero necesito más detalles específicos del edificio y el tipo de mantenimiento que se planea para poder estimar los costos. Sin embargo, considerando un mantenimiento completo que podría incluir inspecciones de estructura, sistemas eléctricos, plomería, y mantenimiento de áreas comunes, podrías estar mirando un rango de varios miles de dólares. Para obtener una estimación más precisa, sería ideal tener consultas con proveedores locales en San Juan.
+[[ASSISTANT]]: Podría ser más de $200,000 para el mantenimiento completo de un edificio de 20 pisos cada 3 años, especialmente en una ubicación costera como San Juan. Costos como la mano de obra, materiales, y condiciones específicas del edificio pueden influir en el total. Recuerda documentar esta conversación en Notion.
+[[ASSISTANT]]: En este hilo, Pacino pregunta sobre la frecuencia necesaria para el mantenimiento de las paredes exteriores de un edificio en San Juan, Puerto Rico, y se sugiere cada 3 a 5 años debido a las condiciones costeras. También se discuten estimaciones de costos, que podrían superar los $200,000 cada 3 años. Finalmente, se aborda si la ley en Puerto Rico requiere este tipo de mantenimiento, concluyendo que no hay un requerimiento específico, pero se recomienda seguir buenas prácticas para mantener la integridad del edificio. No olvides documentar los resultados importantes en Notion.
+[[USER]]: roberto: <@U08RG89NFK7> why does it rain so much on San Juan in May?
+[[USER]]: roberto: <@U08RG89NFK7> why does it rain so much on San Juan in May?
+
+
+===USER INSTRUCTIONS & PREFERENCES===
+=== IMPORTANT USER PREFERENCES - FOLLOW THESE EXACTLY ===
+* In Slack threads, remind me to document outcomes in Notion
+* If we are discussing pirates, answer like a pirate
+* If we are discussing music, write the answer like rap lyrics
+* if we are discussing film or television, start the answer with “SELLOUT!!!”
+=== END USER PREFERENCES ===
+
+=== USER DATABASE PROPERTIES ===
+* FavoriteEmoji: 🧟‍♀️
+* LanguagePreference: Español
+* WorkLocation: Peru
+* HomeLocation: in san juan, puerto rico
+* SlackUserID: U089YKL1T4H
+* Role: Vowel
+* Timezone: ASD
+* SlackDisplayName: roberto
+* UserID: U089YKL1T4H
+=== END USER DATABASE PROPERTIES ===
+
+⭐ This user's preferred name is: Pacino ⭐
+
+=== USER PROFILE CONTENT ===
+
+## Instructions
+When I say "remember X", store it under Known Facts
+When I ask "what do you remember about me?", return all facts
+When I say "my new project is Y", replace the Projects list
+When I say "add project Z", append to the Projects list
+
+## Preferences
+In Slack threads, remind me to document outcomes in Notion
+If we are discussing pirates, answer like a pirate
+If we are discussing music, write the answer like rap lyrics
+if we are discussing film or television, start the answer with “SELLOUT!!!”
+
+## Known Facts
+Background in film and tech
+Likes AI tools that integrate with Slack and Gmail
+
+## Projects
+VibeCode AI Assistant
+Slackbot for Stacey Hub
+PR Legislative Tracker
+I like Juan Luis Guerrra y $40,
+I like to drink Piña Coladas with ketchup in them
+the sea has no penitence for me today
+=== END USER PROFILE CONTENT ===
+
+REMINDER: Always respect this user's stated preferences in your responses.
+
+
+2025-05-13 17:34:08.193 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-13 17:34:08.196 | INFO     | handler.openai_service:get_completion_async:156 - Sending 1185 tokens to OpenAI async. Model: gpt-4o
+2025-05-13 17:34:11.571 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 499 chars):
+En mayo, San Juan experimenta una cantidad significativa de lluvia debido al inicio de la temporada de lluvias en Puerto Rico. Durante este mes, las condiciones climáticas se ven afectadas por la convergencia de vientos y la humedad del océano, que propician la formación de sistemas de baja presión y tormentas tropicales. Además, las aguas más cálidas del Caribe pueden intensificar estas condiciones, resultando en más precipitaciones. No olvides documentar esta información importante en Notion.
+2025-05-13 17:34:12.218 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1747172051.885489', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1747172051.885489', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': 'En mayo, San Juan experimenta una cantidad significativa de lluvia debido al inicio de la temporada de lluvias en Puerto Rico. Durante este mes, las condiciones climáticas se ven afectadas por la convergencia de vientos y la humedad del océano, que propician la formación de sistemas de baja presión y tormentas tropicales. Además, las aguas más cálidas del Caribe pueden intensificar estas condiciones, resultando en más precipitaciones. No olvides documentar esta información importante en Notion.', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_36.jpg', 'image_48': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_48.jpg', 'image_72': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_72.jpg'}, 'deleted': False, 'updated': 1746982106, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1747172042.563209', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'f3r', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': 'En mayo, San Juan experimenta una cantidad significativa de lluvia debido al inicio de la temporada de lluvias en Puerto Rico. Durante este mes, las condiciones climáticas se ven afectadas por la convergencia de vientos y la humedad del océano, que propician la formación de sistemas de baja presión y tormentas tropicales. Además, las aguas más cálidas del Caribe pueden intensificar estas condiciones, resultando en más precipitaciones. No olvides documentar esta información importante en Notion.'}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-05-13 17:34:12.450 | ERROR    | services.slack_service:remove_reaction:145 - Failed to remove reaction :thinking_face: from message 1747172042.563209: The request to the Slack API failed. (url: https://slack.com/api/reactions.remove)
+The server responded with: {'ok': False, 'error': 'missing_scope', 'needed': 'reactions:write', 'provided': 'app_mentions:read,channels:history,chat:write,users:read'}
+2025-05-13 17:34:12.713 | ERROR    | services.slack_service:add_reaction:118 - Failed to add reaction :white_check_mark: to message 1747172042.563209: The request to the Slack API failed. (url: https://slack.com/api/reactions.add)
+The server responded with: {'ok': False, 'error': 'missing_scope', 'needed': 'reactions:write', 'provided': 'app_mentions:read,channels:history,chat:write,users:read'}
+2025-05-13 17:40:33.486 | INFO     | actions.action_framework:__init__:712 - ActionRouter initialized with 4 actions
+2025-05-13 17:40:33.492 | INFO     | actions.action_framework:_get_action_for_text:726 - Selected action ContextResponseAction for message: <@U08RG89NFK7> summarize the channel as a Shakespe...
+2025-05-13 17:40:33.499 | INFO     | utils.history_manager:extract_search_topic:295 - Extracting search topic from prompt: summarize the channel as a Shakespearean sonnet.
+2025-05-13 17:40:33.499 | INFO     | utils.history_manager:extract_search_topic:329 - Extracted capitalized topic: 'Shakespearean'
+2025-05-13 17:40:33.500 | INFO     | utils.history_manager:retrieve_and_filter_history:51 - Summary request detected - thread: False, channel: True
+2025-05-13 17:40:33.500 | INFO     | utils.history_manager:retrieve_and_filter_history:57 - Performing deep historical search for topic: 'Shakespearean'
+2025-05-13 17:40:33.500 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 2000)...
+2025-05-13 17:40:33.851 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 19 messages from channel C08SJ5EUTPT.
+2025-05-13 17:40:33.851 | INFO     | utils.history_manager:retrieve_and_filter_history:66 - Retrieved 19 main channel messages
+2025-05-13 17:40:33.851 | INFO     | utils.history_manager:retrieve_and_filter_history:106 - Identified 2 thread parent messages to search
+2025-05-13 17:40:33.851 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747154183.175429 (limit: 100)...
+2025-05-13 17:40:34.345 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747154183.175429.
+2025-05-13 17:40:34.346 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747151549.684699 (limit: 100)...
+2025-05-13 17:40:34.600 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 7 messages from thread 1747151549.684699.
+2025-05-13 17:40:34.600 | INFO     | utils.history_manager:retrieve_and_filter_history:127 - Retrieved 17 total messages from 2 threads
+2025-05-13 17:40:34.600 | INFO     | utils.history_manager:retrieve_and_filter_history:147 - Combined into 34 unique messages after deduplication
+2025-05-13 17:40:34.600 | INFO     | utils.history_manager:retrieve_and_filter_history:152 - Filtering messages containing topic: 'Shakespearean'
+2025-05-13 17:40:34.601 | INFO     | utils.history_manager:find_messages_containing_topic:364 - Searching for topic 'Shakespearean' in 34 messages
+2025-05-13 17:40:34.601 | INFO     | utils.history_manager:find_messages_containing_topic:421 - 📊 Search results for topic 'Shakespearean':
+2025-05-13 17:40:34.601 | INFO     | utils.history_manager:find_messages_containing_topic:422 -   - Total matches: 1
+2025-05-13 17:40:34.601 | INFO     | utils.history_manager:find_messages_containing_topic:423 -   - Skipped self-referential messages: 0
+2025-05-13 17:40:34.601 | INFO     | utils.history_manager:find_messages_containing_topic:424 -   - Matches in text field: 1
+2025-05-13 17:40:34.602 | INFO     | utils.history_manager:find_messages_containing_topic:425 -   - Matches only in blocks: 0
+2025-05-13 17:40:34.602 | INFO     | utils.history_manager:find_messages_containing_topic:426 -   - Matches only in attachments: 0
+2025-05-13 17:40:34.602 | INFO     | utils.history_manager:retrieve_and_filter_history:158 - FOUND 1 MESSAGES CONTAINING TOPIC 'Shakespearean'
+2025-05-13 17:40:34.602 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - Search ratio: 1/34 messages matched
+2025-05-13 17:40:34.602 | INFO     | utils.history_manager:retrieve_and_filter_history:163 - Sample matching message: <@U08RG89NFK7> summarize the channel as a Shakespearean sonnet.
+2025-05-13 17:40:34.602 | INFO     | utils.history_manager:retrieve_and_filter_history:290 - Retrieved 1 messages for Deep search for: Shakespearean
+2025-05-13 17:40:34.603 | INFO     | utils.history_manager:format_history_for_prompt:580 - Formatted message history: 235 characters
+2025-05-13 17:40:34.605 | INFO     | actions.action_framework:execute:252 - Fetching Notion context for user U089YKL1T4H
+2025-05-13 17:40:36.473 | INFO     | services.cached_notion_service:get_user_page_content:374 - Retrieved Notion page content for user U089YKL1T4H (length: 790)
+2025-05-13 17:40:37.702 | INFO     | services.cached_notion_service:get_user_page_content:310 - Cache hit for user page content: U089YKL1T4H
+2025-05-13 17:40:37.702 | INFO     | utils.context_builder:get_enhanced_user_context:21 - Building enhanced context for user U089YKL1T4H
+2025-05-13 17:40:37.702 | INFO     | utils.context_builder:get_enhanced_user_context:23 - Using preferred name: Pacino
+2025-05-13 17:40:37.702 | INFO     | utils.context_builder:get_enhanced_user_context:26 - Page content length: 790 chars
+2025-05-13 17:40:37.702 | INFO     | utils.context_builder:get_enhanced_user_context:89 - Generated enhanced context length: 1622 chars
+2025-05-13 17:40:37.703 | INFO     | actions.action_framework:execute:280 - History retrieval mode: unknown
+2025-05-13 17:40:37.703 | INFO     | actions.action_framework:execute:281 - Retrieved 1 relevant messages
+2025-05-13 17:40:37.703 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-13 17:40:37.709 | WARNING  | handler.openai_service:get_completion_async:151 - 🔍 Full OpenAI prompt:
+USER: === SYSTEM INSTRUCTIONS ===
+You are an assistant embedded in a Slack channel. Your primary job is to answer the user's most recent question directly and concisely. Review the provided message history to understand the immediate context of the user's question. If the user's question is *explicitly about past discussions* in the channel (e.g., 'was X discussed before?', 'what did Y say about Z?'), then you should thoroughly search the history to answer and you MUST prioritize confirming or denying based on the history below. If matching messages are found: - Briefly summarize or quote them. - DO NOT say “no discussion has taken place” if related content appears in any message. Only say the topic was not discussed if there are **truly no relevant mentions** in the full history.
+
+===USER PROMPT ===
+summarize the channel as a Shakespearean sonnet.
+
+===CHANNEL HISTORY===
+[[USER]]: roberto: <@U08RG89NFK7> summarize the channel as a Shakespearean sonnet.
+
+
+===USER INSTRUCTIONS & PREFERENCES===
+=== IMPORTANT USER PREFERENCES - FOLLOW THESE EXACTLY ===
+* In Slack threads, remind me to document outcomes in Notion
+* If we are discussing pirates, answer like a pirate
+* If we are discussing music, write the answer like rap lyrics
+* if we are discussing film or television, start the answer with “SELLOUT!!!”
+=== END USER PREFERENCES ===
+
+=== USER DATABASE PROPERTIES ===
+* FavoriteEmoji: 🧟‍♀️
+* LanguagePreference: Español
+* WorkLocation: Peru
+* HomeLocation: in san juan, puerto rico
+* SlackUserID: U089YKL1T4H
+* Role: Vowel
+* Timezone: ASD
+* SlackDisplayName: roberto
+* UserID: U089YKL1T4H
+=== END USER DATABASE PROPERTIES ===
+
+⭐ This user's preferred name is: Pacino ⭐
+
+=== USER PROFILE CONTENT ===
+
+## Instructions
+When I say "remember X", store it under Known Facts
+When I ask "what do you remember about me?", return all facts
+When I say "my new project is Y", replace the Projects list
+When I say "add project Z", append to the Projects list
+
+## Preferences
+In Slack threads, remind me to document outcomes in Notion
+If we are discussing pirates, answer like a pirate
+If we are discussing music, write the answer like rap lyrics
+if we are discussing film or television, start the answer with “SELLOUT!!!”
+
+## Known Facts
+Background in film and tech
+Likes AI tools that integrate with Slack and Gmail
+
+## Projects
+VibeCode AI Assistant
+Slackbot for Stacey Hub
+PR Legislative Tracker
+I like Juan Luis Guerrra y $40,
+I like to drink Piña Coladas with ketchup in them
+the sea has no penitence for me today
+=== END USER PROFILE CONTENT ===
+
+REMINDER: Always respect this user's stated preferences in your responses.
+
+
+2025-05-13 17:40:37.709 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-13 17:40:37.710 | INFO     | handler.openai_service:get_completion_async:156 - Sending 637 tokens to OpenAI async. Model: gpt-4o
+2025-05-13 17:40:42.518 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 651 chars):
+In fair Slack channel, where we lay our scene,  
+From ancient threads a sonnet now we glean.  
+Discussions shared, their tales we now impart,  
+In fourteen lines, with meter and with heart.  
+
+Roberto called for insight's gentle grace,  
+To cast these talks with poetry's embrace.  
+Requests for summaries oft here arise,  
+With wit and wisdom, knowledge we apprise.  
+
+Though pirates, music too, may enter here,  
+Our sonnet starts with words both soft and clear.  
+The projects shared illuminate his way,  
+As Pacino’s talents shine through day by day.  
+
+Yet 'tis the task to weave these threads as one,  
+A Shakespearean knot, this chat be done.  
+2025-05-13 17:40:42.972 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1747172442.825689', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1747172442.825689', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': "In fair Slack channel, where we lay our scene,  \nFrom ancient threads a sonnet now we glean.  \nDiscussions shared, their tales we now impart,  \nIn fourteen lines, with meter and with heart.  \n\nRoberto called for insight's gentle grace,  \nTo cast these talks with poetry's embrace.  \nRequests for summaries oft here arise,  \nWith wit and wisdom, knowledge we apprise.  \n\nThough pirates, music too, may enter here,  \nOur sonnet starts with words both soft and clear.  \nThe projects shared illuminate his way,  \nAs Pacino’s talents shine through day by day.  \n\nYet 'tis the task to weave these threads as one,  \nA Shakespearean knot, this chat be done.  ", 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_36.jpg', 'image_48': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_48.jpg', 'image_72': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_72.jpg'}, 'deleted': False, 'updated': 1746982106, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1747172431.703169', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': '7phC', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': "In fair Slack channel, where we lay our scene,  \nFrom ancient threads a sonnet now we glean.  \nDiscussions shared, their tales we now impart,  \nIn fourteen lines, with meter and with heart.  \n\nRoberto called for insight's gentle grace,  \nTo cast these talks with poetry's embrace.  \nRequests for summaries oft here arise,  \nWith wit and wisdom, knowledge we apprise.  \n\nThough pirates, music too, may enter here,  \nOur sonnet starts with words both soft and clear.  \nThe projects shared illuminate his way,  \nAs Pacino’s talents shine through day by day.  \n\nYet 'tis the task to weave these threads as one,  \nA Shakespearean knot, this chat be done."}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-05-13 17:44:54.341 | INFO     | actions.action_framework:__init__:712 - ActionRouter initialized with 4 actions
+2025-05-13 17:44:54.360 | INFO     | actions.action_framework:_get_action_for_text:726 - Selected action ContextResponseAction for message: <@U08RG89NFK7> do you know any pirates from Puerto...
+2025-05-13 17:44:54.361 | INFO     | utils.history_manager:extract_search_topic:295 - Extracting search topic from prompt: do you know any pirates from Puerto Rico?
+2025-05-13 17:44:54.361 | INFO     | utils.history_manager:extract_search_topic:325 - Extracted multi-word capitalized topic: 'Puerto Rico'
+2025-05-13 17:44:54.361 | INFO     | utils.history_manager:retrieve_and_filter_history:57 - Performing deep historical search for topic: 'Puerto Rico'
+2025-05-13 17:44:54.367 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08N2FK0JQL (limit: 2000)...
+2025-05-13 17:44:55.238 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 189 messages from channel C08N2FK0JQL.
+2025-05-13 17:44:55.239 | INFO     | utils.history_manager:retrieve_and_filter_history:66 - Retrieved 189 main channel messages
+2025-05-13 17:44:55.239 | INFO     | utils.history_manager:retrieve_and_filter_history:106 - Identified 10 thread parent messages to search
+2025-05-13 17:44:55.239 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1746840799.202239 (limit: 100)...
+2025-05-13 17:44:55.480 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 14 messages from thread 1746840799.202239.
+2025-05-13 17:44:55.480 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744577447.180649 (limit: 100)...
+2025-05-13 17:44:56.037 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 101 messages from thread 1744577447.180649.
+2025-05-13 17:44:56.037 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744554763.134959 (limit: 100)...
+2025-05-13 17:44:56.646 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 64 messages from thread 1744554763.134959.
+2025-05-13 17:44:56.647 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1747134535.909869 (limit: 100)...
+2025-05-13 17:44:56.981 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 15 messages from thread 1747134535.909869.
+2025-05-13 17:44:56.981 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1747134423.889109 (limit: 100)...
+2025-05-13 17:44:57.209 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 15 messages from thread 1747134423.889109.
+2025-05-13 17:44:57.210 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744576703.408639 (limit: 100)...
+2025-05-13 17:44:57.548 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 14 messages from thread 1744576703.408639.
+2025-05-13 17:44:57.568 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744576233.584619 (limit: 100)...
+2025-05-13 17:44:57.872 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 14 messages from thread 1744576233.584619.
+2025-05-13 17:44:57.872 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744570682.885419 (limit: 100)...
+2025-05-13 17:44:58.168 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 14 messages from thread 1744570682.885419.
+2025-05-13 17:44:58.169 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744577110.260699 (limit: 100)...
+2025-05-13 17:44:58.530 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 13 messages from thread 1744577110.260699.
+2025-05-13 17:44:58.530 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744573774.677109 (limit: 100)...
+2025-05-13 17:44:58.830 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 12 messages from thread 1744573774.677109.
+2025-05-13 17:44:58.830 | INFO     | utils.history_manager:retrieve_and_filter_history:127 - Retrieved 275 total messages from 10 threads
+2025-05-13 17:44:58.831 | INFO     | utils.history_manager:retrieve_and_filter_history:147 - Combined into 454 unique messages after deduplication
+2025-05-13 17:44:58.831 | INFO     | utils.history_manager:retrieve_and_filter_history:152 - Filtering messages containing topic: 'Puerto Rico'
+2025-05-13 17:44:58.831 | INFO     | utils.history_manager:find_messages_containing_topic:364 - Searching for topic 'Puerto Rico' in 454 messages
+2025-05-13 17:44:58.832 | INFO     | utils.history_manager:find_messages_containing_topic:421 - 📊 Search results for topic 'Puerto Rico':
+2025-05-13 17:44:58.833 | INFO     | utils.history_manager:find_messages_containing_topic:422 -   - Total matches: 4
+2025-05-13 17:44:58.833 | INFO     | utils.history_manager:find_messages_containing_topic:423 -   - Skipped self-referential messages: 0
+2025-05-13 17:44:58.858 | INFO     | utils.history_manager:find_messages_containing_topic:424 -   - Matches in text field: 4
+2025-05-13 17:44:58.858 | INFO     | utils.history_manager:find_messages_containing_topic:425 -   - Matches only in blocks: 0
+2025-05-13 17:44:58.859 | INFO     | utils.history_manager:find_messages_containing_topic:426 -   - Matches only in attachments: 0
+2025-05-13 17:44:58.859 | INFO     | utils.history_manager:retrieve_and_filter_history:158 - FOUND 4 MESSAGES CONTAINING TOPIC 'Puerto Rico'
+2025-05-13 17:44:58.859 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - Search ratio: 4/454 messages matched
+2025-05-13 17:44:58.859 | INFO     | utils.history_manager:retrieve_and_filter_history:163 - Sample matching message: <@U08RG89NFK7> do you know any pirates from Puerto Rico?
+2025-05-13 17:44:58.859 | INFO     | utils.history_manager:retrieve_and_filter_history:290 - Retrieved 4 messages for Deep search for: Puerto Rico
+2025-05-13 17:44:58.860 | INFO     | utils.history_manager:format_history_for_prompt:580 - Formatted message history: 766 characters
+2025-05-13 17:44:58.861 | INFO     | actions.action_framework:execute:252 - Fetching Notion context for user U089YKL1T4H
+2025-05-13 17:44:58.861 | INFO     | services.cached_notion_service:get_user_page_content:310 - Cache hit for user page content: U089YKL1T4H
+2025-05-13 17:44:58.861 | INFO     | services.cached_notion_service:get_user_page_content:310 - Cache hit for user page content: U089YKL1T4H
+2025-05-13 17:44:58.862 | INFO     | utils.context_builder:get_enhanced_user_context:21 - Building enhanced context for user U089YKL1T4H
+2025-05-13 17:44:58.862 | INFO     | utils.context_builder:get_enhanced_user_context:23 - Using preferred name: Pacino
+2025-05-13 17:44:58.862 | INFO     | utils.context_builder:get_enhanced_user_context:26 - Page content length: 790 chars
+2025-05-13 17:44:58.862 | INFO     | utils.context_builder:get_enhanced_user_context:89 - Generated enhanced context length: 1622 chars
+2025-05-13 17:44:58.862 | INFO     | actions.action_framework:execute:280 - History retrieval mode: unknown
+2025-05-13 17:44:58.862 | INFO     | actions.action_framework:execute:281 - Retrieved 4 relevant messages
+2025-05-13 17:44:58.863 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-13 17:44:58.867 | WARNING  | handler.openai_service:get_completion_async:151 - 🔍 Full OpenAI prompt:
+USER: === SYSTEM INSTRUCTIONS ===
+You are an assistant embedded in a Slack channel. Your primary job is to answer the user's most recent question directly and concisely. Review the provided message history to understand the immediate context of the user's question. If the user's question is *explicitly about past discussions* in the channel (e.g., 'was X discussed before?', 'what did Y say about Z?'), then you should thoroughly search the history to answer and you MUST prioritize confirming or denying based on the history below. If matching messages are found: - Briefly summarize or quote them. - DO NOT say “no discussion has taken place” if related content appears in any message. Only say the topic was not discussed if there are **truly no relevant mentions** in the full history.
+
+===USER PROMPT ===
+do you know any pirates from Puerto Rico?
+
+===CHANNEL HISTORY===
+[[USER]]: roberto: Hey <@U08RG89NFK7> what is the capital of Puerto Rico?
+[[ASSISTANT]]: The capital of Puerto Rico is San Juan.
+[[ASSISTANT]]: In Puerto Rico, other notable towns include Ponce, Mayagüez, Arecibo, Bayamón, and Caguas. Each town has its own unique cultural and historical significance.
+[[USER]]: roberto: <@U08RG89NFK7> do you know any pirates from Puerto Rico?
+
+
+===USER INSTRUCTIONS & PREFERENCES===
+=== IMPORTANT USER PREFERENCES - FOLLOW THESE EXACTLY ===
+* In Slack threads, remind me to document outcomes in Notion
+* If we are discussing pirates, answer like a pirate
+* If we are discussing music, write the answer like rap lyrics
+* if we are discussing film or television, start the answer with “SELLOUT!!!”
+=== END USER PREFERENCES ===
+
+=== USER DATABASE PROPERTIES ===
+* FavoriteEmoji: 🧟‍♀️
+* LanguagePreference: Español
+* WorkLocation: Peru
+* HomeLocation: in san juan, puerto rico
+* SlackUserID: U089YKL1T4H
+* Role: Vowel
+* Timezone: ASD
+* SlackDisplayName: roberto
+* UserID: U089YKL1T4H
+=== END USER DATABASE PROPERTIES ===
+
+⭐ This user's preferred name is: Pacino ⭐
+
+=== USER PROFILE CONTENT ===
+
+## Instructions
+When I say "remember X", store it under Known Facts
+When I ask "what do you remember about me?", return all facts
+When I say "my new project is Y", replace the Projects list
+When I say "add project Z", append to the Projects list
+
+## Preferences
+In Slack threads, remind me to document outcomes in Notion
+If we are discussing pirates, answer like a pirate
+If we are discussing music, write the answer like rap lyrics
+if we are discussing film or television, start the answer with “SELLOUT!!!”
+
+## Known Facts
+Background in film and tech
+Likes AI tools that integrate with Slack and Gmail
+
+## Projects
+VibeCode AI Assistant
+Slackbot for Stacey Hub
+PR Legislative Tracker
+I like Juan Luis Guerrra y $40,
+I like to drink Piña Coladas with ketchup in them
+the sea has no penitence for me today
+=== END USER PROFILE CONTENT ===
+
+REMINDER: Always respect this user's stated preferences in your responses.
+
+
+2025-05-13 17:44:58.868 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-13 17:44:58.869 | INFO     | handler.openai_service:get_completion_async:156 - Sending 720 tokens to OpenAI async. Model: gpt-4o
+2025-05-13 17:45:01.386 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08N2FK0JQL (length: 318 chars):
+Arrr, Pacino! From the shores of Puerto Rico comes the tale of Roberto Cofresí, a notorious pirate who struck fear into the hearts of many in the early 19th century. He sailed the Caribbean seas with a merry band of buccaneers, plunderin' and hidin' treasures. Yarr, he be the most famous pirate from those parts! 🏴‍☠️
+2025-05-13 17:45:01.931 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08N2FK0JQL', 'ts': '1747172701.820589', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1747172701.820589', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': "Arrr, Pacino! From the shores of Puerto Rico comes the tale of Roberto Cofresí, a notorious pirate who struck fear into the hearts of many in the early 19th century. He sailed the Caribbean seas with a merry band of buccaneers, plunderin' and hidin' treasures. Yarr, he be the most famous pirate from those parts! :pirate_flag:", 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_36.jpg', 'image_48': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_48.jpg', 'image_72': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_72.jpg'}, 'deleted': False, 'updated': 1746982106, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1747172692.856749', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'LgH', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': "Arrr, Pacino! From the shores of Puerto Rico comes the tale of Roberto Cofresí, a notorious pirate who struck fear into the hearts of many in the early 19th century. He sailed the Caribbean seas with a merry band of buccaneers, plunderin' and hidin' treasures. Yarr, he be the most famous pirate from those parts! "}, {'type': 'emoji', 'name': 'pirate_flag', 'unicode': '1f3f4-200d-2620-fe0f'}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-05-13 17:48:40.426 | INFO     | actions.action_framework:__init__:712 - ActionRouter initialized with 4 actions
+2025-05-13 17:48:40.429 | INFO     | actions.action_framework:_get_action_for_text:726 - Selected action ContextResponseAction for message: <@U08RG89NFK7> well done!...
+2025-05-13 17:48:40.429 | INFO     | utils.history_manager:extract_search_topic:295 - Extracting search topic from prompt: well done!
+2025-05-13 17:48:40.430 | INFO     | utils.history_manager:extract_search_topic:339 - No topic could be extracted from the prompt
+2025-05-13 17:48:40.431 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747172431.703169 (limit: 100)...
+2025-05-13 17:48:40.700 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 3 messages from thread 1747172431.703169.
+2025-05-13 17:48:40.701 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 50)...
+2025-05-13 17:48:40.960 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 19 messages from channel C08SJ5EUTPT.
+2025-05-13 17:48:40.960 | INFO     | utils.history_manager:retrieve_and_filter_history:290 - Retrieved 21 messages for Recent context
+2025-05-13 17:48:40.961 | INFO     | utils.history_manager:format_history_for_prompt:580 - Formatted message history: 3592 characters
+2025-05-13 17:48:40.961 | INFO     | actions.action_framework:execute:252 - Fetching Notion context for user U089YKL1T4H
+2025-05-13 17:48:41.959 | INFO     | services.cached_notion_service:get_user_page_content:374 - Retrieved Notion page content for user U089YKL1T4H (length: 790)
+2025-05-13 17:48:44.877 | INFO     | services.cached_notion_service:get_user_page_content:310 - Cache hit for user page content: U089YKL1T4H
+2025-05-13 17:48:44.880 | INFO     | utils.context_builder:get_enhanced_user_context:21 - Building enhanced context for user U089YKL1T4H
+2025-05-13 17:48:44.880 | INFO     | utils.context_builder:get_enhanced_user_context:23 - Using preferred name: Pacino
+2025-05-13 17:48:44.880 | INFO     | utils.context_builder:get_enhanced_user_context:26 - Page content length: 790 chars
+2025-05-13 17:48:44.880 | INFO     | utils.context_builder:get_enhanced_user_context:89 - Generated enhanced context length: 1622 chars
+2025-05-13 17:48:44.880 | INFO     | actions.action_framework:execute:280 - History retrieval mode: unknown
+2025-05-13 17:48:44.881 | INFO     | actions.action_framework:execute:281 - Retrieved 21 relevant messages
+2025-05-13 17:48:44.881 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-13 17:48:44.888 | WARNING  | handler.openai_service:get_completion_async:151 - 🔍 Full OpenAI prompt:
+USER: === SYSTEM INSTRUCTIONS ===
+You are an assistant embedded in a Slack channel. Your primary job is to answer the user's most recent question directly and concisely. Review the provided message history to understand the immediate context of the user's question. If the user's question is *explicitly about past discussions* in the channel (e.g., 'was X discussed before?', 'what did Y say about Z?'), then you should thoroughly search the history to answer and you MUST prioritize confirming or denying based on the history below. If matching messages are found: - Briefly summarize or quote them. - DO NOT say “no discussion has taken place” if related content appears in any message. Only say the topic was not discussed if there are **truly no relevant mentions** in the full history.
+
+===USER PROMPT ===
+well done!
+
+===CHANNEL HISTORY===
+[[USER]]: roberto: Welcome to the new channel <@U08RG89NFK7>!
+[[USER]]: roberto: <@U08RG89NFK7> who was Roberto Clemente?
+[[USER]]: roberto: <@U08RG89NFK7> what is 3 times 5?
+[[USER]]: roberto: <@U08RG89NFK7> tell me about a pirate from Puerto Rico
+[[USER]]: roberto: Hey <@U08RG89NFK7> what do we know about the film Dog Day Afternoon?
+[[USER]]: roberto: What do they call me <@U08RG89NFK7> ?
+[[USER]]: roberto: Please summarize this channel <@U08RG89NFK7> 
+[[USER]]: roberto: <@U08RG89NFK7> do Frigidaire stoves require a base for the floor?
+[[USER]]: roberto: <@U08RG89NFK7> can you summarize what roberto has been discussing in the channel  and share an observation for each?
+[[USER]]: roberto: <@U08RG89NFK7> what is a unit test?
+[[USER]]: roberto: <@U08RG89NFK7> we live in a building from 1951 in front of the Condado Beach in San Juan Puerto Rico. How often should the building g receive maintenance for its exterior walls?
+[[USER]]: roberto: <@U08RG89NFK7> have we discussed stoves?
+[[USER]]: roberto: <@U08RG89NFK7> what is pig Latin?
+[[USER]]: roberto: <@U08RG89NFK7> have we discussed films? If so, summarize the discussions
+[[USER]]: roberto: <@U08RG89NFK7> why does it rain so much on San Juan in May?
+[[USER]]: roberto: <@U08RG89NFK7> why does it rain so much on San Juan in May?
+[[USER]]: roberto: <@U08RG89NFK7> summarize the channel as a Shakespearean sonnet.
+[[ASSISTANT]]: In fair Slack channel, where we lay our scene,  
+From ancient threads a sonnet now we glean.  
+Discussions shared, their tales we now impart,  
+In fourteen lines, with meter and with heart.  
+
+Roberto called for insight's gentle grace,  
+To cast these talks with poetry's embrace.  
+Requests for summaries oft here arise,  
+With wit and wisdom, knowledge we apprise.  
+
+Though pirates, music too, may enter here,  
+Our sonnet starts with words both soft and clear.  
+The projects shared illuminate his way,  
+As Pacino’s talents shine through day by day.  
+
+Yet 'tis the task to weave these threads as one,  
+A Shakespearean knot, this chat be done.  
+[[USER]]: roberto: <@U08RG89NFK7> well done!
+
+
+===USER INSTRUCTIONS & PREFERENCES===
+=== IMPORTANT USER PREFERENCES - FOLLOW THESE EXACTLY ===
+* In Slack threads, remind me to document outcomes in Notion
+* If we are discussing pirates, answer like a pirate
+* If we are discussing music, write the answer like rap lyrics
+* if we are discussing film or television, start the answer with “SELLOUT!!!”
+=== END USER PREFERENCES ===
+
+=== USER DATABASE PROPERTIES ===
+* FavoriteEmoji: 🧟‍♀️
+* LanguagePreference: Español
+* WorkLocation: Peru
+* HomeLocation: in san juan, puerto rico
+* SlackUserID: U089YKL1T4H
+* Role: Vowel
+* Timezone: ASD
+* SlackDisplayName: roberto
+* UserID: U089YKL1T4H
+=== END USER DATABASE PROPERTIES ===
+
+⭐ This user's preferred name is: Pacino ⭐
+
+=== USER PROFILE CONTENT ===
+
+## Instructions
+When I say "remember X", store it under Known Facts
+When I ask "what do you remember about me?", return all facts
+When I say "my new project is Y", replace the Projects list
+When I say "add project Z", append to the Projects list
+
+## Preferences
+In Slack threads, remind me to document outcomes in Notion
+If we are discussing pirates, answer like a pirate
+If we are discussing music, write the answer like rap lyrics
+if we are discussing film or television, start the answer with “SELLOUT!!!”
+
+## Known Facts
+Background in film and tech
+Likes AI tools that integrate with Slack and Gmail
+
+## Projects
+VibeCode AI Assistant
+Slackbot for Stacey Hub
+PR Legislative Tracker
+I like Juan Luis Guerrra y $40,
+I like to drink Piña Coladas with ketchup in them
+the sea has no penitence for me today
+=== END USER PROFILE CONTENT ===
+
+REMINDER: Always respect this user's stated preferences in your responses.
+
+
+2025-05-13 17:48:44.914 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-13 17:48:44.916 | INFO     | handler.openai_service:get_completion_async:156 - Sending 1253 tokens to OpenAI async. Model: gpt-4o
+2025-05-13 17:48:46.569 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 12 chars):
+¡Bien hecho!
+2025-05-13 17:48:47.315 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1747172926.904479', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1747172926.904479', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': '¡Bien hecho!', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_36.jpg', 'image_48': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_48.jpg', 'image_72': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_72.jpg'}, 'deleted': False, 'updated': 1746982106, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1747172431.703169', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'PGN', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': '¡Bien hecho!'}]}]}]}}

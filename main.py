@@ -73,12 +73,8 @@ async def handle_mention(event, say, client):
         # Clean prompt text
         prompt = slack_service.clean_prompt_text(text)
         
-        # Send ephemeral acknowledgment
-        slack_service.send_ephemeral_message(
-            channel_id, 
-            user_id, 
-            "I heard you! I'm working on a response... 🧠"
-        )
+        # Add "thinking" reaction to the original message
+        slack_service.add_reaction(channel_id, message_ts, "thinking_face")
         
         # Check for nickname command first
         nickname_response, nickname_success = await asyncio.to_thread(
@@ -91,6 +87,9 @@ async def handle_mention(event, say, client):
         if nickname_response:
             # If this was a nickname command, send response and return
             response = slack_service.send_message(channel_id, nickname_response, thread_ts)
+            # Remove thinking reaction and add check mark
+            slack_service.remove_reaction(channel_id, message_ts, "thinking_face")
+            slack_service.add_reaction(channel_id, message_ts, "white_check_mark")
             slack_service.update_channel_stats(channel_id, user_id, message_ts)
             return response
         
@@ -115,6 +114,9 @@ async def handle_mention(event, say, client):
                 action_response.message,
                 action_response.thread_ts or thread_ts
             )
+            # Success! Remove thinking reaction and add check mark
+            slack_service.remove_reaction(channel_id, message_ts, "thinking_face")
+            slack_service.add_reaction(channel_id, message_ts, "white_check_mark")
         else:
             error_msg = action_response.error or "Unknown error"
             logger.error(f"Action failed: {error_msg}")
@@ -124,6 +126,9 @@ async def handle_mention(event, say, client):
                 action_response.message or "I encountered an error processing your request.",
                 thread_ts
             )
+            # Error occurred - remove thinking reaction and add warning
+            slack_service.remove_reaction(channel_id, message_ts, "thinking_face")
+            slack_service.add_reaction(channel_id, message_ts, "warning")
         
         # Update channel stats
         slack_service.update_channel_stats(channel_id, user_id, message_ts)
@@ -131,11 +136,18 @@ async def handle_mention(event, say, client):
         return response
     except Exception as e:
         logger.error(f"Error handling mention: {e}", exc_info=True)
+        # Remove thinking reaction and add error indicator
+        try:
+            slack_service.remove_reaction(channel_id, message_ts, "thinking_face")
+            slack_service.add_reaction(channel_id, message_ts, "x")
+        except:
+            pass
+        
         say(
             text="I encountered an unexpected error. Please try again later.",
             thread_ts=event.get("thread_ts", event.get("ts"))
         )
-
+        
 # Register Slack event handlers
 @slack_service.app.event("app_mention")
 def app_mention_handler(event, say, client):
