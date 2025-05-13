@@ -40,15 +40,20 @@ class HistoryManager:
             "description": f"Deep search for: {search_topic}" if is_search_query else "Recent context"
         }
         
-        # Check if this is a thread summary request
-        is_thread_summary = (thread_ts is not None and 
-                            ("summarize" in prompt.lower() or 
-                            "summary" in prompt.lower() or
-                            "recap" in prompt.lower()))
+        # NEW: Distinguish between thread summaries and channel summaries
+        prompt_lower = prompt.lower()
+        is_summary_request = ("summarize" in prompt_lower or "summary" in prompt_lower or "recap" in prompt_lower)
+        is_thread_summary = (thread_ts is not None and is_summary_request and "thread" in prompt_lower)
+        is_channel_summary = (is_summary_request and "channel" in prompt_lower)
+        
+        # Log the detection for debugging
+        if is_summary_request:
+            logger.info(f"Summary request detected - thread: {is_thread_summary}, channel: {is_channel_summary}")
         
         # HANDLE SEARCH QUERY CASE (Search Query + Deep Search)
         if is_search_query and search_topic:
-            # Existing search query handling code... (from your example, should still function correctly)
+            # Existing search query handling code... 
+            # [Keep this entire section unchanged]
             logger.info(f"Performing deep historical search for topic: '{search_topic}'")
 
             # Step 1: Fetch deep channel history
@@ -192,12 +197,37 @@ class HistoryManager:
                 key=lambda m: float(m.get("ts", "0"))
             )
 
-        # Handle regular requests for history (non-search and thread summary)
+        # Handle regular requests for history (non-search and summary requests)
         else: # Not a search query
             limit = query_params.get("limit", 100)
-
-            # Fetch thread-specific history if in a thread
-            if thread_ts: # Now inside the else for NON-search
+            
+            # NEW: For channel summaries, always fetch channel history
+            if is_channel_summary:
+                logger.info(f"Channel summary requested - fetching channel history")
+                query_params["description"] = f"Channel summary"
+                
+                # Get substantial channel history for summaries
+                channel_history = await asyncio.to_thread(
+                    slack_service.fetch_channel_history,
+                    channel_id,
+                    limit  # Use full limit for channel summaries
+                )
+                
+                # Remove duplicates and sort
+                unique_messages = {}
+                for msg in channel_history:
+                    ts = msg.get("ts")
+                    if ts and ts not in unique_messages:
+                        unique_messages[ts] = msg
+                
+                # Sort chronologically
+                filtered_messages = sorted(
+                    unique_messages.values(),
+                    key=lambda m: float(m.get("ts", "0"))
+                )
+            
+            # Fetch thread-specific history if in a thread AND not a channel summary
+            elif thread_ts:
                 thread_history = await asyncio.to_thread(
                     slack_service.fetch_thread_history,
                     channel_id,
@@ -208,7 +238,7 @@ class HistoryManager:
                 # For thread summary requests, ONLY use thread history
                 if is_thread_summary:
                     query_params["description"] = f"Thread summary (thread_ts: {thread_ts})"
-                    filtered_messages = thread_history # THREAD HISTORY ONLY for summaries
+                    filtered_messages = thread_history # THREAD HISTORY ONLY for thread summaries
                 else:
                     # For regular thread context, still get some channel history
                     channel_history = await asyncio.to_thread(
@@ -234,7 +264,7 @@ class HistoryManager:
                         unique_messages.values(),
                         key=lambda m: float(m.get("ts", "0"))
                     )
-            # Not in thread fetch main
+            # Not in thread
             else:
                 # Not in a thread, just get channel history
                 merged_messages = await asyncio.to_thread(
@@ -256,6 +286,9 @@ class HistoryManager:
                     key=lambda m: float(m.get("ts", "0"))
                 )
 
+        # Log the number of messages retrieved for the request
+        logger.info(f"Retrieved {len(filtered_messages)} messages for {query_params.get('description', 'request')}")
+        
         return filtered_messages, query_params
 
     def extract_search_topic(self, prompt: str) -> Optional[str]:
@@ -503,6 +536,13 @@ class HistoryManager:
                 
                 if message_count > 0:
                     header = f"Here is a summary of THIS SPECIFIC THREAD with {message_count} messages:"
+                    formatted_parts.append(header)
+            # NEW: For channel summaries, add a contextual header
+            elif "Channel summary" in query_params.get("description", ""):
+                message_count = len(filtered_messages)
+                
+                if message_count > 0:
+                    header = f"Here is a summary of THE CHANNEL with {message_count} messages:"
                     formatted_parts.append(header)
             
             # Add each thread group

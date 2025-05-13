@@ -21,6 +21,7 @@ tiktoken = "^0.5.2"  # For token counting
 tenacity = "^8.2.0"  # For retries
 cachetools = "^5.3.0"  # For caching
 nltk = "3.8.1"
+httpcore = "^1.0.9"
 
 [build-system]
 requires = ["poetry-core"]
