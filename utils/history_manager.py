@@ -24,33 +24,15 @@ class HistoryManager:
         self.MAX_THREADS_TO_SEARCH = 20  # Maximum number of threads to search
     
     async def retrieve_and_filter_history(self,
-                                         slack_service,
-                                         channel_id: str,
-                                         thread_ts: Optional[str],
-                                         prompt: str) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
-        """
-        Retrieve channel history and filter based on the query type.
-        Includes deep historical search and cross-thread searching.
-        
-        Args:
-            slack_service: The Slack service instance
-            channel_id: Slack channel ID
-            thread_ts: Thread timestamp if in a thread
-            prompt: The user's query
-            
-        Returns:
-            Tuple of (filtered_messages, query_params)
-        """
-        # Log the original prompt for debugging
-        logger.info(f"Original search query: '{prompt}'")
-        
-        # Extract the search topic
+                                        slack_service,
+                                        channel_id: str,
+                                        thread_ts: Optional[str],
+                                        prompt: str) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
+        # Extract the search topic (existing code)
         search_topic = self.extract_search_topic(prompt)
-        
-        # Determine if this is a search query based on the topic
         is_search_query = search_topic is not None
         
-        # Set up query parameters
+        # Set up query parameters (existing code)
         query_params = {
             "limit": self.SEARCH_DEPTH_LIMIT if is_search_query else 100,
             "is_search": is_search_query,
@@ -58,31 +40,32 @@ class HistoryManager:
             "description": f"Deep search for: {search_topic}" if is_search_query else "Recent context"
         }
         
-        # Log search parameters
-        if is_search_query:
-            logger.info(f"🔍 SEARCH QUERY DETECTED - Topic: '{search_topic}'")
-        else:
-            logger.info("Standard context retrieval (not a search query)")
+        # Check if this is a thread summary request
+        is_thread_summary = (thread_ts is not None and 
+                            ("summarize" in prompt.lower() or 
+                            "summary" in prompt.lower() or
+                            "recap" in prompt.lower()))
         
-        # If this is a search query, use deeper history and multi-thread search
+        # HANDLE SEARCH QUERY CASE (Search Query + Deep Search)
         if is_search_query and search_topic:
+            # Existing search query handling code... (from your example, should still function correctly)
             logger.info(f"Performing deep historical search for topic: '{search_topic}'")
-            
+
             # Step 1: Fetch deep channel history
             main_channel_history = await asyncio.to_thread(
                 slack_service.fetch_channel_history,
                 channel_id,
                 self.SEARCH_DEPTH_LIMIT
             )
-            
+
             logger.info(f"Retrieved {len(main_channel_history)} main channel messages")
-            
+
             # Step 2: Identify potential thread parent messages
             thread_parent_candidates = [
-                msg for msg in main_channel_history 
+                msg for msg in main_channel_history
                 if msg.get("reply_count", 0) > 0 or msg.get("thread_ts")
             ]
-            
+
             # Prioritize threads that might contain the search topic
             if search_topic:
                 # Check thread parent messages for the search topic
@@ -92,14 +75,14 @@ class HistoryManager:
                     msg_text = self.extract_full_message_text(msg).lower()
                     if search_topic.lower() in msg_text:
                         relevant_thread_parents.append(msg)
-                        
+
                 # Also include threads with high reply counts
                 high_activity_threads = sorted(
                     [msg for msg in thread_parent_candidates if msg.get("reply_count", 0) > 3],
                     key=lambda x: x.get("reply_count", 0),
                     reverse=True
                 )[:10]  # Top 10 most active threads
-                
+
                 # Combine and deduplicate
                 thread_parents = []
                 seen_ts = set()
@@ -108,22 +91,22 @@ class HistoryManager:
                     if ts and ts not in seen_ts:
                         thread_parents.append(msg)
                         seen_ts.add(ts)
-                
+
                 # Limit to reasonable number
                 thread_parents = thread_parents[:self.MAX_THREADS_TO_SEARCH]
             else:
                 # Without a search topic, just use most recent threads
                 thread_parents = thread_parent_candidates[:self.MAX_THREADS_TO_SEARCH]
-            
+
             logger.info(f"Identified {len(thread_parents)} thread parent messages to search")
-            
+
             # Step 3: Fetch thread replies for each parent
             all_thread_messages = []
             for parent in thread_parents:
                 parent_ts = parent.get("thread_ts") or parent.get("ts")
                 if not parent_ts:
                     continue
-                    
+
                 try:
                     thread_replies = await asyncio.to_thread(
                         slack_service.fetch_thread_history,
@@ -135,45 +118,45 @@ class HistoryManager:
                     logger.debug(f"Retrieved {len(thread_replies)} messages from thread {parent_ts}")
                 except Exception as e:
                     logger.error(f"Error fetching thread {parent_ts}: {e}")
-            
+
             logger.info(f"Retrieved {len(all_thread_messages)} total messages from {len(thread_parents)} threads")
-            
+
             # Step 4: Combine main channel and thread messages, removing duplicates
             merged_messages = []
             seen_ts = set()
-            
+
             # Add main channel messages
             for msg in main_channel_history:
                 ts = msg.get("ts")
                 if ts and ts not in seen_ts:
                     merged_messages.append(msg)
                     seen_ts.add(ts)
-            
+
             # Add thread messages
             for msg in all_thread_messages:
                 ts = msg.get("ts")
                 if ts and ts not in seen_ts:
                     merged_messages.append(msg)
                     seen_ts.add(ts)
-            
+
             logger.info(f"Combined into {len(merged_messages)} unique messages after deduplication")
-            
+
             # Step 5: Filter by search topic if applicable
             if search_topic:
                 # Log that we're searching for the topic
                 logger.info(f"Filtering messages containing topic: '{search_topic}'")
-                
+
                 # Before filtering
                 filtered_messages = self.find_messages_containing_topic(merged_messages, search_topic)
-                
+
                 # Log filtering results
                 logger.info(f"FOUND {len(filtered_messages)} MESSAGES CONTAINING TOPIC '{search_topic}'")
                 logger.info(f"Search ratio: {len(filtered_messages)}/{len(merged_messages)} messages matched")
-                
+
                 # Log sample results for debugging
                 if filtered_messages:
                     logger.info(f"Sample matching message: {filtered_messages[0].get('text', '')[:100]}")
-                
+
                 # If no matches, try a simpler approach
                 if len(filtered_messages) == 0:
                     logger.warning(f"No matches found for topic '{search_topic}'. Trying looser matching...")
@@ -187,7 +170,7 @@ class HistoryManager:
                     for variation in variations:
                         logger.info(f"Trying variation: '{variation}'")
                         variation_matches = [
-                            msg for msg in merged_messages 
+                            msg for msg in merged_messages
                             if variation in self.extract_full_message_text(msg)
                         ]
                         if variation_matches:
@@ -202,38 +185,56 @@ class HistoryManager:
                     reverse=True
                 )
                 filtered_messages = sorted_messages[:100]  # Most recent 100
-            
+
             # Final sort chronologically for presentation
             filtered_messages = sorted(
                 filtered_messages,
                 key=lambda m: float(m.get("ts", "0"))
             )
-            
-        else:
-            # Regular (non-search) handling
+
+        # Handle regular requests for history (non-search and thread summary)
+        else: # Not a search query
             limit = query_params.get("limit", 100)
-            
+
             # Fetch thread-specific history if in a thread
-            if thread_ts:
+            if thread_ts: # Now inside the else for NON-search
                 thread_history = await asyncio.to_thread(
                     slack_service.fetch_thread_history,
                     channel_id,
                     thread_ts,
                     limit
                 )
-                
-                # For thread context, also get some channel history
-                channel_history = await asyncio.to_thread(
-                    slack_service.fetch_channel_history,
-                    channel_id,
-                    50  # Limited channel context for threads
-                )
-                
-                # Merge without duplicates
-                thread_timestamps = {msg["ts"] for msg in thread_history}
-                merged_messages = thread_history + [
-                    msg for msg in channel_history if msg["ts"] not in thread_timestamps
-                ]
+
+                # For thread summary requests, ONLY use thread history
+                if is_thread_summary:
+                    query_params["description"] = f"Thread summary (thread_ts: {thread_ts})"
+                    filtered_messages = thread_history # THREAD HISTORY ONLY for summaries
+                else:
+                    # For regular thread context, still get some channel history
+                    channel_history = await asyncio.to_thread(
+                        slack_service.fetch_channel_history,
+                        channel_id,
+                        50  # Limited channel context for threads
+                    )
+
+                    # Merge without duplicates
+                    thread_timestamps = {msg["ts"] for msg in thread_history}
+                    merged_messages = thread_history + [
+                        msg for msg in channel_history if msg["ts"] not in thread_timestamps
+                    ]
+                    # Remove duplicates
+                    unique_messages = {}
+                    for msg in merged_messages:
+                        ts = msg.get("ts")
+                        if ts and ts not in unique_messages:
+                            unique_messages[ts] = msg
+            
+                    # Sort chronologically
+                    filtered_messages = sorted(
+                        unique_messages.values(),
+                        key=lambda m: float(m.get("ts", "0"))
+                    )
+            # Not in thread fetch main
             else:
                 # Not in a thread, just get channel history
                 merged_messages = await asyncio.to_thread(
@@ -241,22 +242,22 @@ class HistoryManager:
                     channel_id,
                     limit
                 )
-            
-            # Remove duplicates
-            unique_messages = {}
-            for msg in merged_messages:
-                ts = msg.get("ts")
-                if ts and ts not in unique_messages:
-                    unique_messages[ts] = msg
-            
-            # Sort chronologically
-            filtered_messages = sorted(
-                unique_messages.values(),
-                key=lambda m: float(m.get("ts", "0"))
-            )
         
+                # Remove duplicates
+                unique_messages = {}
+                for msg in merged_messages:
+                    ts = msg.get("ts")
+                    if ts and ts not in unique_messages:
+                        unique_messages[ts] = msg
+                
+                # Sort chronologically
+                filtered_messages = sorted(
+                    unique_messages.values(),
+                    key=lambda m: float(m.get("ts", "0"))
+                )
+
         return filtered_messages, query_params
-    
+
     def extract_search_topic(self, prompt: str) -> Optional[str]:
         logger.info(f"Extracting search topic from prompt: {prompt}")
         prompt_lower = prompt.lower()
@@ -494,6 +495,15 @@ class HistoryManager:
                     formatted_parts.append(header)
                 else:
                     formatted_parts.append(f"I did not find any messages that mention '{topic}'.")
+
+            # For thread summaries, add a contextual header
+            if "Thread summary" in query_params.get("description", ""):
+                message_count = len(filtered_messages)
+                thread_ts = query_params.get("description").split("thread_ts: ")[1].strip(")")
+                
+                if message_count > 0:
+                    header = f"Here is a summary of THIS SPECIFIC THREAD with {message_count} messages:"
+                    formatted_parts.append(header)
             
             # Add each thread group
             for thread_key, messages in thread_groups.items():

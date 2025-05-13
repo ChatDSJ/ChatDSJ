@@ -389,17 +389,7 @@ class CachedNotionService:
         nickname: str, 
         slack_display_name: Optional[str] = None
     ) -> bool:
-        """
-        Store a user's nickname in their Notion page.
-        
-        Args:
-            slack_user_id: The Slack user ID
-            nickname: The nickname to store
-            slack_display_name: Optional Slack display name to store
-            
-        Returns:
-            True if successful, False otherwise
-        """
+        """Store a user's nickname in their Notion page."""
         if not self.is_available():
             logger.warning("Notion client not available. Cannot store nickname.")
             return False
@@ -426,27 +416,80 @@ class CachedNotionService:
                 # Create new page
                 logger.info(f"Creating new Notion page for user {slack_user_id} with nickname: {nickname}")
                 
+                # Initialize all database properties based on the schema
                 new_page_properties = {
+                    # Primary field (title)
                     "UserID": {"title": [{"type": "text", "text": {"content": slack_user_id}}]},
-                    "PreferredName": {"rich_text": [{"type": "text", "text": {"content": nickname}}]}
+                    
+                    # Required fields
+                    "PreferredName": {"rich_text": [{"type": "text", "text": {"content": nickname}}]},
+                    
+                    # Initialize all other fields with empty values
+                    "SlackUserID": {"rich_text": [{"type": "text", "text": {"content": slack_user_id}}]},
+                    "FavoriteEmoji": {"rich_text": []},
+                    "LanguagePreference": {"rich_text": []},
+                    "WorkLocation": {"rich_text": []},
+                    "HomeLocation": {"rich_text": []},
+                    "Role": {"rich_text": []},
+                    "Timezone": {"rich_text": []},
+                    "User Notes (Admin)": {"rich_text": []},
+                    "Last Bot Interaction": {"date": {"start": datetime.now().isoformat()}},
+                    "User TODO Page Link": {"url": None}
                 }
                 
+                # Add display name if available
                 if slack_display_name:
                     new_page_properties["SlackDisplayName"] = {
                         "rich_text": [{"type": "text", "text": {"content": slack_display_name}}]
                     }
+                else:
+                    new_page_properties["SlackDisplayName"] = {"rich_text": []}
                 
-                # Initial page content
+                # Initial page content with proper structured sections
                 initial_body_content = [
+                    # Projects section
                     {
                         "object": "block",
                         "type": "heading_2",
-                        "heading_2": {"rich_text": [{"type": "text", "text": {"content": "User Facts & Instructions:"}}]}
+                        "heading_2": {"rich_text": [{"type": "text", "text": {"content": "Projects"}}]}
                     },
                     {
                         "object": "block",
                         "type": "paragraph",
-                        "paragraph": {"rich_text": [{"type": "text", "text": {"content": "(Edit this page to add specific facts and preferences for the bot to use.)"}}]}
+                        "paragraph": {"rich_text": [{"type": "text", "text": {"content": "(Add your projects here.)"}}]}
+                    },
+                    # Preferences section
+                    {
+                        "object": "block",
+                        "type": "heading_2",
+                        "heading_2": {"rich_text": [{"type": "text", "text": {"content": "Preferences"}}]}
+                    },
+                    {
+                        "object": "block",
+                        "type": "paragraph",
+                        "paragraph": {"rich_text": [{"type": "text", "text": {"content": "(Add your preferences here.)"}}]}
+                    },
+                    # Known Facts section
+                    {
+                        "object": "block",
+                        "type": "heading_2",
+                        "heading_2": {"rich_text": [{"type": "text", "text": {"content": "Known Facts"}}]}
+                    },
+                    {
+                        "object": "block",
+                        "type": "paragraph",
+                        "paragraph": {"rich_text": [{"type": "text", "text": {"content": "(Add facts about yourself here.)"}}]}
+                    },
+                    # Instructions section
+                    {
+                        "object": "block",
+                        "type": "heading_2",
+                        "heading_2": {"rich_text": [{"type": "text", "text": {"content": "Instructions"}}]}
+                    },
+                    {
+                        "object": "block",
+                        "type": "paragraph",
+                        "paragraph": {"rich_text": [{"type": "text", "text": {"content": "(Add instructions for the bot here.)"}}]}
                     }
                 ]
                 
@@ -465,7 +508,7 @@ class CachedNotionService:
             logger.error(f"Error storing nickname for user {slack_user_id}: {e}", exc_info=True)
             self.cache_stats["errors"] += 1
             return False
-
+    
     def handle_nickname_command(
         self, 
         prompt_text: str, 
