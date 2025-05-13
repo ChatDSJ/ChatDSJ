@@ -2,11 +2,8 @@ import os
 import random
 import re
 import logging
-import nltk
 
-nltk_data_dir = os.path.expanduser('~/nltk_data')
-if nltk_data_dir not in nltk.data.path:
-    nltk.data.path.insert(0, nltk_data_dir)
+# No more NLTK imports or configuration
 
 from loguru import logger
 from datetime import datetime
@@ -135,7 +132,7 @@ def create_slack_app():
         text = event.get("text", "")
         reply_thread_ts = event.get("thread_ts", message_ts) 
 
-         # Remove bot mention to get the clean prompt
+        # Remove bot mention to get the clean prompt
         bot_mention_pattern = f"<@{bot_user_id}>"
         prompt = re.sub(bot_mention_pattern, "", text).strip()
 

@@ -115,18 +115,23 @@ class SlackService:
             return {"ok": True, "ts": "dummy_ts"}
             
         try:
+            logger.info(f"[Slack] Sending message to channel {channel_id} (length: {len(text)} chars):\n{text}")
+
             response = self.app.client.chat_postMessage(
                 channel=channel_id,
                 text=text,
                 thread_ts=thread_ts
             )
-            
+
+            logger.info(f"[Slack] Slack API response: {response}")
+
             # Track bot message
             if response.get("ok") and response.get("ts"):
                 self.bot_message_timestamps.add(response["ts"])
             
             return response
         except Exception as e:
+            logger.error(f"[Slack POST] Channel: {channel_id}, Text Length: {len(text)}, Text Preview: {text[:200]}")
             logger.error(f"Failed to send message: {e}")
             return {"ok": False, "error": str(e)}
     

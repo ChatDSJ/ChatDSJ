@@ -192,49 +192,43 @@ class OpenAIService:
         system_prompt: Optional[str] = None,
     ) -> List[Dict[str, str]]:
         """
-        Prepare messages for the OpenAI API with proper context management.
+        Prepares a SINGLE STRING prompt with all components combined.
         """
         settings = get_settings()
 
-        # Use provided system prompt or default
-        system_prompt_content = system_prompt if system_prompt else settings.openai_system_prompt
+        # Load the SYSTEM INSTRUCTIONS
+        system_prompt_content = system_prompt if system_prompt else settings.openai_system_prompt if settings.openai_system_prompt else ""
 
-        # Add user-specific context if available with STRONG emphasis
-        if user_specific_context:
-            system_prompt_content += (
-                f"\n\n=== CRITICALLY IMPORTANT USER-SPECIFIC CONTEXT & PREFERENCES ===\n"
-                f"The following information from the user's Notion profile is AUTHORITATIVE and MUST be followed "
-                f"without exception. This information OVERRIDES any other information in the conversation history "
-                f"or your previous knowledge. You MUST follow these instructions exactly as specified:\n\n"
-                f"{user_specific_context.strip()}\n"
-                f"=== END USER-SPECIFIC CONTEXT & PREFERENCES ===\n\n"
-                f"IMPORTANT: You MUST incorporate the above user-specific information into your response. "
-                f"If the user has specific preferences or instructions, you MUST follow them without fail."
-            )
+        # 1. Start building the prompt string
+        full_prompt = "=== SYSTEM INSTRUCTIONS ===\n" + system_prompt_content + "\n\n"
 
-        # Add linked Notion content if available
-        if linked_notion_content:
-            system_prompt_content += (
-                f"\n\n--- REFERENCED NOTION PAGES CONTENT ---\n"
-                f"{linked_notion_content.strip()}\n"
-                f"--- END REFERENCED NOTION PAGES CONTENT ---"
-            )
+        # 2. Add the USER PROMPT
+        full_prompt += "===USER PROMPT ===\n" + prompt + "\n\n"
 
-        # Build the message list
-        messages = [{"role": "system", "content": system_prompt_content}]
-
+        # 3. Format CHANNEL HISTORY, extract data and combine as a string
+        history_string = ""
         if conversation_history:
-            messages.extend(conversation_history)
+            history_string += "===CHANNEL HISTORY===\n"
+            for msg in conversation_history:  # Format conversation in a readable way
+                role = msg.get("role", "unknown")
+                content = msg.get("content", "")
+                history_string += f"[[{role.upper()}]]: {content}\n"
+            full_prompt += history_string + "\n\n"
 
-        user_instruction = (
-            f"Use the context above to respond to the user's message: \"{prompt}\".\n"
-            f"Provide a concise, helpful response as if participating in the same Slack conversation."
-        )
-        messages.append({"role": "user", "content": user_instruction})
+        # 4.  Add the USER INSTRUCTIONS and PREFERENCES
+        if user_specific_context:
+            full_prompt += "===USER INSTRUCTIONS & PREFERENCES===\n" + user_specific_context + "\n\n"
 
-        logger.debug(f"System prompt (first 500 chars): {system_prompt_content[:500]}...")
+        # 5. Add Linked Notion Content
+        if linked_notion_content:
+            full_prompt += "===LINKED NOTION CONTENT===\n" + linked_notion_content + "\n\n"
 
-        # Truncate messages if necessary
+        # Create a SINGLE MESSAGE with role "user" containing the FULL PROMPT
+        messages = [{"role": "user", "content": full_prompt}]
+
+        logger.debug(f"FULL OpenAI prompt (first 500 chars): {full_prompt[:500]}...")
+
+        # Truncate if necessary
         max_context_tokens = 8000 - (self.max_tokens or 1500)
         messages = ensure_messages_within_limit(messages, self.model, max_context_tokens)
 
