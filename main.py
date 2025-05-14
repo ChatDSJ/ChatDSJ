@@ -109,14 +109,15 @@ async def handle_mention(event, say, client):
         
         # Send response to Slack
         if action_response.success and action_response.message:
+            # Success! Remove thinking reaction and add check mark
+            slack_service.remove_reaction(channel_id, message_ts, "thinking_face")
+            slack_service.add_reaction(channel_id, message_ts, "white_check_mark")
+
             response = slack_service.send_message(
                 channel_id, 
                 action_response.message,
                 action_response.thread_ts or thread_ts
             )
-            # Success! Remove thinking reaction and add check mark
-            slack_service.remove_reaction(channel_id, message_ts, "thinking_face")
-            slack_service.add_reaction(channel_id, message_ts, "white_check_mark")
         else:
             error_msg = action_response.error or "Unknown error"
             logger.error(f"Action failed: {error_msg}")
@@ -147,7 +148,7 @@ async def handle_mention(event, say, client):
             text="I encountered an unexpected error. Please try again later.",
             thread_ts=event.get("thread_ts", event.get("ts"))
         )
-        
+
 # Register Slack event handlers
 @slack_service.app.event("app_mention")
 def app_mention_handler(event, say, client):
