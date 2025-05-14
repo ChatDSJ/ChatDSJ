@@ -732,7 +732,7 @@ class ActionRouter:
     
     async def route_action(self, request: ActionRequest) -> ActionResponse:
         """
-        Route the request to the appropriate action handler.
+        Route the request to the appropriate action handler with improved error handling.
         
         Args:
             request: The action request
@@ -759,18 +759,41 @@ class ActionRouter:
                     thread_ts=request.thread_ts
                 )
         
+        # Check for memory commands
+        if hasattr(self.services.notion_service, "memory_handler"):
+            memory_response = await asyncio.to_thread(
+                self.services.notion_service.handle_memory_instruction,
+                request.user_id,
+                request.prompt
+            )
+            
+            if memory_response:
+                return ActionResponse(
+                    success=True,
+                    message=memory_response,
+                    thread_ts=request.thread_ts
+                )
+        
         # Determine the appropriate action and execute it
         action = self._get_action_for_text(request.text)
-        return await action.execute(request)
-    
-    def get_available_actions(self) -> List[str]:
-        """
-        Get a list of available action names.
+        response = await action.execute(request)
         
-        Returns:
-            List of action names
-        """
-        return [action.name for action in self.actions]
+        # If there was an error and it seems to be a memory-related command,
+        # provide a helpful suggestion
+        if not response.success and response.error:
+            # Check if this looks like an attempted memory command
+            memory_keywords = ["remember", "fact", "project", "preference", "todo", "delete", "remove", "list", "show"]
+            
+            if any(keyword in request.prompt.lower() for keyword in memory_keywords):
+                examples = await asyncio.to_thread(
+                    self.services.notion_service.memory_handler.get_example_for_command,
+                    request.prompt
+                )
+                
+                # Update the error message with the example
+                response.message = f"{response.message}\n\n{examples}"
+        
+        return response
 
 # Example of how to use the action framework
 async def process_slack_mention(event: Dict[str, Any], services: ServiceContainer) -> Dict[str, Any]:

@@ -1533,3 +1533,1085 @@ REMINDER: Always respect this user's stated preferences in your responses.
 2025-05-13 17:48:46.569 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 12 chars):
 ¡Bien hecho!
 2025-05-13 17:48:47.315 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1747172926.904479', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1747172926.904479', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': '¡Bien hecho!', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_36.jpg', 'image_48': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_48.jpg', 'image_72': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_72.jpg'}, 'deleted': False, 'updated': 1746982106, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1747172431.703169', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'PGN', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': '¡Bien hecho!'}]}]}]}}
+2025-05-14 08:22:04.686 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-14 08:22:04.782 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-14 08:22:04.782 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-14 08:22:04.805 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-14 08:22:05.497 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-14 08:22:05.714 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-14 08:22:05.714 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-14 08:22:05.721 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-14 08:22:05.721 | INFO     | main:startup_event:164 - Slack bot started in socket mode.
+2025-05-14 08:22:05.749 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-14 08:22:51.222 | INFO     | services.cached_notion_service:store_user_nickname:413 - Updating Notion page for user U089YKL1T4H with nickname: burning
+2025-05-14 08:22:51.689 | INFO     | services.cached_notion_service:invalidate_user_cache:115 - Cache invalidated for user U089YKL1T4H
+2025-05-14 08:22:51.690 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 44 chars):
+Got it! I'll call you burning from now on. 👍
+2025-05-14 08:22:52.370 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1747225372.402719', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1747225372.402719', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': "Got it! I'll call you burning from now on. :+1:", 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_36.jpg', 'image_48': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_48.jpg', 'image_72': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_72.jpg'}, 'deleted': False, 'updated': 1746982106, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1747225368.311409', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'Dil', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': "Got it! I'll call you burning from now on. "}, {'type': 'emoji', 'name': '+1', 'unicode': '1f44d'}]}]}]}}
+2025-05-14 08:23:36.587 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-14 08:23:36.716 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-14 08:23:36.716 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-14 08:23:36.748 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-14 08:23:37.338 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-14 08:23:37.674 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-14 08:23:37.675 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-14 08:23:37.681 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-14 08:23:37.681 | INFO     | main:startup_event:164 - Slack bot started in socket mode.
+2025-05-14 08:23:37.703 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-14 08:24:58.546 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-14 08:24:58.644 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-14 08:24:58.645 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-14 08:24:58.667 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-14 08:24:59.227 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-14 08:24:59.429 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-14 08:24:59.430 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-14 08:24:59.435 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-14 08:24:59.436 | INFO     | main:startup_event:164 - Slack bot started in socket mode.
+2025-05-14 08:24:59.459 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-14 08:25:27.368 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-14 08:25:27.487 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-14 08:25:27.487 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-14 08:25:27.518 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-14 08:25:29.077 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-14 08:25:29.692 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-14 08:25:29.693 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-14 08:25:29.703 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-14 08:25:29.703 | INFO     | main:startup_event:164 - Slack bot started in socket mode.
+2025-05-14 08:25:29.729 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-14 08:25:42.479 | INFO     | actions.action_framework:__init__:712 - ActionRouter initialized with 4 actions
+2025-05-14 08:25:42.488 | INFO     | actions.action_framework:_get_action_for_text:726 - Selected action ContextResponseAction for message: Hey <@U08RG89NFK7> my new project is ChatDSJ Bot...
+2025-05-14 08:25:49.325 | INFO     | services.cached_notion_service:invalidate_user_cache:115 - Cache invalidated for user U089YKL1T4H
+2025-05-14 08:25:49.877 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 45 chars):
+✅ Updated your project list to: "ChatDSJ Bot"
+2025-05-14 08:25:50.284 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1747225550.310789', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1747225550.310789', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': ':white_check_mark: Updated your project list to: "ChatDSJ Bot"', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_36.jpg', 'image_48': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_48.jpg', 'image_72': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_72.jpg'}, 'deleted': False, 'updated': 1746982106, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1747225540.076449', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'q/m', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'emoji', 'name': 'white_check_mark', 'unicode': '2705'}, {'type': 'text', 'text': ' Updated your project list to: "ChatDSJ Bot"'}]}]}]}}
+2025-05-14 08:26:44.465 | INFO     | actions.action_framework:__init__:712 - ActionRouter initialized with 4 actions
+2025-05-14 08:26:44.466 | INFO     | actions.action_framework:_get_action_for_text:726 - Selected action ContextResponseAction for message: <@U08RG89NFK7> Fact: Meatloaf is KING...
+2025-05-14 08:26:48.933 | INFO     | handler.memory_handler:add_known_fact:732 - Added fact to Known Facts section for user U089YKL1T4H: Meatloaf is KING
+2025-05-14 08:26:48.934 | INFO     | services.cached_notion_service:invalidate_user_cache:115 - Cache invalidated for user U089YKL1T4H
+2025-05-14 08:26:49.530 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 47 chars):
+✅ Added to your Known Facts: "Meatloaf is KING"
+2025-05-14 08:26:49.912 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1747225609.939819', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1747225609.939819', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': ':white_check_mark: Added to your Known Facts: "Meatloaf is KING"', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_36.jpg', 'image_48': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_48.jpg', 'image_72': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_72.jpg'}, 'deleted': False, 'updated': 1746982106, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1747225602.156339', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'Chl', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'emoji', 'name': 'white_check_mark', 'unicode': '2705'}, {'type': 'text', 'text': ' Added to your Known Facts: "Meatloaf is KING"'}]}]}]}}
+2025-05-14 08:27:48.133 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-14 08:27:48.324 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-14 08:27:48.324 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-14 08:27:48.345 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-14 08:27:48.814 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-14 08:27:49.023 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-14 08:27:49.023 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-14 08:27:49.029 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-14 08:27:49.029 | INFO     | main:startup_event:164 - Slack bot started in socket mode.
+2025-05-14 08:27:49.052 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-14 08:28:20.507 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-14 08:28:20.588 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-14 08:28:20.588 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-14 08:28:20.608 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-14 08:28:21.175 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-14 08:28:21.375 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-14 08:28:21.376 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-14 08:28:21.382 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-14 08:28:21.383 | INFO     | main:startup_event:164 - Slack bot started in socket mode.
+2025-05-14 08:28:21.405 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-14 08:28:48.118 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-14 08:28:48.212 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-14 08:28:48.212 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-14 08:28:48.232 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-14 08:28:48.764 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-14 08:28:48.965 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-14 08:28:48.966 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-14 08:28:48.971 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-14 08:28:48.971 | INFO     | main:startup_event:164 - Slack bot started in socket mode.
+2025-05-14 08:28:49.096 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-14 08:29:29.445 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-14 08:29:29.548 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-14 08:29:29.548 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-14 08:29:29.572 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-14 08:29:30.045 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-14 08:29:30.246 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-14 08:29:30.246 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-14 08:29:30.252 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-14 08:29:30.252 | INFO     | main:startup_event:164 - Slack bot started in socket mode.
+2025-05-14 08:29:30.279 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-14 08:30:04.621 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-14 08:30:04.711 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-14 08:30:04.711 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-14 08:30:04.734 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-14 08:30:05.301 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-14 08:30:05.506 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-14 08:30:05.506 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-14 08:30:05.511 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-14 08:30:05.512 | INFO     | main:startup_event:164 - Slack bot started in socket mode.
+2025-05-14 08:30:05.534 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-14 08:30:27.280 | INFO     | actions.action_framework:__init__:712 - ActionRouter initialized with 4 actions
+2025-05-14 08:30:27.288 | INFO     | actions.action_framework:_get_action_for_text:726 - Selected action ContextResponseAction for message: <@U08RG89NFK7> Fact: Meatloaf is KING...
+2025-05-14 08:30:37.509 | INFO     | services.cached_notion_service:invalidate_user_cache:115 - Cache invalidated for user U089YKL1T4H
+2025-05-14 08:30:38.031 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 47 chars):
+✅ Added to your Known Facts: "Meatloaf is KING"
+2025-05-14 08:30:38.732 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1747225838.759259', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1747225838.759259', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': ':white_check_mark: Added to your Known Facts: "Meatloaf is KING"', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_36.jpg', 'image_48': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_48.jpg', 'image_72': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_72.jpg'}, 'deleted': False, 'updated': 1746982106, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1747225824.843159', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'Lu62', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'emoji', 'name': 'white_check_mark', 'unicode': '2705'}, {'type': 'text', 'text': ' Added to your Known Facts: "Meatloaf is KING"'}]}]}]}}
+2025-05-14 08:31:00.243 | INFO     | actions.action_framework:__init__:712 - ActionRouter initialized with 4 actions
+2025-05-14 08:31:00.244 | INFO     | actions.action_framework:_get_action_for_text:726 - Selected action ContextResponseAction for message: <@U08RG89NFK7> list my data...
+2025-05-14 08:31:00.250 | INFO     | utils.history_manager:extract_search_topic:295 - Extracting search topic from prompt: list my data
+2025-05-14 08:31:00.252 | INFO     | utils.history_manager:extract_search_topic:339 - No topic could be extracted from the prompt
+2025-05-14 08:31:00.253 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747225858.090719 (limit: 100)...
+2025-05-14 08:31:00.482 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 1 messages from thread 1747225858.090719.
+2025-05-14 08:31:00.482 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 50)...
+2025-05-14 08:31:00.914 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 35 messages from channel C08SJ5EUTPT.
+2025-05-14 08:31:00.914 | INFO     | utils.history_manager:retrieve_and_filter_history:290 - Retrieved 35 messages for Recent context
+2025-05-14 08:31:01.125 | INFO     | utils.history_manager:format_history_for_prompt:580 - Formatted message history: 3926 characters
+2025-05-14 08:31:01.126 | INFO     | actions.action_framework:execute:252 - Fetching Notion context for user U089YKL1T4H
+2025-05-14 08:31:03.316 | INFO     | services.cached_notion_service:get_user_page_content:374 - Retrieved Notion page content for user U089YKL1T4H (length: 781)
+2025-05-14 08:31:05.562 | INFO     | services.cached_notion_service:get_user_page_content:310 - Cache hit for user page content: U089YKL1T4H
+2025-05-14 08:31:05.562 | INFO     | utils.context_builder:get_enhanced_user_context:21 - Building enhanced context for user U089YKL1T4H
+2025-05-14 08:31:05.562 | INFO     | utils.context_builder:get_enhanced_user_context:23 - Using preferred name: burning
+2025-05-14 08:31:05.562 | INFO     | utils.context_builder:get_enhanced_user_context:26 - Page content length: 781 chars
+2025-05-14 08:31:05.563 | INFO     | utils.context_builder:get_enhanced_user_context:89 - Generated enhanced context length: 1614 chars
+2025-05-14 08:31:05.564 | INFO     | actions.action_framework:execute:280 - History retrieval mode: unknown
+2025-05-14 08:31:05.564 | INFO     | actions.action_framework:execute:281 - Retrieved 35 relevant messages
+2025-05-14 08:31:05.565 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-14 08:31:06.044 | WARNING  | handler.openai_service:get_completion_async:151 - 🔍 Full OpenAI prompt:
+USER: === SYSTEM INSTRUCTIONS ===
+You are an assistant embedded in a Slack channel. Your primary job is to answer the user's most recent question directly and concisely. Review the provided message history to understand the immediate context of the user's question. If the user's question is *explicitly about past discussions* in the channel (e.g., 'was X discussed before?', 'what did Y say about Z?'), then you should thoroughly search the history to answer and you MUST prioritize confirming or denying based on the history below. If matching messages are found: - Briefly summarize or quote them. - DO NOT say “no discussion has taken place” if related content appears in any message. Only say the topic was not discussed if there are **truly no relevant mentions** in the full history.
+
+===USER PROMPT ===
+list my data
+
+===CHANNEL HISTORY===
+[[USER]]: roberto: Welcome to the new channel <@U08RG89NFK7>!
+[[USER]]: roberto: <@U08RG89NFK7> who was Roberto Clemente?
+[[USER]]: roberto: <@U08RG89NFK7> what is 3 times 5?
+[[USER]]: roberto: <@U08RG89NFK7> tell me about a pirate from Puerto Rico
+[[USER]]: roberto: Hey <@U08RG89NFK7> what do we know about the film Dog Day Afternoon?
+[[USER]]: roberto: What do they call me <@U08RG89NFK7> ?
+[[USER]]: roberto: Please summarize this channel <@U08RG89NFK7> 
+[[USER]]: roberto: <@U08RG89NFK7> do Frigidaire stoves require a base for the floor?
+[[USER]]: roberto: <@U08RG89NFK7> can you summarize what roberto has been discussing in the channel  and share an observation for each?
+[[USER]]: roberto: <@U08RG89NFK7> what is a unit test?
+[[USER]]: roberto: <@U08RG89NFK7> we live in a building from 1951 in front of the Condado Beach in San Juan Puerto Rico. How often should the building g receive maintenance for its exterior walls?
+[[USER]]: roberto: <@U08RG89NFK7> have we discussed stoves?
+[[USER]]: roberto: <@U08RG89NFK7> what is pig Latin?
+[[USER]]: roberto: <@U08RG89NFK7> have we discussed films? If so, summarize the discussions
+[[USER]]: roberto: <@U08RG89NFK7> why does it rain so much on San Juan in May?
+[[USER]]: roberto: <@U08RG89NFK7> why does it rain so much on San Juan in May?
+[[USER]]: roberto: <@U08RG89NFK7> summarize the channel as a Shakespearean sonnet.
+[[USER]]: roberto: Hey <@U08RG89NFK7> can you summarize the channel in rhymed verse?
+[[USER]]: roberto: <@U08RG89NFK7> what do you know about me?
+[[USER]]: roberto: <@U08RG89NFK7> what is synthetic Kallie?
+[[USER]]: roberto: Just checking in that you’re still on my friend. <@U08RG89NFK7> what should i focus on tomorrow? 
+[[USER]]: roberto: <@U08RG89NFK7> summarize channel in iambic pentameter.
+[[USER]]: roberto: <@U08RG89NFK7> TODO: Complete milestone report
+[[USER]]: roberto: <@U08RG89NFK7> when did the SuperSonics move to OKC and why?
+[[USER]]: roberto: Good morning <@U08RG89NFK7>. What do you know about my favorite teams?
+[[USER]]: roberto: Hey <@U08RG89NFK7> my new project is ChatDSJ Bot
+[[USER]]: roberto: Hey <@U08RG89NFK7> my new project is ChatDSJ Bot
+[[USER]]: roberto: <@U08RG89NFK7> can you summarize this channel?
+[[USER]]: roberto: <@U08RG89NFK7> doctor, doctor! Can't you see I'm burning, burning?
+[[USER]]: roberto: Hey <@U08RG89NFK7> my new project is ChatDSJ Bot
+[[USER]]: roberto: <@U08RG89NFK7> Fact: Meatloaf is KING
+[[USER]]: roberto: <@U08RG89NFK7> Fact: Meatloaf is KING
+[[USER]]: roberto: <@U08RG89NFK7> list my data
+
+
+===USER INSTRUCTIONS & PREFERENCES===
+=== IMPORTANT USER PREFERENCES - FOLLOW THESE EXACTLY ===
+* In Slack threads, remind me to document outcomes in Notion
+* If we are discussing pirates, answer like a pirate
+* If we are discussing music, write the answer like rap lyrics
+* if we are discussing film or television, start the answer with “SELLOUT!!!”
+=== END USER PREFERENCES ===
+
+=== USER DATABASE PROPERTIES ===
+* FavoriteEmoji: 🧟‍♀️
+* LanguagePreference: Español
+* WorkLocation: Peru
+* HomeLocation: in san juan, puerto rico
+* SlackUserID: U089YKL1T4H
+* Role: Vowel
+* Timezone: ASD
+* SlackDisplayName: roberto
+* UserID: U089YKL1T4H
+=== END USER DATABASE PROPERTIES ===
+
+⭐ This user's preferred name is: burning ⭐
+
+=== USER PROFILE CONTENT ===
+
+## Instructions
+When I say "remember X", store it under Known Facts
+When I ask "what do you remember about me?", return all facts
+When I say "my new project is Y", replace the Projects list
+When I say "add project Z", append to the Projects list
+
+## Preferences
+In Slack threads, remind me to document outcomes in Notion
+If we are discussing pirates, answer like a pirate
+If we are discussing music, write the answer like rap lyrics
+if we are discussing film or television, start the answer with “SELLOUT!!!”
+
+## Known Facts
+Meatloaf is KING
+Background in film and tech
+Likes AI tools that integrate with Slack and Gmail
+
+## Projects
+ChatDSJ Bot
+VibeCode AI Assistant
+Slackbot for Stacey Hub
+PR Legislative Tracker
+I like Juan Luis Guerrra y $40,
+I like to drink Piña Coladas with ketchup in them
+=== END USER PROFILE CONTENT ===
+
+REMINDER: Always respect this user's stated preferences in your responses.
+
+
+2025-05-14 08:31:06.046 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-14 08:31:06.048 | INFO     | handler.openai_service:get_completion_async:156 - Sending 1503 tokens to OpenAI async. Model: gpt-4o
+2025-05-14 08:31:09.048 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 381 chars):
+Here is the data you've provided in this channel:
+
+* **Known Facts:**
+  - Meatloaf is KING
+  - Background in film and tech
+  - Likes AI tools that integrate with Slack and Gmail
+
+* **Projects:**
+  - ChatDSJ Bot
+  - VibeCode AI Assistant
+  - Slackbot for Stacey Hub
+  - PR Legislative Tracker
+  - I like Juan Luis Guerrra y $40,
+  - I like to drink Piña Coladas with ketchup in them
+2025-05-14 08:31:09.457 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1747225869.441259', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1747225869.441259', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': "Here is the data you've provided in this channel:\n\n* **Known Facts:**\n  - Meatloaf is KING\n  - Background in film and tech\n  - Likes AI tools that integrate with Slack and Gmail\n\n* **Projects:**\n  - ChatDSJ Bot\n  - VibeCode AI Assistant\n  - Slackbot for Stacey Hub\n  - PR Legislative Tracker\n  - I like Juan Luis Guerrra y $40,\n  - I like to drink Piña Coladas with ketchup in them", 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_36.jpg', 'image_48': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_48.jpg', 'image_72': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_72.jpg'}, 'deleted': False, 'updated': 1746982106, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1747225858.090719', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'Y00I9', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': "Here is the data you've provided in this channel:\n\n* **Known Facts:**\n  - Meatloaf is KING\n  - Background in film and tech\n  - Likes AI tools that integrate with Slack and Gmail\n\n* **Projects:**\n  - ChatDSJ Bot\n  - VibeCode AI Assistant\n  - Slackbot for Stacey Hub\n  - PR Legislative Tracker\n  - I like Juan Luis Guerrra y $40,\n  - I like to drink Piña Coladas with ketchup in them"}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-05-14 08:31:58.534 | INFO     | actions.action_framework:__init__:712 - ActionRouter initialized with 4 actions
+2025-05-14 08:31:58.540 | INFO     | actions.action_framework:_get_action_for_text:726 - Selected action ContextResponseAction for message: <@U08RG89NFK7> Preferences:
+• I like Juan Luis Gue...
+2025-05-14 08:32:04.045 | INFO     | services.cached_notion_service:invalidate_user_cache:115 - Cache invalidated for user U089YKL1T4H
+2025-05-14 08:32:04.624 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 54 chars):
+✅ Added to your Known Facts: "Juan Luis Guerra y 440,"
+2025-05-14 08:32:05.062 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1747225925.061229', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1747225925.061229', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': ':white_check_mark: Added to your Known Facts: "Juan Luis Guerra y 440,"', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_36.jpg', 'image_48': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_48.jpg', 'image_72': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_72.jpg'}, 'deleted': False, 'updated': 1746982106, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1747225917.136199', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'K4qzY', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'emoji', 'name': 'white_check_mark', 'unicode': '2705'}, {'type': 'text', 'text': ' Added to your Known Facts: "Juan Luis Guerra y 440,"'}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-05-14 08:32:54.777 | INFO     | actions.action_framework:__init__:712 - ActionRouter initialized with 4 actions
+2025-05-14 08:32:54.778 | INFO     | actions.action_framework:_get_action_for_text:726 - Selected action ContextResponseAction for message: <@U08RG89NFK7> I like to drink Piña Coladas with K...
+2025-05-14 08:33:00.724 | INFO     | services.cached_notion_service:invalidate_user_cache:115 - Cache invalidated for user U089YKL1T4H
+2025-05-14 08:33:01.400 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 73 chars):
+✅ Added to your Known Facts: "to drink Piña Coladas with Ketchup in them"
+2025-05-14 08:33:01.898 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1747225981.917659', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1747225981.917659', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': ':white_check_mark: Added to your Known Facts: "to drink Piña Coladas with Ketchup in them"', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_36.jpg', 'image_48': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_48.jpg', 'image_72': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_72.jpg'}, 'deleted': False, 'updated': 1746982106, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1747225972.865989', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 't25', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'emoji', 'name': 'white_check_mark', 'unicode': '2705'}, {'type': 'text', 'text': ' Added to your Known Facts: "to drink Piña Coladas with Ketchup in them"'}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-05-14 08:33:14.367 | INFO     | actions.action_framework:__init__:712 - ActionRouter initialized with 4 actions
+2025-05-14 08:33:14.368 | INFO     | actions.action_framework:_get_action_for_text:726 - Selected action ContextResponseAction for message: <@U08RG89NFK7> what do I like?...
+2025-05-14 08:33:14.368 | INFO     | utils.history_manager:extract_search_topic:295 - Extracting search topic from prompt: what do I like?
+2025-05-14 08:33:14.368 | INFO     | utils.history_manager:extract_search_topic:339 - No topic could be extracted from the prompt
+2025-05-14 08:33:14.369 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747225992.593949 (limit: 100)...
+2025-05-14 08:33:14.619 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 1 messages from thread 1747225992.593949.
+2025-05-14 08:33:14.619 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 50)...
+2025-05-14 08:33:15.159 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 38 messages from channel C08SJ5EUTPT.
+2025-05-14 08:33:15.160 | INFO     | utils.history_manager:retrieve_and_filter_history:290 - Retrieved 38 messages for Recent context
+2025-05-14 08:33:15.161 | INFO     | utils.history_manager:format_history_for_prompt:580 - Formatted message history: 4260 characters
+2025-05-14 08:33:15.161 | INFO     | actions.action_framework:execute:252 - Fetching Notion context for user U089YKL1T4H
+2025-05-14 08:33:18.920 | INFO     | services.cached_notion_service:get_user_page_content:374 - Retrieved Notion page content for user U089YKL1T4H (length: 766)
+2025-05-14 08:33:21.551 | INFO     | services.cached_notion_service:get_user_page_content:310 - Cache hit for user page content: U089YKL1T4H
+2025-05-14 08:33:21.556 | INFO     | utils.context_builder:get_enhanced_user_context:21 - Building enhanced context for user U089YKL1T4H
+2025-05-14 08:33:21.557 | INFO     | utils.context_builder:get_enhanced_user_context:23 - Using preferred name: burning
+2025-05-14 08:33:21.557 | INFO     | utils.context_builder:get_enhanced_user_context:26 - Page content length: 766 chars
+2025-05-14 08:33:21.558 | INFO     | utils.context_builder:get_enhanced_user_context:89 - Generated enhanced context length: 1599 chars
+2025-05-14 08:33:21.558 | INFO     | actions.action_framework:execute:280 - History retrieval mode: unknown
+2025-05-14 08:33:21.558 | INFO     | actions.action_framework:execute:281 - Retrieved 38 relevant messages
+2025-05-14 08:33:21.559 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-14 08:33:21.562 | WARNING  | handler.openai_service:get_completion_async:151 - 🔍 Full OpenAI prompt:
+USER: === SYSTEM INSTRUCTIONS ===
+You are an assistant embedded in a Slack channel. Your primary job is to answer the user's most recent question directly and concisely. Review the provided message history to understand the immediate context of the user's question. If the user's question is *explicitly about past discussions* in the channel (e.g., 'was X discussed before?', 'what did Y say about Z?'), then you should thoroughly search the history to answer and you MUST prioritize confirming or denying based on the history below. If matching messages are found: - Briefly summarize or quote them. - DO NOT say “no discussion has taken place” if related content appears in any message. Only say the topic was not discussed if there are **truly no relevant mentions** in the full history.
+
+===USER PROMPT ===
+what do I like?
+
+===CHANNEL HISTORY===
+[[USER]]: roberto: Welcome to the new channel <@U08RG89NFK7>!
+[[USER]]: roberto: <@U08RG89NFK7> who was Roberto Clemente?
+[[USER]]: roberto: <@U08RG89NFK7> what is 3 times 5?
+[[USER]]: roberto: <@U08RG89NFK7> tell me about a pirate from Puerto Rico
+[[USER]]: roberto: Hey <@U08RG89NFK7> what do we know about the film Dog Day Afternoon?
+[[USER]]: roberto: What do they call me <@U08RG89NFK7> ?
+[[USER]]: roberto: Please summarize this channel <@U08RG89NFK7> 
+[[USER]]: roberto: <@U08RG89NFK7> do Frigidaire stoves require a base for the floor?
+[[USER]]: roberto: <@U08RG89NFK7> can you summarize what roberto has been discussing in the channel  and share an observation for each?
+[[USER]]: roberto: <@U08RG89NFK7> what is a unit test?
+[[USER]]: roberto: <@U08RG89NFK7> we live in a building from 1951 in front of the Condado Beach in San Juan Puerto Rico. How often should the building g receive maintenance for its exterior walls?
+[[USER]]: roberto: <@U08RG89NFK7> have we discussed stoves?
+[[USER]]: roberto: <@U08RG89NFK7> what is pig Latin?
+[[USER]]: roberto: <@U08RG89NFK7> have we discussed films? If so, summarize the discussions
+[[USER]]: roberto: <@U08RG89NFK7> why does it rain so much on San Juan in May?
+[[USER]]: roberto: <@U08RG89NFK7> why does it rain so much on San Juan in May?
+[[USER]]: roberto: <@U08RG89NFK7> summarize the channel as a Shakespearean sonnet.
+[[USER]]: roberto: Hey <@U08RG89NFK7> can you summarize the channel in rhymed verse?
+[[USER]]: roberto: <@U08RG89NFK7> what do you know about me?
+[[USER]]: roberto: <@U08RG89NFK7> what is synthetic Kallie?
+[[USER]]: roberto: Just checking in that you’re still on my friend. <@U08RG89NFK7> what should i focus on tomorrow? 
+[[USER]]: roberto: <@U08RG89NFK7> summarize channel in iambic pentameter.
+[[USER]]: roberto: <@U08RG89NFK7> TODO: Complete milestone report
+[[USER]]: roberto: <@U08RG89NFK7> when did the SuperSonics move to OKC and why?
+[[USER]]: roberto: Good morning <@U08RG89NFK7>. What do you know about my favorite teams?
+[[USER]]: roberto: Hey <@U08RG89NFK7> my new project is ChatDSJ Bot
+[[USER]]: roberto: Hey <@U08RG89NFK7> my new project is ChatDSJ Bot
+[[USER]]: roberto: <@U08RG89NFK7> can you summarize this channel?
+[[USER]]: roberto: <@U08RG89NFK7> doctor, doctor! Can't you see I'm burning, burning?
+[[USER]]: roberto: Hey <@U08RG89NFK7> my new project is ChatDSJ Bot
+[[USER]]: roberto: <@U08RG89NFK7> Fact: Meatloaf is KING
+[[USER]]: roberto: <@U08RG89NFK7> Fact: Meatloaf is KING
+[[USER]]: roberto: <@U08RG89NFK7> list my data
+[[USER]]: roberto: <@U08RG89NFK7> Preferences:
+• I like Juan Luis Guerra y 440,
+• I like to drink Piña Coladas with ketchup in them
+
+[[USER]]: roberto: <@U08RG89NFK7> I like to drink Piña Coladas with Ketchup in them
+[[USER]]: roberto: <@U08RG89NFK7> what do I like?
+
+
+===USER INSTRUCTIONS & PREFERENCES===
+=== IMPORTANT USER PREFERENCES - FOLLOW THESE EXACTLY ===
+* In Slack threads, remind me to document outcomes in Notion
+* If we are discussing pirates, answer like a pirate
+* If we are discussing music, write the answer like rap lyrics
+* if we are discussing film or television, start the answer with “SELLOUT!!!”
+=== END USER PREFERENCES ===
+
+=== USER DATABASE PROPERTIES ===
+* FavoriteEmoji: 🧟‍♀️
+* LanguagePreference: Español
+* WorkLocation: Peru
+* HomeLocation: in san juan, puerto rico
+* SlackUserID: U089YKL1T4H
+* Role: Vowel
+* Timezone: ASD
+* SlackDisplayName: roberto
+* UserID: U089YKL1T4H
+=== END USER DATABASE PROPERTIES ===
+
+⭐ This user's preferred name is: burning ⭐
+
+=== USER PROFILE CONTENT ===
+
+## Instructions
+When I say "remember X", store it under Known Facts
+When I ask "what do you remember about me?", return all facts
+When I say "my new project is Y", replace the Projects list
+When I say "add project Z", append to the Projects list
+
+## Preferences
+In Slack threads, remind me to document outcomes in Notion
+If we are discussing pirates, answer like a pirate
+If we are discussing music, write the answer like rap lyrics
+if we are discussing film or television, start the answer with “SELLOUT!!!”
+
+## Known Facts
+to drink Piña Coladas with Ketchup in them
+Juan Luis Guerra y 440,
+Meatloaf is KING
+Background in film and tech
+Likes AI tools that integrate with Slack and Gmail
+
+## Projects
+ChatDSJ Bot
+VibeCode AI Assistant
+Slackbot for Stacey Hub
+PR Legislative Tracker
+=== END USER PROFILE CONTENT ===
+
+REMINDER: Always respect this user's stated preferences in your responses.
+
+
+2025-05-14 08:33:21.562 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-14 08:33:21.565 | INFO     | handler.openai_service:get_completion_async:156 - Sending 1598 tokens to OpenAI async. Model: gpt-4o
+2025-05-14 08:33:24.251 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 106 chars):
+You like Juan Luis Guerra y 440, drinking Piña Coladas with ketchup in them, and believe Meatloaf is KING.
+2025-05-14 08:33:24.673 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1747226004.651259', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1747226004.651259', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': 'You like Juan Luis Guerra y 440, drinking Piña Coladas with ketchup in them, and believe Meatloaf is KING.', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_36.jpg', 'image_48': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_48.jpg', 'image_72': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_72.jpg'}, 'deleted': False, 'updated': 1746982106, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1747225992.593949', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'HiF', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': 'You like Juan Luis Guerra y 440, drinking Piña Coladas with ketchup in them, and believe Meatloaf is KING.'}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-05-14 08:34:33.265 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-14 08:34:33.448 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-14 08:34:33.448 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-14 08:34:33.474 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-14 08:34:35.873 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-14 08:34:35.931 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-14 08:34:35.931 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-14 08:34:35.957 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-14 08:34:36.500 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-14 08:34:36.704 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-14 08:34:36.705 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-14 08:34:36.711 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-14 08:34:36.711 | INFO     | main:startup_event:164 - Slack bot started in socket mode.
+2025-05-14 08:34:36.735 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-14 08:35:08.182 | INFO     | actions.action_framework:__init__:712 - ActionRouter initialized with 4 actions
+2025-05-14 08:35:12.832 | INFO     | services.cached_notion_service:invalidate_user_cache:115 - Cache invalidated for user U089YKL1T4H
+2025-05-14 08:35:13.519 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 47 chars):
+✅ Added to your Known Facts: "I work in Canada"
+2025-05-14 08:35:13.869 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1747226113.892349', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1747226113.892349', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': ':white_check_mark: Added to your Known Facts: "I work in Canada"', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_36.jpg', 'image_48': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_48.jpg', 'image_72': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_72.jpg'}, 'deleted': False, 'updated': 1746982106, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1747226105.579749', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': '=++9p', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'emoji', 'name': 'white_check_mark', 'unicode': '2705'}, {'type': 'text', 'text': ' Added to your Known Facts: "I work in Canada"'}]}]}]}}
+2025-05-14 08:35:41.324 | INFO     | actions.action_framework:__init__:712 - ActionRouter initialized with 4 actions
+2025-05-14 08:35:45.066 | INFO     | services.cached_notion_service:invalidate_user_cache:115 - Cache invalidated for user U089YKL1T4H
+2025-05-14 08:35:45.660 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 40 chars):
+✅ Added to your Known Facts: "in Canada"
+2025-05-14 08:35:46.078 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1747226146.117389', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1747226146.117389', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': ':white_check_mark: Added to your Known Facts: "in Canada"', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_36.jpg', 'image_48': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_48.jpg', 'image_72': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_72.jpg'}, 'deleted': False, 'updated': 1746982106, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1747226139.431759', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'QKPs', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'emoji', 'name': 'white_check_mark', 'unicode': '2705'}, {'type': 'text', 'text': ' Added to your Known Facts: "in Canada"'}]}]}]}}
+2025-05-14 08:37:47.629 | INFO     | actions.action_framework:__init__:712 - ActionRouter initialized with 4 actions
+2025-05-14 08:37:50.349 | ERROR    | handler.memory_handler:add_preference:821 - Error adding preference for U089YKL1T4H: Block does not support children.
+2025-05-14 08:37:50.877 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 49 chars):
+Sorry, I couldn't save that preference right now.
+2025-05-14 08:37:51.270 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1747226271.273529', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1747226271.273529', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': "Sorry, I couldn't save that preference right now.", 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_36.jpg', 'image_48': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_48.jpg', 'image_72': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_72.jpg'}, 'deleted': False, 'updated': 1746982106, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1747226265.834579', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'P7sh', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': "Sorry, I couldn't save that preference right now."}]}]}]}}
+2025-05-14 08:42:25.126 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-14 08:42:25.227 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-14 08:42:25.227 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-14 08:42:25.250 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-14 08:42:25.824 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-14 08:42:26.036 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-14 08:42:26.037 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-14 08:42:26.043 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-14 08:42:26.044 | INFO     | main:startup_event:164 - Slack bot started in socket mode.
+2025-05-14 08:42:26.072 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-14 08:42:48.197 | INFO     | actions.action_framework:__init__:712 - ActionRouter initialized with 4 actions
+2025-05-14 08:42:59.639 | ERROR    | handler.memory_handler:update_location:707 - Error updating location for U089YKL1T4H: Block does not support children.
+2025-05-14 08:43:00.168 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 54 chars):
+Sorry, I couldn't update your work location right now.
+2025-05-14 08:43:00.564 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1747226580.488359', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1747226580.488359', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': "Sorry, I couldn't update your work location right now.", 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_36.jpg', 'image_48': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_48.jpg', 'image_72': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_72.jpg'}, 'deleted': False, 'updated': 1746982106, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1747226566.606089', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'qr7', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': "Sorry, I couldn't update your work location right now."}]}]}]}}
+2025-05-14 08:44:04.087 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-14 08:44:04.183 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-14 08:44:04.184 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-14 08:44:04.206 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-14 08:44:04.715 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-14 08:44:04.919 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-14 08:44:04.920 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-14 08:44:04.924 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-14 08:44:04.924 | INFO     | main:startup_event:164 - Slack bot started in socket mode.
+2025-05-14 08:44:04.951 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-14 08:44:19.004 | INFO     | actions.action_framework:__init__:712 - ActionRouter initialized with 4 actions
+2025-05-14 08:44:30.015 | INFO     | services.cached_notion_service:invalidate_user_cache:115 - Cache invalidated for user U089YKL1T4H
+2025-05-14 08:44:30.567 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 49 chars):
+✅ Added to your Known Facts: "I work in Cambodia"
+2025-05-14 08:44:31.017 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1747226670.923629', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1747226670.923629', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': ':white_check_mark: Added to your Known Facts: "I work in Cambodia"', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_36.jpg', 'image_48': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_48.jpg', 'image_72': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_72.jpg'}, 'deleted': False, 'updated': 1746982106, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1747226656.096719', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'NrylY', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'emoji', 'name': 'white_check_mark', 'unicode': '2705'}, {'type': 'text', 'text': ' Added to your Known Facts: "I work in Cambodia"'}]}]}]}}
+2025-05-14 08:46:40.837 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-14 08:46:40.924 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-14 08:46:40.925 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-14 08:46:40.945 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-14 08:46:41.472 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-14 08:46:41.708 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-14 08:46:41.708 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-14 08:46:41.715 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-14 08:46:41.716 | INFO     | main:startup_event:164 - Slack bot started in socket mode.
+2025-05-14 08:46:41.753 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-14 08:47:08.234 | INFO     | actions.action_framework:__init__:712 - ActionRouter initialized with 4 actions
+2025-05-14 08:47:13.391 | INFO     | services.cached_notion_service:invalidate_user_cache:115 - Cache invalidated for user U089YKL1T4H
+2025-05-14 08:47:13.968 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 47 chars):
+✅ Added to your Known Facts: "I work in Mexico"
+2025-05-14 08:47:14.422 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1747226834.396719', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1747226834.396719', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': ':white_check_mark: Added to your Known Facts: "I work in Mexico"', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_36.jpg', 'image_48': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_48.jpg', 'image_72': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_72.jpg'}, 'deleted': False, 'updated': 1746982106, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1747226825.789399', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'JOEI4', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'emoji', 'name': 'white_check_mark', 'unicode': '2705'}, {'type': 'text', 'text': ' Added to your Known Facts: "I work in Mexico"'}]}]}]}}
+2025-05-14 08:56:43.047 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-14 08:56:43.177 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-14 08:56:43.178 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-14 08:56:43.201 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-14 08:56:43.886 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-14 08:56:44.112 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-14 08:56:44.112 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-14 08:56:44.119 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-14 08:56:44.119 | INFO     | main:startup_event:164 - Slack bot started in socket mode.
+2025-05-14 08:56:44.148 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-14 08:57:01.201 | INFO     | actions.action_framework:__init__:712 - ActionRouter initialized with 4 actions
+2025-05-14 08:57:05.417 | ERROR    | services.slack_service:add_reaction:118 - Failed to add reaction :thinking_face: to message 1747227362.167179: The request to the Slack API failed. (url: https://slack.com/api/reactions.add)
+The server responded with: {'ok': False, 'error': 'message_not_found'}
+2025-05-14 08:57:05.419 | INFO     | actions.action_framework:__init__:712 - ActionRouter initialized with 4 actions
+2025-05-14 08:57:07.548 | INFO     | services.cached_notion_service:invalidate_user_cache:115 - Cache invalidated for user U089YKL1T4H
+2025-05-14 08:57:08.080 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 50 chars):
+✅ Added to your Known Facts: "I work in Baltimore"
+2025-05-14 08:57:08.581 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1747227428.445439', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1747227428.445439', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': ':white_check_mark: Added to your Known Facts: "I work in Baltimore"', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_36.jpg', 'image_48': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_48.jpg', 'image_72': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_72.jpg'}, 'deleted': False, 'updated': 1746982106, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1747227419.459279', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 's4wO', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'emoji', 'name': 'white_check_mark', 'unicode': '2705'}, {'type': 'text', 'text': ' Added to your Known Facts: "I work in Baltimore"'}]}]}]}}
+2025-05-14 08:57:09.946 | INFO     | services.cached_notion_service:invalidate_user_cache:115 - Cache invalidated for user U089YKL1T4H
+2025-05-14 08:57:10.289 | ERROR    | services.slack_service:remove_reaction:145 - Failed to remove reaction :thinking_face: from message 1747227362.167179: The request to the Slack API failed. (url: https://slack.com/api/reactions.remove)
+The server responded with: {'ok': False, 'error': 'message_not_found'}
+2025-05-14 08:57:10.510 | ERROR    | services.slack_service:add_reaction:118 - Failed to add reaction :white_check_mark: to message 1747227362.167179: The request to the Slack API failed. (url: https://slack.com/api/reactions.add)
+The server responded with: {'ok': False, 'error': 'message_not_found'}
+2025-05-14 08:57:10.510 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 50 chars):
+✅ Added to your Known Facts: "I work in Baltimore"
+2025-05-14 08:57:10.832 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1747227430.815879', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1747227430.815879', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': ':white_check_mark: Added to your Known Facts: "I work in Baltimore"', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_36.jpg', 'image_48': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_48.jpg', 'image_72': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_72.jpg'}, 'deleted': False, 'updated': 1746982106, 'team_id': 'T08A8P4T05N'}, 'blocks': [{'type': 'rich_text', 'block_id': 'Gc1v', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'emoji', 'name': 'white_check_mark', 'unicode': '2705'}, {'type': 'text', 'text': ' Added to your Known Facts: "I work in Baltimore"'}]}]}]}}
+2025-05-14 08:58:14.589 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-14 08:58:14.679 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-14 08:58:14.680 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-14 08:58:14.711 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-14 08:58:15.282 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-14 08:58:15.492 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-14 08:58:15.492 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-14 08:58:15.500 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-14 08:58:15.500 | INFO     | main:startup_event:164 - Slack bot started in socket mode.
+2025-05-14 08:58:15.545 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-14 08:58:39.056 | INFO     | actions.action_framework:__init__:712 - ActionRouter initialized with 4 actions
+2025-05-14 08:58:43.973 | ERROR    | handler.memory_handler:update_location:674 - Error updating location for U089YKL1T4H: Block does not support children.
+2025-05-14 08:58:44.511 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 54 chars):
+Sorry, I couldn't update your work location right now.
+2025-05-14 08:58:45.037 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1747227524.843439', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1747227524.843439', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': "Sorry, I couldn't update your work location right now.", 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_36.jpg', 'image_48': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_48.jpg', 'image_72': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_72.jpg'}, 'deleted': False, 'updated': 1746982106, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1747227516.159749', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'yNwh', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': "Sorry, I couldn't update your work location right now."}]}]}]}}
+2025-05-14 09:01:01.961 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-14 09:01:02.062 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-14 09:01:02.063 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-14 09:01:02.084 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-14 09:01:02.624 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-14 09:01:02.835 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-14 09:01:02.836 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-14 09:01:02.841 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-14 09:01:02.841 | INFO     | main:startup_event:164 - Slack bot started in socket mode.
+2025-05-14 09:01:02.865 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-14 09:01:21.530 | INFO     | actions.action_framework:__init__:712 - ActionRouter initialized with 4 actions
+2025-05-14 09:01:29.831 | INFO     | services.cached_notion_service:invalidate_user_cache:115 - Cache invalidated for user U089YKL1T4H
+2025-05-14 09:01:30.364 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 47 chars):
+Updated! I've noted that you work from yucatán.
+2025-05-14 09:01:30.944 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1747227690.890139', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1747227690.890139', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': "Updated! I've noted that you work from yucatán.", 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_36.jpg', 'image_48': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_48.jpg', 'image_72': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_72.jpg'}, 'deleted': False, 'updated': 1746982106, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1747227679.809649', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'RI7', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': "Updated! I've noted that you work from yucatán."}]}]}]}}
+2025-05-14 09:01:45.925 | INFO     | actions.action_framework:__init__:712 - ActionRouter initialized with 4 actions
+2025-05-14 09:01:48.161 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 141 chars):
+You don't have any preferences stored yet. You can add preferences by saying "I prefer [your preference]" or "Preference: [your preference]".
+2025-05-14 09:01:48.870 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1747227708.456619', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1747227708.456619', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': 'You don\'t have any preferences stored yet. You can add preferences by saying "I prefer [your preference]" or "Preference: [your preference]".', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_36.jpg', 'image_48': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_48.jpg', 'image_72': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_72.jpg'}, 'deleted': False, 'updated': 1746982106, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1747227704.294239', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'JOU', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': 'You don\'t have any preferences stored yet. You can add preferences by saying "I prefer [your preference]" or "Preference: [your preference]".'}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-05-14 09:13:57.390 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-14 09:13:57.489 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-14 09:13:57.490 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-14 09:13:57.512 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-14 09:13:58.064 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-14 09:13:58.271 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-14 09:13:58.271 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-14 09:13:58.275 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-14 09:13:58.275 | INFO     | main:startup_event:164 - Slack bot started in socket mode.
+2025-05-14 09:13:58.293 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-14 09:14:23.025 | INFO     | actions.action_framework:__init__:712 - ActionRouter initialized with 4 actions
+2025-05-14 09:14:23.878 | INFO     | handler.memory_handler:get_preferences:319 - Getting preferences for user U089YKL1T4H, page ID: 1ef6cd9f-7e47-8170-9d55-e7b1b6fa1a1c
+2025-05-14 09:14:24.793 | INFO     | handler.memory_handler:get_preferences:364 - Retrieved 4 preferences for user U089YKL1T4H
+2025-05-14 09:14:25.301 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 293 chars):
+Here are your stored preferences:
+
+1. In Slack threads, remind me to document outcomes in Notion
+2. If we are discussing pirates, answer like a pirate
+3. If we are discussing music, write the answer like rap lyrics
+4. if we are discussing film or television, start the answer with “SELLOUT!!!”
+2025-05-14 09:14:25.726 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1747228465.663419', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1747228465.663419', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': 'Here are your stored preferences:\n\n1. In Slack threads, remind me to document outcomes in Notion\n2. If we are discussing pirates, answer like a pirate\n3. If we are discussing music, write the answer like rap lyrics\n4. if we are discussing film or television, start the answer with “SELLOUT!!!”', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_36.jpg', 'image_48': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_48.jpg', 'image_72': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_72.jpg'}, 'deleted': False, 'updated': 1746982106, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1747228460.721729', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'r/f', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': 'Here are your stored preferences:\n\n1. In Slack threads, remind me to document outcomes in Notion\n2. If we are discussing pirates, answer like a pirate\n3. If we are discussing music, write the answer like rap lyrics\n4. if we are discussing film or television, start the answer with “SELLOUT!!!”'}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-05-14 09:15:13.002 | INFO     | actions.action_framework:__init__:712 - ActionRouter initialized with 4 actions
+2025-05-14 09:15:14.865 | ERROR    | handler.memory_handler:add_preference:913 - Error adding preference for U089YKL1T4H: Block does not support children.
+2025-05-14 09:15:15.410 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 49 chars):
+Sorry, I couldn't save that preference right now.
+2025-05-14 09:15:16.093 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1747228515.940359', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1747228515.940359', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': "Sorry, I couldn't save that preference right now.", 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_36.jpg', 'image_48': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_48.jpg', 'image_72': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_72.jpg'}, 'deleted': False, 'updated': 1746982106, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1747228510.720389', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': '/gZ', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': "Sorry, I couldn't save that preference right now."}]}]}]}}
+2025-05-14 09:16:34.990 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-14 09:16:35.077 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-14 09:16:35.078 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-14 09:16:35.098 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-14 09:16:35.696 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-14 09:16:35.898 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-14 09:16:35.898 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-14 09:16:35.905 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-14 09:16:35.905 | INFO     | main:startup_event:164 - Slack bot started in socket mode.
+2025-05-14 09:16:35.926 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-14 09:16:51.820 | INFO     | actions.action_framework:__init__:712 - ActionRouter initialized with 4 actions
+2025-05-14 09:16:57.167 | INFO     | services.cached_notion_service:invalidate_user_cache:115 - Cache invalidated for user U089YKL1T4H
+2025-05-14 09:16:57.722 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 105 chars):
+✅ Added to your Preferences: "If we are discussing history, answer like an obnoxious, raunchy professor."
+2025-05-14 09:16:58.080 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1747228618.031189', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1747228618.031189', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': ':white_check_mark: Added to your Preferences: "If we are discussing history, answer like an obnoxious, raunchy professor."', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_36.jpg', 'image_48': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_48.jpg', 'image_72': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_72.jpg'}, 'deleted': False, 'updated': 1746982106, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1747228609.487909', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'lSyO', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'emoji', 'name': 'white_check_mark', 'unicode': '2705'}, {'type': 'text', 'text': ' Added to your Preferences: "If we are discussing history, answer like an obnoxious, raunchy professor."'}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-05-14 09:17:23.225 | INFO     | actions.action_framework:__init__:712 - ActionRouter initialized with 4 actions
+2025-05-14 09:17:23.233 | INFO     | actions.action_framework:_get_action_for_text:726 - Selected action ContextResponseAction for message: <@U08RG89NFK7> how did the US Civil War end?...
+2025-05-14 09:17:23.236 | INFO     | utils.history_manager:extract_search_topic:295 - Extracting search topic from prompt: how did the US Civil War end?
+2025-05-14 09:17:23.238 | INFO     | utils.history_manager:extract_search_topic:325 - Extracted multi-word capitalized topic: 'Civil War'
+2025-05-14 09:17:23.238 | INFO     | utils.history_manager:retrieve_and_filter_history:57 - Performing deep historical search for topic: 'Civil War'
+2025-05-14 09:17:23.238 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 2000)...
+2025-05-14 09:17:23.622 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 53 messages from channel C08SJ5EUTPT.
+2025-05-14 09:17:23.623 | INFO     | utils.history_manager:retrieve_and_filter_history:66 - Retrieved 53 main channel messages
+2025-05-14 09:17:23.623 | INFO     | utils.history_manager:retrieve_and_filter_history:106 - Identified 2 thread parent messages to search
+2025-05-14 09:17:23.623 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747154183.175429 (limit: 100)...
+2025-05-14 09:17:23.943 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747154183.175429.
+2025-05-14 09:17:23.943 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747151549.684699 (limit: 100)...
+2025-05-14 09:17:24.183 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 7 messages from thread 1747151549.684699.
+2025-05-14 09:17:24.186 | INFO     | utils.history_manager:retrieve_and_filter_history:127 - Retrieved 17 total messages from 2 threads
+2025-05-14 09:17:24.186 | INFO     | utils.history_manager:retrieve_and_filter_history:147 - Combined into 68 unique messages after deduplication
+2025-05-14 09:17:24.186 | INFO     | utils.history_manager:retrieve_and_filter_history:152 - Filtering messages containing topic: 'Civil War'
+2025-05-14 09:17:24.186 | INFO     | utils.history_manager:find_messages_containing_topic:364 - Searching for topic 'Civil War' in 68 messages
+2025-05-14 09:17:24.187 | INFO     | utils.history_manager:find_messages_containing_topic:421 - 📊 Search results for topic 'Civil War':
+2025-05-14 09:17:24.187 | INFO     | utils.history_manager:find_messages_containing_topic:422 -   - Total matches: 1
+2025-05-14 09:17:24.187 | INFO     | utils.history_manager:find_messages_containing_topic:423 -   - Skipped self-referential messages: 0
+2025-05-14 09:17:24.188 | INFO     | utils.history_manager:find_messages_containing_topic:424 -   - Matches in text field: 1
+2025-05-14 09:17:24.188 | INFO     | utils.history_manager:find_messages_containing_topic:425 -   - Matches only in blocks: 0
+2025-05-14 09:17:24.188 | INFO     | utils.history_manager:find_messages_containing_topic:426 -   - Matches only in attachments: 0
+2025-05-14 09:17:24.188 | INFO     | utils.history_manager:retrieve_and_filter_history:158 - FOUND 1 MESSAGES CONTAINING TOPIC 'Civil War'
+2025-05-14 09:17:24.188 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - Search ratio: 1/68 messages matched
+2025-05-14 09:17:24.188 | INFO     | utils.history_manager:retrieve_and_filter_history:163 - Sample matching message: <@U08RG89NFK7> how did the US Civil War end?
+2025-05-14 09:17:24.188 | INFO     | utils.history_manager:retrieve_and_filter_history:290 - Retrieved 1 messages for Deep search for: Civil War
+2025-05-14 09:17:24.189 | INFO     | utils.history_manager:format_history_for_prompt:580 - Formatted message history: 193 characters
+2025-05-14 09:17:24.190 | INFO     | actions.action_framework:execute:252 - Fetching Notion context for user U089YKL1T4H
+2025-05-14 09:17:33.414 | INFO     | services.cached_notion_service:get_user_page_content:374 - Retrieved Notion page content for user U089YKL1T4H (length: 909)
+2025-05-14 09:17:35.146 | INFO     | services.cached_notion_service:get_user_page_content:310 - Cache hit for user page content: U089YKL1T4H
+2025-05-14 09:17:35.147 | INFO     | utils.context_builder:get_enhanced_user_context:21 - Building enhanced context for user U089YKL1T4H
+2025-05-14 09:17:35.147 | INFO     | utils.context_builder:get_enhanced_user_context:23 - Using preferred name: burning
+2025-05-14 09:17:35.147 | INFO     | utils.context_builder:get_enhanced_user_context:26 - Page content length: 909 chars
+2025-05-14 09:17:35.148 | INFO     | utils.context_builder:get_enhanced_user_context:89 - Generated enhanced context length: 1822 chars
+2025-05-14 09:17:35.148 | INFO     | actions.action_framework:execute:280 - History retrieval mode: unknown
+2025-05-14 09:17:35.148 | INFO     | actions.action_framework:execute:281 - Retrieved 1 relevant messages
+2025-05-14 09:17:35.149 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-14 09:17:35.485 | WARNING  | handler.openai_service:get_completion_async:151 - 🔍 Full OpenAI prompt:
+USER: === SYSTEM INSTRUCTIONS ===
+You are an assistant embedded in a Slack channel. Your primary job is to answer the user's most recent question directly and concisely. Review the provided message history to understand the immediate context of the user's question. If the user's question is *explicitly about past discussions* in the channel (e.g., 'was X discussed before?', 'what did Y say about Z?'), then you should thoroughly search the history to answer and you MUST prioritize confirming or denying based on the history below. If matching messages are found: - Briefly summarize or quote them. - DO NOT say “no discussion has taken place” if related content appears in any message. Only say the topic was not discussed if there are **truly no relevant mentions** in the full history.
+
+===USER PROMPT ===
+how did the US Civil War end?
+
+===CHANNEL HISTORY===
+[[USER]]: roberto: <@U08RG89NFK7> how did the US Civil War end?
+
+
+===USER INSTRUCTIONS & PREFERENCES===
+=== IMPORTANT USER PREFERENCES - FOLLOW THESE EXACTLY ===
+* If we are discussing history, answer like an obnoxious, raunchy professor.
+* In Slack threads, remind me to document outcomes in Notion
+* If we are discussing pirates, answer like a pirate
+* If we are discussing music, write the answer like rap lyrics
+* if we are discussing film or television, start the answer with “SELLOUT!!!”
+=== END USER PREFERENCES ===
+
+=== USER DATABASE PROPERTIES ===
+* FavoriteEmoji: 🧟‍♀️
+* LanguagePreference: Español
+* WorkLocation: yucatán
+* HomeLocation: in san juan, puerto rico
+* SlackUserID: U089YKL1T4H
+* Role: Vowel
+* Timezone: ASD
+* SlackDisplayName: roberto
+* UserID: U089YKL1T4H
+=== END USER DATABASE PROPERTIES ===
+
+⭐ This user's preferred name is: burning ⭐
+
+=== USER PROFILE CONTENT ===
+
+## Instructions
+When I say "remember X", store it under Known Facts
+When I ask "what do you remember about me?", return all facts
+When I say "my new project is Y", replace the Projects list
+When I say "add project Z", append to the Projects list
+
+## Preferences
+If we are discussing history, answer like an obnoxious, raunchy professor.
+In Slack threads, remind me to document outcomes in Notion
+If we are discussing pirates, answer like a pirate
+If we are discussing music, write the answer like rap lyrics
+if we are discussing film or television, start the answer with “SELLOUT!!!”
+
+## Known Facts
+to drink Piña Coladas with Ketchup in them
+Juan Luis Guerra y 440,
+Meatloaf is KING
+Background in film and tech
+Likes AI tools that integrate with Slack and Gmail
+
+## Projects
+ChatDSJ Bot
+VibeCode AI Assistant
+Slackbot for Stacey Hub
+PR Legislative Tracker
+Location Information
+Work Location: [WorkLocation property] yucatán
+=== END USER PROFILE CONTENT ===
+
+REMINDER: Always respect this user's stated preferences in your responses.
+
+
+2025-05-14 09:17:35.486 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-14 09:17:35.487 | INFO     | handler.openai_service:get_completion_async:156 - Sending 681 tokens to OpenAI async. Model: gpt-4o
+2025-05-14 09:17:43.782 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 713 chars):
+Oh, burning, you want to know how the US Civil War ended, do ya? Grab your fancy britches and prepare for a wild ride down history lane! The whole shebang wrapped up when General Robert E. Lee, the Confederate honcho, surrendered to General Ulysses S. Grant of the Union at Appomattox Court House on April 9, 1865. This capitulation essentially marked the end of the bloody conflict. But hold your horses, it wasn't all sunshine and rainbows right after. Guerrilla skirmishes and grumbly pockets of resistance took a while to simmer down. Reconstruction, that grand ol' mess, followed suit as the post-war chore of rebuilding the nation. Now, don't forget to jot all this juicy historical dirt in Notion, eh? 🧟‍♀️
+2025-05-14 09:17:44.189 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1747228664.134159', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1747228664.134159', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': "Oh, burning, you want to know how the US Civil War ended, do ya? Grab your fancy britches and prepare for a wild ride down history lane! The whole shebang wrapped up when General Robert E. Lee, the Confederate honcho, surrendered to General Ulysses S. Grant of the Union at Appomattox Court House on April 9, 1865. This capitulation essentially marked the end of the bloody conflict. But hold your horses, it wasn't all sunshine and rainbows right after. Guerrilla skirmishes and grumbly pockets of resistance took a while to simmer down. Reconstruction, that grand ol' mess, followed suit as the post-war chore of rebuilding the nation. Now, don't forget to jot all this juicy historical dirt in Notion, eh? :female_zombie:", 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_36.jpg', 'image_48': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_48.jpg', 'image_72': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_72.jpg'}, 'deleted': False, 'updated': 1746982106, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1747228640.850849', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'hcW', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': "Oh, burning, you want to know how the US Civil War ended, do ya? Grab your fancy britches and prepare for a wild ride down history lane! The whole shebang wrapped up when General Robert E. Lee, the Confederate honcho, surrendered to General Ulysses S. Grant of the Union at Appomattox Court House on April 9, 1865. This capitulation essentially marked the end of the bloody conflict. But hold your horses, it wasn't all sunshine and rainbows right after. Guerrilla skirmishes and grumbly pockets of resistance took a while to simmer down. Reconstruction, that grand ol' mess, followed suit as the post-war chore of rebuilding the nation. Now, don't forget to jot all this juicy historical dirt in Notion, eh? "}, {'type': 'emoji', 'name': 'female_zombie', 'unicode': '1f9df-200d-2640-fe0f'}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-05-14 09:18:27.525 | INFO     | actions.action_framework:__init__:712 - ActionRouter initialized with 4 actions
+2025-05-14 09:18:27.527 | INFO     | actions.action_framework:_get_action_for_text:726 - Selected action ContextResponseAction for message: <@U08RG89NFK7> what do we know about the film Glor...
+2025-05-14 09:18:27.528 | INFO     | utils.history_manager:extract_search_topic:295 - Extracting search topic from prompt: what do we know about the film Glory?
+2025-05-14 09:18:27.528 | INFO     | utils.history_manager:extract_search_topic:317 - Extracted topic from direct pattern: 'the film glory'
+2025-05-14 09:18:27.528 | INFO     | utils.history_manager:retrieve_and_filter_history:57 - Performing deep historical search for topic: 'the film glory'
+2025-05-14 09:18:27.528 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 2000)...
+2025-05-14 09:18:28.160 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 53 messages from channel C08SJ5EUTPT.
+2025-05-14 09:18:28.165 | INFO     | utils.history_manager:retrieve_and_filter_history:66 - Retrieved 53 main channel messages
+2025-05-14 09:18:28.166 | INFO     | utils.history_manager:retrieve_and_filter_history:106 - Identified 2 thread parent messages to search
+2025-05-14 09:18:28.167 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747154183.175429 (limit: 100)...
+2025-05-14 09:18:28.460 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747154183.175429.
+2025-05-14 09:18:28.460 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747151549.684699 (limit: 100)...
+2025-05-14 09:18:28.702 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 7 messages from thread 1747151549.684699.
+2025-05-14 09:18:28.759 | INFO     | utils.history_manager:retrieve_and_filter_history:127 - Retrieved 17 total messages from 2 threads
+2025-05-14 09:18:28.760 | INFO     | utils.history_manager:retrieve_and_filter_history:147 - Combined into 68 unique messages after deduplication
+2025-05-14 09:18:28.760 | INFO     | utils.history_manager:retrieve_and_filter_history:152 - Filtering messages containing topic: 'the film glory'
+2025-05-14 09:18:28.760 | INFO     | utils.history_manager:find_messages_containing_topic:364 - Searching for topic 'the film glory' in 68 messages
+2025-05-14 09:18:28.760 | INFO     | utils.history_manager:find_messages_containing_topic:421 - 📊 Search results for topic 'the film glory':
+2025-05-14 09:18:28.761 | INFO     | utils.history_manager:find_messages_containing_topic:422 -   - Total matches: 0
+2025-05-14 09:18:28.761 | INFO     | utils.history_manager:find_messages_containing_topic:423 -   - Skipped self-referential messages: 0
+2025-05-14 09:18:28.761 | INFO     | utils.history_manager:find_messages_containing_topic:424 -   - Matches in text field: 0
+2025-05-14 09:18:28.761 | INFO     | utils.history_manager:find_messages_containing_topic:425 -   - Matches only in blocks: 0
+2025-05-14 09:18:28.761 | INFO     | utils.history_manager:find_messages_containing_topic:426 -   - Matches only in attachments: 0
+2025-05-14 09:18:28.761 | INFO     | utils.history_manager:retrieve_and_filter_history:158 - FOUND 0 MESSAGES CONTAINING TOPIC 'the film glory'
+2025-05-14 09:18:28.761 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - Search ratio: 0/68 messages matched
+2025-05-14 09:18:28.762 | WARNING  | utils.history_manager:retrieve_and_filter_history:167 - No matches found for topic 'the film glory'. Trying looser matching...
+2025-05-14 09:18:28.762 | INFO     | utils.history_manager:retrieve_and_filter_history:176 - Trying variation: 'the film glory'
+2025-05-14 09:18:28.762 | INFO     | utils.history_manager:retrieve_and_filter_history:176 - Trying variation: 'The Film Glory'
+2025-05-14 09:18:28.763 | INFO     | utils.history_manager:retrieve_and_filter_history:176 - Trying variation: 'THE FILM GLORY'
+2025-05-14 09:18:28.763 | INFO     | utils.history_manager:retrieve_and_filter_history:290 - Retrieved 0 messages for Deep search for: the film glory
+2025-05-14 09:18:28.764 | INFO     | actions.action_framework:execute:252 - Fetching Notion context for user U089YKL1T4H
+2025-05-14 09:18:28.764 | INFO     | services.cached_notion_service:get_user_page_content:310 - Cache hit for user page content: U089YKL1T4H
+2025-05-14 09:18:28.764 | INFO     | services.cached_notion_service:get_user_page_content:310 - Cache hit for user page content: U089YKL1T4H
+2025-05-14 09:18:28.764 | INFO     | utils.context_builder:get_enhanced_user_context:21 - Building enhanced context for user U089YKL1T4H
+2025-05-14 09:18:28.765 | INFO     | utils.context_builder:get_enhanced_user_context:23 - Using preferred name: burning
+2025-05-14 09:18:28.765 | INFO     | utils.context_builder:get_enhanced_user_context:26 - Page content length: 909 chars
+2025-05-14 09:18:28.765 | INFO     | utils.context_builder:get_enhanced_user_context:89 - Generated enhanced context length: 1822 chars
+2025-05-14 09:18:28.765 | INFO     | actions.action_framework:execute:280 - History retrieval mode: unknown
+2025-05-14 09:18:28.765 | INFO     | actions.action_framework:execute:281 - Retrieved 0 relevant messages
+2025-05-14 09:18:28.765 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-14 09:18:28.766 | WARNING  | handler.openai_service:get_completion_async:151 - 🔍 Full OpenAI prompt:
+USER: === SYSTEM INSTRUCTIONS ===
+You are an assistant embedded in a Slack channel. Your primary job is to answer the user's most recent question directly and concisely. Review the provided message history to understand the immediate context of the user's question. If the user's question is *explicitly about past discussions* in the channel (e.g., 'was X discussed before?', 'what did Y say about Z?'), then you should thoroughly search the history to answer and you MUST prioritize confirming or denying based on the history below. If matching messages are found: - Briefly summarize or quote them. - DO NOT say “no discussion has taken place” if related content appears in any message. Only say the topic was not discussed if there are **truly no relevant mentions** in the full history.
+
+===USER PROMPT ===
+what do we know about the film Glory?
+
+===USER INSTRUCTIONS & PREFERENCES===
+=== IMPORTANT USER PREFERENCES - FOLLOW THESE EXACTLY ===
+* If we are discussing history, answer like an obnoxious, raunchy professor.
+* In Slack threads, remind me to document outcomes in Notion
+* If we are discussing pirates, answer like a pirate
+* If we are discussing music, write the answer like rap lyrics
+* if we are discussing film or television, start the answer with “SELLOUT!!!”
+=== END USER PREFERENCES ===
+
+=== USER DATABASE PROPERTIES ===
+* FavoriteEmoji: 🧟‍♀️
+* LanguagePreference: Español
+* WorkLocation: yucatán
+* HomeLocation: in san juan, puerto rico
+* SlackUserID: U089YKL1T4H
+* Role: Vowel
+* Timezone: ASD
+* SlackDisplayName: roberto
+* UserID: U089YKL1T4H
+=== END USER DATABASE PROPERTIES ===
+
+⭐ This user's preferred name is: burning ⭐
+
+=== USER PROFILE CONTENT ===
+
+## Instructions
+When I say "remember X", store it under Known Facts
+When I ask "what do you remember about me?", return all facts
+When I say "my new project is Y", replace the Projects list
+When I say "add project Z", append to the Projects list
+
+## Preferences
+If we are discussing history, answer like an obnoxious, raunchy professor.
+In Slack threads, remind me to document outcomes in Notion
+If we are discussing pirates, answer like a pirate
+If we are discussing music, write the answer like rap lyrics
+if we are discussing film or television, start the answer with “SELLOUT!!!”
+
+## Known Facts
+to drink Piña Coladas with Ketchup in them
+Juan Luis Guerra y 440,
+Meatloaf is KING
+Background in film and tech
+Likes AI tools that integrate with Slack and Gmail
+
+## Projects
+ChatDSJ Bot
+VibeCode AI Assistant
+Slackbot for Stacey Hub
+PR Legislative Tracker
+Location Information
+Work Location: [WorkLocation property] yucatán
+=== END USER PROFILE CONTENT ===
+
+REMINDER: Always respect this user's stated preferences in your responses.
+
+
+2025-05-14 09:18:28.767 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-14 09:18:28.768 | INFO     | handler.openai_service:get_completion_async:156 - Sending 653 tokens to OpenAI async. Model: gpt-4o
+2025-05-14 09:18:33.301 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 589 chars):
+SELLOUT!!! "Glory" is a film about the 54th Massachusetts Infantry Regiment, one of the first African-American units in the Union Army during the American Civil War. It stars Matthew Broderick, Denzel Washington, Morgan Freeman, and Cary Elwes, and chronicles the challenges and triumphs of these soldiers as they fight for freedom and prove their courage and valor. Denzel Washington gives an unforgettable performance, earning him an Academy Award for Best Supporting Actor. It's a stirring tale that's as much about what it means to be a hero as it is about the brutal realities of war.
+2025-05-14 09:18:33.943 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1747228713.807639', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1747228713.807639', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': 'SELLOUT!!! "Glory" is a film about the 54th Massachusetts Infantry Regiment, one of the first African-American units in the Union Army during the American Civil War. It stars Matthew Broderick, Denzel Washington, Morgan Freeman, and Cary Elwes, and chronicles the challenges and triumphs of these soldiers as they fight for freedom and prove their courage and valor. Denzel Washington gives an unforgettable performance, earning him an Academy Award for Best Supporting Actor. It\'s a stirring tale that\'s as much about what it means to be a hero as it is about the brutal realities of war.', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_36.jpg', 'image_48': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_48.jpg', 'image_72': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_72.jpg'}, 'deleted': False, 'updated': 1746982106, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1747228640.850849', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'kCI', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': 'SELLOUT!!! "Glory" is a film about the 54th Massachusetts Infantry Regiment, one of the first African-American units in the Union Army during the American Civil War. It stars Matthew Broderick, Denzel Washington, Morgan Freeman, and Cary Elwes, and chronicles the challenges and triumphs of these soldiers as they fight for freedom and prove their courage and valor. Denzel Washington gives an unforgettable performance, earning him an Academy Award for Best Supporting Actor. It\'s a stirring tale that\'s as much about what it means to be a hero as it is about the brutal realities of war.'}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-05-14 09:22:54.485 | INFO     | actions.action_framework:__init__:712 - ActionRouter initialized with 4 actions
+2025-05-14 09:22:54.498 | INFO     | actions.action_framework:_get_action_for_text:726 - Selected action ContextResponseAction for message: <@U08RG89NFK7> help...
+2025-05-14 09:22:54.500 | INFO     | utils.history_manager:extract_search_topic:295 - Extracting search topic from prompt: help
+2025-05-14 09:22:54.500 | INFO     | utils.history_manager:extract_search_topic:339 - No topic could be extracted from the prompt
+2025-05-14 09:22:54.500 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747228971.691019 (limit: 100)...
+2025-05-14 09:22:54.738 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 1 messages from thread 1747228971.691019.
+2025-05-14 09:22:54.738 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 50)...
+2025-05-14 09:22:55.145 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 50 messages from channel C08SJ5EUTPT.
+2025-05-14 09:22:55.146 | INFO     | utils.history_manager:retrieve_and_filter_history:290 - Retrieved 50 messages for Recent context
+2025-05-14 09:22:55.351 | INFO     | utils.history_manager:format_history_for_prompt:580 - Formatted message history: 5654 characters
+2025-05-14 09:22:55.352 | INFO     | actions.action_framework:execute:252 - Fetching Notion context for user U089YKL1T4H
+2025-05-14 09:22:56.601 | INFO     | services.cached_notion_service:get_user_page_content:374 - Retrieved Notion page content for user U089YKL1T4H (length: 909)
+2025-05-14 09:22:57.214 | INFO     | services.cached_notion_service:get_user_page_content:310 - Cache hit for user page content: U089YKL1T4H
+2025-05-14 09:22:57.214 | INFO     | utils.context_builder:get_enhanced_user_context:21 - Building enhanced context for user U089YKL1T4H
+2025-05-14 09:22:57.214 | INFO     | utils.context_builder:get_enhanced_user_context:23 - Using preferred name: burning
+2025-05-14 09:22:57.215 | INFO     | utils.context_builder:get_enhanced_user_context:26 - Page content length: 909 chars
+2025-05-14 09:22:57.215 | INFO     | utils.context_builder:get_enhanced_user_context:89 - Generated enhanced context length: 1822 chars
+2025-05-14 09:22:57.215 | INFO     | actions.action_framework:execute:280 - History retrieval mode: unknown
+2025-05-14 09:22:57.215 | INFO     | actions.action_framework:execute:281 - Retrieved 50 relevant messages
+2025-05-14 09:22:57.216 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-14 09:22:57.254 | WARNING  | handler.openai_service:get_completion_async:151 - 🔍 Full OpenAI prompt:
+USER: === SYSTEM INSTRUCTIONS ===
+You are an assistant embedded in a Slack channel. Your primary job is to answer the user's most recent question directly and concisely. Review the provided message history to understand the immediate context of the user's question. If the user's question is *explicitly about past discussions* in the channel (e.g., 'was X discussed before?', 'what did Y say about Z?'), then you should thoroughly search the history to answer and you MUST prioritize confirming or denying based on the history below. If matching messages are found: - Briefly summarize or quote them. - DO NOT say “no discussion has taken place” if related content appears in any message. Only say the topic was not discussed if there are **truly no relevant mentions** in the full history.
+
+===USER PROMPT ===
+help
+
+===CHANNEL HISTORY===
+[[USER]]: roberto: <@U08RG89NFK7> what is 3 times 5?
+[[USER]]: roberto: <@U08RG89NFK7> tell me about a pirate from Puerto Rico
+[[USER]]: roberto: Hey <@U08RG89NFK7> what do we know about the film Dog Day Afternoon?
+[[USER]]: roberto: What do they call me <@U08RG89NFK7> ?
+[[USER]]: roberto: Please summarize this channel <@U08RG89NFK7> 
+[[USER]]: roberto: <@U08RG89NFK7> do Frigidaire stoves require a base for the floor?
+[[USER]]: roberto: <@U08RG89NFK7> can you summarize what roberto has been discussing in the channel  and share an observation for each?
+[[USER]]: roberto: <@U08RG89NFK7> what is a unit test?
+[[USER]]: roberto: <@U08RG89NFK7> we live in a building from 1951 in front of the Condado Beach in San Juan Puerto Rico. How often should the building g receive maintenance for its exterior walls?
+[[USER]]: roberto: <@U08RG89NFK7> have we discussed stoves?
+[[USER]]: roberto: <@U08RG89NFK7> what is pig Latin?
+[[USER]]: roberto: <@U08RG89NFK7> have we discussed films? If so, summarize the discussions
+[[USER]]: roberto: <@U08RG89NFK7> why does it rain so much on San Juan in May?
+[[USER]]: roberto: <@U08RG89NFK7> why does it rain so much on San Juan in May?
+[[USER]]: roberto: <@U08RG89NFK7> summarize the channel as a Shakespearean sonnet.
+[[USER]]: roberto: Hey <@U08RG89NFK7> can you summarize the channel in rhymed verse?
+[[USER]]: roberto: <@U08RG89NFK7> what do you know about me?
+[[USER]]: roberto: <@U08RG89NFK7> what is synthetic Kallie?
+[[USER]]: roberto: Just checking in that you’re still on my friend. <@U08RG89NFK7> what should i focus on tomorrow? 
+[[USER]]: roberto: <@U08RG89NFK7> summarize channel in iambic pentameter.
+[[USER]]: roberto: <@U08RG89NFK7> TODO: Complete milestone report
+[[USER]]: roberto: <@U08RG89NFK7> when did the SuperSonics move to OKC and why?
+[[USER]]: roberto: Good morning <@U08RG89NFK7>. What do you know about my favorite teams?
+[[USER]]: roberto: Hey <@U08RG89NFK7> my new project is ChatDSJ Bot
+[[USER]]: roberto: Hey <@U08RG89NFK7> my new project is ChatDSJ Bot
+[[USER]]: roberto: <@U08RG89NFK7> can you summarize this channel?
+[[USER]]: roberto: <@U08RG89NFK7> doctor, doctor! Can't you see I'm burning, burning?
+[[USER]]: roberto: Hey <@U08RG89NFK7> my new project is ChatDSJ Bot
+[[USER]]: roberto: <@U08RG89NFK7> Fact: Meatloaf is KING
+[[USER]]: roberto: <@U08RG89NFK7> Fact: Meatloaf is KING
+[[USER]]: roberto: <@U08RG89NFK7> list my data
+[[USER]]: roberto: <@U08RG89NFK7> Preferences:
+• I like Juan Luis Guerra y 440,
+• I like to drink Piña Coladas with ketchup in them
+
+[[USER]]: roberto: <@U08RG89NFK7> I like to drink Piña Coladas with Ketchup in them
+[[USER]]: roberto: <@U08RG89NFK7> what do I like?
+[[USER]]: roberto: <@U08RG89NFK7> remember I work in Canada
+[[USER]]: roberto: <@U08RG89NFK7> I work in Canada
+[[USER]]: roberto: <@U08RG89NFK7> Preference: If we are discussing history, answer like an obnoxious, raunchy professor.
+[[USER]]: roberto: <@U08RG89NFK7> remember I work in Canada
+[[USER]]: roberto: <@U08RG89NFK7> remember I work in Cambodia
+[[USER]]: roberto: <@U08RG89NFK7> Remember I work in Mexico
+[[USER]]: roberto: <@U08RG89NFK7> Remember I work in Baltimore
+[[ASSISTANT]]: :white_check_mark: Added to your Known Facts: "I work in Baltimore"
+[[USER]]: roberto: <@U08RG89NFK7> remember I work in Baltimore
+[[USER]]: roberto: Hey <@U08RG89NFK7> remember I work in Yucatán
+[[USER]]: roberto: <@U08RG89NFK7> list preferences
+[[USER]]: roberto: <@U08RG89NFK7> list preferences
+[[USER]]: roberto: <@U08RG89NFK7> Preference: If we are discussing history, answer like an obnoxious, raunchy professor.
+[[USER]]: roberto: <@U08RG89NFK7> Preference: If we are discussing history, answer like an obnoxious, raunchy professor.
+[[USER]]: roberto: <@U08RG89NFK7> how did the US Civil War end?
+[[USER]]: roberto: <@U08RG89NFK7> help
+
+
+===USER INSTRUCTIONS & PREFERENCES===
+=== IMPORTANT USER PREFERENCES - FOLLOW THESE EXACTLY ===
+* If we are discussing history, answer like an obnoxious, raunchy professor.
+* In Slack threads, remind me to document outcomes in Notion
+* If we are discussing pirates, answer like a pirate
+* If we are discussing music, write the answer like rap lyrics
+* if we are discussing film or television, start the answer with “SELLOUT!!!”
+=== END USER PREFERENCES ===
+
+=== USER DATABASE PROPERTIES ===
+* FavoriteEmoji: 🧟‍♀️
+* LanguagePreference: Español
+* WorkLocation: yucatán
+* HomeLocation: in san juan, puerto rico
+* SlackUserID: U089YKL1T4H
+* Role: Vowel
+* Timezone: ASD
+* SlackDisplayName: roberto
+* UserID: U089YKL1T4H
+=== END USER DATABASE PROPERTIES ===
+
+⭐ This user's preferred name is: burning ⭐
+
+=== USER PROFILE CONTENT ===
+
+## Instructions
+When I say "remember X", store it under Known Facts
+When I ask "what do you remember about me?", return all facts
+When I say "my new project is Y", replace the Projects list
+When I say "add project Z", append to the Projects list
+
+## Preferences
+If we are discussing history, answer like an obnoxious, raunchy professor.
+In Slack threads, remind me to document outcomes in Notion
+If we are discussing pirates, answer like a pirate
+If we are discussing music, write the answer like rap lyrics
+if we are discussing film or television, start the answer with “SELLOUT!!!”
+
+## Known Facts
+to drink Piña Coladas with Ketchup in them
+Juan Luis Guerra y 440,
+Meatloaf is KING
+Background in film and tech
+Likes AI tools that integrate with Slack and Gmail
+
+## Projects
+ChatDSJ Bot
+VibeCode AI Assistant
+Slackbot for Stacey Hub
+PR Legislative Tracker
+Location Information
+Work Location: [WorkLocation property] yucatán
+=== END USER PROFILE CONTENT ===
+
+REMINDER: Always respect this user's stated preferences in your responses.
+
+
+2025-05-14 09:22:57.255 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-14 09:22:57.258 | INFO     | handler.openai_service:get_completion_async:156 - Sending 2005 tokens to OpenAI async. Model: gpt-4o
+2025-05-14 09:23:00.042 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 30 chars):
+How can I assist you, burning?
+2025-05-14 09:23:00.594 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1747228980.391509', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1747228980.391509', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': 'How can I assist you, burning?', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_36.jpg', 'image_48': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_48.jpg', 'image_72': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_72.jpg'}, 'deleted': False, 'updated': 1746982106, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1747228971.691019', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'OAyZO', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': 'How can I assist you, burning?'}]}]}]}}
+2025-05-14 09:23:24.350 | INFO     | actions.action_framework:__init__:712 - ActionRouter initialized with 4 actions
+2025-05-14 09:23:24.351 | INFO     | actions.action_framework:_get_action_for_text:726 - Selected action ContextResponseAction for message: <@U08RG89NFK7> help me update my preferences...
+2025-05-14 09:23:24.351 | INFO     | utils.history_manager:extract_search_topic:295 - Extracting search topic from prompt: help me update my preferences
+2025-05-14 09:23:24.352 | INFO     | utils.history_manager:extract_search_topic:339 - No topic could be extracted from the prompt
+2025-05-14 09:23:24.352 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747228971.691019 (limit: 100)...
+2025-05-14 09:23:24.607 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 3 messages from thread 1747228971.691019.
+2025-05-14 09:23:24.608 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 50)...
+2025-05-14 09:23:25.170 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 50 messages from channel C08SJ5EUTPT.
+2025-05-14 09:23:25.171 | INFO     | utils.history_manager:retrieve_and_filter_history:290 - Retrieved 52 messages for Recent context
+2025-05-14 09:23:25.172 | INFO     | utils.history_manager:format_history_for_prompt:580 - Formatted message history: 5820 characters
+2025-05-14 09:23:25.172 | INFO     | actions.action_framework:execute:252 - Fetching Notion context for user U089YKL1T4H
+2025-05-14 09:23:25.172 | INFO     | services.cached_notion_service:get_user_page_content:310 - Cache hit for user page content: U089YKL1T4H
+2025-05-14 09:23:25.173 | INFO     | services.cached_notion_service:get_user_page_content:310 - Cache hit for user page content: U089YKL1T4H
+2025-05-14 09:23:25.174 | INFO     | utils.context_builder:get_enhanced_user_context:21 - Building enhanced context for user U089YKL1T4H
+2025-05-14 09:23:25.174 | INFO     | utils.context_builder:get_enhanced_user_context:23 - Using preferred name: burning
+2025-05-14 09:23:25.174 | INFO     | utils.context_builder:get_enhanced_user_context:26 - Page content length: 909 chars
+2025-05-14 09:23:25.174 | INFO     | utils.context_builder:get_enhanced_user_context:89 - Generated enhanced context length: 1822 chars
+2025-05-14 09:23:25.174 | INFO     | actions.action_framework:execute:280 - History retrieval mode: unknown
+2025-05-14 09:23:25.175 | INFO     | actions.action_framework:execute:281 - Retrieved 52 relevant messages
+2025-05-14 09:23:25.175 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-14 09:23:25.178 | WARNING  | handler.openai_service:get_completion_async:151 - 🔍 Full OpenAI prompt:
+USER: === SYSTEM INSTRUCTIONS ===
+You are an assistant embedded in a Slack channel. Your primary job is to answer the user's most recent question directly and concisely. Review the provided message history to understand the immediate context of the user's question. If the user's question is *explicitly about past discussions* in the channel (e.g., 'was X discussed before?', 'what did Y say about Z?'), then you should thoroughly search the history to answer and you MUST prioritize confirming or denying based on the history below. If matching messages are found: - Briefly summarize or quote them. - DO NOT say “no discussion has taken place” if related content appears in any message. Only say the topic was not discussed if there are **truly no relevant mentions** in the full history.
+
+===USER PROMPT ===
+help me update my preferences
+
+===CHANNEL HISTORY===
+[[USER]]: roberto: <@U08RG89NFK7> what is 3 times 5?
+[[USER]]: roberto: <@U08RG89NFK7> tell me about a pirate from Puerto Rico
+[[USER]]: roberto: Hey <@U08RG89NFK7> what do we know about the film Dog Day Afternoon?
+[[USER]]: roberto: What do they call me <@U08RG89NFK7> ?
+[[USER]]: roberto: Please summarize this channel <@U08RG89NFK7> 
+[[USER]]: roberto: <@U08RG89NFK7> do Frigidaire stoves require a base for the floor?
+[[USER]]: roberto: <@U08RG89NFK7> can you summarize what roberto has been discussing in the channel  and share an observation for each?
+[[USER]]: roberto: <@U08RG89NFK7> what is a unit test?
+[[USER]]: roberto: <@U08RG89NFK7> we live in a building from 1951 in front of the Condado Beach in San Juan Puerto Rico. How often should the building g receive maintenance for its exterior walls?
+[[USER]]: roberto: <@U08RG89NFK7> have we discussed stoves?
+[[USER]]: roberto: <@U08RG89NFK7> what is pig Latin?
+[[USER]]: roberto: <@U08RG89NFK7> have we discussed films? If so, summarize the discussions
+[[USER]]: roberto: <@U08RG89NFK7> why does it rain so much on San Juan in May?
+[[USER]]: roberto: <@U08RG89NFK7> why does it rain so much on San Juan in May?
+[[USER]]: roberto: <@U08RG89NFK7> summarize the channel as a Shakespearean sonnet.
+[[USER]]: roberto: Hey <@U08RG89NFK7> can you summarize the channel in rhymed verse?
+[[USER]]: roberto: <@U08RG89NFK7> what do you know about me?
+[[USER]]: roberto: <@U08RG89NFK7> what is synthetic Kallie?
+[[USER]]: roberto: Just checking in that you’re still on my friend. <@U08RG89NFK7> what should i focus on tomorrow? 
+[[USER]]: roberto: <@U08RG89NFK7> summarize channel in iambic pentameter.
+[[USER]]: roberto: <@U08RG89NFK7> TODO: Complete milestone report
+[[USER]]: roberto: <@U08RG89NFK7> when did the SuperSonics move to OKC and why?
+[[USER]]: roberto: Good morning <@U08RG89NFK7>. What do you know about my favorite teams?
+[[USER]]: roberto: Hey <@U08RG89NFK7> my new project is ChatDSJ Bot
+[[USER]]: roberto: Hey <@U08RG89NFK7> my new project is ChatDSJ Bot
+[[USER]]: roberto: <@U08RG89NFK7> can you summarize this channel?
+[[USER]]: roberto: <@U08RG89NFK7> doctor, doctor! Can't you see I'm burning, burning?
+[[USER]]: roberto: Hey <@U08RG89NFK7> my new project is ChatDSJ Bot
+[[USER]]: roberto: <@U08RG89NFK7> Fact: Meatloaf is KING
+[[USER]]: roberto: <@U08RG89NFK7> Fact: Meatloaf is KING
+[[USER]]: roberto: <@U08RG89NFK7> list my data
+[[USER]]: roberto: <@U08RG89NFK7> Preferences:
+• I like Juan Luis Guerra y 440,
+• I like to drink Piña Coladas with ketchup in them
+
+[[USER]]: roberto: <@U08RG89NFK7> I like to drink Piña Coladas with Ketchup in them
+[[USER]]: roberto: <@U08RG89NFK7> what do I like?
+[[USER]]: roberto: <@U08RG89NFK7> remember I work in Canada
+[[USER]]: roberto: <@U08RG89NFK7> I work in Canada
+[[USER]]: roberto: <@U08RG89NFK7> Preference: If we are discussing history, answer like an obnoxious, raunchy professor.
+[[USER]]: roberto: <@U08RG89NFK7> remember I work in Canada
+[[USER]]: roberto: <@U08RG89NFK7> remember I work in Cambodia
+[[USER]]: roberto: <@U08RG89NFK7> Remember I work in Mexico
+[[USER]]: roberto: <@U08RG89NFK7> Remember I work in Baltimore
+[[ASSISTANT]]: :white_check_mark: Added to your Known Facts: "I work in Baltimore"
+[[USER]]: roberto: <@U08RG89NFK7> remember I work in Baltimore
+[[USER]]: roberto: Hey <@U08RG89NFK7> remember I work in Yucatán
+[[USER]]: roberto: <@U08RG89NFK7> list preferences
+[[USER]]: roberto: <@U08RG89NFK7> list preferences
+[[USER]]: roberto: <@U08RG89NFK7> Preference: If we are discussing history, answer like an obnoxious, raunchy professor.
+[[USER]]: roberto: <@U08RG89NFK7> Preference: If we are discussing history, answer like an obnoxious, raunchy professor.
+[[USER]]: roberto: <@U08RG89NFK7> how did the US Civil War end?
+[[USER]]: roberto: <@U08RG89NFK7> help
+[[ASSISTANT]]: How can I assist you, burning?
+[[USER]]: roberto: <@U08RG89NFK7> help me update my preferences
+
+
+===USER INSTRUCTIONS & PREFERENCES===
+=== IMPORTANT USER PREFERENCES - FOLLOW THESE EXACTLY ===
+* If we are discussing history, answer like an obnoxious, raunchy professor.
+* In Slack threads, remind me to document outcomes in Notion
+* If we are discussing pirates, answer like a pirate
+* If we are discussing music, write the answer like rap lyrics
+* if we are discussing film or television, start the answer with “SELLOUT!!!”
+=== END USER PREFERENCES ===
+
+=== USER DATABASE PROPERTIES ===
+* FavoriteEmoji: 🧟‍♀️
+* LanguagePreference: Español
+* WorkLocation: yucatán
+* HomeLocation: in san juan, puerto rico
+* SlackUserID: U089YKL1T4H
+* Role: Vowel
+* Timezone: ASD
+* SlackDisplayName: roberto
+* UserID: U089YKL1T4H
+=== END USER DATABASE PROPERTIES ===
+
+⭐ This user's preferred name is: burning ⭐
+
+=== USER PROFILE CONTENT ===
+
+## Instructions
+When I say "remember X", store it under Known Facts
+When I ask "what do you remember about me?", return all facts
+When I say "my new project is Y", replace the Projects list
+When I say "add project Z", append to the Projects list
+
+## Preferences
+If we are discussing history, answer like an obnoxious, raunchy professor.
+In Slack threads, remind me to document outcomes in Notion
+If we are discussing pirates, answer like a pirate
+If we are discussing music, write the answer like rap lyrics
+if we are discussing film or television, start the answer with “SELLOUT!!!”
+
+## Known Facts
+to drink Piña Coladas with Ketchup in them
+Juan Luis Guerra y 440,
+Meatloaf is KING
+Background in film and tech
+Likes AI tools that integrate with Slack and Gmail
+
+## Projects
+ChatDSJ Bot
+VibeCode AI Assistant
+Slackbot for Stacey Hub
+PR Legislative Tracker
+Location Information
+Work Location: [WorkLocation property] yucatán
+=== END USER PROFILE CONTENT ===
+
+REMINDER: Always respect this user's stated preferences in your responses.
+
+
+2025-05-14 09:23:25.178 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-14 09:23:25.181 | INFO     | handler.openai_service:get_completion_async:156 - Sending 2046 tokens to OpenAI async. Model: gpt-4o
+2025-05-14 09:23:30.687 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 223 chars):
+Sure! Let me help you update your preferences.
+
+Would you like to:
+- Add a new preference
+- Remove a current preference
+- Change a specific preference
+
+Let me know which step you'd like to take, and I'll assist you further!
+2025-05-14 09:23:31.316 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1747229010.963239', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1747229010.963239', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': "Sure! Let me help you update your preferences.\n\nWould you like to:\n- Add a new preference\n- Remove a current preference\n- Change a specific preference\n\nLet me know which step you'd like to take, and I'll assist you further!", 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_36.jpg', 'image_48': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_48.jpg', 'image_72': 'https://avatars.slack-edge.com/2025-05-08/8862160864166_cb15e6bd6ada4898acce_72.jpg'}, 'deleted': False, 'updated': 1746982106, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1747228971.691019', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'Fuhi9', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': "Sure! Let me help you update your preferences.\n\nWould you like to:\n- Add a new preference\n- Remove a current preference\n- Change a specific preference\n\nLet me know which step you'd like to take, and I'll assist you further!"}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}

@@ -46,7 +46,7 @@ class MemoryHandler:
         memory_type, cleaned_content = self.classify_memory_instruction(text)
         
         # If not a memory instruction, return None
-        if memory_type == "unknown" or cleaned_content is None:
+        if memory_type == "unknown" or (cleaned_content is None and not memory_type.startswith("list_")):
             return None
         
         # Handle different types of memory instructions
@@ -64,33 +64,67 @@ class MemoryHandler:
         
         elif memory_type == "known_fact":
             success = self.add_known_fact(slack_user_id, cleaned_content)
-            return "Got it. I've added that to what I know about you." if success else "Sorry, I couldn't remember that right now."
+            return "✅ Added to your Known Facts: \"" + cleaned_content + "\"" if success else "Sorry, I couldn't remember that right now."
         
         elif memory_type == "preference":
             success = self.add_preference(slack_user_id, cleaned_content)
-            return "Understood. I'll keep that in mind for future responses." if success else "Sorry, I couldn't save that preference right now."
+            return "✅ Added to your Preferences: \"" + cleaned_content + "\"" if success else "Sorry, I couldn't save that preference right now."
         
         elif memory_type == "project_replace":
             success = self.replace_projects(slack_user_id, cleaned_content)
-            return "Got it. I've updated your project list." if success else "Sorry, I couldn't update your projects right now."
+            return "✅ Updated your project list to: \"" + cleaned_content + "\"" if success else "Sorry, I couldn't update your projects right now."
         
         elif memory_type == "project_add":
             success = self.add_project(slack_user_id, cleaned_content)
-            return "Got it. I've added that to your project list." if success else "Sorry, I couldn't add that project right now."
+            return "✅ Added to your Projects: \"" + cleaned_content + "\"" if success else "Sorry, I couldn't add that project right now."
         
         elif memory_type == "todo":
             success = self.add_todo(slack_user_id, cleaned_content)
-            return "✅ Added to your TODO list." if success else "Sorry, I couldn't add that to your TODO list right now."
+            return "✅ Added to your TODO list: \"" + cleaned_content + "\"" if success else "Sorry, I couldn't add that to your TODO list right now."
+        
+        # New management commands
+        elif memory_type == "list_facts":
+            facts = self.get_known_facts(slack_user_id)
+            if not facts:
+                return "You don't have any facts stored yet. You can add facts by saying \"Remember [your fact]\" or \"Fact: [your fact]\"."
+            facts_list = "\n".join([f"{i+1}. {fact}" for i, fact in enumerate(facts)])
+            return f"Here are your stored facts:\n\n{facts_list}"
+        
+        elif memory_type == "list_preferences":
+            preferences = self.get_preferences(slack_user_id)
+            if not preferences:
+                return "You don't have any preferences stored yet. You can add preferences by saying \"I prefer [your preference]\" or \"Preference: [your preference]\"."
+            preferences_list = "\n".join([f"{i+1}. {pref}" for i, pref in enumerate(preferences)])
+            return f"Here are your stored preferences:\n\n{preferences_list}"
+        
+        elif memory_type == "list_projects":
+            projects = self.get_projects(slack_user_id)
+            if not projects:
+                return "You don't have any projects stored yet. You can add projects by saying \"Project: [your project]\" or \"Add project [your project]\"."
+            projects_list = "\n".join([f"{i+1}. {proj}" for i, proj in enumerate(projects)])
+            return f"Here are your stored projects:\n\n{projects_list}"
+        
+        elif memory_type == "delete_fact":
+            success = self.delete_known_fact(slack_user_id, cleaned_content)
+            return f"✅ Removed fact about \"{cleaned_content}\" from your Known Facts." if success else f"Sorry, I couldn't find a fact about \"{cleaned_content}\" to remove."
+        
+        elif memory_type == "delete_preference":
+            success = self.delete_preference(slack_user_id, cleaned_content)
+            return f"✅ Removed preference about \"{cleaned_content}\" from your Preferences." if success else f"Sorry, I couldn't find a preference about \"{cleaned_content}\" to remove."
+        
+        elif memory_type == "delete_project":
+            success = self.delete_project(slack_user_id, cleaned_content)
+            return f"✅ Removed project \"{cleaned_content}\" from your Projects." if success else f"Sorry, I couldn't find a project \"{cleaned_content}\" to remove."
         
         return None
-    
+
     def classify_memory_instruction(self, text: str) -> Tuple[str, Optional[str]]:
         """
         Classify a message as a memory instruction type and extract the clean content.
         
         Args:
             text: The message content
-            
+                
         Returns:
             A tuple of (memory_type, cleaned_content) where cleaned_content is None 
             if the message is not a memory instruction
@@ -108,53 +142,97 @@ class MemoryHandler:
             if re.search(pattern, lowered):
                 return "unknown", None  # This is a question, not a memory instruction
         
-        # Enhanced patterns for remembering facts
-        remembering_patterns = [
-            # Classic "remember that..."
-            r"(?:remember|note|keep in mind) (?:that|this)?\s*(.+)",
+        # Direct command checking - these have priority over other patterns
+        if lowered.startswith("fact:") or lowered.startswith("fact "):
+            content = re.sub(r'^fact[:\s]\s*', '', text, flags=re.IGNORECASE).strip()
+            return "known_fact", content
             
-            # "Add this fact..."
-            r"(?:add|store|save|write down)\s+(?:this|that|the following)?\s*(?:fact|information|detail)(?:\s*:|about me)?[:\s]*(.+)",
+        if lowered.startswith("project:") or lowered.startswith("project "):
+            content = re.sub(r'^project[:\s]\s*', '', text, flags=re.IGNORECASE).strip()
+            return "project_add", content
             
-            # Simple statements that should be remembered
-            r"(?:i|I)\s+(?:am|have|like|prefer|want|need|work|live|reside)\s+(.+)"
+        if lowered.startswith("preference:") or lowered.startswith("preference "):
+            content = re.sub(r'^preference[:\s]\s*', '', text, flags=re.IGNORECASE).strip()
+            return "preference", content
+            
+        # List/show commands
+        if re.match(r'^(?:list|show)\s+(?:my\s+)?facts', lowered):
+            return "list_facts", None
+            
+        if re.match(r'^(?:list|show)\s+(?:my\s+)?preferences', lowered):
+            return "list_preferences", None
+            
+        if re.match(r'^(?:list|show)\s+(?:my\s+)?projects', lowered):
+            return "list_projects", None
+        
+        # Delete commands
+        if re.match(r'^(?:remove|delete)\s+(?:my\s+)?fact', lowered):
+            content = re.sub(r'^(?:remove|delete)\s+(?:my\s+)?fact\s+(?:about\s+)?', '', text, flags=re.IGNORECASE).strip()
+            return "delete_fact", content
+            
+        if re.match(r'^(?:remove|delete)\s+(?:my\s+)?preference', lowered):
+            content = re.sub(r'^(?:remove|delete)\s+(?:my\s+)?preference\s+(?:about\s+)?', '', text, flags=re.IGNORECASE).strip()
+            return "delete_preference", content
+            
+        if re.match(r'^(?:remove|delete)\s+(?:my\s+)?project', lowered):
+            content = re.sub(r'^(?:remove|delete)\s+(?:my\s+)?project\s+(?:about\s+)?', '', text, flags=re.IGNORECASE).strip()
+            return "delete_project", content
+        
+        # Remove "remember that" or similar prefixes to get the core content for pattern matching
+        core_content = text
+        remember_prefixes = [
+            r"^remember\s+that\s+",
+            r"^remember\s+",
+            r"^note\s+that\s+",
+            r"^note\s+",
+            r"^keep in mind\s+that\s+",
+            r"^keep in mind\s+"
+        ]
+        for prefix in remember_prefixes:
+            core_content = re.sub(prefix, "", core_content, flags=re.IGNORECASE)
+        
+        # Location patterns - check these before other patterns
+        # These need to check both the original text and the content after "remember"
+        location_patterns = [
+            (r"\bi (?:work|am working)(?:\s+in|\s+at|\s+from|\s+remotely\s+from|\s+remotely\s+in)\s+(.*?)(?:\.|\s*$)", "work_location"),
+            (r"\bi (?:live|reside|am living|am from|was born in|moved to)\s+(.*?)(?:\.|\s*$)", "home_location")
         ]
         
-        # Check all remembering patterns
-        for pattern in remembering_patterns:
-            match = re.search(pattern, text, re.IGNORECASE)
-            if match:
-                return "known_fact", match.group(1).strip()
+        for pattern, location_type in location_patterns:
+            # Check in both original and clean content
+            for check_text in [text, core_content]:
+                match = re.search(pattern, check_text.lower())
+                if match:
+                    location_text = match.group(1).strip()
+                    # Clean up location text
+                    location_text = re.sub(r"^(?:remotely\s+from\s+|from\s+)", "", location_text)
+                    return location_type, location_text
         
-        # Clean up common greetings and bot mentions
-        cleaned_text = text.strip()
-        greeting_patterns = [
-            r"^(?:hey|hello|hi|greetings|yo|hiya)(?:\s+(?:there|you|everyone|all|team|folks))?\s+",
-            r"^(?:good\s+(?:morning|afternoon|evening|day))(?:\s+(?:there|you|everyone|all|team|folks))?\s+"
-        ]
-        
-        for pattern in greeting_patterns:
-            cleaned_text = re.sub(pattern, "", cleaned_text, flags=re.IGNORECASE)
-        
-        # Remove bot mentions
-        bot_mention_pattern = r"<@[A-Z0-9]+>\s*"
-        cleaned_text = re.sub(bot_mention_pattern, "", cleaned_text)
-        cleaned_text = cleaned_text.strip()
-        
-        # TODO command has highest priority
+        # TODO command has highest priority among remaining types
         if re.search(r"^todo:", lowered, re.IGNORECASE) or re.search(r"\btodo:", lowered, re.IGNORECASE):
             todo_match = re.search(r"todo:(.*)", lowered, re.IGNORECASE)
-            todo_text = todo_match.group(1).strip() if todo_match else cleaned_text
+            todo_text = todo_match.group(1).strip() if todo_match else text
             return "todo", todo_text
         
         # Enhanced project-related patterns
         if "my new project is" in lowered:
-            project_text = re.sub(r".*?my new project is\s+", "", cleaned_text, flags=re.IGNORECASE)
+            project_text = re.sub(r".*?my new project is\s+", "", text, flags=re.IGNORECASE)
             return "project_replace", project_text
         
         if re.search(r"\badd project\b", lowered):
-            project_text = re.sub(r".*?\badd project\b\s+", "", cleaned_text, flags=re.IGNORECASE)
+            project_text = re.sub(r".*?\badd project\b\s+", "", text, flags=re.IGNORECASE)
             return "project_add", project_text
+        
+        # If we made it this far and it's a "remember" statement, it's a known fact
+        remember_patterns = [
+            r"^remember\b",
+            r"^note\b",
+            r"^keep in mind\b"
+        ]
+        
+        for pattern in remember_patterns:
+            if re.search(pattern, text, re.IGNORECASE):
+                return "known_fact", core_content
         
         # Enhanced preference patterns
         preference_patterns = [
@@ -169,27 +247,331 @@ class MemoryHandler:
                 match = re.search(r"(?:prefer|like|love|enjoy|hate|dislike|preference is)\s+(.+)", lowered)
                 if match:
                     return "preference", match.group(1).strip()
-                return "preference", cleaned_text
+                return "preference", core_content
         
-        # Location-specific patterns
-        location_match = re.search(r"\bi (?:work|live|am from|was born in|reside in|moved to)\s+(.*?)(?:\.|\s*$)", lowered)
-        if location_match:
-            location_type = "work_location" if "work" in location_match.group(0) else "home_location"
-            location_text = location_match.group(1).strip()
-            
-            # Extract just the location by removing any "remotely from" that might be part of the extracted text
-            if "work" in location_match.group(0):
-                location_text = re.sub(r"^(?:remotely\s+from\s+|from\s+)", "", location_text)
-                clean_fact = location_text
-            else:
-                clean_fact = location_text
-                
-            return location_type, clean_fact
+        # Simple statements that could be added as facts
+        fact_patterns = [
+            r"^i\s+(?:am|have|like|prefer|want|need)\s+(.+)"
+        ]
+        
+        for pattern in fact_patterns:
+            match = re.search(pattern, lowered)
+            if match:
+                return "known_fact", match.group(0)
         
         # No pattern matched
         logger.debug(f"No memory instruction pattern matched for: {text}")
         return "unknown", None
 
+    def get_known_facts(self, slack_user_id: str) -> List[str]:
+        """
+        Get all known facts for a user.
+        
+        Args:
+            slack_user_id: The Slack user ID
+            
+        Returns:
+            List of known facts as strings
+        """
+        page_id = self.notion_service.get_user_page_id(slack_user_id)
+        if not page_id:
+            return []
+        
+        facts = []
+        section_block = self._find_section_block(page_id, SectionType.KNOWN_FACTS.value)
+        if not section_block:
+            return []
+        
+        try:
+            children_response = self.notion_service.client.blocks.children.list(
+                block_id=section_block.get("id")
+            )
+            
+            for block in children_response.get("results", []):
+                if block.get("type") == "bulleted_list_item":
+                    text_content = ""
+                    rich_text = block.get("bulleted_list_item", {}).get("rich_text", [])
+                    
+                    for text_item in rich_text:
+                        text_content += text_item.get("plain_text", "")
+                    
+                    facts.append(text_content)
+            
+            return facts
+        except Exception as e:
+            logger.error(f"Error getting known facts for user {slack_user_id}: {e}", exc_info=True)
+            return []
+
+    def get_preferences(self, slack_user_id: str) -> List[str]:
+        """
+        Get all preferences for a user.
+        
+        Args:
+            slack_user_id: The Slack user ID
+            
+        Returns:
+            List of preferences as strings
+        """
+        page_id = self.notion_service.get_user_page_id(slack_user_id)
+        if not page_id:
+            return []
+        
+        logger.info(f"Getting preferences for user {slack_user_id}, page ID: {page_id}")
+        
+        preferences = []
+        
+        try:
+            # Get all blocks on the page first
+            all_blocks = self.notion_service.client.blocks.children.list(block_id=page_id)
+            blocks = all_blocks.get("results", [])
+            
+            # Find the Preferences section and collect all bulleted list items that follow it
+            in_preferences_section = False
+            
+            for block in blocks:
+                block_type = block.get("type")
+                
+                # Check if this is a heading (potentially the Preferences section)
+                if block_type in ["heading_1", "heading_2", "heading_3"]:
+                    heading_text = ""
+                    rich_text = block.get(block_type, {}).get("rich_text", [])
+                    
+                    for text_item in rich_text:
+                        heading_text += text_item.get("plain_text", "")
+                    
+                    # Found Preferences section - now we'll collect items until the next section
+                    if heading_text == "Preferences":
+                        in_preferences_section = True
+                        logger.debug(f"Found Preferences section")
+                        continue
+                    # If we find another heading and we were in Preferences section, exit the section
+                    elif in_preferences_section:
+                        in_preferences_section = False
+                        logger.debug(f"Exiting Preferences section at heading: {heading_text}")
+                
+                # If we're in the Preferences section, collect bulleted list items
+                elif in_preferences_section and block_type == "bulleted_list_item":
+                    text_content = ""
+                    rich_text = block.get("bulleted_list_item", {}).get("rich_text", [])
+                    
+                    for text_item in rich_text:
+                        text_content += text_item.get("plain_text", "")
+                    
+                    if text_content:
+                        preferences.append(text_content)
+                        logger.debug(f"Found preference: {text_content}")
+                
+            logger.info(f"Retrieved {len(preferences)} preferences for user {slack_user_id}")
+            
+            # If we didn't find any preferences using the section method, try a direct search
+            if not preferences:
+                logger.warning(f"No preferences found in section. Trying direct bullet scan.")
+                preference_section_block = self._find_section_block(page_id, "Preferences")
+                if preference_section_block:
+                    # Find bullets after the preferences heading
+                    section_index = -1
+                    for i, block in enumerate(blocks):
+                        if block.get("id") == preference_section_block.get("id"):
+                            section_index = i
+                            break
+                    
+                    if section_index >= 0:
+                        # Look at the blocks after the section heading
+                        for i in range(section_index + 1, len(blocks)):
+                            block = blocks[i]
+                            if block.get("type") == "heading_2":  # Next section
+                                break
+                            
+                            if block.get("type") == "bulleted_list_item":
+                                text_content = ""
+                                rich_text = block.get("bulleted_list_item", {}).get("rich_text", [])
+                                
+                                for text_item in rich_text:
+                                    text_content += text_item.get("plain_text", "")
+                                
+                                if text_content:
+                                    preferences.append(text_content)
+                                    logger.debug(f"Found preference (direct scan): {text_content}")
+            
+            return preferences
+        except Exception as e:
+            logger.error(f"Error getting preferences for user {slack_user_id}: {e}", exc_info=True)
+            return []
+    
+    def get_projects(self, slack_user_id: str) -> List[str]:
+        """
+        Get all projects for a user.
+        
+        Args:
+            slack_user_id: The Slack user ID
+            
+        Returns:
+            List of projects as strings
+        """
+        page_id = self.notion_service.get_user_page_id(slack_user_id)
+        if not page_id:
+            return []
+        
+        projects = []
+        section_block = self._find_section_block(page_id, SectionType.PROJECTS.value)
+        if not section_block:
+            return []
+        
+        try:
+            children_response = self.notion_service.client.blocks.children.list(
+                block_id=section_block.get("id")
+            )
+            
+            for block in children_response.get("results", []):
+                if block.get("type") == "bulleted_list_item":
+                    text_content = ""
+                    rich_text = block.get("bulleted_list_item", {}).get("rich_text", [])
+                    
+                    for text_item in rich_text:
+                        text_content += text_item.get("plain_text", "")
+                    
+                    projects.append(text_content)
+            
+            return projects
+        except Exception as e:
+            logger.error(f"Error getting projects for user {slack_user_id}: {e}", exc_info=True)
+            return []
+
+    def delete_known_fact(self, slack_user_id: str, fact_fragment: str) -> bool:
+        """
+        Delete a known fact containing the given fragment.
+        
+        Args:
+            slack_user_id: The Slack user ID
+            fact_fragment: A text fragment to identify the fact
+            
+        Returns:
+            True if successful, False otherwise
+        """
+        page_id = self.notion_service.get_user_page_id(slack_user_id)
+        if not page_id:
+            return False
+        
+        section_block = self._find_section_block(page_id, SectionType.KNOWN_FACTS.value)
+        if not section_block:
+            return False
+        
+        try:
+            children_response = self.notion_service.client.blocks.children.list(
+                block_id=section_block.get("id")
+            )
+            
+            for block in children_response.get("results", []):
+                if block.get("type") == "bulleted_list_item":
+                    text_content = ""
+                    rich_text = block.get("bulleted_list_item", {}).get("rich_text", [])
+                    
+                    for text_item in rich_text:
+                        text_content += text_item.get("plain_text", "")
+                    
+                    if fact_fragment.lower() in text_content.lower():
+                        self.notion_service.client.blocks.delete(block_id=block.get("id"))
+                        
+                        # Invalidate cache
+                        self.notion_service.invalidate_user_cache(slack_user_id)
+                        
+                        return True
+            
+            return False
+        except Exception as e:
+            logger.error(f"Error deleting known fact for user {slack_user_id}: {e}", exc_info=True)
+            return False
+
+    def delete_preference(self, slack_user_id: str, preference_fragment: str) -> bool:
+        """
+        Delete a preference containing the given fragment.
+        
+        Args:
+            slack_user_id: The Slack user ID
+            preference_fragment: A text fragment to identify the preference
+            
+        Returns:
+            True if successful, False otherwise
+        """
+        page_id = self.notion_service.get_user_page_id(slack_user_id)
+        if not page_id:
+            return False
+        
+        section_block = self._find_section_block(page_id, SectionType.PREFERENCES.value)
+        if not section_block:
+            return False
+        
+        try:
+            children_response = self.notion_service.client.blocks.children.list(
+                block_id=section_block.get("id")
+            )
+            
+            for block in children_response.get("results", []):
+                if block.get("type") == "bulleted_list_item":
+                    text_content = ""
+                    rich_text = block.get("bulleted_list_item", {}).get("rich_text", [])
+                    
+                    for text_item in rich_text:
+                        text_content += text_item.get("plain_text", "")
+                    
+                    if preference_fragment.lower() in text_content.lower():
+                        self.notion_service.client.blocks.delete(block_id=block.get("id"))
+                        
+                        # Invalidate cache
+                        self.notion_service.invalidate_user_cache(slack_user_id)
+                        
+                        return True
+            
+            return False
+        except Exception as e:
+            logger.error(f"Error deleting preference for user {slack_user_id}: {e}", exc_info=True)
+            return False
+
+    def delete_project(self, slack_user_id: str, project_fragment: str) -> bool:
+        """
+        Delete a project containing the given fragment.
+        
+        Args:
+            slack_user_id: The Slack user ID
+            project_fragment: A text fragment to identify the project
+            
+        Returns:
+            True if successful, False otherwise
+        """
+        page_id = self.notion_service.get_user_page_id(slack_user_id)
+        if not page_id:
+            return False
+        
+        section_block = self._find_section_block(page_id, SectionType.PROJECTS.value)
+        if not section_block:
+            return False
+        
+        try:
+            children_response = self.notion_service.client.blocks.children.list(
+                block_id=section_block.get("id")
+            )
+            
+            for block in children_response.get("results", []):
+                if block.get("type") == "bulleted_list_item":
+                    text_content = ""
+                    rich_text = block.get("bulleted_list_item", {}).get("rich_text", [])
+                    
+                    for text_item in rich_text:
+                        text_content += text_item.get("plain_text", "")
+                    
+                    if project_fragment.lower() in text_content.lower():
+                        self.notion_service.client.blocks.delete(block_id=block.get("id"))
+                        
+                        # Invalidate cache
+                        self.notion_service.invalidate_user_cache(slack_user_id)
+                        
+                        return True
+            
+            return False
+        except Exception as e:
+            logger.error(f"Error deleting project for user {slack_user_id}: {e}", exc_info=True)
+            return False
+    
     def update_user_name(self, slack_user_id: str, name: str) -> bool:
         """
         Update a user's preferred name.
@@ -292,61 +674,101 @@ class MemoryHandler:
                 if not page_id:
                     return False
             
-            # 3. Update the property
+            # 3. Update the property in the database
             properties_update = {
                 property_name: {"rich_text": [{"type": "text", "text": {"content": location}}]}
             }
             self.notion_service.client.pages.update(page_id=page_id, properties=properties_update)
             
-            # 4. Find and update the location in the Location Information section
-            location_section_block = self._find_section_block(page_id, SectionType.LOCATION_INFO.value)
+            # 4. Find or create the Location Information section
+            location_section_block = self.ensure_section_exists(page_id, SectionType.LOCATION_INFO.value)
             if not location_section_block:
-                # Create the Location Information section if it doesn't exist
-                location_section_block = self._create_section(page_id, SectionType.LOCATION_INFO.value)
+                logger.error(f"Failed to create Location Information section for user {slack_user_id}")
+                return False
             
-            # Find the location item in the Location Information section
+            # 5. Prepare the location text for display
             location_label = "Work Location:" if location_type == "work" else "Home Location:"
-            location_block = self._find_text_block_in_section(
-                page_id, 
-                location_section_block.get("id"), 
-                location_label, 
-                exact_match=False
-            )
-            
-            if location_block:
-                # Update the existing location block
-                self.notion_service.client.blocks.update(
-                    block_id=location_block.get("id"),
-                    bulleted_list_item={
-                        "rich_text": [{
-                            "type": "text",
-                            "text": {"content": f"{location_label} [{property_name} property]"}
-                        }]
-                    }
-                )
-            else:
-                # Add a new location block
-                self.notion_service.client.blocks.children.append(
-                    block_id=location_section_block.get("id"),
-                    children=[{
-                        "object": "block",
-                        "type": "bulleted_list_item",
-                        "bulleted_list_item": {
-                            "rich_text": [{
-                                "type": "text",
-                                "text": {"content": f"{location_label} [{property_name} property]"}
-                            }]
-                        }
+            location_bullet = {
+                "object": "block",
+                "type": "bulleted_list_item",
+                "bulleted_list_item": {
+                    "rich_text": [{
+                        "type": "text",
+                        "text": {"content": f"{location_label} [{property_name} property] {location}"}
                     }]
+                }
+            }
+            
+            # 6. Find existing location bullets
+            existing_location_bullets = []
+            try:
+                # Get all blocks on the page
+                page_blocks = self.notion_service.client.blocks.children.list(block_id=page_id)
+                
+                # Find the Location Information section to get its position
+                section_index = -1
+                for i, block in enumerate(page_blocks.get("results", [])):
+                    if block.get("id") == location_section_block.get("id"):
+                        section_index = i
+                        break
+                
+                if section_index >= 0:
+                    # Look for location bullets after the section header
+                    for i in range(section_index + 1, len(page_blocks.get("results", []))):
+                        block = page_blocks.get("results")[i]
+                        if block.get("type") == "heading_2":  # Found next section
+                            break
+                        
+                        if block.get("type") == "bulleted_list_item":
+                            text_content = ""
+                            rich_text = block.get("bulleted_list_item", {}).get("rich_text", [])
+                            for text_item in rich_text:
+                                text_content += text_item.get("plain_text", "")
+                            
+                            # Check if this is our location type
+                            current_label = "Work Location:" if location_type == "work" else "Home Location:"
+                            if current_label in text_content:
+                                # Found a matching location bullet
+                                existing_location_bullets.append((i, block))
+            except Exception as e:
+                logger.warning(f"Error finding existing location bullets: {e}")
+            
+            # 7. Delete existing location bullets for this type
+            for _, block in existing_location_bullets:
+                try:
+                    self.notion_service.client.blocks.delete(block_id=block.get("id"))
+                except Exception as e:
+                    logger.warning(f"Error deleting existing location bullet: {e}")
+            
+            # 8. Add the new location bullet after the section heading
+            try:
+                # Insert after the section heading
+                self.notion_service.client.blocks.children.append(
+                    block_id=page_id,  # Append to the page
+                    children=[location_bullet],
+                    after=location_section_block.get("id")  # After the section heading
                 )
+            except Exception as e:
+                logger.warning(f"Error adding location bullet after section: {e}")
+                
+                # Fallback - try adding at the page level without positioning
+                try:
+                    self.notion_service.client.blocks.children.append(
+                        block_id=page_id,
+                        children=[location_bullet]
+                    )
+                except Exception as e2:
+                    logger.error(f"Error adding location bullet to page: {e2}")
+                    # The property was still updated, so don't return False here
             
             # Invalidate cache
             self.notion_service.invalidate_user_cache(slack_user_id)
             
+            # Return success if we at least updated the property
             return True
         
         except Exception as e:
-            logger.error(f"Error updating location for {slack_user_id}: {e}", exc_info=True)
+            logger.error(f"Error updating location for user {slack_user_id}: {e}", exc_info=True)
             return False
     
     def add_known_fact(self, slack_user_id: str, fact_text: str) -> bool:
@@ -374,99 +796,64 @@ class MemoryHandler:
                 if not page_id:
                     return False
             
-            # First, check if the Known Facts section already exists
-            known_facts_section = self._find_section_block(page_id, "Known Facts")
-            
-            if known_facts_section:
-                # Add to existing Known Facts section
-                try:
-                    # Get existing children of this section to see if we can append
-                    children_response = self.notion_service.client.blocks.children.list(
-                        block_id=known_facts_section.get("id")
-                    )
-                    
-                    # Create a new bullet point after the section header
-                    self.notion_service.client.blocks.children.append(
-                        block_id=page_id,  # Append to page instead of section
-                        children=[
-                            {
-                                "object": "block",
-                                "type": "bulleted_list_item",
-                                "bulleted_list_item": {
-                                    "rich_text": [{
-                                        "type": "text",
-                                        "text": {"content": fact_text}
-                                    }]
-                                }
-                            }
-                        ]
-                    )
-                    
-                    logger.info(f"Added fact to Known Facts section for user {slack_user_id}: {fact_text}")
-                except Exception as section_error:
-                    # If we can't append to the section (which seems to be the issue), create a new bullet directly on the page
-                    logger.warning(f"Could not append to Known Facts section: {section_error}. Trying alternative approach.")
-                    
-                    # Add directly to the page
-                    self.notion_service.client.blocks.children.append(
-                        block_id=page_id,
-                        children=[
-                            {
-                                "object": "block",
-                                "type": "bulleted_list_item",
-                                "bulleted_list_item": {
-                                    "rich_text": [{
-                                        "type": "text",
-                                        "text": {"content": fact_text}
-                                    }]
-                                }
-                            }
-                        ]
-                    )
-                    
-                    logger.info(f"Added fact directly to page for user {slack_user_id}: {fact_text}")
-            else:
-                # Create a new Known Facts section
-                logger.info(f"Creating new Known Facts section for user {slack_user_id}")
+            # Ensure the Known Facts section exists
+            known_facts_section = self.ensure_section_exists(page_id, SectionType.KNOWN_FACTS.value)
+            if not known_facts_section:
+                logger.error(f"Failed to create Known Facts section for user {slack_user_id}")
+                return False
                 
-                try:
-                    # Add section header and first bullet
+            # Create a new bullet for the fact
+            new_fact_block = {
+                "object": "block",
+                "type": "bulleted_list_item",
+                "bulleted_list_item": {
+                    "rich_text": [{
+                        "type": "text",
+                        "text": {"content": fact_text}
+                    }]
+                }
+            }
+            
+            # Try to insert the fact after the heading
+            try:
+                page_blocks = self.notion_service.client.blocks.children.list(block_id=page_id)
+                insert_after_id = None
+                
+                for i, block in enumerate(page_blocks.get("results", [])):
+                    if block.get("id") == known_facts_section.get("id"):
+                        insert_after_id = block.get("id")
+                        break
+                
+                if insert_after_id:
+                    # Insert directly after the heading in the page
                     self.notion_service.client.blocks.children.append(
                         block_id=page_id,
-                        children=[
-                            {
-                                "object": "block",
-                                "type": "heading_2",
-                                "heading_2": {
-                                    "rich_text": [{
-                                        "type": "text",
-                                        "text": {"content": "Known Facts"}
-                                    }]
-                                }
-                            },
-                            {
-                                "object": "block",
-                                "type": "bulleted_list_item",
-                                "bulleted_list_item": {
-                                    "rich_text": [{
-                                        "type": "text",
-                                        "text": {"content": fact_text}
-                                    }]
-                                }
-                            }
-                        ]
+                        children=[new_fact_block],
+                        after=insert_after_id
                     )
-                    
-                    logger.info(f"Created Known Facts section with first fact: {fact_text}")
-                except Exception as create_error:
-                    logger.error(f"Failed to create Known Facts section: {create_error}", exc_info=True)
+                else:
+                    # Fallback if we can't find the section
+                    self.notion_service.client.blocks.children.append(
+                        block_id=page_id,
+                        children=[new_fact_block]
+                    )
+            except Exception as e:
+                logger.warning(f"Failed to append fact after section: {e}")
+                
+                # Fallback - try adding directly to the page without positioning
+                try:
+                    self.notion_service.client.blocks.children.append(
+                        block_id=page_id,
+                        children=[new_fact_block]
+                    )
+                except Exception as e2:
+                    logger.error(f"Failed to add fact to page: {e2}")
                     return False
             
             # Invalidate cache
             self.notion_service.invalidate_user_cache(slack_user_id)
             
             return True
-            
         except Exception as e:
             logger.error(f"Error adding known fact for user {slack_user_id}: {e}", exc_info=True)
             return False
@@ -496,43 +883,76 @@ class MemoryHandler:
                 if not page_id:
                     return False
             
-            # 2. Find the Preferences section
-            preferences_section_block = self._find_section_block(page_id, SectionType.PREFERENCES.value)
+            # 2. Ensure the Preferences section exists
+            preferences_section_block = self.ensure_section_exists(page_id, SectionType.PREFERENCES.value)
             if not preferences_section_block:
-                # Create the Preferences section if it doesn't exist
-                preferences_section_block = self._create_section(page_id, SectionType.PREFERENCES.value)
+                logger.error(f"Failed to create Preferences section for user {slack_user_id}")
+                return False
             
-            # 3. Add the new preference as a bullet point
-            self.notion_service.client.blocks.children.append(
-                block_id=preferences_section_block.get("id"),
-                children=[{
-                    "object": "block",
-                    "type": "bulleted_list_item",
-                    "bulleted_list_item": {
-                        "rich_text": [{
-                            "type": "text",
-                            "text": {"content": preference}
-                        }]
-                    }
-                }]
-            )
+            # 3. Create the new preference bullet point
+            new_preference_block = {
+                "object": "block",
+                "type": "bulleted_list_item",
+                "bulleted_list_item": {
+                    "rich_text": [{
+                        "type": "text",
+                        "text": {"content": preference}
+                    }]
+                }
+            }
             
-            # Invalidate cache
+            # 4. Try to insert the preference after the section heading
+            try:
+                page_blocks = self.notion_service.client.blocks.children.list(block_id=page_id)
+                insert_after_id = None
+                
+                for i, block in enumerate(page_blocks.get("results", [])):
+                    if block.get("id") == preferences_section_block.get("id"):
+                        insert_after_id = block.get("id")
+                        break
+                
+                if insert_after_id:
+                    # Insert directly after the heading in the page
+                    self.notion_service.client.blocks.children.append(
+                        block_id=page_id,  # Insert at page level, not heading level
+                        children=[new_preference_block],
+                        after=insert_after_id  # Insert after the heading
+                    )
+                else:
+                    # Fallback if we can't find the section
+                    self.notion_service.client.blocks.children.append(
+                        block_id=page_id,
+                        children=[new_preference_block]
+                    )
+            except Exception as e:
+                logger.warning(f"Failed to append preference after section: {e}")
+                
+                # Fallback - try adding directly to the page without positioning
+                try:
+                    self.notion_service.client.blocks.children.append(
+                        block_id=page_id,
+                        children=[new_preference_block]
+                    )
+                except Exception as e2:
+                    logger.error(f"Failed to add preference to page: {e2}")
+                    return False
+            
+            # 5. Invalidate cache
             self.notion_service.invalidate_user_cache(slack_user_id)
             
             return True
-        
+            
         except Exception as e:
             logger.error(f"Error adding preference for {slack_user_id}: {e}", exc_info=True)
             return False
     
-    def replace_projects(self, slack_user_id: str, project: str) -> bool:
+    def replace_projects(self, slack_user_id: str, project_name: str) -> bool:
         """
-        Replace the Projects section with a new project.
+        Replace the projects section with a new project.
         
         Args:
             slack_user_id: The Slack user ID
-            project: The new project
+            project_name: The name of the new project
             
         Returns:
             True if successful, False otherwise
@@ -553,23 +973,37 @@ class MemoryHandler:
             
             # 2. Find the Projects section
             projects_section_block = self._find_section_block(page_id, SectionType.PROJECTS.value)
+            
+            # If no Projects section exists, create it
             if not projects_section_block:
-                # Create the Projects section if it doesn't exist
-                projects_section_block = self._create_section(page_id, SectionType.PROJECTS.value)
-                
-                # Add the new project as a bullet point
-                self.notion_service.client.blocks.children.append(
-                    block_id=projects_section_block.get("id"),
-                    children=[{
+                # Create a new Projects section with a header and bullet point
+                new_blocks = [
+                    {
+                        "object": "block",
+                        "type": "heading_2",
+                        "heading_2": {
+                            "rich_text": [{
+                                "type": "text",
+                                "text": {"content": SectionType.PROJECTS.value}
+                            }]
+                        }
+                    },
+                    {
                         "object": "block",
                         "type": "bulleted_list_item",
                         "bulleted_list_item": {
                             "rich_text": [{
                                 "type": "text",
-                                "text": {"content": project}
+                                "text": {"content": project_name}
                             }]
                         }
-                    }]
+                    }
+                ]
+                
+                # Add the new section directly to the page
+                self.notion_service.client.blocks.children.append(
+                    block_id=page_id,
+                    children=new_blocks
                 )
                 
                 # Invalidate cache
@@ -577,37 +1011,122 @@ class MemoryHandler:
                 
                 return True
             
-            # 3. Delete all existing projects
-            children_response = self.notion_service.client.blocks.children.list(
-                block_id=projects_section_block.get("id")
-            )
+            # 3. If the Projects section exists, get its children
+            try:
+                children_response = self.notion_service.client.blocks.children.list(
+                    block_id=projects_section_block.get("id")
+                )
+                
+                # 4. Delete all existing project bullet points
+                for block in children_response.get("results", []):
+                    if block.get("type") == "bulleted_list_item":
+                        self.notion_service.client.blocks.delete(block_id=block.get("id"))
+            except Exception as e:
+                # If we can't get children of the section (which is the issue from the error),
+                # we need a different approach
+                logger.warning(f"Cannot get children of Projects section: {e}")
+                
+                # Try to delete the section and recreate it
+                try:
+                    self.notion_service.client.blocks.delete(block_id=projects_section_block.get("id"))
+                    
+                    # Add new section after deletion
+                    new_blocks = [
+                        {
+                            "object": "block",
+                            "type": "heading_2",
+                            "heading_2": {
+                                "rich_text": [{
+                                    "type": "text",
+                                    "text": {"content": SectionType.PROJECTS.value}
+                                }]
+                            }
+                        },
+                        {
+                            "object": "block",
+                            "type": "bulleted_list_item",
+                            "bulleted_list_item": {
+                                "rich_text": [{
+                                    "type": "text",
+                                    "text": {"content": project_name}
+                                }]
+                            }
+                        }
+                    ]
+                    
+                    # Add the new section directly to the page
+                    self.notion_service.client.blocks.children.append(
+                        block_id=page_id,
+                        children=new_blocks
+                    )
+                    
+                    # Invalidate cache
+                    self.notion_service.invalidate_user_cache(slack_user_id)
+                    
+                    return True
+                except Exception as delete_error:
+                    logger.error(f"Failed to delete and recreate Projects section: {delete_error}")
+                    return False
             
-            for block in children_response.get("results", []):
-                if block.get("type") == "bulleted_list_item":
-                    self.notion_service.client.blocks.delete(block_id=block.get("id"))
-            
-            # 4. Add the new project as a bullet point
-            self.notion_service.client.blocks.children.append(
-                block_id=projects_section_block.get("id"),
-                children=[{
-                    "object": "block",
-                    "type": "bulleted_list_item",
-                    "bulleted_list_item": {
-                        "rich_text": [{
-                            "type": "text",
-                            "text": {"content": project}
-                        }]
+            # 5. Add the new project as a bullet point directly after the heading
+            # First find where to insert the new bullet
+            try:
+                page_blocks = self.notion_service.client.blocks.children.list(block_id=page_id)
+                insert_after_id = None
+                
+                for i, block in enumerate(page_blocks.get("results", [])):
+                    if block.get("id") == projects_section_block.get("id"):
+                        insert_after_id = block.get("id")
+                        break
+                
+                if insert_after_id:
+                    # Insert the new bullet point directly after the heading in the page
+                    new_bullet = {
+                        "object": "block",
+                        "type": "bulleted_list_item",
+                        "bulleted_list_item": {
+                            "rich_text": [{
+                                "type": "text",
+                                "text": {"content": project_name}
+                            }]
+                        }
                     }
-                }]
-            )
+                    
+                    self.notion_service.client.blocks.children.append(
+                        block_id=page_id,  # Insert directly in the page, not the heading
+                        children=[new_bullet],
+                        after=insert_after_id  # Insert after the heading
+                    )
+                else:
+                    # Fallback if we can't find the section in the page blocks
+                    logger.warning("Couldn't locate projects section in page blocks")
+                    
+                    # Add new bullet directly to the page
+                    new_bullet = {
+                        "object": "block",
+                        "type": "bulleted_list_item",
+                        "bulleted_list_item": {
+                            "rich_text": [{
+                                "type": "text",
+                                "text": {"content": project_name}
+                            }]
+                        }
+                    }
+                    
+                    self.notion_service.client.blocks.children.append(
+                        block_id=page_id,
+                        children=[new_bullet]
+                    )
+            except Exception as e:
+                logger.error(f"Failed to add new project bullet: {e}")
+                return False
             
             # Invalidate cache
             self.notion_service.invalidate_user_cache(slack_user_id)
             
             return True
-        
         except Exception as e:
-            logger.error(f"Error replacing projects for {slack_user_id}: {e}", exc_info=True)
+            logger.error(f"Error replacing projects for user {slack_user_id}: {e}", exc_info=True)
             return False
     
     def add_project(self, slack_user_id: str, project: str) -> bool:
@@ -744,6 +1263,49 @@ class MemoryHandler:
         
         return None
     
+    def ensure_section_exists(self, page_id: str, section_name: str) -> Dict[str, Any]:
+        """
+        Ensure a section exists, creating it if necessary.
+        
+        Args:
+            page_id: The page ID
+            section_name: The name of the section
+            
+        Returns:
+            The section block
+        """
+        # First check if the section exists
+        section_block = self._find_section_block(page_id, section_name)
+        if section_block:
+            return section_block
+        
+        # Create a new section
+        try:
+            # Add a new heading for the section
+            result = self.notion_service.client.blocks.children.append(
+                block_id=page_id,
+                children=[{
+                    "object": "block",
+                    "type": "heading_2",
+                    "heading_2": {
+                        "rich_text": [{
+                            "type": "text",
+                            "text": {"content": section_name}
+                        }]
+                    }
+                }]
+            )
+            
+            # Return the newly created section
+            if result.get("results"):
+                return result["results"][0]
+            
+            # If we can't get the result directly, try to find it again
+            return self._find_section_block(page_id, section_name)
+        except Exception as e:
+            logger.error(f"Error creating section {section_name}: {e}", exc_info=True)
+            return None
+
     def _create_section(self, page_id: str, section_name: str) -> Dict[str, Any]:
         """
         Create a section block.
@@ -772,3 +1334,76 @@ class MemoryHandler:
         
         # Return the created block
         return result.get("results", [{}])[0]
+    
+    def get_help_text(self) -> str:
+        """
+        Get help text explaining how to use memory commands.
+        
+        Returns:
+            Formatted help text
+        """
+        help_text = """
+    Here's how you can manage your information with me:
+
+    **Adding Information:**
+    - "Remember I like coffee" - Add to Known Facts
+    - "Fact: I prefer tea" - Add to Known Facts
+    - "I work in New York" - Add location information
+    - "My new project is Website Redesign" - Replace all projects
+    - "Project: Mobile App Development" - Add a project
+    - "I prefer short answers" - Add to Preferences
+    - "Preference: Use bullet points" - Add to Preferences
+    - "TODO: Call John tomorrow" - Add a TODO item
+
+    **Viewing Information:**
+    - "Show my facts" - List all Known Facts
+    - "List my preferences" - List all Preferences
+    - "Show my projects" - List all Projects
+
+    **Deleting Information:**
+    - "Delete fact about coffee" - Remove a fact
+    - "Remove preference about bullet points" - Remove a preference
+    - "Delete project Website Redesign" - Remove a project
+
+    I'll remember this information and use it to personalize our conversations.
+    """
+        return help_text
+    
+    def get_example_for_command(self, attempted_command: str) -> str:
+        """
+        Get a helpful example based on what the user attempted to do.
+        
+        Args:
+            attempted_command: The command the user attempted
+            
+        Returns:
+            Example text
+        """
+        lowered = attempted_command.lower()
+        
+        # Project examples
+        if "project" in lowered:
+            return "Here are some examples:\n• \"Project: Mobile App Development\"\n• \"My new project is Website Redesign\"\n• \"Add project Database Migration\""
+        
+        # Fact examples
+        if any(word in lowered for word in ["fact", "remember", "know"]):
+            return "Here are some examples:\n• \"Remember I drink coffee\"\n• \"Fact: I have a cat named Max\"\n• \"I live in New York\""
+        
+        # Preference examples
+        if any(word in lowered for word in ["prefer", "like", "don't like", "hate"]):
+            return "Here are some examples:\n• \"I prefer short answers\"\n• \"Preference: Use bullet points\"\n• \"I like technical explanations\""
+        
+        # TODO examples
+        if "todo" in lowered:
+            return "Here are some examples:\n• \"TODO: Call John tomorrow\"\n• \"TODO: Finish report by Friday\""
+        
+        # Deletion examples
+        if any(word in lowered for word in ["delete", "remove"]):
+            return "Here are some examples:\n• \"Delete fact about coffee\"\n• \"Remove preference about bullet points\"\n• \"Delete project Website Redesign\""
+        
+        # List examples
+        if any(word in lowered for word in ["list", "show", "view"]):
+            return "Here are some examples:\n• \"Show my facts\"\n• \"List my preferences\"\n• \"Show my projects\""
+        
+        # Default example
+        return "Try saying \"help\" to see all available commands."
