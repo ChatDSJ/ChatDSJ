@@ -1,6 +1,22 @@
-SLACK_BOT_TOKEN=xoxb-XXXXXXXXX
-SLACK_SIGNING_SECRET=XXXXXXXX
-SLACK_APP_TOKEN=xapp-XXXXXXXXX
-OPENAI_API_KEY=sk-XXXXXXX
-NOTION_USER_DB_ID=XXXXXXXXXXX
-NOTION_API_TOKEN=ntn_2XXXXXXXXX
+# Slack Configuration
+SLACK_BOT_TOKEN=xoxb-your-slack-bot-token
+SLACK_SIGNING_SECRET=your-slack-signing-secret
+SLACK_APP_TOKEN=xapp-your-slack-app-token
+
+# OpenAI Configuration
+OPENAI_API_KEY=sk-your-openai-api-key
+OPENAI_MODEL=gpt-4o
+
+# Notion Configuration
+NOTION_API_TOKEN=secret_your-notion-api-token
+NOTION_USER_DB_ID=your-notion-database-id
+
+# Application Configuration (Optional - defaults will be used if not specified)
+LOG_LEVEL=INFO
+ENVIRONMENT=development
+MAX_TOKENS_RESPONSE=1500
+MAX_MESSAGE_HISTORY=1000
+
+# Caching Configuration (Optional)
+CACHE_TTL=300
+CACHE_MAX_SIZE=1000

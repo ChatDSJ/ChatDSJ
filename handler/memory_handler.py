@@ -47,7 +47,10 @@ class MemoryHandler:
         
         # If not a memory instruction, return None
         if memory_type == "unknown" or (cleaned_content is None and not memory_type.startswith("list_")):
+            logger.debug(f"Not a memory instruction: '{text}'")
             return None
+        
+        logger.info(f"Processing memory instruction type: {memory_type}, content: '{cleaned_content}'")
         
         # Handle different types of memory instructions
         if memory_type == "nickname":
@@ -105,8 +108,36 @@ class MemoryHandler:
             return f"Here are your stored projects:\n\n{projects_list}"
         
         elif memory_type == "delete_fact":
+            # IMPROVED: More explicit feedback with detailed info about what was deleted or not found
+            before_facts = self.get_known_facts(slack_user_id)
             success = self.delete_known_fact(slack_user_id, cleaned_content)
-            return f"✅ Removed fact about \"{cleaned_content}\" from your Known Facts." if success else f"Sorry, I couldn't find a fact about \"{cleaned_content}\" to remove."
+            
+            if success:
+                # Get facts after deletion to confirm what was deleted
+                after_facts = self.get_known_facts(slack_user_id)
+                
+                # Find which fact was deleted by comparing before and after
+                deleted_fact = None
+                for fact in before_facts:
+                    if fact not in after_facts and cleaned_content.lower() in fact.lower():
+                        deleted_fact = fact
+                        break
+                
+                if deleted_fact:
+                    return f"✅ Successfully removed \"{deleted_fact}\" from your Known Facts."
+                else:
+                    return f"✅ Removed fact about \"{cleaned_content}\" from your Known Facts."
+            else:
+                # If deletion failed, check if there are any facts containing the fragment
+                matching_facts = [fact for fact in before_facts if cleaned_content.lower() in fact.lower()]
+                
+                if matching_facts:
+                    # Facts matching the fragment exist, but deletion failed
+                    facts_list = "\n".join([f"• {fact}" for fact in matching_facts])
+                    return f"❌ Error: I found facts matching \"{cleaned_content}\" but couldn't delete them. Technical issue.\n\nMatching facts:\n{facts_list}"
+                else:
+                    # No facts matching the fragment exist
+                    return f"❓ I couldn't find any facts containing \"{cleaned_content}\" to remove."
         
         elif memory_type == "delete_preference":
             success = self.delete_preference(slack_user_id, cleaned_content)
@@ -140,42 +171,52 @@ class MemoryHandler:
         
         for pattern in question_patterns:
             if re.search(pattern, lowered):
+                logger.debug(f"Detected question pattern in: '{text}'")
                 return "unknown", None  # This is a question, not a memory instruction
         
         # Direct command checking - these have priority over other patterns
         if lowered.startswith("fact:") or lowered.startswith("fact "):
             content = re.sub(r'^fact[:\s]\s*', '', text, flags=re.IGNORECASE).strip()
+            logger.debug(f"Detected fact command: '{content}'")
             return "known_fact", content
             
         if lowered.startswith("project:") or lowered.startswith("project "):
             content = re.sub(r'^project[:\s]\s*', '', text, flags=re.IGNORECASE).strip()
+            logger.debug(f"Detected project command: '{content}'")
             return "project_add", content
             
         if lowered.startswith("preference:") or lowered.startswith("preference "):
             content = re.sub(r'^preference[:\s]\s*', '', text, flags=re.IGNORECASE).strip()
+            logger.debug(f"Detected preference command: '{content}'")
             return "preference", content
             
         # List/show commands
         if re.match(r'^(?:list|show)\s+(?:my\s+)?facts', lowered):
+            logger.debug(f"Detected list facts command")
             return "list_facts", None
             
         if re.match(r'^(?:list|show)\s+(?:my\s+)?preferences', lowered):
+            logger.debug(f"Detected list preferences command")
             return "list_preferences", None
             
         if re.match(r'^(?:list|show)\s+(?:my\s+)?projects', lowered):
+            logger.debug(f"Detected list projects command")
             return "list_projects", None
         
-        # Delete commands
-        if re.match(r'^(?:remove|delete)\s+(?:my\s+)?fact', lowered):
-            content = re.sub(r'^(?:remove|delete)\s+(?:my\s+)?fact\s+(?:about\s+)?', '', text, flags=re.IGNORECASE).strip()
+        # Delete commands - FIX: Added "known" as an optional word
+        if re.match(r'^(?:remove|delete)\s+(?:my\s+)?(?:known\s+)?fact', lowered):
+            content = re.sub(r'^(?:remove|delete)\s+(?:my\s+)?(?:known\s+)?fact\s+(?:about\s+)?', '', text, flags=re.IGNORECASE).strip()
+            logger.info(f"Detected delete fact command with content: '{content}'")
             return "delete_fact", content
             
         if re.match(r'^(?:remove|delete)\s+(?:my\s+)?preference', lowered):
             content = re.sub(r'^(?:remove|delete)\s+(?:my\s+)?preference\s+(?:about\s+)?', '', text, flags=re.IGNORECASE).strip()
+            logger.debug(f"Detected delete preference command: '{content}'")
             return "delete_preference", content
             
         if re.match(r'^(?:remove|delete)\s+(?:my\s+)?project', lowered):
             content = re.sub(r'^(?:remove|delete)\s+(?:my\s+)?project\s+(?:about\s+)?', '', text, flags=re.IGNORECASE).strip()
+            logger.debug(f"Detected delete project command: '{content}'")
             return "delete_project", content
         
         # Remove "remember that" or similar prefixes to get the core content for pattern matching
@@ -448,20 +489,35 @@ class MemoryHandler:
         Returns:
             True if successful, False otherwise
         """
+        logger.info(f"Attempting to delete fact containing '{fact_fragment}' for user {slack_user_id}")
+        
         page_id = self.notion_service.get_user_page_id(slack_user_id)
         if not page_id:
+            logger.error(f"No Notion page found for user {slack_user_id}")
             return False
         
+        logger.debug(f"Found user page ID: {page_id}")
+        
+        # Try to find the Known Facts section
         section_block = self._find_section_block(page_id, SectionType.KNOWN_FACTS.value)
         if not section_block:
+            logger.error(f"No 'Known Facts' section found in page {page_id}")
             return False
         
+        logger.debug(f"Found 'Known Facts' section ID: {section_block.get('id')}")
+        
         try:
+            # Get all the blocks in the Known Facts section
             children_response = self.notion_service.client.blocks.children.list(
                 block_id=section_block.get("id")
             )
             
-            for block in children_response.get("results", []):
+            results = children_response.get("results", [])
+            logger.debug(f"Found {len(results)} items in 'Known Facts' section")
+            
+            # Log all facts for debugging
+            found_facts = []
+            for block in results:
                 if block.get("type") == "bulleted_list_item":
                     text_content = ""
                     rich_text = block.get("bulleted_list_item", {}).get("rich_text", [])
@@ -469,19 +525,107 @@ class MemoryHandler:
                     for text_item in rich_text:
                         text_content += text_item.get("plain_text", "")
                     
-                    if fact_fragment.lower() in text_content.lower():
-                        self.notion_service.client.blocks.delete(block_id=block.get("id"))
-                        
-                        # Invalidate cache
-                        self.notion_service.invalidate_user_cache(slack_user_id)
-                        
-                        return True
+                    if text_content:
+                        found_facts.append(text_content)
             
-            return False
+            logger.info(f"All facts in section: {found_facts}")
+            
+            # Track if we've successfully deleted anything
+            successful_deletion = False
+            deleted_facts = []
+            
+            # First look directly in the section block's children
+            for block in results:
+                if block.get("type") == "bulleted_list_item":
+                    text_content = ""
+                    rich_text = block.get("bulleted_list_item", {}).get("rich_text", [])
+                    
+                    for text_item in rich_text:
+                        text_content += text_item.get("plain_text", "")
+                    
+                    logger.debug(f"Checking fact item: '{text_content}'")
+                    
+                    # Check if this fact contains our search fragment
+                    if fact_fragment.lower() in text_content.lower():
+                        logger.info(f"Found matching fact: '{text_content}' contains '{fact_fragment}'")
+                        
+                        try:
+                            self.notion_service.client.blocks.delete(block_id=block.get("id"))
+                            logger.info(f"Successfully deleted block with ID {block.get('id')}")
+                            successful_deletion = True
+                            deleted_facts.append(text_content)
+                            
+                        except Exception as delete_e:
+                            logger.error(f"Error deleting block {block.get('id')}: {delete_e}")
+            
+            # If we haven't found anything yet, look more broadly in the page
+            if not successful_deletion:
+                logger.info(f"No facts found in section children. Checking the entire page...")
+                
+                # Get all blocks in the page
+                all_blocks_response = self.notion_service.client.blocks.children.list(block_id=page_id)
+                all_blocks = all_blocks_response.get("results", [])
+                
+                # Find the Known Facts section to know where to stop
+                facts_section_idx = -1
+                next_section_idx = len(all_blocks)
+                
+                for i, block in enumerate(all_blocks):
+                    block_type = block.get("type")
+                    if block_type in ["heading_1", "heading_2", "heading_3"]:
+                        text_content = ""
+                        rich_text = block.get(block_type, {}).get("rich_text", [])
+                        
+                        for text_item in rich_text:
+                            text_content += text_item.get("plain_text", "")
+                        
+                        if "Known Facts" in text_content:
+                            facts_section_idx = i
+                        elif facts_section_idx >= 0 and i > facts_section_idx:
+                            # This is the next section after Known Facts
+                            next_section_idx = i
+                            break
+                
+                # If we found the Known Facts section
+                if facts_section_idx >= 0:
+                    logger.info(f"Found Known Facts at index {facts_section_idx}, next section at {next_section_idx}")
+                    
+                    # Look at all blocks between Facts section and next section
+                    for i in range(facts_section_idx + 1, next_section_idx):
+                        block = all_blocks[i]
+                        
+                        if block.get("type") == "bulleted_list_item":
+                            text_content = ""
+                            rich_text = block.get("bulleted_list_item", {}).get("rich_text", [])
+                            
+                            for text_item in rich_text:
+                                text_content += text_item.get("plain_text", "")
+                            
+                            logger.debug(f"Checking fact in page: '{text_content}'")
+                            
+                            if fact_fragment.lower() in text_content.lower():
+                                logger.info(f"Found matching fact in page: '{text_content}'")
+                                
+                                try:
+                                    self.notion_service.client.blocks.delete(block_id=block.get("id"))
+                                    logger.info(f"Successfully deleted block with ID {block.get('id')}")
+                                    successful_deletion = True
+                                    deleted_facts.append(text_content)
+                                    
+                                except Exception as delete_e:
+                                    logger.error(f"Error deleting block {block.get('id')}: {delete_e}")
+            
+            # Invalidate cache if we deleted anything
+            if successful_deletion:
+                self.notion_service.invalidate_user_cache(slack_user_id)
+                logger.info(f"Successfully deleted facts: {deleted_facts}")
+            
+            return successful_deletion
+            
         except Exception as e:
-            logger.error(f"Error deleting known fact for user {slack_user_id}: {e}", exc_info=True)
+            logger.error(f"Error searching for facts to delete: {e}", exc_info=True)
             return False
-
+    
     def delete_preference(self, slack_user_id: str, preference_fragment: str) -> bool:
         """
         Delete a preference containing the given fragment.

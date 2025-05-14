@@ -1270,3 +1270,116 @@ class CachedNotionService:
         """
         return self.memory_handler._find_text_block_in_section(page_id, section_id, text_prefix, exact_match)
     
+    def debug_user_notion_page(self, slack_user_id: str) -> Dict[str, Any]:
+        """
+        Generate a detailed diagnostic report of a user's Notion page.
+        Useful for debugging issues with memory operations.
+        
+        Args:
+            slack_user_id: The Slack user ID
+            
+        Returns:
+            A dictionary with diagnostic information
+        """
+        logger.info(f"Running Notion page diagnostics for user {slack_user_id}")
+        diagnostics = {
+            "slack_user_id": slack_user_id,
+            "timestamp": datetime.now().isoformat(),
+            "errors": [],
+            "page_exists": False,
+            "sections": {},
+            "cache_status": {}
+        }
+        
+        try:
+            # Check if user page exists
+            page_id = self.get_user_page_id(slack_user_id)
+            if not page_id:
+                diagnostics["errors"].append("User page not found")
+                return diagnostics
+            
+            diagnostics["page_exists"] = True
+            diagnostics["page_id"] = page_id
+            
+            # Check cache status
+            cache_key_page = f"user_page_id_{slack_user_id}"
+            cache_key_content = f"user_page_content_{slack_user_id}"
+            
+            with self.cache_lock:
+                diagnostics["cache_status"]["page_id_in_cache"] = cache_key_page in self.cache
+                if cache_key_page in self.cache:
+                    diagnostics["cache_status"]["cached_page_id"] = self.cache[cache_key_page]
+            
+            with self.page_content_lock:
+                diagnostics["cache_status"]["content_in_cache"] = cache_key_content in self.page_content_cache
+            
+            # Get all blocks to analyze page structure
+            try:
+                blocks_response = self.client.blocks.children.list(block_id=page_id)
+                results = blocks_response.get("results", [])
+                diagnostics["total_blocks"] = len(results)
+                
+                # Track sections
+                current_section = None
+                for block in results:
+                    block_type = block.get("type")
+                    block_id = block.get("id")
+                    
+                    # Identify section headings
+                    if block_type in ["heading_1", "heading_2", "heading_3"]:
+                        text_content = ""
+                        rich_text = block.get(block_type, {}).get("rich_text", [])
+                        
+                        for text_item in rich_text:
+                            text_content += text_item.get("plain_text", "")
+                        
+                        current_section = text_content
+                        diagnostics["sections"][current_section] = {
+                            "id": block_id,
+                            "type": block_type,
+                            "items": []
+                        }
+                    
+                    # Track items under current section
+                    elif current_section and block_type in ["paragraph", "bulleted_list_item", "numbered_list_item", "to_do"]:
+                        text_content = ""
+                        rich_text = block.get(block_type, {}).get("rich_text", [])
+                        
+                        for text_item in rich_text:
+                            text_content += text_item.get("plain_text", "")
+                        
+                        diagnostics["sections"][current_section]["items"].append({
+                            "id": block_id,
+                            "type": block_type,
+                            "content": text_content
+                        })
+            
+            except Exception as e:
+                diagnostics["errors"].append(f"Error listing blocks: {str(e)}")
+            
+            # Get & summarize "Known Facts" section specifically
+            # This is particularly relevant for the deletion issue
+            if "Known Facts" in diagnostics["sections"]:
+                known_facts = diagnostics["sections"]["Known Facts"]
+                known_facts["item_count"] = len(known_facts["items"])
+                
+                # Extract just the text content for easy viewing
+                known_facts["text_items"] = [item["content"] for item in known_facts["items"]]
+                
+                # Check for items containing "Meatloaf" as this was the reported issue
+                meatloaf_items = [
+                    {"content": item["content"], "id": item["id"]} 
+                    for item in known_facts["items"] 
+                    if "meatloaf" in item["content"].lower()
+                ]
+                
+                if meatloaf_items:
+                    known_facts["meatloaf_items"] = meatloaf_items
+            
+            return diagnostics
+        
+        except Exception as e:
+            logger.error(f"Error in debug_user_notion_page: {e}", exc_info=True)
+            diagnostics["errors"].append(f"Unexpected error: {str(e)}")
+            return diagnostics
+    

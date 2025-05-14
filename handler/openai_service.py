@@ -129,6 +129,7 @@ class OpenAIService:
         linked_notion_content: Optional[str] = None,
         system_prompt: Optional[str] = None,
         max_tokens: Optional[int] = None,
+        timeout: float = 30.0  # Add timeout parameter with 30 second default
     ) -> Tuple[Optional[str], Optional[Dict[str, Any]]]:
         """
         Asynchronously get a completion from OpenAI with full context injection.
@@ -147,8 +148,8 @@ class OpenAIService:
                 system_prompt=system_prompt
             )
 
-            # Log full payload being sent to OpenAI
-            logger.warning("🔍 Full OpenAI prompt:\n" + "\n".join(f"{m['role'].upper()}: {m['content']}" for m in messages))
+            # Log payload being sent to OpenAI (for debugging only)
+            logger.debug("Full OpenAI prompt:\n" + "\n".join(f"{m['role'].upper()}: {m['content']}" for m in messages))
 
             # Track usage stats
             self.usage_stats["request_count"] += 1
@@ -157,31 +158,46 @@ class OpenAIService:
 
             for attempt in range(3):
                 try:
-                    response = await self.async_client.chat.completions.create(
-                        model=self.model,
-                        messages=messages,
-                        max_tokens=max_tokens or self.max_tokens,
+                    # Use asyncio.wait_for to implement timeout
+                    response = await asyncio.wait_for(
+                        self.async_client.chat.completions.create(
+                            model=self.model,
+                            messages=messages,
+                            max_tokens=max_tokens or self.max_tokens,
+                        ),
+                        timeout=timeout
                     )
+                    
                     content = response.choices[0].message.content
                     usage = response.usage.model_dump() if hasattr(response, "usage") else None
 
                     if usage:
                         self._update_usage_tracking(usage)
 
+                    logger.info(f"OpenAI response received successfully in {attempt+1} attempt(s)")
                     return content, usage
 
+                except asyncio.TimeoutError:
+                    logger.error(f"OpenAI request timed out after {timeout} seconds (attempt {attempt+1}/3)")
+                    if attempt == 2:  # Last attempt
+                        return "I'm sorry, but I timed out while processing your request. Please try again.", None
+                    # Otherwise retry with longer timeout
+                    timeout *= 1.5  # Increase timeout for next attempt
+                    continue
+                    
                 except (TimeoutError, ConnectionError) as e:
                     if attempt < 2:
                         wait_time = 2 ** attempt
                         logger.warning(f"Retrying after error: {e}. Attempt {attempt+1}/3. Waiting {wait_time}s")
                         await asyncio.sleep(wait_time)
                     else:
+                        logger.error(f"Failed after 3 attempts: {e}")
                         raise
 
         except Exception as e:
             self.usage_stats["error_count"] += 1
             logger.error(f"Error getting async OpenAI response: {e}", exc_info=True)
-            return None, None
+            return "I'm sorry, I encountered an error when processing your request. Please try again.", None
 
     def _prepare_messages(
         self,

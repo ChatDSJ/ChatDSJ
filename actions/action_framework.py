@@ -732,7 +732,7 @@ class ActionRouter:
     
     async def route_action(self, request: ActionRequest) -> ActionResponse:
         """
-        Route the request to the appropriate action handler with improved error handling.
+        Route the request to the appropriate action handler with improved memory command handling.
         
         Args:
             request: The action request
@@ -740,61 +740,176 @@ class ActionRouter:
         Returns:
             Response from the action handler
         """
-        # Check for nickname command as a special case
-        if hasattr(self.services.notion_service, "handle_nickname_command"):
-            nickname_response, nickname_success = await asyncio.to_thread(
-                self.services.notion_service.handle_nickname_command,
-                request.prompt,
-                request.user_id,
-                await asyncio.to_thread(
-                    self.services.slack_service.get_user_display_name,
-                    request.user_id
-                )
-            )
+        try:
+            # First, try to identify and directly handle any memory operations
+            if hasattr(self.services.notion_service, "memory_handler"):
+                # Use the memory handler's classify method to check if this is a memory command
+                memory_type, content = self.services.notion_service.memory_handler.classify_memory_instruction(request.prompt)
+                
+                if memory_type != "unknown":
+                    logger.info(f"Identified memory command of type '{memory_type}' with content: '{content}'")
+                    
+                    # Handle deletion commands directly (bypassing OpenAI)
+                    if memory_type == "delete_fact":
+                        # Direct deletion execution
+                        success = self.services.notion_service.memory_handler.delete_known_fact(request.user_id, content)
+                        
+                        # Get current facts to see what's still there
+                        remaining_facts = self.services.notion_service.memory_handler.get_known_facts(request.user_id)
+                        
+                        if success:
+                            # Check if any matching facts remain
+                            matching_remaining = [f for f in remaining_facts if content.lower() in f.lower()]
+                            
+                            if matching_remaining:
+                                # We thought we deleted it but matching facts still exist
+                                facts_list = "\n".join([f"• {f}" for f in matching_remaining])
+                                return ActionResponse(
+                                    success=True,
+                                    message=f"I deleted a fact containing '{content}', but I found these similar facts still remaining:\n\n{facts_list}\n\nWould you like me to delete these as well?",
+                                    thread_ts=request.thread_ts
+                                )
+                            else:
+                                # Success - no more matching facts
+                                return ActionResponse(
+                                    success=True,
+                                    message=f"✅ Successfully removed the fact containing '{content}' from your Known Facts.",
+                                    thread_ts=request.thread_ts
+                                )
+                        else:
+                            # Failed to delete
+                            if not remaining_facts:
+                                return ActionResponse(
+                                    success=False,
+                                    message=f"You don't have any facts stored yet. Add facts by saying \"Remember [your fact]\" or \"Fact: [your fact]\".",
+                                    thread_ts=request.thread_ts
+                                )
+                                
+                            # Check if any matching facts exist at all
+                            matching_facts = [f for f in remaining_facts if content.lower() in f.lower()]
+                            
+                            if matching_facts:
+                                # We have matching facts but couldn't delete them
+                                facts_list = "\n".join([f"• {f}" for f in matching_facts])
+                                return ActionResponse(
+                                    success=False,
+                                    message=f"I found facts containing '{content}' but couldn't delete them. Please try again with a more specific text:\n\n{facts_list}",
+                                    thread_ts=request.thread_ts
+                                )
+                            else:
+                                # No matching facts found
+                                return ActionResponse(
+                                    success=False,
+                                    message=f"I couldn't find any facts containing '{content}' to remove.",
+                                    thread_ts=request.thread_ts
+                                )
+                    
+                    # Handle other deletion commands similarly
+                    elif memory_type == "delete_preference":
+                        success = self.services.notion_service.memory_handler.delete_preference(request.user_id, content)
+                        return ActionResponse(
+                            success=success,
+                            message=f"✅ Removed preference about '{content}'." if success else f"I couldn't find a preference about '{content}' to remove.",
+                            thread_ts=request.thread_ts
+                        )
+                        
+                    elif memory_type == "delete_project":
+                        success = self.services.notion_service.memory_handler.delete_project(request.user_id, content)
+                        return ActionResponse(
+                            success=success,
+                            message=f"✅ Removed project '{content}'." if success else f"I couldn't find a project '{content}' to remove.",
+                            thread_ts=request.thread_ts
+                        )
+                    
+                    # For listing operations, bypass OpenAI as well
+                    elif memory_type in ["list_facts", "list_preferences", "list_projects"]:
+                        response = self.services.notion_service.memory_handler.handle_memory_instruction(
+                            request.user_id, request.prompt
+                        )
+                        if response:
+                            return ActionResponse(
+                                success=True,
+                                message=response,
+                                thread_ts=request.thread_ts
+                            )
+                    
+                    # For other memory instructions, we can use the regular handler
+                    else:
+                        response = self.services.notion_service.memory_handler.handle_memory_instruction(
+                            request.user_id, request.prompt
+                        )
+                        if response:
+                            return ActionResponse(
+                                success=True,
+                                message=response,
+                                thread_ts=request.thread_ts
+                            )
             
-            if nickname_response:
-                return ActionResponse(
-                    success=nickname_success,
-                    message=nickname_response,
-                    thread_ts=request.thread_ts
-                )
-        
-        # Check for memory commands
-        if hasattr(self.services.notion_service, "memory_handler"):
-            memory_response = await asyncio.to_thread(
-                self.services.notion_service.handle_memory_instruction,
-                request.user_id,
-                request.prompt
-            )
+            # If not handled by direct memory operations, continue with regular flow...
             
-            if memory_response:
-                return ActionResponse(
-                    success=True,
-                    message=memory_response,
-                    thread_ts=request.thread_ts
+            # Check for nickname command as a special case  
+            if hasattr(self.services.notion_service, "handle_nickname_command"):
+                nickname_response, nickname_success = await asyncio.to_thread(
+                    self.services.notion_service.handle_nickname_command,
+                    request.prompt,
+                    request.user_id,
+                    await asyncio.to_thread(
+                        self.services.slack_service.get_user_display_name,
+                        request.user_id
+                    )
                 )
-        
-        # Determine the appropriate action and execute it
-        action = self._get_action_for_text(request.text)
-        response = await action.execute(request)
-        
-        # If there was an error and it seems to be a memory-related command,
-        # provide a helpful suggestion
-        if not response.success and response.error:
-            # Check if this looks like an attempted memory command
-            memory_keywords = ["remember", "fact", "project", "preference", "todo", "delete", "remove", "list", "show"]
+                
+                if nickname_response:
+                    return ActionResponse(
+                        success=nickname_success,
+                        message=nickname_response,
+                        thread_ts=request.thread_ts
+                    )
             
-            if any(keyword in request.prompt.lower() for keyword in memory_keywords):
-                examples = await asyncio.to_thread(
-                    self.services.notion_service.memory_handler.get_example_for_command,
+            # Check for memory commands
+            if hasattr(self.services.notion_service, "memory_handler"):
+                memory_response = await asyncio.to_thread(
+                    self.services.notion_service.handle_memory_instruction,
+                    request.user_id,
                     request.prompt
                 )
                 
-                # Update the error message with the example
-                response.message = f"{response.message}\n\n{examples}"
+                if memory_response:
+                    return ActionResponse(
+                        success=True,
+                        message=memory_response,
+                        thread_ts=request.thread_ts
+                    )
+            
+            # Determine the appropriate action and execute it
+            action = self._get_action_for_text(request.text)
+            response = await action.execute(request)
+            
+            # If there was an error and it seems to be a memory-related command,
+            # provide a helpful suggestion
+            if not response.success and response.error:
+                # Check if this looks like an attempted memory command
+                memory_keywords = ["remember", "fact", "project", "preference", "todo", "delete", "remove", "list", "show"]
+                
+                if any(keyword in request.prompt.lower() for keyword in memory_keywords):
+                    examples = await asyncio.to_thread(
+                        self.services.notion_service.memory_handler.get_example_for_command,
+                        request.prompt
+                    )
+                    
+                    # Update the error message with the example
+                    response.message = f"{response.message}\n\n{examples}"
+            
+            return response
         
-        return response
-
+        except Exception as e:
+            logger.error(f"Error in route_action: {e}", exc_info=True)
+            return ActionResponse(
+                success=False,
+                message=f"I encountered an error while processing your request. Please try again.",
+                thread_ts=request.thread_ts
+            )
+    
 # Example of how to use the action framework
 async def process_slack_mention(event: Dict[str, Any], services: ServiceContainer) -> Dict[str, Any]:
     """
