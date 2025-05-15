@@ -2,17 +2,79 @@ name: Deploy to Fly.io
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      - test-bot
   workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+          - production
+          - test
 
 jobs:
   deploy:
+    name: Deploy to Fly.io
     runs-on: ubuntu-latest
+    concurrency: deploy-group  # Ensure only one deployment runs at a time
+    
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
       - name: Set up Flyctl
         uses: superfly/flyctl-actions/setup-flyctl@master
+      
+      - name: Determine target environment
+        id: set-target
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            # Use the environment specified in the manual trigger
+            TARGET_ENV="${{ github.event.inputs.environment }}"
+          elif [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+            # main branch deploys to production
+            TARGET_ENV="production"
+          elif [[ "${{ github.ref }}" == "refs/heads/test-bot" ]]; then
+            # test-bot branch deploys to test
+            TARGET_ENV="test"
+          else
+            echo "Unsupported branch for automatic deployment"
+            exit 1
+          fi
+          
+          # Set app name based on environment
+          if [[ "$TARGET_ENV" == "production" ]]; then
+            APP_NAME="chatdsj-bot"
+            echo "Deploying to production app: $APP_NAME"
+          else
+            APP_NAME="testchatdsj-bot"
+            echo "Deploying to test app: $APP_NAME"
+          fi
+          
+          echo "environment=$TARGET_ENV" >> $GITHUB_OUTPUT
+          echo "app_name=$APP_NAME" >> $GITHUB_OUTPUT
+      
+      - name: Safety check for production
+        run: |
+          if [[ "${{ github.ref }}" != "refs/heads/main" && "${{ steps.set-target.outputs.app_name }}" == "chatdsj-bot" ]]; then
+            echo "ERROR: Attempting to deploy non-main branch to production!"
+            exit 1
+          fi
+
       - name: Deploy to Fly.io
-        run: flyctl deploy --remote-only
+        run: flyctl deploy --app ${{ steps.set-target.outputs.app_name }} --remote-only
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+      
+      - name: Report deployment status
+        if: always()
+        run: |
+          if [ "${{ job.status }}" == "success" ]; then
+            echo "Deployment to ${{ steps.set-target.outputs.app_name }} (${{ steps.set-target.outputs.environment }}) succeeded"
+          else
+            echo "Deployment to ${{ steps.set-target.outputs.app_name }} (${{ steps.set-target.outputs.environment }}) failed"
+          fi
