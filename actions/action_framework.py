@@ -923,7 +923,7 @@ class HistoricalSearchAction(Action):
     
     def can_handle(self, text: str) -> bool:
         """
-        Check if this is a historical search query.
+        Check if this is a historical search query with expanded pattern matching.
         
         Args:
             text: The message text
@@ -931,17 +931,52 @@ class HistoricalSearchAction(Action):
         Returns:
             True if this is a search query, False otherwise
         """
+        
+        # Temporary debug test (keep this if you still have it)
+        if "test search functionality" in text.lower():
+            logger.info("Debug test triggered")
+            return True
+        
+        # Expanded search patterns to catch more variations
         search_patterns = [
+            # Original patterns (keep these)
             r"(?:has|have|did)\s+anyone\s+(?:talk|discuss|mention)(?:ed)?\s+(?:about\s+)?",
-            r"(?:was|were)\s+.*?\s+(?:discussed|mentioned|talked about)",
             r"(?:any|are there)\s+discussions?\s+(?:about|on|regarding)\s+",
             r"(?:find|search|show).*?(?:discussions?|conversations?|messages?)",
-            r"when\s+(?:did|was).*?(?:discussed|mentioned)"
+            r"when\s+(?:did|was).*?(?:discussed|mentioned)",
+            
+            # NEW: Direct topic patterns
+            r"(?:has|have)\s+.*?\s+been\s+(?:discussed|mentioned|talked\s+about)",  # "has Miami been discussed?"
+            r"(?:was|were)\s+.*?\s+(?:discussed|mentioned|talked\s+about)",        # "was Miami discussed?"
+            r"(?:did|does)\s+.*?\s+get\s+(?:discussed|mentioned)",                 # "did Miami get discussed?"
+            
+            # NEW: Simple question patterns  
+            r"(?:has|have|did|was|were)\s+\w+.*?(?:discussed|mentioned)",          # "has Miami discussed", "was Miami mentioned"
+            
+            # NEW: What/who patterns about discussions
+            r"(?:what|who).*?(?:discussed|mentioned|talked about).*?\?",           # "what was discussed about Miami?"
+            r"(?:what|who).*?(?:said|talked).*?(?:about|regarding)",               # "what did they say about Miami?"
+            
+            # NEW: Past tense search patterns
+            r"(?:did|have)\s+(?:we|people|someone|anybody)\s+(?:discuss|mention|talk about)", # "did we discuss Miami?"
+            
+            # NEW: Show/tell me patterns
+            r"(?:show|tell)\s+me.*?(?:discussions?|conversations?|mentions?)",     # "show me Miami discussions"
+            r"(?:list|find)\s+.*?(?:discussions?|conversations?|mentions?)",       # "list Miami discussions"
+            
+            # NEW: Simple existence questions
+            r".*?(?:discussed|mentioned|talked about).*?\?",                       # Catch-all for discussion questions
         ]
         
-        for pattern in search_patterns:
-            if re.search(pattern, text.lower()):
+        text_lower = text.lower()
+        
+        for i, pattern in enumerate(search_patterns):
+            if re.search(pattern, text_lower):
+                logger.info(f"HistoricalSearchAction matched pattern {i+1}: {pattern[:50]}...")
+                logger.debug(f"Full pattern: {pattern}")
+                logger.debug(f"Matched text: {text}")
                 return True
+        
         return False
     
     async def execute(self, request: ActionRequest) -> ActionResponse:
@@ -971,7 +1006,8 @@ class HistoricalSearchAction(Action):
                 self.services.slack_service,
                 request.channel_id,
                 request.thread_ts,
-                request.prompt
+                request.prompt,
+                exclude_message_ts=request.message_ts 
             )
             
             # Build user display names dictionary
@@ -994,7 +1030,29 @@ class HistoricalSearchAction(Action):
                 self.services.slack_service
             )
             
-            # Build rich response message
+            # Check if we want to use rich blocks or simple text
+            use_rich_blocks = True  # Set to False if you prefer simple text
+            
+            if use_rich_blocks:
+                fallback_text, blocks = self.build_slack_blocks_response(search_results)
+                
+                # Send rich message if Slack service supports it
+                if hasattr(self.services.slack_service, 'send_rich_message'):
+                    response = await asyncio.to_thread(
+                        self.services.slack_service.send_rich_message,
+                        request.channel_id,
+                        blocks,
+                        fallback_text,
+                        request.thread_ts
+                    )
+                    
+                    return ActionResponse(
+                        success=True,
+                        message=None,  # Message sent via rich blocks
+                        thread_ts=request.thread_ts
+                    )
+            
+            # Fallback to regular text formatting
             response_message = self.build_rich_search_response(search_results)
             
             return ActionResponse(
@@ -1014,43 +1072,179 @@ class HistoricalSearchAction(Action):
     
     def build_rich_search_response(self, search_results: Dict[str, Any]) -> str:
         """
-        Build a rich response message with thread links and excerpts.
+        Build a polished response message with clean formatting for Slack.
         
         Args:
             search_results: Formatted search results
             
         Returns:
-            Rich response message
+            Polished response message with Slack-specific formatting
         """
         if not search_results.get("show_details"):
             return search_results.get("summary", "No results found.")
         
-        message_parts = [search_results["summary"]]
+        # Use Slack-specific formatting
         threads = search_results.get("threads", [])
+        topic = search_results.get("topic", "this topic")
         
-        # Add thread summaries with links
+        # Create header with emoji and clean formatting
+        thread_count = len(threads)
+        message_count = sum(t["message_count"] for t in threads)
+        
+        header = f":white_check_mark: *Found {message_count} message{'s' if message_count != 1 else ''} about '{topic}' in {thread_count} conversation{'s' if thread_count != 1 else ''}*\n"
+        
+        message_parts = [header]
+        
+        # Add each thread with clean formatting
         for i, thread in enumerate(threads[:5], 1):  # Limit to 5 most relevant
             excerpt = thread["excerpt"]
             link = thread["link"]
             starter = thread["starter"]
             msg_count = thread["message_count"]
             
+            # Clean up the excerpt formatting for Slack
+            clean_excerpt = excerpt.replace("**", "*")  # Convert to Slack bold
+            
+            # Use Slack link format: <URL|display text>
+            clean_link = f"<{link}|:point_right: Jump to conversation>"
+            
+            # Create visually appealing thread summary
             thread_summary = (
-                f"\n**{i}. Thread started by {starter}** ({msg_count} message{'s' if msg_count != 1 else ''})\n"
-                f"💬 {excerpt}\n"
-                f"🔗 [Jump to conversation]({link})"
+                f"\n:speech_balloon: *{i}. Thread by {starter}* "
+                f"({msg_count} message{'s' if msg_count != 1 else ''})\n"
+                f"{clean_excerpt}\n"
+                f"{clean_link}\n"
             )
             message_parts.append(thread_summary)
         
-        # Add footer with options
+        # Add footer with options if there are more threads
         if len(threads) > 5:
-            message_parts.append(f"\n_Showing 5 of {len(threads)} conversations. Ask for more details if needed._")
+            message_parts.append(f"\n:eyes: _Showing 5 of {len(threads)} conversations_")
         
-        # Add interactive options
-        topic = search_results.get("topic", "this topic")
-        message_parts.append(f"\n💡 *Want more details? Try:*\n• \"Show me more conversations about {topic}\"\n• \"Summarize the {topic} discussions\"")
+        # Add interactive suggestions with emojis
+        suggestions = (
+            f"\n:bulb: *Need more details?*\n"
+            f":mag: \"Show me more conversations about {topic}\"\n"
+            f":memo: \"Summarize the {topic} discussions\""
+        )
+        message_parts.append(suggestions)
         
         return "\n".join(message_parts)
+
+    def build_slack_blocks_response(self, search_results: Dict[str, Any]) -> Tuple[str, List[Dict[str, Any]]]:
+        """
+        Build response using Slack's rich blocks format for maximum visual appeal.
+        
+        Args:
+            search_results: Formatted search results
+            
+        Returns:
+            Tuple of (fallback_text, blocks)
+        """
+        if not search_results.get("show_details"):
+            return search_results.get("summary", "No results found."), []
+        
+        threads = search_results.get("threads", [])
+        topic = search_results.get("topic", "this topic")
+        
+        # Fallback text for notifications
+        fallback_text = f"Found {len(threads)} conversations about '{topic}'"
+        
+        blocks = []
+        
+        # Header block
+        thread_count = len(threads)
+        message_count = sum(t["message_count"] for t in threads)
+        
+        header_text = f":white_check_mark: *Found {message_count} message{'s' if message_count != 1 else ''} about '{topic}' in {thread_count} conversation{'s' if thread_count != 1 else ''}*"
+        
+        blocks.append({
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": header_text
+            }
+        })
+        
+        # Divider
+        blocks.append({"type": "divider"})
+        
+        # Thread results (limit to 8 for blocks, rest in text)
+        for i, thread in enumerate(threads[:8], 1):
+            excerpt = thread["excerpt"]
+            link = thread["link"]
+            starter = thread["starter"]
+            msg_count = thread["message_count"]
+            
+            # Clean excerpt for blocks
+            clean_excerpt = excerpt.replace("**", "*")
+            
+            thread_text = f":speech_balloon: *{i}. Thread by {starter}* ({msg_count} message{'s' if msg_count != 1 else ''})\n{clean_excerpt}"
+            
+            blocks.append({
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": thread_text
+                },
+                "accessory": {
+                    "type": "button",
+                    "text": {
+                        "type": "plain_text",
+                        "text": "Jump to Thread",
+                        "emoji": True
+                    },
+                    "url": link,
+                    "action_id": f"jump_to_thread_{thread['thread_ts']}"
+                }
+            })
+        
+        # Add remaining threads as text if more than 8
+        if len(threads) > 8:
+            remaining_threads = []
+            for i, thread in enumerate(threads[8:], 9):
+                excerpt = thread["excerpt"]
+                link = thread["link"]
+                starter = thread["starter"]
+                msg_count = thread["message_count"]
+                
+                clean_excerpt = excerpt.replace("**", "*")
+                clean_link = f"<{link}|:point_right: Jump to conversation>"
+                
+                thread_summary = (
+                    f":speech_balloon: *{i}. Thread by {starter}* "
+                    f"({msg_count} message{'s' if msg_count != 1 else ''})\n"
+                    f"{clean_excerpt}\n"
+                    f"{clean_link}\n"
+                )
+                remaining_threads.append(thread_summary)
+            
+            if remaining_threads:
+                blocks.append({
+                    "type": "section",
+                    "text": {
+                        "type": "mrkdwn",
+                        "text": "\n".join(remaining_threads)
+                    }
+                })
+        
+        # Footer with suggestions
+        footer_text = (
+            f":bulb: *Need more details?*\n"
+            f":mag: \"Show me more conversations about {topic}\"\n"
+            f":memo: \"Summarize the {topic} discussions\""
+        )
+        
+        blocks.append({"type": "divider"})
+        blocks.append({
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": footer_text
+            }
+        })
+        
+        return fallback_text, blocks
 
 class SearchFollowUpAction(Action):
     """
@@ -1117,7 +1311,7 @@ def create_search_result_blocks(search_results: Dict[str, Any], channel_name: st
     
     # Thread results
     threads = search_results.get("threads", [])
-    for i, thread in enumerate(threads[:3], 1):  # Show top 3 in blocks
+    for i, thread in enumerate(threads[:8], 1):  # Show top 8 in blocks
         excerpt = thread["excerpt"]
         link = thread["link"]
         starter = thread["starter"]

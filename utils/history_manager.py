@@ -24,10 +24,11 @@ class HistoryManager:
         self.MAX_THREADS_TO_SEARCH = 20  # Maximum number of threads to search
     
     async def retrieve_and_filter_history(self,
-                                        slack_service,
-                                        channel_id: str,
-                                        thread_ts: Optional[str],
-                                        prompt: str) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
+                                    slack_service,
+                                    channel_id: str,
+                                    thread_ts: Optional[str],
+                                    prompt: str,
+                                    exclude_message_ts: Optional[str] = None):
         # Extract the search topic (existing code)
         search_topic = self.extract_search_topic(prompt)
         is_search_query = search_topic is not None
@@ -286,59 +287,113 @@ class HistoryManager:
                     key=lambda m: float(m.get("ts", "0"))
                 )
 
-        # Log the number of messages retrieved for the request
+        # Exclude current message if specified
+        if exclude_message_ts and filtered_messages:
+            original_count = len(filtered_messages)
+            filtered_messages = [msg for msg in filtered_messages if msg.get("ts") != exclude_message_ts]
+            if len(filtered_messages) != original_count:
+                logger.info(f"Excluded current question, {original_count} -> {len(filtered_messages)} messages")
+
+        # Final sort chronologically for presentation  
+        filtered_messages = sorted(filtered_messages, key=lambda m: float(m.get("ts", "0")))
+
         logger.info(f"Retrieved {len(filtered_messages)} messages for {query_params.get('description', 'request')}")
         
         return filtered_messages, query_params
 
     def extract_search_topic(self, prompt: str) -> Optional[str]:
+        """Extract search topic from various question patterns."""
         logger.info(f"Extracting search topic from prompt: {prompt}")
         prompt_lower = prompt.lower()
         
-        # First: pattern-based extraction
-        for pattern in self.search_patterns:
+        # Enhanced pattern-based extraction for new question types
+        enhanced_patterns = [
+            # Original patterns (keep these)
+            r'(?:has|have|did)\s+anyone\s+(?:talk|discuss|mention)(?:ed)?\s+(?:about\s+)?([^?\.]+)',
+            r'(?:was|were)\s+([^?\.]+)\s+(?:discussed|mentioned|talked about)',
+            r'(?:any|are there)\s+discussions?\s+(?:about|on|regarding)\s+([^?\.]+)',
+            
+            # NEW: Direct "has X been discussed" patterns
+            r'(?:has|have)\s+(.*?)\s+been\s+(?:discussed|mentioned|talked\s+about)',     # "has Miami been discussed?"
+            r'(?:was|were)\s+(.*?)\s+(?:discussed|mentioned|talked\s+about)',           # "was Miami discussed?"
+            r'(?:did|does)\s+(.*?)\s+get\s+(?:discussed|mentioned)',                    # "did Miami get discussed?"
+            
+            # NEW: Simple topic extraction
+            r'(?:has|have|did|was|were)\s+(\w+(?:\s+\w+)*?)\s+(?:discussed|mentioned)', # "has Miami discussed" -> "Miami"
+            
+            # NEW: What/who about topic
+            r'(?:what|who).*?(?:discussed|mentioned|talked about)\s+(.*?)(?:\?|$)',     # "what was discussed about Miami?"
+            r'(?:what|who).*?(?:said|talked).*?(?:about|regarding)\s+(.*?)(?:\?|$)',    # "what did they say about Miami?"
+            
+            # NEW: Show/find topic
+            r'(?:show|tell|find|list)\s+(?:me\s+)?(?:.*?\s+)?(?:discussions?|conversations?|mentions?).*?(?:about|regarding|on)\s+(.*?)(?:\?|$)',
+            r'(?:show|tell|find|list)\s+(?:me\s+)?(.*?)\s+(?:discussions?|conversations?|mentions?)',  # "show me Miami discussions"
+        ]
+        
+        # Try enhanced patterns first
+        for pattern in enhanced_patterns:
             match = re.search(pattern, prompt_lower)
             if match:
                 topic = match.group(1).strip()
-                topic = re.sub(r'[.,;:!?]+$', '', topic)
-                logger.info(f"Extracted topic from pattern: '{topic}'")
-                return topic
                 
-        # Second: direct simple pattern extraction
+                # Clean up extracted topic
+                topic = re.sub(r'^(?:the\s+|a\s+|an\s+)', '', topic)  # Remove articles
+                topic = re.sub(r'\s+(?:been|get|getting|being)$', '', topic)  # Remove helper verbs at end
+                topic = re.sub(r'[.,;:!?]+$', '', topic)  # Remove punctuation
+                
+                # Filter out too-short or too-common topics
+                if len(topic) > 2 and topic not in ['it', 'this', 'that', 'they', 'we', 'you']:
+                    logger.info(f"Extracted topic from enhanced pattern: '{topic}'")
+                    return topic
+        
+        # Fallback to direct simple pattern extraction
         direct_patterns = [
             r'about\s+([A-Za-z0-9\s]+)(?:[,\.?!]|$)',
-            r'([A-Za-z0-9\s]+)\s+was\s+(?:discussed|mentioned|talked about)',
+            r'([A-Za-z0-9\s]+)\s+(?:was|were)\s+(?:discussed|mentioned|talked about)',
+            r'(?:discussed|mentioned|talked about)\s+(.*?)(?:[,\.?!]|$)',
         ]
+        
         for pattern in direct_patterns:
             match = re.search(pattern, prompt_lower)
             if match:
                 topic = match.group(1).strip()
                 topic = re.sub(r'[.,;:!?]+$', '', topic)
-                logger.info(f"Extracted topic from direct pattern: '{topic}'")
-                return topic
-                
-        # Third: fallback to capitalized words (look for adjacent first)
-        capitalized = re.findall(r'\b[A-Z][a-z]+\b', prompt)
-        for i in range(len(capitalized) - 1):
-            two_word = f"{capitalized[i]} {capitalized[i+1]}"
-            if two_word in prompt:
-                logger.info(f"Extracted multi-word capitalized topic: '{two_word}'")
-                return two_word
-        if capitalized:
-            topic = capitalized[-1]
-            logger.info(f"Extracted capitalized topic: '{topic}'")
-            return topic
-            
-        # Fourth: quoted phrases
+                if len(topic) > 2:
+                    logger.info(f"Extracted topic from direct pattern: '{topic}'")
+                    return topic
+        
+        # Enhanced fallback to single capitalized words or quoted phrases
+        
+        # Look for quoted phrases first
         quotes = re.findall(r'"([^"]+)"', prompt)
         if quotes:
             topic = quotes[0].strip()
             logger.info(f"Extracted quoted topic: '{topic}'")
             return topic
-            
+        
+        # Look for capitalized words (likely proper nouns)
+        capitalized = re.findall(r'\b[A-Z][a-z]+\b', prompt)
+        
+        # Filter out common words that shouldn't be topics
+        common_words = {'Has', 'Have', 'Did', 'Was', 'Were', 'What', 'Who', 'When', 'Where', 'How', 'The', 'This', 'That'}
+        capitalized = [word for word in capitalized if word not in common_words]
+        
+        # Try adjacent capitalized words first
+        for i in range(len(capitalized) - 1):
+            two_word = f"{capitalized[i]} {capitalized[i+1]}"
+            if two_word in prompt:
+                logger.info(f"Extracted multi-word capitalized topic: '{two_word}'")
+                return two_word
+        
+        # Single capitalized word as last resort
+        if capitalized:
+            topic = capitalized[-1]  # Take the last one as it's more likely to be the subject
+            logger.info(f"Extracted single capitalized topic: '{topic}'")
+            return topic
+        
         logger.info("No topic could be extracted from the prompt")
         return None
-    
+
     def find_messages_containing_topic(self, 
                                     messages: List[Dict[str, Any]], 
                                     topic: str,
@@ -682,9 +737,9 @@ class HistoryManager:
             "conversation_excerpts": conversation_excerpts[:3]  # Limit for display
         }
 
-    def extract_relevant_excerpt(self, messages: List[Dict[str, Any]], topic: str, user_display_names: Dict[str, str], context_window: int = 100) -> str:
+    def extract_relevant_excerpt(self, messages: List[Dict[str, Any]], topic: str, user_display_names: Dict[str, str], context_window: int = 120) -> str:
         """
-        Extract a relevant excerpt around where the topic is mentioned.
+        Extract a clean, relevant excerpt around where the topic is mentioned.
         
         Args:
             messages: Messages in the thread
@@ -693,12 +748,15 @@ class HistoryManager:
             context_window: Characters of context around the mention
             
         Returns:
-            Formatted excerpt string
+            Clean formatted excerpt string for Slack
         """
         topic_lower = topic.lower()
         
         for msg in messages:
             full_text = self.extract_full_message_text(msg)
+            if not full_text:
+                    continue
+            
             if topic_lower in full_text.lower():
                 user_id = msg.get("user") or msg.get("bot_id", "unknown")
                 user_name = user_display_names.get(user_id, f"User {user_id}")
@@ -710,20 +768,101 @@ class HistoryManager:
                 start_pos = max(0, mention_pos - context_window)
                 end_pos = min(len(full_text), mention_pos + len(topic) + context_window)
                 
-                excerpt = full_text[start_pos:end_pos]
+                excerpt = full_text[start_pos:end_pos].strip()
+                
+                # Clean up the excerpt
                 if start_pos > 0:
                     excerpt = "..." + excerpt
                 if end_pos < len(full_text):
                     excerpt = excerpt + "..."
                 
-                return f"**{user_name}:** {excerpt}"
+                # Remove extra whitespace and line breaks
+                excerpt = " ".join(excerpt.split())
+
+                # NEW: Fix repetitive text (simple approach)
+                excerpt = self._fix_repetitive_text(excerpt)
+                
+                # Truncate if still too long
+                if len(excerpt) > 200:
+                    excerpt = excerpt[:197] + "..."
+                
+                # Format with Slack-style user mention
+                return f"*{user_name}:* {excerpt}"
         
-        # Fallback: return first message
+        # Fallback: return first message with clean formatting
         if messages:
             first_msg = messages[0]
             user_id = first_msg.get("user") or first_msg.get("bot_id", "unknown")
             user_name = user_display_names.get(user_id, f"User {user_id}")
-            text = self.extract_full_message_text(first_msg)[:200]
-            return f"**{user_name}:** {text}..."
+            text = self.extract_full_message_text(first_msg)
+            
+            # Clean and truncate
+            clean_text = " ".join(text.split())[:150]
+            if len(text) > 150:
+                clean_text += "..."
+                
+            return f"*{user_name}:* {clean_text}"
         
-        return "No excerpt available"
+        return "_No excerpt available_"
+    
+    def _fix_repetitive_text(self, text: str) -> str:
+        """
+        Fix text that has obvious repetition like 'question? question?' or 'phrase - phrase'.
+        
+        Args:
+            text: Input text that may have repetition
+            
+        Returns:
+            Text with repetition removed
+        """
+        if not text or len(text) < 20:
+            return text
+        
+        try:
+            # Common pattern: "question? question?" or "statement - statement"
+            
+            # Split on question marks
+            if '?' in text:
+                parts = text.split('?')
+                if len(parts) >= 3:  # At least 2 question marks
+                    # Check if the part before first ? is similar to part before second ?
+                    first_part = parts[0].strip()
+                    second_part = parts[1].strip()
+                    
+                    # If second part starts with first part, it's likely repetitive
+                    if len(first_part) > 10 and second_part.lower().startswith(first_part.lower()[:len(first_part)//2]):
+                        return first_part + '?'
+            
+            # Split on hyphens/dashes  
+            if ' - ' in text:
+                parts = text.split(' - ')
+                if len(parts) >= 2:
+                    first_part = parts[0].strip()
+                    second_part = parts[1].strip()
+                    
+                    # If they're very similar, keep just the first
+                    if len(first_part) > 10 and first_part.lower() in second_part.lower():
+                        return first_part
+            
+            # Check for general repetition where text repeats itself
+            words = text.split()
+            if len(words) > 8:
+                # Check if second half starts similar to first half
+                mid = len(words) // 2
+                first_half_words = words[:mid]
+                second_half_words = words[mid:]
+                
+                # If first few words of second half match first few words of first half
+                if len(first_half_words) >= 3 and len(second_half_words) >= 3:
+                    first_start = ' '.join(first_half_words[:3]).lower()
+                    second_start = ' '.join(second_half_words[:3]).lower()
+                    
+                    if first_start == second_start:
+                        # Likely repetition, return first half
+                        return ' '.join(first_half_words)
+            
+            return text
+            
+        except Exception as e:
+            logger.error(f"Error fixing repetitive text: {e}")
+            return text

@@ -4553,3 +4553,1106 @@ So, imagine Leonardo's steps as a dance with dimensions, while Michelangelo's ar
 • "Show me more conversations about casablanca"
 • "Summarize the casablanca discussions"
 2025-05-23 14:20:47.668 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1748024447.562859', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1748024447.562859', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': ':white_check_mark: Yes! I found 5 message(s) about \'casablanca\' in 3 conversation(s):\n\n**1. Thread started by roberto** (1 message)\n:speech_balloon: **roberto:** <@U08RG89NFK7> has anyone discussed Casablanca?  has anyone discussed Casablanca?\n:link: [Jump to conversation](<https://staceyhub.slack.com/archives/C08SJ5EUTPT/p1748024440347959>)\n\n**2. Thread started by roberto** (2 messages)\n:speech_balloon: **roberto:** <@U08RG89NFK7> has anyone discussed Casablanca?  has anyone discussed Casablanca?\n:link: [Jump to conversation](<https://staceyhub.slack.com/archives/C08SJ5EUTPT/p1748023155911099?thread_ts=1748023155.911099&amp;cid=C08SJ5EUTPT>)\n\n**3. Thread started by roberto** (2 messages)\n:speech_balloon: **roberto:** Hey <@U08RG89NFK7> if it’s eight o clock in Casablanca what time is it in New York? I bet they’re asleep in New York. I bet they’re asleep all over Americ...\n:link: [Jump to conversation](<https://staceyhub.slack.com/archives/C08SJ5EUTPT/p1747340258771419?thread_ts=1747340258.771419&amp;cid=C08SJ5EUTPT>)\n\n:bulb: *Want more details? Try:*\n• "Show me more conversations about casablanca"\n• "Summarize the casablanca discussions"', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1748024440.347959', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'bwfL+', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'emoji', 'name': 'white_check_mark', 'unicode': '2705'}, {'type': 'text', 'text': " Yes! I found 5 message(s) about 'casablanca' in 3 conversation(s):\n\n**1. Thread started by roberto** (1 message)\n"}, {'type': 'emoji', 'name': 'speech_balloon', 'unicode': '1f4ac'}, {'type': 'text', 'text': ' **roberto:** '}, {'type': 'user', 'user_id': 'U08RG89NFK7'}, {'type': 'text', 'text': ' has anyone discussed Casablanca?  has anyone discussed Casablanca?\n'}, {'type': 'emoji', 'name': 'link', 'unicode': '1f517'}, {'type': 'text', 'text': ' [Jump to conversation]('}, {'type': 'link', 'url': 'https://staceyhub.slack.com/archives/C08SJ5EUTPT/p1748024440347959'}, {'type': 'text', 'text': ')\n\n**2. Thread started by roberto** (2 messages)\n'}, {'type': 'emoji', 'name': 'speech_balloon', 'unicode': '1f4ac'}, {'type': 'text', 'text': ' **roberto:** '}, {'type': 'user', 'user_id': 'U08RG89NFK7'}, {'type': 'text', 'text': ' has anyone discussed Casablanca?  has anyone discussed Casablanca?\n'}, {'type': 'emoji', 'name': 'link', 'unicode': '1f517'}, {'type': 'text', 'text': ' [Jump to conversation]('}, {'type': 'link', 'url': 'https://staceyhub.slack.com/archives/C08SJ5EUTPT/p1748023155911099?thread_ts=1748023155.911099&amp;cid=C08SJ5EUTPT', 'text': 'https://staceyhub.slack.com/archives/C08SJ5EUTPT/p1748023155911099?thread_ts=1748023155.911099&cid=C08SJ5EUTPT'}, {'type': 'text', 'text': ')\n\n**3. Thread started by roberto** (2 messages)\n'}, {'type': 'emoji', 'name': 'speech_balloon', 'unicode': '1f4ac'}, {'type': 'text', 'text': ' **roberto:** Hey '}, {'type': 'user', 'user_id': 'U08RG89NFK7'}, {'type': 'text', 'text': ' if it’s eight o clock in Casablanca what time is it in New York? I bet they’re asleep in New York. I bet they’re asleep all over Americ...\n'}, {'type': 'emoji', 'name': 'link', 'unicode': '1f517'}, {'type': 'text', 'text': ' [Jump to conversation]('}, {'type': 'link', 'url': 'https://staceyhub.slack.com/archives/C08SJ5EUTPT/p1747340258771419?thread_ts=1747340258.771419&amp;cid=C08SJ5EUTPT', 'text': 'https://staceyhub.slack.com/archives/C08SJ5EUTPT/p1747340258771419?thread_ts=1747340258.771419&cid=C08SJ5EUTPT'}, {'type': 'text', 'text': ')\n\n'}, {'type': 'emoji', 'name': 'bulb', 'unicode': '1f4a1'}, {'type': 'text', 'text': ' '}, {'type': 'text', 'text': 'Want more details? Try:', 'style': {'bold': True}}, {'type': 'text', 'text': '\n• "Show me more conversations about casablanca"\n• "Summarize the casablanca discussions"'}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-05-23 14:28:38.248 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-23 14:28:38.405 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-23 14:28:38.405 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-23 14:28:38.432 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-23 14:28:38.967 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-23 14:28:39.149 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-23 14:28:39.149 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-23 14:28:39.155 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-23 14:28:39.155 | INFO     | main:startup_event:164 - Slack bot started in socket mode.
+2025-05-23 14:28:39.181 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-23 14:29:11.059 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-23 14:29:11.161 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-23 14:29:11.161 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-23 14:29:11.192 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-23 14:29:11.667 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-23 14:29:11.847 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-23 14:29:11.847 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-23 14:29:11.854 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-23 14:29:11.854 | INFO     | main:startup_event:164 - Slack bot started in socket mode.
+2025-05-23 14:29:11.878 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-23 14:30:04.341 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-23 14:30:04.455 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-23 14:30:04.455 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-23 14:30:04.479 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-23 14:30:04.979 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-23 14:30:05.162 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-23 14:30:05.163 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-23 14:30:05.171 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-23 14:30:05.171 | INFO     | main:startup_event:164 - Slack bot started in socket mode.
+2025-05-23 14:30:05.198 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-23 14:31:08.779 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-23 14:31:08.913 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-23 14:31:08.913 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-23 14:31:08.944 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-23 14:31:09.451 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-23 14:31:09.632 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-23 14:31:09.632 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-23 14:31:09.638 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-23 14:31:09.638 | INFO     | main:startup_event:164 - Slack bot started in socket mode.
+2025-05-23 14:31:09.664 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-23 14:32:48.338 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-23 14:32:48.432 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-23 14:32:48.432 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-23 14:32:48.454 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-23 14:32:48.947 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-23 14:32:49.131 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-23 14:32:49.131 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-23 14:32:49.137 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-23 14:32:49.137 | INFO     | main:startup_event:164 - Slack bot started in socket mode.
+2025-05-23 14:32:49.167 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-23 14:33:13.089 | INFO     | actions.action_framework:__init__:714 - ActionRouter initialized with 6 actions
+2025-05-23 14:33:13.097 | INFO     | actions.action_framework:_get_action_for_text:728 - Selected action HistoricalSearchAction for message: <@U08RG89NFK7> has anyone discussed Casablanca?...
+2025-05-23 14:33:13.108 | INFO     | utils.history_manager:extract_search_topic:295 - Extracting search topic from prompt: has anyone discussed Casablanca?
+2025-05-23 14:33:13.108 | INFO     | utils.history_manager:extract_search_topic:304 - Extracted topic from pattern: 'casablanca'
+2025-05-23 14:33:13.108 | INFO     | utils.history_manager:retrieve_and_filter_history:57 - Performing deep historical search for topic: 'casablanca'
+2025-05-23 14:33:13.109 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 2000)...
+2025-05-23 14:33:13.631 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 97 messages from channel C08SJ5EUTPT.
+2025-05-23 14:33:13.631 | INFO     | utils.history_manager:retrieve_and_filter_history:66 - Retrieved 97 main channel messages
+2025-05-23 14:33:13.632 | INFO     | utils.history_manager:retrieve_and_filter_history:106 - Identified 13 thread parent messages to search
+2025-05-23 14:33:13.632 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748024440.347959 (limit: 100)...
+2025-05-23 14:33:13.857 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1748024440.347959.
+2025-05-23 14:33:13.858 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748023155.911099 (limit: 100)...
+2025-05-23 14:33:14.081 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1748023155.911099.
+2025-05-23 14:33:14.082 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747340258.771419 (limit: 100)...
+2025-05-23 14:33:14.285 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1747340258.771419.
+2025-05-23 14:33:14.285 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747229885.082289 (limit: 100)...
+2025-05-23 14:33:14.558 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 16 messages from thread 1747229885.082289.
+2025-05-23 14:33:14.559 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747735398.888529 (limit: 100)...
+2025-05-23 14:33:14.767 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747735398.888529.
+2025-05-23 14:33:14.767 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747398469.291069 (limit: 100)...
+2025-05-23 14:33:14.979 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747398469.291069.
+2025-05-23 14:33:14.980 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747240286.113569 (limit: 100)...
+2025-05-23 14:33:15.186 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747240286.113569.
+2025-05-23 14:33:15.187 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747154183.175429 (limit: 100)...
+2025-05-23 14:33:15.450 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747154183.175429.
+2025-05-23 14:33:15.451 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748023621.862269 (limit: 100)...
+2025-05-23 14:33:15.669 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1748023621.862269.
+2025-05-23 14:33:15.669 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747712176.750479 (limit: 100)...
+2025-05-23 14:33:15.881 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747712176.750479.
+2025-05-23 14:33:15.882 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747256395.819809 (limit: 100)...
+2025-05-23 14:33:16.090 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747256395.819809.
+2025-05-23 14:33:16.090 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747239317.848699 (limit: 100)...
+2025-05-23 14:33:16.330 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747239317.848699.
+2025-05-23 14:33:16.331 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747151549.684699 (limit: 100)...
+2025-05-23 14:33:16.762 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 7 messages from thread 1747151549.684699.
+2025-05-23 14:33:16.763 | INFO     | utils.history_manager:retrieve_and_filter_history:127 - Retrieved 101 total messages from 13 threads
+2025-05-23 14:33:16.763 | INFO     | utils.history_manager:retrieve_and_filter_history:147 - Combined into 185 unique messages after deduplication
+2025-05-23 14:33:16.763 | INFO     | utils.history_manager:retrieve_and_filter_history:152 - Filtering messages containing topic: 'casablanca'
+2025-05-23 14:33:16.763 | INFO     | utils.history_manager:find_messages_containing_topic:364 - Searching for topic 'casablanca' in 185 messages
+2025-05-23 14:33:16.765 | INFO     | utils.history_manager:find_messages_containing_topic:421 - 📊 Search results for topic 'casablanca':
+2025-05-23 14:33:16.765 | INFO     | utils.history_manager:find_messages_containing_topic:422 -   - Total matches: 7
+2025-05-23 14:33:16.765 | INFO     | utils.history_manager:find_messages_containing_topic:423 -   - Skipped self-referential messages: 0
+2025-05-23 14:33:16.766 | INFO     | utils.history_manager:find_messages_containing_topic:424 -   - Matches in text field: 7
+2025-05-23 14:33:16.766 | INFO     | utils.history_manager:find_messages_containing_topic:425 -   - Matches only in blocks: 0
+2025-05-23 14:33:16.766 | INFO     | utils.history_manager:find_messages_containing_topic:426 -   - Matches only in attachments: 0
+2025-05-23 14:33:16.766 | INFO     | utils.history_manager:retrieve_and_filter_history:158 - FOUND 7 MESSAGES CONTAINING TOPIC 'casablanca'
+2025-05-23 14:33:16.766 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - Search ratio: 7/185 messages matched
+2025-05-23 14:33:16.766 | INFO     | utils.history_manager:retrieve_and_filter_history:163 - Sample matching message: <@U08RG89NFK7> has anyone discussed Casablanca?
+2025-05-23 14:33:16.766 | INFO     | utils.history_manager:retrieve_and_filter_history:290 - Retrieved 7 messages for Deep search for: casablanca
+2025-05-23 14:33:18.135 | ERROR    | main:handle_mention:123 - Action failed: Unknown error
+2025-05-23 14:33:18.135 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 47 chars):
+I encountered an error processing your request.
+2025-05-23 14:33:18.668 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1748025198.496059', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1748025198.496059', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': 'I encountered an error processing your request.', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1748025190.132799', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'd8kUa', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': 'I encountered an error processing your request.'}]}]}]}}
+2025-05-23 14:37:37.714 | INFO     | actions.action_framework:__init__:714 - ActionRouter initialized with 6 actions
+2025-05-23 14:37:37.759 | INFO     | actions.action_framework:_get_action_for_text:728 - Selected action HistoricalSearchAction for message: <@U08RG89NFK7> has anyone discussed Infocom?...
+2025-05-23 14:37:37.760 | INFO     | utils.history_manager:extract_search_topic:295 - Extracting search topic from prompt: has anyone discussed Infocom?
+2025-05-23 14:37:37.760 | INFO     | utils.history_manager:extract_search_topic:304 - Extracted topic from pattern: 'infocom'
+2025-05-23 14:37:37.760 | INFO     | utils.history_manager:retrieve_and_filter_history:57 - Performing deep historical search for topic: 'infocom'
+2025-05-23 14:37:37.761 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 2000)...
+2025-05-23 14:37:38.438 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 98 messages from channel C08SJ5EUTPT.
+2025-05-23 14:37:38.444 | INFO     | utils.history_manager:retrieve_and_filter_history:66 - Retrieved 98 main channel messages
+2025-05-23 14:37:38.444 | INFO     | utils.history_manager:retrieve_and_filter_history:106 - Identified 10 thread parent messages to search
+2025-05-23 14:37:38.445 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748023621.862269 (limit: 100)...
+2025-05-23 14:37:38.689 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1748023621.862269.
+2025-05-23 14:37:38.690 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747229885.082289 (limit: 100)...
+2025-05-23 14:37:38.958 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 16 messages from thread 1747229885.082289.
+2025-05-23 14:37:38.959 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747735398.888529 (limit: 100)...
+2025-05-23 14:37:39.171 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747735398.888529.
+2025-05-23 14:37:39.171 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747398469.291069 (limit: 100)...
+2025-05-23 14:37:39.388 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747398469.291069.
+2025-05-23 14:37:39.389 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747240286.113569 (limit: 100)...
+2025-05-23 14:37:39.600 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747240286.113569.
+2025-05-23 14:37:39.602 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747154183.175429 (limit: 100)...
+2025-05-23 14:37:39.863 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747154183.175429.
+2025-05-23 14:37:39.864 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747712176.750479 (limit: 100)...
+2025-05-23 14:37:40.070 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747712176.750479.
+2025-05-23 14:37:40.070 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747256395.819809 (limit: 100)...
+2025-05-23 14:37:40.282 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747256395.819809.
+2025-05-23 14:37:40.282 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747239317.848699 (limit: 100)...
+2025-05-23 14:37:40.508 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747239317.848699.
+2025-05-23 14:37:40.509 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747151549.684699 (limit: 100)...
+2025-05-23 14:37:40.726 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 7 messages from thread 1747151549.684699.
+2025-05-23 14:37:40.726 | INFO     | utils.history_manager:retrieve_and_filter_history:127 - Retrieved 95 total messages from 10 threads
+2025-05-23 14:37:40.727 | INFO     | utils.history_manager:retrieve_and_filter_history:147 - Combined into 183 unique messages after deduplication
+2025-05-23 14:37:40.727 | INFO     | utils.history_manager:retrieve_and_filter_history:152 - Filtering messages containing topic: 'infocom'
+2025-05-23 14:37:40.727 | INFO     | utils.history_manager:find_messages_containing_topic:364 - Searching for topic 'infocom' in 183 messages
+2025-05-23 14:37:40.728 | INFO     | utils.history_manager:find_messages_containing_topic:421 - 📊 Search results for topic 'infocom':
+2025-05-23 14:37:40.729 | INFO     | utils.history_manager:find_messages_containing_topic:422 -   - Total matches: 7
+2025-05-23 14:37:40.729 | INFO     | utils.history_manager:find_messages_containing_topic:423 -   - Skipped self-referential messages: 0
+2025-05-23 14:37:40.729 | INFO     | utils.history_manager:find_messages_containing_topic:424 -   - Matches in text field: 7
+2025-05-23 14:37:40.729 | INFO     | utils.history_manager:find_messages_containing_topic:425 -   - Matches only in blocks: 0
+2025-05-23 14:37:40.729 | INFO     | utils.history_manager:find_messages_containing_topic:426 -   - Matches only in attachments: 0
+2025-05-23 14:37:40.729 | INFO     | utils.history_manager:retrieve_and_filter_history:158 - FOUND 7 MESSAGES CONTAINING TOPIC 'infocom'
+2025-05-23 14:37:40.729 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - Search ratio: 7/183 messages matched
+2025-05-23 14:37:40.729 | INFO     | utils.history_manager:retrieve_and_filter_history:163 - Sample matching message: <@U08RG89NFK7> has anyone discussed Infocom?
+2025-05-23 14:37:40.730 | INFO     | utils.history_manager:retrieve_and_filter_history:290 - Retrieved 7 messages for Deep search for: infocom
+2025-05-23 14:37:41.480 | ERROR    | main:handle_mention:123 - Action failed: Unknown error
+2025-05-23 14:37:41.480 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 47 chars):
+I encountered an error processing your request.
+2025-05-23 14:37:41.782 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1748025461.787359', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1748025461.787359', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': 'I encountered an error processing your request.', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1748025455.681389', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': '53a', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': 'I encountered an error processing your request.'}]}]}]}}
+2025-05-23 14:43:13.477 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-23 14:43:13.572 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-23 14:43:13.572 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-23 14:43:13.593 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-23 14:43:14.090 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-23 14:43:14.269 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-23 14:43:14.269 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-23 14:43:14.275 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-23 14:43:14.275 | INFO     | main:startup_event:178 - Slack bot started in socket mode.
+2025-05-23 14:43:14.298 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-23 14:43:32.663 | INFO     | actions.action_framework:__init__:714 - ActionRouter initialized with 6 actions
+2025-05-23 14:43:32.667 | INFO     | actions.action_framework:_get_action_for_text:728 - Selected action HistoricalSearchAction for message: <@U08RG89NFK7> has anyone discussed Infocom?...
+2025-05-23 14:43:32.673 | INFO     | utils.history_manager:extract_search_topic:295 - Extracting search topic from prompt: has anyone discussed Infocom?
+2025-05-23 14:43:32.673 | INFO     | utils.history_manager:extract_search_topic:304 - Extracted topic from pattern: 'infocom'
+2025-05-23 14:43:32.673 | INFO     | utils.history_manager:retrieve_and_filter_history:57 - Performing deep historical search for topic: 'infocom'
+2025-05-23 14:43:32.674 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 2000)...
+2025-05-23 14:43:33.258 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 99 messages from channel C08SJ5EUTPT.
+2025-05-23 14:43:33.258 | INFO     | utils.history_manager:retrieve_and_filter_history:66 - Retrieved 99 main channel messages
+2025-05-23 14:43:33.259 | INFO     | utils.history_manager:retrieve_and_filter_history:106 - Identified 11 thread parent messages to search
+2025-05-23 14:43:33.259 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748025455.681389 (limit: 100)...
+2025-05-23 14:43:33.465 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 3 messages from thread 1748025455.681389.
+2025-05-23 14:43:33.466 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748023621.862269 (limit: 100)...
+2025-05-23 14:43:33.674 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1748023621.862269.
+2025-05-23 14:43:33.674 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747229885.082289 (limit: 100)...
+2025-05-23 14:43:33.943 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 16 messages from thread 1747229885.082289.
+2025-05-23 14:43:33.944 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747735398.888529 (limit: 100)...
+2025-05-23 14:43:34.170 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747735398.888529.
+2025-05-23 14:43:34.171 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747398469.291069 (limit: 100)...
+2025-05-23 14:43:34.382 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747398469.291069.
+2025-05-23 14:43:34.383 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747240286.113569 (limit: 100)...
+2025-05-23 14:43:34.601 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747240286.113569.
+2025-05-23 14:43:34.602 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747154183.175429 (limit: 100)...
+2025-05-23 14:43:34.868 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747154183.175429.
+2025-05-23 14:43:34.869 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747712176.750479 (limit: 100)...
+2025-05-23 14:43:35.301 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747712176.750479.
+2025-05-23 14:43:35.301 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747256395.819809 (limit: 100)...
+2025-05-23 14:43:35.523 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747256395.819809.
+2025-05-23 14:43:35.524 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747239317.848699 (limit: 100)...
+2025-05-23 14:43:35.734 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747239317.848699.
+2025-05-23 14:43:35.735 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747151549.684699 (limit: 100)...
+2025-05-23 14:43:35.945 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 7 messages from thread 1747151549.684699.
+2025-05-23 14:43:35.945 | INFO     | utils.history_manager:retrieve_and_filter_history:127 - Retrieved 98 total messages from 11 threads
+2025-05-23 14:43:35.946 | INFO     | utils.history_manager:retrieve_and_filter_history:147 - Combined into 186 unique messages after deduplication
+2025-05-23 14:43:35.946 | INFO     | utils.history_manager:retrieve_and_filter_history:152 - Filtering messages containing topic: 'infocom'
+2025-05-23 14:43:35.946 | INFO     | utils.history_manager:find_messages_containing_topic:364 - Searching for topic 'infocom' in 186 messages
+2025-05-23 14:43:35.948 | INFO     | utils.history_manager:find_messages_containing_topic:421 - 📊 Search results for topic 'infocom':
+2025-05-23 14:43:35.948 | INFO     | utils.history_manager:find_messages_containing_topic:422 -   - Total matches: 9
+2025-05-23 14:43:35.949 | INFO     | utils.history_manager:find_messages_containing_topic:423 -   - Skipped self-referential messages: 0
+2025-05-23 14:43:35.949 | INFO     | utils.history_manager:find_messages_containing_topic:424 -   - Matches in text field: 9
+2025-05-23 14:43:35.949 | INFO     | utils.history_manager:find_messages_containing_topic:425 -   - Matches only in blocks: 0
+2025-05-23 14:43:35.949 | INFO     | utils.history_manager:find_messages_containing_topic:426 -   - Matches only in attachments: 0
+2025-05-23 14:43:35.949 | INFO     | utils.history_manager:retrieve_and_filter_history:158 - FOUND 9 MESSAGES CONTAINING TOPIC 'infocom'
+2025-05-23 14:43:35.949 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - Search ratio: 9/186 messages matched
+2025-05-23 14:43:35.949 | INFO     | utils.history_manager:retrieve_and_filter_history:163 - Sample matching message: <@U08RG89NFK7> has anyone discussed Infocom?
+2025-05-23 14:43:35.950 | INFO     | utils.history_manager:retrieve_and_filter_history:290 - Retrieved 9 messages for Deep search for: infocom
+2025-05-23 14:43:37.146 | ERROR    | main:handle_mention:130 - Action failed: Unknown error
+2025-05-23 14:43:37.146 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 47 chars):
+I encountered an error processing your request.
+2025-05-23 14:43:37.492 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1748025817.504719', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1748025817.504719', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': 'I encountered an error processing your request.', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1748025810.765549', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': '6RsEV', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': 'I encountered an error processing your request.'}]}]}]}}
+2025-05-23 14:45:34.826 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-23 14:45:34.932 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-23 14:45:34.932 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-23 14:45:34.968 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-23 14:45:35.503 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-23 14:45:35.685 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-23 14:45:35.686 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-23 14:45:35.694 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-23 14:45:35.694 | INFO     | main:startup_event:179 - Slack bot started in socket mode.
+2025-05-23 14:45:35.720 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-23 14:45:55.190 | INFO     | actions.action_framework:__init__:714 - ActionRouter initialized with 6 actions
+2025-05-23 14:45:55.201 | INFO     | actions.action_framework:_get_action_for_text:728 - Selected action HistoricalSearchAction for message: <@U08RG89NFK7> has anyone discussed Infocom?...
+2025-05-23 14:45:55.206 | INFO     | utils.history_manager:extract_search_topic:295 - Extracting search topic from prompt: has anyone discussed Infocom?
+2025-05-23 14:45:55.207 | INFO     | utils.history_manager:extract_search_topic:304 - Extracted topic from pattern: 'infocom'
+2025-05-23 14:45:55.207 | INFO     | utils.history_manager:retrieve_and_filter_history:57 - Performing deep historical search for topic: 'infocom'
+2025-05-23 14:45:55.207 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 2000)...
+2025-05-23 14:45:55.802 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 100 messages from channel C08SJ5EUTPT.
+2025-05-23 14:45:55.802 | INFO     | utils.history_manager:retrieve_and_filter_history:66 - Retrieved 100 main channel messages
+2025-05-23 14:45:55.803 | INFO     | utils.history_manager:retrieve_and_filter_history:106 - Identified 12 thread parent messages to search
+2025-05-23 14:45:55.803 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748025810.765549 (limit: 100)...
+2025-05-23 14:45:56.013 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 3 messages from thread 1748025810.765549.
+2025-05-23 14:45:56.013 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748025455.681389 (limit: 100)...
+2025-05-23 14:45:56.252 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 3 messages from thread 1748025455.681389.
+2025-05-23 14:45:56.252 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748023621.862269 (limit: 100)...
+2025-05-23 14:45:56.466 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1748023621.862269.
+2025-05-23 14:45:56.467 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747229885.082289 (limit: 100)...
+2025-05-23 14:45:56.729 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 16 messages from thread 1747229885.082289.
+2025-05-23 14:45:56.730 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747735398.888529 (limit: 100)...
+2025-05-23 14:45:56.939 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747735398.888529.
+2025-05-23 14:45:56.940 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747398469.291069 (limit: 100)...
+2025-05-23 14:45:57.148 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747398469.291069.
+2025-05-23 14:45:57.149 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747240286.113569 (limit: 100)...
+2025-05-23 14:45:57.363 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747240286.113569.
+2025-05-23 14:45:57.363 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747154183.175429 (limit: 100)...
+2025-05-23 14:45:57.685 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747154183.175429.
+2025-05-23 14:45:57.685 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747712176.750479 (limit: 100)...
+2025-05-23 14:45:57.893 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747712176.750479.
+2025-05-23 14:45:57.894 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747256395.819809 (limit: 100)...
+2025-05-23 14:45:58.160 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747256395.819809.
+2025-05-23 14:45:58.160 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747239317.848699 (limit: 100)...
+2025-05-23 14:45:58.370 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747239317.848699.
+2025-05-23 14:45:58.370 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747151549.684699 (limit: 100)...
+2025-05-23 14:45:58.587 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 7 messages from thread 1747151549.684699.
+2025-05-23 14:45:58.587 | INFO     | utils.history_manager:retrieve_and_filter_history:127 - Retrieved 101 total messages from 12 threads
+2025-05-23 14:45:58.588 | INFO     | utils.history_manager:retrieve_and_filter_history:147 - Combined into 189 unique messages after deduplication
+2025-05-23 14:45:58.588 | INFO     | utils.history_manager:retrieve_and_filter_history:152 - Filtering messages containing topic: 'infocom'
+2025-05-23 14:45:58.588 | INFO     | utils.history_manager:find_messages_containing_topic:364 - Searching for topic 'infocom' in 189 messages
+2025-05-23 14:45:58.589 | INFO     | utils.history_manager:find_messages_containing_topic:421 - 📊 Search results for topic 'infocom':
+2025-05-23 14:45:58.589 | INFO     | utils.history_manager:find_messages_containing_topic:422 -   - Total matches: 11
+2025-05-23 14:45:58.590 | INFO     | utils.history_manager:find_messages_containing_topic:423 -   - Skipped self-referential messages: 0
+2025-05-23 14:45:58.590 | INFO     | utils.history_manager:find_messages_containing_topic:424 -   - Matches in text field: 11
+2025-05-23 14:45:58.590 | INFO     | utils.history_manager:find_messages_containing_topic:425 -   - Matches only in blocks: 0
+2025-05-23 14:45:58.590 | INFO     | utils.history_manager:find_messages_containing_topic:426 -   - Matches only in attachments: 0
+2025-05-23 14:45:58.590 | INFO     | utils.history_manager:retrieve_and_filter_history:158 - FOUND 11 MESSAGES CONTAINING TOPIC 'infocom'
+2025-05-23 14:45:58.590 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - Search ratio: 11/189 messages matched
+2025-05-23 14:45:58.590 | INFO     | utils.history_manager:retrieve_and_filter_history:163 - Sample matching message: <@U08RG89NFK7> has anyone discussed Infocom?
+2025-05-23 14:45:58.591 | INFO     | utils.history_manager:retrieve_and_filter_history:290 - Retrieved 11 messages for Deep search for: infocom
+2025-05-23 14:45:59.889 | INFO     | main:handle_mention:111 - action_response.success: True | action_response.message: None
+2025-05-23 14:45:59.889 | ERROR    | main:handle_mention:131 - Action failed: Unknown error
+2025-05-23 14:45:59.889 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 47 chars):
+I encountered an error processing your request.
+2025-05-23 14:46:00.191 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1748025960.204279', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1748025960.204279', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': 'I encountered an error processing your request.', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1748025952.901879', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 't8d+', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': 'I encountered an error processing your request.'}]}]}]}}
+2025-05-23 14:49:36.237 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-23 14:49:36.324 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-23 14:49:36.324 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-23 14:49:36.346 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-23 14:49:36.888 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-23 14:49:37.068 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-23 14:49:37.068 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-23 14:49:37.075 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-23 14:49:37.075 | INFO     | main:startup_event:185 - Slack bot started in socket mode.
+2025-05-23 14:49:37.095 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-23 14:49:59.107 | INFO     | actions.action_framework:__init__:714 - ActionRouter initialized with 6 actions
+2025-05-23 14:49:59.115 | INFO     | actions.action_framework:_get_action_for_text:728 - Selected action HistoricalSearchAction for message: <@U08RG89NFK7> has anyone discussed Infocom?...
+2025-05-23 14:49:59.118 | INFO     | utils.history_manager:extract_search_topic:295 - Extracting search topic from prompt: has anyone discussed Infocom?
+2025-05-23 14:49:59.118 | INFO     | utils.history_manager:extract_search_topic:304 - Extracted topic from pattern: 'infocom'
+2025-05-23 14:49:59.118 | INFO     | utils.history_manager:retrieve_and_filter_history:57 - Performing deep historical search for topic: 'infocom'
+2025-05-23 14:49:59.119 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 2000)...
+2025-05-23 14:49:59.613 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 101 messages from channel C08SJ5EUTPT.
+2025-05-23 14:49:59.613 | INFO     | utils.history_manager:retrieve_and_filter_history:66 - Retrieved 101 main channel messages
+2025-05-23 14:49:59.614 | INFO     | utils.history_manager:retrieve_and_filter_history:106 - Identified 13 thread parent messages to search
+2025-05-23 14:49:59.614 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748025952.901879 (limit: 100)...
+2025-05-23 14:49:59.825 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 3 messages from thread 1748025952.901879.
+2025-05-23 14:49:59.825 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748025810.765549 (limit: 100)...
+2025-05-23 14:50:00.043 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 3 messages from thread 1748025810.765549.
+2025-05-23 14:50:00.043 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748025455.681389 (limit: 100)...
+2025-05-23 14:50:00.245 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 3 messages from thread 1748025455.681389.
+2025-05-23 14:50:00.246 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748023621.862269 (limit: 100)...
+2025-05-23 14:50:00.462 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1748023621.862269.
+2025-05-23 14:50:00.462 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747229885.082289 (limit: 100)...
+2025-05-23 14:50:00.724 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 16 messages from thread 1747229885.082289.
+2025-05-23 14:50:00.727 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747735398.888529 (limit: 100)...
+2025-05-23 14:50:00.962 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747735398.888529.
+2025-05-23 14:50:00.963 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747398469.291069 (limit: 100)...
+2025-05-23 14:50:01.182 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747398469.291069.
+2025-05-23 14:50:01.182 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747240286.113569 (limit: 100)...
+2025-05-23 14:50:01.394 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747240286.113569.
+2025-05-23 14:50:01.395 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747154183.175429 (limit: 100)...
+2025-05-23 14:50:01.778 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747154183.175429.
+2025-05-23 14:50:01.779 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747712176.750479 (limit: 100)...
+2025-05-23 14:50:02.007 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747712176.750479.
+2025-05-23 14:50:02.007 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747256395.819809 (limit: 100)...
+2025-05-23 14:50:02.222 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747256395.819809.
+2025-05-23 14:50:02.223 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747239317.848699 (limit: 100)...
+2025-05-23 14:50:02.450 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747239317.848699.
+2025-05-23 14:50:02.450 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747151549.684699 (limit: 100)...
+2025-05-23 14:50:02.675 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 7 messages from thread 1747151549.684699.
+2025-05-23 14:50:02.676 | INFO     | utils.history_manager:retrieve_and_filter_history:127 - Retrieved 104 total messages from 13 threads
+2025-05-23 14:50:02.676 | INFO     | utils.history_manager:retrieve_and_filter_history:147 - Combined into 192 unique messages after deduplication
+2025-05-23 14:50:02.676 | INFO     | utils.history_manager:retrieve_and_filter_history:152 - Filtering messages containing topic: 'infocom'
+2025-05-23 14:50:02.676 | INFO     | utils.history_manager:find_messages_containing_topic:364 - Searching for topic 'infocom' in 192 messages
+2025-05-23 14:50:02.677 | INFO     | utils.history_manager:find_messages_containing_topic:421 - 📊 Search results for topic 'infocom':
+2025-05-23 14:50:02.677 | INFO     | utils.history_manager:find_messages_containing_topic:422 -   - Total matches: 13
+2025-05-23 14:50:02.678 | INFO     | utils.history_manager:find_messages_containing_topic:423 -   - Skipped self-referential messages: 0
+2025-05-23 14:50:02.678 | INFO     | utils.history_manager:find_messages_containing_topic:424 -   - Matches in text field: 13
+2025-05-23 14:50:02.678 | INFO     | utils.history_manager:find_messages_containing_topic:425 -   - Matches only in blocks: 0
+2025-05-23 14:50:02.678 | INFO     | utils.history_manager:find_messages_containing_topic:426 -   - Matches only in attachments: 0
+2025-05-23 14:50:02.678 | INFO     | utils.history_manager:retrieve_and_filter_history:158 - FOUND 13 MESSAGES CONTAINING TOPIC 'infocom'
+2025-05-23 14:50:02.678 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - Search ratio: 13/192 messages matched
+2025-05-23 14:50:02.678 | INFO     | utils.history_manager:retrieve_and_filter_history:163 - Sample matching message: <@U08RG89NFK7> has anyone discussed Infocom?
+2025-05-23 14:50:02.678 | INFO     | utils.history_manager:retrieve_and_filter_history:290 - Retrieved 13 messages for Deep search for: infocom
+2025-05-23 14:50:04.218 | INFO     | main:handle_mention:123 - Action handled message sending directly (e.g., rich blocks)
+2025-05-23 14:53:58.808 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-23 14:53:58.902 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-23 14:53:58.902 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-23 14:53:58.922 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-23 14:53:59.379 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-23 14:53:59.558 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-23 14:53:59.559 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-23 14:53:59.565 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-23 14:53:59.565 | INFO     | main:startup_event:185 - Slack bot started in socket mode.
+2025-05-23 14:53:59.588 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-23 14:54:36.461 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-23 14:54:36.590 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-23 14:54:36.591 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-23 14:54:36.616 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-23 14:54:37.115 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-23 14:54:37.290 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-23 14:54:37.291 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-23 14:54:37.296 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-23 14:54:37.297 | INFO     | main:startup_event:185 - Slack bot started in socket mode.
+2025-05-23 14:54:37.320 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-23 14:54:47.451 | INFO     | actions.action_framework:__init__:714 - ActionRouter initialized with 6 actions
+2025-05-23 14:54:47.461 | INFO     | actions.action_framework:_get_action_for_text:728 - Selected action HistoricalSearchAction for message: <@U08RG89NFK7> has anyone discussed Infocom?...
+2025-05-23 14:54:47.463 | INFO     | utils.history_manager:extract_search_topic:295 - Extracting search topic from prompt: has anyone discussed Infocom?
+2025-05-23 14:54:47.464 | INFO     | utils.history_manager:extract_search_topic:304 - Extracted topic from pattern: 'infocom'
+2025-05-23 14:54:47.464 | INFO     | utils.history_manager:retrieve_and_filter_history:57 - Performing deep historical search for topic: 'infocom'
+2025-05-23 14:54:47.464 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 2000)...
+2025-05-23 14:54:47.974 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 102 messages from channel C08SJ5EUTPT.
+2025-05-23 14:54:47.974 | INFO     | utils.history_manager:retrieve_and_filter_history:66 - Retrieved 102 main channel messages
+2025-05-23 14:54:47.974 | INFO     | utils.history_manager:retrieve_and_filter_history:106 - Identified 14 thread parent messages to search
+2025-05-23 14:54:47.975 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748026196.674979 (limit: 100)...
+2025-05-23 14:54:48.682 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1748026196.674979.
+2025-05-23 14:54:48.682 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748025952.901879 (limit: 100)...
+2025-05-23 14:54:48.908 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 3 messages from thread 1748025952.901879.
+2025-05-23 14:54:48.909 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748025810.765549 (limit: 100)...
+2025-05-23 14:54:49.119 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 3 messages from thread 1748025810.765549.
+2025-05-23 14:54:49.119 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748025455.681389 (limit: 100)...
+2025-05-23 14:54:49.351 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 3 messages from thread 1748025455.681389.
+2025-05-23 14:54:49.351 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748023621.862269 (limit: 100)...
+2025-05-23 14:54:49.567 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1748023621.862269.
+2025-05-23 14:54:49.568 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747229885.082289 (limit: 100)...
+2025-05-23 14:54:49.862 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 16 messages from thread 1747229885.082289.
+2025-05-23 14:54:49.863 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747735398.888529 (limit: 100)...
+2025-05-23 14:54:50.082 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747735398.888529.
+2025-05-23 14:54:50.082 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747398469.291069 (limit: 100)...
+2025-05-23 14:54:50.288 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747398469.291069.
+2025-05-23 14:54:50.289 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747240286.113569 (limit: 100)...
+2025-05-23 14:54:50.516 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747240286.113569.
+2025-05-23 14:54:50.517 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747154183.175429 (limit: 100)...
+2025-05-23 14:54:50.798 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747154183.175429.
+2025-05-23 14:54:50.799 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747712176.750479 (limit: 100)...
+2025-05-23 14:54:51.005 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747712176.750479.
+2025-05-23 14:54:51.005 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747256395.819809 (limit: 100)...
+2025-05-23 14:54:51.229 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747256395.819809.
+2025-05-23 14:54:51.230 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747239317.848699 (limit: 100)...
+2025-05-23 14:54:51.438 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747239317.848699.
+2025-05-23 14:54:51.439 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747151549.684699 (limit: 100)...
+2025-05-23 14:54:51.659 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 7 messages from thread 1747151549.684699.
+2025-05-23 14:54:51.659 | INFO     | utils.history_manager:retrieve_and_filter_history:127 - Retrieved 106 total messages from 14 threads
+2025-05-23 14:54:51.659 | INFO     | utils.history_manager:retrieve_and_filter_history:147 - Combined into 194 unique messages after deduplication
+2025-05-23 14:54:51.660 | INFO     | utils.history_manager:retrieve_and_filter_history:152 - Filtering messages containing topic: 'infocom'
+2025-05-23 14:54:51.660 | INFO     | utils.history_manager:find_messages_containing_topic:364 - Searching for topic 'infocom' in 194 messages
+2025-05-23 14:54:51.661 | INFO     | utils.history_manager:find_messages_containing_topic:421 - 📊 Search results for topic 'infocom':
+2025-05-23 14:54:51.661 | INFO     | utils.history_manager:find_messages_containing_topic:422 -   - Total matches: 15
+2025-05-23 14:54:51.662 | INFO     | utils.history_manager:find_messages_containing_topic:423 -   - Skipped self-referential messages: 0
+2025-05-23 14:54:51.662 | INFO     | utils.history_manager:find_messages_containing_topic:424 -   - Matches in text field: 15
+2025-05-23 14:54:51.662 | INFO     | utils.history_manager:find_messages_containing_topic:425 -   - Matches only in blocks: 0
+2025-05-23 14:54:51.662 | INFO     | utils.history_manager:find_messages_containing_topic:426 -   - Matches only in attachments: 0
+2025-05-23 14:54:51.662 | INFO     | utils.history_manager:retrieve_and_filter_history:158 - FOUND 15 MESSAGES CONTAINING TOPIC 'infocom'
+2025-05-23 14:54:51.662 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - Search ratio: 15/194 messages matched
+2025-05-23 14:54:51.663 | INFO     | utils.history_manager:retrieve_and_filter_history:163 - Sample matching message: <@U08RG89NFK7> has anyone discussed Infocom?
+2025-05-23 14:54:51.663 | INFO     | utils.history_manager:retrieve_and_filter_history:290 - Retrieved 15 messages for Deep search for: infocom
+2025-05-23 14:54:53.301 | INFO     | main:handle_mention:123 - Action handled message sending directly (e.g., rich blocks)
+2025-05-23 14:58:22.424 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-23 14:58:22.515 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-23 14:58:22.515 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-23 14:58:22.542 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-23 14:58:23.035 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-23 14:58:23.219 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-23 14:58:23.220 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-23 14:58:23.226 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-23 14:58:23.226 | INFO     | main:startup_event:185 - Slack bot started in socket mode.
+2025-05-23 14:58:23.319 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-23 14:58:26.328 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-23 14:58:26.386 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-23 14:58:26.386 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-23 14:58:26.413 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-23 14:58:26.806 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-23 14:58:26.990 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-23 14:58:26.990 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-23 14:58:26.996 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-23 14:58:26.997 | INFO     | main:startup_event:185 - Slack bot started in socket mode.
+2025-05-23 14:58:27.004 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-23 14:58:35.947 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-23 14:58:36.022 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-23 14:58:36.022 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-23 14:58:36.045 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-23 14:58:36.470 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-23 14:58:36.652 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-23 14:58:36.652 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-23 14:58:36.660 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-23 14:58:36.660 | INFO     | main:startup_event:185 - Slack bot started in socket mode.
+2025-05-23 14:58:36.668 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-23 15:00:00.532 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-23 15:00:00.652 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-23 15:00:00.655 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-23 15:00:00.712 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-23 15:00:01.373 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-23 15:00:01.570 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-23 15:00:01.570 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-23 15:00:01.576 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-23 15:00:01.576 | INFO     | main:startup_event:185 - Slack bot started in socket mode.
+2025-05-23 15:00:01.585 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-23 15:00:16.040 | INFO     | actions.action_framework:__init__:714 - ActionRouter initialized with 6 actions
+2025-05-23 15:00:16.044 | INFO     | actions.action_framework:_get_action_for_text:728 - Selected action HistoricalSearchAction for message: <@U08RG89NFK7> has anyone discussed Infocom?...
+2025-05-23 15:00:16.064 | INFO     | utils.history_manager:extract_search_topic:305 - Extracting search topic from prompt: has anyone discussed Infocom?
+2025-05-23 15:00:16.064 | INFO     | utils.history_manager:extract_search_topic:314 - Extracted topic from pattern: 'infocom'
+2025-05-23 15:00:16.065 | INFO     | utils.history_manager:retrieve_and_filter_history:58 - Performing deep historical search for topic: 'infocom'
+2025-05-23 15:00:16.065 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 2000)...
+2025-05-23 15:00:16.574 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 103 messages from channel C08SJ5EUTPT.
+2025-05-23 15:00:16.574 | INFO     | utils.history_manager:retrieve_and_filter_history:67 - Retrieved 103 main channel messages
+2025-05-23 15:00:16.575 | INFO     | utils.history_manager:retrieve_and_filter_history:107 - Identified 15 thread parent messages to search
+2025-05-23 15:00:16.576 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748026485.852119 (limit: 100)...
+2025-05-23 15:00:16.793 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1748026485.852119.
+2025-05-23 15:00:16.794 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748026196.674979 (limit: 100)...
+2025-05-23 15:00:17.390 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1748026196.674979.
+2025-05-23 15:00:17.391 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748025952.901879 (limit: 100)...
+2025-05-23 15:00:17.607 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 3 messages from thread 1748025952.901879.
+2025-05-23 15:00:17.608 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748025810.765549 (limit: 100)...
+2025-05-23 15:00:17.866 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 3 messages from thread 1748025810.765549.
+2025-05-23 15:00:17.867 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748025455.681389 (limit: 100)...
+2025-05-23 15:00:18.111 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 3 messages from thread 1748025455.681389.
+2025-05-23 15:00:18.112 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748023621.862269 (limit: 100)...
+2025-05-23 15:00:18.325 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1748023621.862269.
+2025-05-23 15:00:18.326 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747229885.082289 (limit: 100)...
+2025-05-23 15:00:18.619 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 16 messages from thread 1747229885.082289.
+2025-05-23 15:00:18.619 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747735398.888529 (limit: 100)...
+2025-05-23 15:00:18.838 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747735398.888529.
+2025-05-23 15:00:18.839 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747398469.291069 (limit: 100)...
+2025-05-23 15:00:19.205 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747398469.291069.
+2025-05-23 15:00:19.206 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747240286.113569 (limit: 100)...
+2025-05-23 15:00:19.411 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747240286.113569.
+2025-05-23 15:00:19.411 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747154183.175429 (limit: 100)...
+2025-05-23 15:00:19.671 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747154183.175429.
+2025-05-23 15:00:19.672 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747712176.750479 (limit: 100)...
+2025-05-23 15:00:19.905 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747712176.750479.
+2025-05-23 15:00:19.906 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747256395.819809 (limit: 100)...
+2025-05-23 15:00:20.139 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747256395.819809.
+2025-05-23 15:00:20.140 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747239317.848699 (limit: 100)...
+2025-05-23 15:00:20.357 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747239317.848699.
+2025-05-23 15:00:20.357 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747151549.684699 (limit: 100)...
+2025-05-23 15:00:20.573 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 7 messages from thread 1747151549.684699.
+2025-05-23 15:00:20.574 | INFO     | utils.history_manager:retrieve_and_filter_history:128 - Retrieved 108 total messages from 15 threads
+2025-05-23 15:00:20.574 | INFO     | utils.history_manager:retrieve_and_filter_history:148 - Combined into 196 unique messages after deduplication
+2025-05-23 15:00:20.574 | INFO     | utils.history_manager:retrieve_and_filter_history:153 - Filtering messages containing topic: 'infocom'
+2025-05-23 15:00:20.574 | INFO     | utils.history_manager:find_messages_containing_topic:374 - Searching for topic 'infocom' in 196 messages
+2025-05-23 15:00:20.576 | INFO     | utils.history_manager:find_messages_containing_topic:431 - 📊 Search results for topic 'infocom':
+2025-05-23 15:00:20.576 | INFO     | utils.history_manager:find_messages_containing_topic:432 -   - Total matches: 17
+2025-05-23 15:00:20.576 | INFO     | utils.history_manager:find_messages_containing_topic:433 -   - Skipped self-referential messages: 0
+2025-05-23 15:00:20.576 | INFO     | utils.history_manager:find_messages_containing_topic:434 -   - Matches in text field: 17
+2025-05-23 15:00:20.576 | INFO     | utils.history_manager:find_messages_containing_topic:435 -   - Matches only in blocks: 0
+2025-05-23 15:00:20.577 | INFO     | utils.history_manager:find_messages_containing_topic:436 -   - Matches only in attachments: 0
+2025-05-23 15:00:20.577 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - FOUND 17 MESSAGES CONTAINING TOPIC 'infocom'
+2025-05-23 15:00:20.577 | INFO     | utils.history_manager:retrieve_and_filter_history:160 - Search ratio: 17/196 messages matched
+2025-05-23 15:00:20.577 | INFO     | utils.history_manager:retrieve_and_filter_history:164 - Sample matching message: <@U08RG89NFK7> has anyone discussed Infocom?
+2025-05-23 15:00:20.577 | INFO     | utils.history_manager:retrieve_and_filter_history:295 - Excluded current question, 17 -> 16 messages
+2025-05-23 15:00:20.578 | INFO     | utils.history_manager:retrieve_and_filter_history:300 - Retrieved 16 messages for Deep search for: infocom
+2025-05-23 15:00:22.698 | INFO     | main:handle_mention:123 - Action handled message sending directly (e.g., rich blocks)
+2025-05-23 15:01:11.231 | INFO     | actions.action_framework:__init__:714 - ActionRouter initialized with 6 actions
+2025-05-23 15:01:11.244 | INFO     | actions.action_framework:_get_action_for_text:728 - Selected action HistoricalSearchAction for message: <@U08RG89NFK7> has anyone discussed Macedonia?...
+2025-05-23 15:01:11.244 | INFO     | utils.history_manager:extract_search_topic:305 - Extracting search topic from prompt: has anyone discussed Macedonia?
+2025-05-23 15:01:11.244 | INFO     | utils.history_manager:extract_search_topic:314 - Extracted topic from pattern: 'macedonia'
+2025-05-23 15:01:11.244 | INFO     | utils.history_manager:retrieve_and_filter_history:58 - Performing deep historical search for topic: 'macedonia'
+2025-05-23 15:01:11.244 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08N2FK0JQL (limit: 2000)...
+2025-05-23 15:01:11.922 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 195 messages from channel C08N2FK0JQL.
+2025-05-23 15:01:11.923 | INFO     | utils.history_manager:retrieve_and_filter_history:67 - Retrieved 195 main channel messages
+2025-05-23 15:01:11.923 | INFO     | utils.history_manager:retrieve_and_filter_history:107 - Identified 10 thread parent messages to search
+2025-05-23 15:01:11.924 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744577447.180649 (limit: 100)...
+2025-05-23 15:01:12.433 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 101 messages from thread 1744577447.180649.
+2025-05-23 15:01:12.436 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744554763.134959 (limit: 100)...
+2025-05-23 15:01:12.836 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 64 messages from thread 1744554763.134959.
+2025-05-23 15:01:12.837 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1747256752.470699 (limit: 100)...
+2025-05-23 15:01:13.376 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 20 messages from thread 1747256752.470699.
+2025-05-23 15:01:13.377 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1747134535.909869 (limit: 100)...
+2025-05-23 15:01:13.646 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 15 messages from thread 1747134535.909869.
+2025-05-23 15:01:13.646 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1747134423.889109 (limit: 100)...
+2025-05-23 15:01:13.852 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 15 messages from thread 1747134423.889109.
+2025-05-23 15:01:13.853 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1746840799.202239 (limit: 100)...
+2025-05-23 15:01:14.118 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 14 messages from thread 1746840799.202239.
+2025-05-23 15:01:14.118 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744576703.408639 (limit: 100)...
+2025-05-23 15:01:14.451 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 14 messages from thread 1744576703.408639.
+2025-05-23 15:01:14.451 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744576233.584619 (limit: 100)...
+2025-05-23 15:01:14.719 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 14 messages from thread 1744576233.584619.
+2025-05-23 15:01:14.719 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744570682.885419 (limit: 100)...
+2025-05-23 15:01:14.995 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 14 messages from thread 1744570682.885419.
+2025-05-23 15:01:14.995 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744577110.260699 (limit: 100)...
+2025-05-23 15:01:15.269 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 13 messages from thread 1744577110.260699.
+2025-05-23 15:01:15.270 | INFO     | utils.history_manager:retrieve_and_filter_history:128 - Retrieved 283 total messages from 10 threads
+2025-05-23 15:01:15.270 | INFO     | utils.history_manager:retrieve_and_filter_history:148 - Combined into 468 unique messages after deduplication
+2025-05-23 15:01:15.270 | INFO     | utils.history_manager:retrieve_and_filter_history:153 - Filtering messages containing topic: 'macedonia'
+2025-05-23 15:01:15.271 | INFO     | utils.history_manager:find_messages_containing_topic:374 - Searching for topic 'macedonia' in 468 messages
+2025-05-23 15:01:15.273 | INFO     | utils.history_manager:find_messages_containing_topic:431 - 📊 Search results for topic 'macedonia':
+2025-05-23 15:01:15.273 | INFO     | utils.history_manager:find_messages_containing_topic:432 -   - Total matches: 1
+2025-05-23 15:01:15.273 | INFO     | utils.history_manager:find_messages_containing_topic:433 -   - Skipped self-referential messages: 0
+2025-05-23 15:01:15.274 | INFO     | utils.history_manager:find_messages_containing_topic:434 -   - Matches in text field: 1
+2025-05-23 15:01:15.274 | INFO     | utils.history_manager:find_messages_containing_topic:435 -   - Matches only in blocks: 0
+2025-05-23 15:01:15.274 | INFO     | utils.history_manager:find_messages_containing_topic:436 -   - Matches only in attachments: 0
+2025-05-23 15:01:15.274 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - FOUND 1 MESSAGES CONTAINING TOPIC 'macedonia'
+2025-05-23 15:01:15.274 | INFO     | utils.history_manager:retrieve_and_filter_history:160 - Search ratio: 1/468 messages matched
+2025-05-23 15:01:15.275 | INFO     | utils.history_manager:retrieve_and_filter_history:164 - Sample matching message: <@U08RG89NFK7> has anyone discussed Macedonia?
+2025-05-23 15:01:15.275 | INFO     | utils.history_manager:retrieve_and_filter_history:295 - Excluded current question, 1 -> 0 messages
+2025-05-23 15:01:15.275 | INFO     | utils.history_manager:retrieve_and_filter_history:300 - Retrieved 0 messages for Deep search for: macedonia
+2025-05-23 15:01:15.759 | INFO     | main:handle_mention:123 - Action handled message sending directly (e.g., rich blocks)
+2025-05-23 15:01:52.915 | INFO     | actions.action_framework:__init__:714 - ActionRouter initialized with 6 actions
+2025-05-23 15:01:52.919 | INFO     | actions.action_framework:_get_action_for_text:728 - Selected action HistoricalSearchAction for message: <@U08RG89NFK7> has anyone discussed Mongolia?...
+2025-05-23 15:01:52.919 | INFO     | utils.history_manager:extract_search_topic:305 - Extracting search topic from prompt: has anyone discussed Mongolia?
+2025-05-23 15:01:52.919 | INFO     | utils.history_manager:extract_search_topic:314 - Extracted topic from pattern: 'mongolia'
+2025-05-23 15:01:52.919 | INFO     | utils.history_manager:retrieve_and_filter_history:58 - Performing deep historical search for topic: 'mongolia'
+2025-05-23 15:01:52.919 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08N2FK0JQL (limit: 2000)...
+2025-05-23 15:01:53.797 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 195 messages from channel C08N2FK0JQL.
+2025-05-23 15:01:53.798 | INFO     | utils.history_manager:retrieve_and_filter_history:67 - Retrieved 195 main channel messages
+2025-05-23 15:01:53.798 | INFO     | utils.history_manager:retrieve_and_filter_history:107 - Identified 15 thread parent messages to search
+2025-05-23 15:01:53.798 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1747134535.909869 (limit: 100)...
+2025-05-23 15:01:54.121 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 15 messages from thread 1747134535.909869.
+2025-05-23 15:01:54.122 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1747090773.054309 (limit: 100)...
+2025-05-23 15:01:54.396 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 4 messages from thread 1747090773.054309.
+2025-05-23 15:01:54.397 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1746841657.440269 (limit: 100)...
+2025-05-23 15:01:54.602 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 6 messages from thread 1746841657.440269.
+2025-05-23 15:01:54.603 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1746838179.810719 (limit: 100)...
+2025-05-23 15:01:54.809 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 6 messages from thread 1746838179.810719.
+2025-05-23 15:01:54.809 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1746837230.503219 (limit: 100)...
+2025-05-23 15:01:55.017 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1746837230.503219.
+2025-05-23 15:01:55.018 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1746834317.882839 (limit: 100)...
+2025-05-23 15:01:55.245 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 9 messages from thread 1746834317.882839.
+2025-05-23 15:01:55.246 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744577447.180649 (limit: 100)...
+2025-05-23 15:01:55.782 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 101 messages from thread 1744577447.180649.
+2025-05-23 15:01:55.784 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744554763.134959 (limit: 100)...
+2025-05-23 15:01:56.266 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 64 messages from thread 1744554763.134959.
+2025-05-23 15:01:56.267 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1747256752.470699 (limit: 100)...
+2025-05-23 15:01:56.672 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 20 messages from thread 1747256752.470699.
+2025-05-23 15:01:56.673 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1747134423.889109 (limit: 100)...
+2025-05-23 15:01:56.879 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 15 messages from thread 1747134423.889109.
+2025-05-23 15:01:56.879 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1746840799.202239 (limit: 100)...
+2025-05-23 15:01:57.092 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 14 messages from thread 1746840799.202239.
+2025-05-23 15:01:57.092 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744576703.408639 (limit: 100)...
+2025-05-23 15:01:57.396 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 14 messages from thread 1744576703.408639.
+2025-05-23 15:01:57.397 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744576233.584619 (limit: 100)...
+2025-05-23 15:01:57.678 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 14 messages from thread 1744576233.584619.
+2025-05-23 15:01:57.679 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744570682.885419 (limit: 100)...
+2025-05-23 15:01:57.957 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 14 messages from thread 1744570682.885419.
+2025-05-23 15:01:57.958 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744577110.260699 (limit: 100)...
+2025-05-23 15:01:58.545 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 13 messages from thread 1744577110.260699.
+2025-05-23 15:01:58.546 | INFO     | utils.history_manager:retrieve_and_filter_history:128 - Retrieved 310 total messages from 15 threads
+2025-05-23 15:01:58.547 | INFO     | utils.history_manager:retrieve_and_filter_history:148 - Combined into 490 unique messages after deduplication
+2025-05-23 15:01:58.547 | INFO     | utils.history_manager:retrieve_and_filter_history:153 - Filtering messages containing topic: 'mongolia'
+2025-05-23 15:01:58.547 | INFO     | utils.history_manager:find_messages_containing_topic:374 - Searching for topic 'mongolia' in 490 messages
+2025-05-23 15:01:58.550 | INFO     | utils.history_manager:find_messages_containing_topic:431 - 📊 Search results for topic 'mongolia':
+2025-05-23 15:01:58.550 | INFO     | utils.history_manager:find_messages_containing_topic:432 -   - Total matches: 26
+2025-05-23 15:01:58.550 | INFO     | utils.history_manager:find_messages_containing_topic:433 -   - Skipped self-referential messages: 0
+2025-05-23 15:01:58.550 | INFO     | utils.history_manager:find_messages_containing_topic:434 -   - Matches in text field: 26
+2025-05-23 15:01:58.550 | INFO     | utils.history_manager:find_messages_containing_topic:435 -   - Matches only in blocks: 0
+2025-05-23 15:01:58.550 | INFO     | utils.history_manager:find_messages_containing_topic:436 -   - Matches only in attachments: 0
+2025-05-23 15:01:58.550 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - FOUND 26 MESSAGES CONTAINING TOPIC 'mongolia'
+2025-05-23 15:01:58.550 | INFO     | utils.history_manager:retrieve_and_filter_history:160 - Search ratio: 26/490 messages matched
+2025-05-23 15:01:58.551 | INFO     | utils.history_manager:retrieve_and_filter_history:164 - Sample matching message: <@U08RG89NFK7> has anyone discussed Mongolia?
+2025-05-23 15:01:58.551 | INFO     | utils.history_manager:retrieve_and_filter_history:295 - Excluded current question, 26 -> 25 messages
+2025-05-23 15:01:58.551 | INFO     | utils.history_manager:retrieve_and_filter_history:300 - Retrieved 25 messages for Deep search for: mongolia
+2025-05-23 15:02:00.897 | INFO     | main:handle_mention:123 - Action handled message sending directly (e.g., rich blocks)
+2025-05-23 15:12:05.964 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-23 15:12:06.058 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-23 15:12:06.058 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-23 15:12:06.079 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-23 15:12:06.570 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-23 15:12:06.749 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-23 15:12:06.749 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-23 15:12:06.755 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-23 15:12:06.755 | INFO     | main:startup_event:185 - Slack bot started in socket mode.
+2025-05-23 15:12:06.787 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-23 15:12:44.687 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-23 15:12:44.774 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-23 15:12:44.775 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-23 15:12:44.797 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-23 15:12:45.228 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-23 15:12:45.574 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-23 15:12:45.574 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-23 15:12:45.585 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-23 15:12:45.586 | INFO     | main:startup_event:185 - Slack bot started in socket mode.
+2025-05-23 15:12:45.647 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-23 15:13:25.272 | INFO     | actions.action_framework:__init__:714 - ActionRouter initialized with 6 actions
+2025-05-23 15:13:25.280 | INFO     | actions.action_framework:_get_action_for_text:728 - Selected action HistoricalSearchAction for message: <@U08RG89NFK7> has anyone discussed Mongolia?...
+2025-05-23 15:13:25.293 | INFO     | utils.history_manager:extract_search_topic:305 - Extracting search topic from prompt: has anyone discussed Mongolia?
+2025-05-23 15:13:25.294 | INFO     | utils.history_manager:extract_search_topic:314 - Extracted topic from pattern: 'mongolia'
+2025-05-23 15:13:25.294 | INFO     | utils.history_manager:retrieve_and_filter_history:58 - Performing deep historical search for topic: 'mongolia'
+2025-05-23 15:13:25.294 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08N2FK0JQL (limit: 2000)...
+2025-05-23 15:13:25.810 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 195 messages from channel C08N2FK0JQL.
+2025-05-23 15:13:25.810 | INFO     | utils.history_manager:retrieve_and_filter_history:67 - Retrieved 195 main channel messages
+2025-05-23 15:13:25.811 | INFO     | utils.history_manager:retrieve_and_filter_history:107 - Identified 15 thread parent messages to search
+2025-05-23 15:13:25.811 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1747134535.909869 (limit: 100)...
+2025-05-23 15:13:26.082 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 15 messages from thread 1747134535.909869.
+2025-05-23 15:13:26.082 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1747090773.054309 (limit: 100)...
+2025-05-23 15:13:26.304 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 4 messages from thread 1747090773.054309.
+2025-05-23 15:13:26.305 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1746841657.440269 (limit: 100)...
+2025-05-23 15:13:26.520 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 6 messages from thread 1746841657.440269.
+2025-05-23 15:13:26.520 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1746838179.810719 (limit: 100)...
+2025-05-23 15:13:26.741 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 6 messages from thread 1746838179.810719.
+2025-05-23 15:13:26.742 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1746837230.503219 (limit: 100)...
+2025-05-23 15:13:26.964 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1746837230.503219.
+2025-05-23 15:13:26.964 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1746834317.882839 (limit: 100)...
+2025-05-23 15:13:27.186 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 9 messages from thread 1746834317.882839.
+2025-05-23 15:13:27.186 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744577447.180649 (limit: 100)...
+2025-05-23 15:13:27.917 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 101 messages from thread 1744577447.180649.
+2025-05-23 15:13:27.918 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744554763.134959 (limit: 100)...
+2025-05-23 15:13:28.313 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 64 messages from thread 1744554763.134959.
+2025-05-23 15:13:28.314 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1747256752.470699 (limit: 100)...
+2025-05-23 15:13:28.577 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 20 messages from thread 1747256752.470699.
+2025-05-23 15:13:28.577 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1747134423.889109 (limit: 100)...
+2025-05-23 15:13:28.786 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 15 messages from thread 1747134423.889109.
+2025-05-23 15:13:28.787 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1746840799.202239 (limit: 100)...
+2025-05-23 15:13:28.997 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 14 messages from thread 1746840799.202239.
+2025-05-23 15:13:28.997 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744576703.408639 (limit: 100)...
+2025-05-23 15:13:29.274 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 14 messages from thread 1744576703.408639.
+2025-05-23 15:13:29.274 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744576233.584619 (limit: 100)...
+2025-05-23 15:13:29.561 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 14 messages from thread 1744576233.584619.
+2025-05-23 15:13:29.562 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744570682.885419 (limit: 100)...
+2025-05-23 15:13:29.832 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 14 messages from thread 1744570682.885419.
+2025-05-23 15:13:29.833 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744577110.260699 (limit: 100)...
+2025-05-23 15:13:30.104 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 13 messages from thread 1744577110.260699.
+2025-05-23 15:13:30.105 | INFO     | utils.history_manager:retrieve_and_filter_history:128 - Retrieved 310 total messages from 15 threads
+2025-05-23 15:13:30.105 | INFO     | utils.history_manager:retrieve_and_filter_history:148 - Combined into 490 unique messages after deduplication
+2025-05-23 15:13:30.106 | INFO     | utils.history_manager:retrieve_and_filter_history:153 - Filtering messages containing topic: 'mongolia'
+2025-05-23 15:13:30.106 | INFO     | utils.history_manager:find_messages_containing_topic:374 - Searching for topic 'mongolia' in 490 messages
+2025-05-23 15:13:30.108 | INFO     | utils.history_manager:find_messages_containing_topic:431 - 📊 Search results for topic 'mongolia':
+2025-05-23 15:13:30.108 | INFO     | utils.history_manager:find_messages_containing_topic:432 -   - Total matches: 26
+2025-05-23 15:13:30.108 | INFO     | utils.history_manager:find_messages_containing_topic:433 -   - Skipped self-referential messages: 0
+2025-05-23 15:13:30.109 | INFO     | utils.history_manager:find_messages_containing_topic:434 -   - Matches in text field: 26
+2025-05-23 15:13:30.109 | INFO     | utils.history_manager:find_messages_containing_topic:435 -   - Matches only in blocks: 0
+2025-05-23 15:13:30.109 | INFO     | utils.history_manager:find_messages_containing_topic:436 -   - Matches only in attachments: 0
+2025-05-23 15:13:30.109 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - FOUND 26 MESSAGES CONTAINING TOPIC 'mongolia'
+2025-05-23 15:13:30.109 | INFO     | utils.history_manager:retrieve_and_filter_history:160 - Search ratio: 26/490 messages matched
+2025-05-23 15:13:30.109 | INFO     | utils.history_manager:retrieve_and_filter_history:164 - Sample matching message: <@U08RG89NFK7> has anyone discussed Mongolia?
+2025-05-23 15:13:30.109 | INFO     | utils.history_manager:retrieve_and_filter_history:295 - Excluded current question, 26 -> 25 messages
+2025-05-23 15:13:30.109 | INFO     | utils.history_manager:retrieve_and_filter_history:300 - Retrieved 25 messages for Deep search for: mongolia
+2025-05-23 15:13:32.157 | INFO     | main:handle_mention:123 - Action handled message sending directly (e.g., rich blocks)
+2025-05-23 15:16:41.379 | INFO     | actions.action_framework:__init__:714 - ActionRouter initialized with 6 actions
+2025-05-23 15:16:41.393 | INFO     | actions.action_framework:_get_action_for_text:728 - Selected action ContextResponseAction for message: <@U08RG89NFK7> has Miami been discussed?...
+2025-05-23 15:16:41.394 | INFO     | utils.history_manager:extract_search_topic:305 - Extracting search topic from prompt: has Miami been discussed?
+2025-05-23 15:16:41.395 | INFO     | utils.history_manager:extract_search_topic:339 - Extracted capitalized topic: 'Miami'
+2025-05-23 15:16:41.395 | INFO     | utils.history_manager:retrieve_and_filter_history:58 - Performing deep historical search for topic: 'Miami'
+2025-05-23 15:16:41.395 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08N2FK0JQL (limit: 2000)...
+2025-05-23 15:16:42.165 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 196 messages from channel C08N2FK0JQL.
+2025-05-23 15:16:42.165 | INFO     | utils.history_manager:retrieve_and_filter_history:67 - Retrieved 196 main channel messages
+2025-05-23 15:16:42.166 | INFO     | utils.history_manager:retrieve_and_filter_history:107 - Identified 10 thread parent messages to search
+2025-05-23 15:16:42.166 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744577447.180649 (limit: 100)...
+2025-05-23 15:16:42.645 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 101 messages from thread 1744577447.180649.
+2025-05-23 15:16:42.646 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744554763.134959 (limit: 100)...
+2025-05-23 15:16:43.047 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 64 messages from thread 1744554763.134959.
+2025-05-23 15:16:43.048 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1747256752.470699 (limit: 100)...
+2025-05-23 15:16:43.314 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 20 messages from thread 1747256752.470699.
+2025-05-23 15:16:43.314 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1747134535.909869 (limit: 100)...
+2025-05-23 15:16:43.576 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 15 messages from thread 1747134535.909869.
+2025-05-23 15:16:43.576 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1747134423.889109 (limit: 100)...
+2025-05-23 15:16:43.786 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 15 messages from thread 1747134423.889109.
+2025-05-23 15:16:43.786 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1746840799.202239 (limit: 100)...
+2025-05-23 15:16:43.988 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 14 messages from thread 1746840799.202239.
+2025-05-23 15:16:43.989 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744576703.408639 (limit: 100)...
+2025-05-23 15:16:44.275 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 14 messages from thread 1744576703.408639.
+2025-05-23 15:16:44.276 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744576233.584619 (limit: 100)...
+2025-05-23 15:16:44.538 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 14 messages from thread 1744576233.584619.
+2025-05-23 15:16:44.539 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744570682.885419 (limit: 100)...
+2025-05-23 15:16:44.803 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 14 messages from thread 1744570682.885419.
+2025-05-23 15:16:44.803 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744577110.260699 (limit: 100)...
+2025-05-23 15:16:45.189 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 13 messages from thread 1744577110.260699.
+2025-05-23 15:16:45.190 | INFO     | utils.history_manager:retrieve_and_filter_history:128 - Retrieved 283 total messages from 10 threads
+2025-05-23 15:16:45.190 | INFO     | utils.history_manager:retrieve_and_filter_history:148 - Combined into 469 unique messages after deduplication
+2025-05-23 15:16:45.190 | INFO     | utils.history_manager:retrieve_and_filter_history:153 - Filtering messages containing topic: 'Miami'
+2025-05-23 15:16:45.190 | INFO     | utils.history_manager:find_messages_containing_topic:374 - Searching for topic 'Miami' in 469 messages
+2025-05-23 15:16:45.193 | INFO     | utils.history_manager:find_messages_containing_topic:431 - 📊 Search results for topic 'Miami':
+2025-05-23 15:16:45.193 | INFO     | utils.history_manager:find_messages_containing_topic:432 -   - Total matches: 6
+2025-05-23 15:16:45.193 | INFO     | utils.history_manager:find_messages_containing_topic:433 -   - Skipped self-referential messages: 0
+2025-05-23 15:16:45.194 | INFO     | utils.history_manager:find_messages_containing_topic:434 -   - Matches in text field: 6
+2025-05-23 15:16:45.194 | INFO     | utils.history_manager:find_messages_containing_topic:435 -   - Matches only in blocks: 0
+2025-05-23 15:16:45.194 | INFO     | utils.history_manager:find_messages_containing_topic:436 -   - Matches only in attachments: 0
+2025-05-23 15:16:45.194 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - FOUND 6 MESSAGES CONTAINING TOPIC 'Miami'
+2025-05-23 15:16:45.194 | INFO     | utils.history_manager:retrieve_and_filter_history:160 - Search ratio: 6/469 messages matched
+2025-05-23 15:16:45.194 | INFO     | utils.history_manager:retrieve_and_filter_history:164 - Sample matching message: <@U08RG89NFK7> has Miami been discussed?
+2025-05-23 15:16:45.195 | INFO     | utils.history_manager:retrieve_and_filter_history:300 - Retrieved 6 messages for Deep search for: Miami
+2025-05-23 15:16:45.394 | INFO     | utils.history_manager:format_history_for_prompt:590 - Formatted message history: 5379 characters
+2025-05-23 15:16:45.394 | INFO     | actions.action_framework:execute:252 - Fetching Notion context for user U089YKL1T4H
+2025-05-23 15:16:46.275 | INFO     | services.cached_notion_service:get_user_page_content:374 - Retrieved Notion page content for user U089YKL1T4H (length: 1090)
+2025-05-23 15:16:46.493 | INFO     | services.cached_notion_service:get_user_page_content:310 - Cache hit for user page content: U089YKL1T4H
+2025-05-23 15:16:46.493 | INFO     | utils.context_builder:get_enhanced_user_context:21 - Building enhanced context for user U089YKL1T4H
+2025-05-23 15:16:46.493 | INFO     | utils.context_builder:get_enhanced_user_context:23 - Using preferred name: Al
+2025-05-23 15:16:46.493 | INFO     | utils.context_builder:get_enhanced_user_context:26 - Page content length: 1090 chars
+2025-05-23 15:16:46.494 | INFO     | utils.context_builder:get_enhanced_user_context:89 - Generated enhanced context length: 2072 chars
+2025-05-23 15:16:46.494 | INFO     | actions.action_framework:execute:280 - History retrieval mode: unknown
+2025-05-23 15:16:46.494 | INFO     | actions.action_framework:execute:281 - Retrieved 6 relevant messages
+2025-05-23 15:16:46.495 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-23 15:16:46.883 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-23 15:16:46.885 | INFO     | handler.openai_service:get_completion_async:157 - Sending 1382 tokens to OpenAI async. Model: gpt-4o
+2025-05-23 15:16:48.466 | INFO     | handler.openai_service:get_completion_async:177 - OpenAI response received successfully in 1 attempt(s)
+2025-05-23 15:16:48.468 | INFO     | main:handle_mention:115 - Sending action response message (length: 121)
+2025-05-23 15:16:48.468 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08N2FK0JQL (length: 121 chars):
+Yes, Miami has been discussed, focusing on its weather, time, and an estimation of the "crypto bros" present in the city.
+2025-05-23 15:16:49.067 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08N2FK0JQL', 'ts': '1748027808.957829', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1748027808.957829', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': 'Yes, Miami has been discussed, focusing on its weather, time, and an estimation of the "crypto bros" present in the city.', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1748027799.403549', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'CWJnt', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': 'Yes, Miami has been discussed, focusing on its weather, time, and an estimation of the "crypto bros" present in the city.'}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-05-23 15:20:43.186 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-23 15:20:43.293 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-23 15:20:43.294 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-23 15:20:43.319 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-23 15:20:43.939 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-23 15:20:44.128 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-23 15:20:44.128 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-23 15:20:44.134 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-23 15:20:44.134 | INFO     | main:startup_event:185 - Slack bot started in socket mode.
+2025-05-23 15:20:44.166 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-23 15:21:29.227 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-23 15:21:29.337 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-23 15:21:29.337 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-23 15:21:29.358 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-23 15:21:29.768 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-23 15:21:29.946 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-23 15:21:29.946 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-23 15:21:29.951 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-23 15:21:29.951 | INFO     | main:startup_event:185 - Slack bot started in socket mode.
+2025-05-23 15:21:29.972 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-23 15:22:00.065 | INFO     | actions.action_framework:__init__:714 - ActionRouter initialized with 6 actions
+2025-05-23 15:22:00.074 | INFO     | actions.action_framework:can_handle:975 - HistoricalSearchAction matched pattern 5: (?:has|have)\s+.*?\s+been\s+(?:discussed|mentioned...
+2025-05-23 15:22:00.074 | INFO     | actions.action_framework:_get_action_for_text:728 - Selected action HistoricalSearchAction for message: <@U08RG89NFK7> has Miami been discussed?...
+2025-05-23 15:22:00.088 | INFO     | utils.history_manager:extract_search_topic:306 - Extracting search topic from prompt: has Miami been discussed?
+2025-05-23 15:22:00.089 | INFO     | utils.history_manager:extract_search_topic:346 - Extracted topic from enhanced pattern: 'miami'
+2025-05-23 15:22:00.089 | INFO     | utils.history_manager:retrieve_and_filter_history:58 - Performing deep historical search for topic: 'miami'
+2025-05-23 15:22:00.089 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08N2FK0JQL (limit: 2000)...
+2025-05-23 15:22:00.638 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 196 messages from channel C08N2FK0JQL.
+2025-05-23 15:22:00.639 | INFO     | utils.history_manager:retrieve_and_filter_history:67 - Retrieved 196 main channel messages
+2025-05-23 15:22:00.639 | INFO     | utils.history_manager:retrieve_and_filter_history:107 - Identified 10 thread parent messages to search
+2025-05-23 15:22:00.639 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744577447.180649 (limit: 100)...
+2025-05-23 15:22:01.336 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 101 messages from thread 1744577447.180649.
+2025-05-23 15:22:01.336 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744554763.134959 (limit: 100)...
+2025-05-23 15:22:01.742 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 64 messages from thread 1744554763.134959.
+2025-05-23 15:22:01.743 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1747256752.470699 (limit: 100)...
+2025-05-23 15:22:02.009 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 20 messages from thread 1747256752.470699.
+2025-05-23 15:22:02.010 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1747134535.909869 (limit: 100)...
+2025-05-23 15:22:02.277 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 15 messages from thread 1747134535.909869.
+2025-05-23 15:22:02.277 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1747134423.889109 (limit: 100)...
+2025-05-23 15:22:02.487 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 15 messages from thread 1747134423.889109.
+2025-05-23 15:22:02.488 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1746840799.202239 (limit: 100)...
+2025-05-23 15:22:02.713 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 14 messages from thread 1746840799.202239.
+2025-05-23 15:22:02.713 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744576703.408639 (limit: 100)...
+2025-05-23 15:22:02.995 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 14 messages from thread 1744576703.408639.
+2025-05-23 15:22:02.996 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744576233.584619 (limit: 100)...
+2025-05-23 15:22:03.270 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 14 messages from thread 1744576233.584619.
+2025-05-23 15:22:03.270 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744570682.885419 (limit: 100)...
+2025-05-23 15:22:03.543 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 14 messages from thread 1744570682.885419.
+2025-05-23 15:22:03.544 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744577110.260699 (limit: 100)...
+2025-05-23 15:22:03.872 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 13 messages from thread 1744577110.260699.
+2025-05-23 15:22:03.872 | INFO     | utils.history_manager:retrieve_and_filter_history:128 - Retrieved 283 total messages from 10 threads
+2025-05-23 15:22:03.873 | INFO     | utils.history_manager:retrieve_and_filter_history:148 - Combined into 469 unique messages after deduplication
+2025-05-23 15:22:03.873 | INFO     | utils.history_manager:retrieve_and_filter_history:153 - Filtering messages containing topic: 'miami'
+2025-05-23 15:22:03.873 | INFO     | utils.history_manager:find_messages_containing_topic:419 - Searching for topic 'miami' in 469 messages
+2025-05-23 15:22:03.875 | INFO     | utils.history_manager:find_messages_containing_topic:476 - 📊 Search results for topic 'miami':
+2025-05-23 15:22:03.876 | INFO     | utils.history_manager:find_messages_containing_topic:477 -   - Total matches: 6
+2025-05-23 15:22:03.876 | INFO     | utils.history_manager:find_messages_containing_topic:478 -   - Skipped self-referential messages: 0
+2025-05-23 15:22:03.876 | INFO     | utils.history_manager:find_messages_containing_topic:479 -   - Matches in text field: 6
+2025-05-23 15:22:03.876 | INFO     | utils.history_manager:find_messages_containing_topic:480 -   - Matches only in blocks: 0
+2025-05-23 15:22:03.877 | INFO     | utils.history_manager:find_messages_containing_topic:481 -   - Matches only in attachments: 0
+2025-05-23 15:22:03.877 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - FOUND 6 MESSAGES CONTAINING TOPIC 'miami'
+2025-05-23 15:22:03.877 | INFO     | utils.history_manager:retrieve_and_filter_history:160 - Search ratio: 6/469 messages matched
+2025-05-23 15:22:03.877 | INFO     | utils.history_manager:retrieve_and_filter_history:164 - Sample matching message: <@U08RG89NFK7> has Miami been discussed?
+2025-05-23 15:22:03.877 | INFO     | utils.history_manager:retrieve_and_filter_history:295 - Excluded current question, 6 -> 5 messages
+2025-05-23 15:22:03.877 | INFO     | utils.history_manager:retrieve_and_filter_history:300 - Retrieved 5 messages for Deep search for: miami
+2025-05-23 15:22:05.789 | INFO     | main:handle_mention:123 - Action handled message sending directly (e.g., rich blocks)
+2025-05-23 15:24:02.694 | INFO     | actions.action_framework:__init__:714 - ActionRouter initialized with 6 actions
+2025-05-23 15:24:02.697 | INFO     | actions.action_framework:can_handle:975 - HistoricalSearchAction matched pattern 7: (?:did|does)\s+.*?\s+get\s+(?:discussed|mentioned)...
+2025-05-23 15:24:02.698 | INFO     | actions.action_framework:_get_action_for_text:728 - Selected action HistoricalSearchAction for message: <@U08RG89NFK7> did England get discussed?...
+2025-05-23 15:24:02.699 | INFO     | utils.history_manager:extract_search_topic:306 - Extracting search topic from prompt: did England get discussed?
+2025-05-23 15:24:02.699 | INFO     | utils.history_manager:extract_search_topic:346 - Extracted topic from enhanced pattern: 'england'
+2025-05-23 15:24:02.699 | INFO     | utils.history_manager:retrieve_and_filter_history:58 - Performing deep historical search for topic: 'england'
+2025-05-23 15:24:02.699 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08N2FK0JQL (limit: 2000)...
+2025-05-23 15:24:03.625 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 197 messages from channel C08N2FK0JQL.
+2025-05-23 15:24:03.626 | INFO     | utils.history_manager:retrieve_and_filter_history:67 - Retrieved 197 main channel messages
+2025-05-23 15:24:03.626 | INFO     | utils.history_manager:retrieve_and_filter_history:107 - Identified 10 thread parent messages to search
+2025-05-23 15:24:03.626 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744577447.180649 (limit: 100)...
+2025-05-23 15:24:04.526 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 101 messages from thread 1744577447.180649.
+2025-05-23 15:24:04.527 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744554763.134959 (limit: 100)...
+2025-05-23 15:24:04.931 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 64 messages from thread 1744554763.134959.
+2025-05-23 15:24:04.931 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1747256752.470699 (limit: 100)...
+2025-05-23 15:24:05.195 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 20 messages from thread 1747256752.470699.
+2025-05-23 15:24:05.196 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1747134535.909869 (limit: 100)...
+2025-05-23 15:24:05.467 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 15 messages from thread 1747134535.909869.
+2025-05-23 15:24:05.467 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1747134423.889109 (limit: 100)...
+2025-05-23 15:24:05.687 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 15 messages from thread 1747134423.889109.
+2025-05-23 15:24:05.687 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1746840799.202239 (limit: 100)...
+2025-05-23 15:24:05.896 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 14 messages from thread 1746840799.202239.
+2025-05-23 15:24:05.897 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744576703.408639 (limit: 100)...
+2025-05-23 15:24:06.207 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 14 messages from thread 1744576703.408639.
+2025-05-23 15:24:06.208 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744576233.584619 (limit: 100)...
+2025-05-23 15:24:06.475 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 14 messages from thread 1744576233.584619.
+2025-05-23 15:24:06.476 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744570682.885419 (limit: 100)...
+2025-05-23 15:24:06.748 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 14 messages from thread 1744570682.885419.
+2025-05-23 15:24:06.749 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744577110.260699 (limit: 100)...
+2025-05-23 15:24:07.020 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 13 messages from thread 1744577110.260699.
+2025-05-23 15:24:07.020 | INFO     | utils.history_manager:retrieve_and_filter_history:128 - Retrieved 283 total messages from 10 threads
+2025-05-23 15:24:07.020 | INFO     | utils.history_manager:retrieve_and_filter_history:148 - Combined into 470 unique messages after deduplication
+2025-05-23 15:24:07.020 | INFO     | utils.history_manager:retrieve_and_filter_history:153 - Filtering messages containing topic: 'england'
+2025-05-23 15:24:07.021 | INFO     | utils.history_manager:find_messages_containing_topic:419 - Searching for topic 'england' in 470 messages
+2025-05-23 15:24:07.025 | INFO     | utils.history_manager:find_messages_containing_topic:476 - 📊 Search results for topic 'england':
+2025-05-23 15:24:07.025 | INFO     | utils.history_manager:find_messages_containing_topic:477 -   - Total matches: 3
+2025-05-23 15:24:07.025 | INFO     | utils.history_manager:find_messages_containing_topic:478 -   - Skipped self-referential messages: 0
+2025-05-23 15:24:07.025 | INFO     | utils.history_manager:find_messages_containing_topic:479 -   - Matches in text field: 3
+2025-05-23 15:24:07.025 | INFO     | utils.history_manager:find_messages_containing_topic:480 -   - Matches only in blocks: 0
+2025-05-23 15:24:07.026 | INFO     | utils.history_manager:find_messages_containing_topic:481 -   - Matches only in attachments: 0
+2025-05-23 15:24:07.026 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - FOUND 3 MESSAGES CONTAINING TOPIC 'england'
+2025-05-23 15:24:07.026 | INFO     | utils.history_manager:retrieve_and_filter_history:160 - Search ratio: 3/470 messages matched
+2025-05-23 15:24:07.026 | INFO     | utils.history_manager:retrieve_and_filter_history:164 - Sample matching message: <@U08RG89NFK7> did England get discussed?
+2025-05-23 15:24:07.026 | INFO     | utils.history_manager:retrieve_and_filter_history:295 - Excluded current question, 3 -> 2 messages
+2025-05-23 15:24:07.026 | INFO     | utils.history_manager:retrieve_and_filter_history:300 - Retrieved 2 messages for Deep search for: england
+2025-05-23 15:24:07.749 | INFO     | main:handle_mention:123 - Action handled message sending directly (e.g., rich blocks)
+2025-05-23 15:25:15.891 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-23 15:25:15.985 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-23 15:25:15.985 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-23 15:25:16.009 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-23 15:25:16.482 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-23 15:25:16.661 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-23 15:25:16.662 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-23 15:25:16.667 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-23 15:25:16.667 | INFO     | main:startup_event:185 - Slack bot started in socket mode.
+2025-05-23 15:25:16.683 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-23 15:25:34.526 | INFO     | actions.action_framework:__init__:714 - ActionRouter initialized with 6 actions
+2025-05-23 15:25:34.529 | INFO     | actions.action_framework:can_handle:975 - HistoricalSearchAction matched pattern 5: (?:has|have)\s+.*?\s+been\s+(?:discussed|mentioned...
+2025-05-23 15:25:34.529 | INFO     | actions.action_framework:_get_action_for_text:728 - Selected action HistoricalSearchAction for message: Has Juan Luis Guerra been discussed, <@U08RG89NFK7...
+2025-05-23 15:25:34.536 | INFO     | utils.history_manager:extract_search_topic:306 - Extracting search topic from prompt: Has Juan Luis Guerra been discussed, ?
+2025-05-23 15:25:34.538 | INFO     | utils.history_manager:extract_search_topic:346 - Extracted topic from enhanced pattern: 'juan luis guerra'
+2025-05-23 15:25:34.538 | INFO     | utils.history_manager:retrieve_and_filter_history:58 - Performing deep historical search for topic: 'juan luis guerra'
+2025-05-23 15:25:34.539 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 2000)...
+2025-05-23 15:25:35.099 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 104 messages from channel C08SJ5EUTPT.
+2025-05-23 15:25:35.100 | INFO     | utils.history_manager:retrieve_and_filter_history:67 - Retrieved 104 main channel messages
+2025-05-23 15:25:35.100 | INFO     | utils.history_manager:retrieve_and_filter_history:107 - Identified 11 thread parent messages to search
+2025-05-23 15:25:35.100 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747225917.136199 (limit: 100)...
+2025-05-23 15:25:35.324 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1747225917.136199.
+2025-05-23 15:25:35.325 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747229885.082289 (limit: 100)...
+2025-05-23 15:25:35.590 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 16 messages from thread 1747229885.082289.
+2025-05-23 15:25:35.591 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747735398.888529 (limit: 100)...
+2025-05-23 15:25:35.855 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747735398.888529.
+2025-05-23 15:25:35.856 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747398469.291069 (limit: 100)...
+2025-05-23 15:25:36.091 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747398469.291069.
+2025-05-23 15:25:36.091 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747240286.113569 (limit: 100)...
+2025-05-23 15:25:36.304 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747240286.113569.
+2025-05-23 15:25:36.305 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747154183.175429 (limit: 100)...
+2025-05-23 15:25:36.566 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747154183.175429.
+2025-05-23 15:25:36.567 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748023621.862269 (limit: 100)...
+2025-05-23 15:25:36.816 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1748023621.862269.
+2025-05-23 15:25:36.817 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747712176.750479 (limit: 100)...
+2025-05-23 15:25:37.022 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747712176.750479.
+2025-05-23 15:25:37.022 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747256395.819809 (limit: 100)...
+2025-05-23 15:25:37.237 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747256395.819809.
+2025-05-23 15:25:37.238 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747239317.848699 (limit: 100)...
+2025-05-23 15:25:37.447 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747239317.848699.
+2025-05-23 15:25:37.447 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747151549.684699 (limit: 100)...
+2025-05-23 15:25:37.654 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 7 messages from thread 1747151549.684699.
+2025-05-23 15:25:37.654 | INFO     | utils.history_manager:retrieve_and_filter_history:128 - Retrieved 97 total messages from 11 threads
+2025-05-23 15:25:37.655 | INFO     | utils.history_manager:retrieve_and_filter_history:148 - Combined into 190 unique messages after deduplication
+2025-05-23 15:25:37.655 | INFO     | utils.history_manager:retrieve_and_filter_history:153 - Filtering messages containing topic: 'juan luis guerra'
+2025-05-23 15:25:37.655 | INFO     | utils.history_manager:find_messages_containing_topic:419 - Searching for topic 'juan luis guerra' in 190 messages
+2025-05-23 15:25:37.656 | INFO     | utils.history_manager:find_messages_containing_topic:476 - 📊 Search results for topic 'juan luis guerra':
+2025-05-23 15:25:37.657 | INFO     | utils.history_manager:find_messages_containing_topic:477 -   - Total matches: 5
+2025-05-23 15:25:37.657 | INFO     | utils.history_manager:find_messages_containing_topic:478 -   - Skipped self-referential messages: 0
+2025-05-23 15:25:37.657 | INFO     | utils.history_manager:find_messages_containing_topic:479 -   - Matches in text field: 5
+2025-05-23 15:25:37.657 | INFO     | utils.history_manager:find_messages_containing_topic:480 -   - Matches only in blocks: 0
+2025-05-23 15:25:37.658 | INFO     | utils.history_manager:find_messages_containing_topic:481 -   - Matches only in attachments: 0
+2025-05-23 15:25:37.658 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - FOUND 5 MESSAGES CONTAINING TOPIC 'juan luis guerra'
+2025-05-23 15:25:37.658 | INFO     | utils.history_manager:retrieve_and_filter_history:160 - Search ratio: 5/190 messages matched
+2025-05-23 15:25:37.658 | INFO     | utils.history_manager:retrieve_and_filter_history:164 - Sample matching message: Has Juan Luis Guerra been discussed, <@U08RG89NFK7>?
+2025-05-23 15:25:37.658 | INFO     | utils.history_manager:retrieve_and_filter_history:295 - Excluded current question, 5 -> 4 messages
+2025-05-23 15:25:37.658 | INFO     | utils.history_manager:retrieve_and_filter_history:300 - Retrieved 4 messages for Deep search for: juan luis guerra
+2025-05-23 15:25:38.988 | INFO     | main:handle_mention:123 - Action handled message sending directly (e.g., rich blocks)
+2025-05-23 15:26:34.886 | INFO     | actions.action_framework:__init__:714 - ActionRouter initialized with 6 actions
+2025-05-23 15:26:34.890 | INFO     | actions.action_framework:can_handle:975 - HistoricalSearchAction matched pattern 8: (?:has|have|did|was|were)\s+\w+.*?(?:discussed|men...
+2025-05-23 15:26:34.890 | INFO     | actions.action_framework:_get_action_for_text:728 - Selected action HistoricalSearchAction for message: What about ketchup - have we discussed ketchup, <@...
+2025-05-23 15:26:34.890 | INFO     | utils.history_manager:extract_search_topic:306 - Extracting search topic from prompt: What about ketchup - have we discussed ketchup, ?
+2025-05-23 15:26:34.895 | INFO     | utils.history_manager:extract_search_topic:346 - Extracted topic from enhanced pattern: 'ketchup'
+2025-05-23 15:26:34.895 | INFO     | utils.history_manager:retrieve_and_filter_history:58 - Performing deep historical search for topic: 'ketchup'
+2025-05-23 15:26:34.895 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 2000)...
+2025-05-23 15:26:35.364 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 105 messages from channel C08SJ5EUTPT.
+2025-05-23 15:26:35.364 | INFO     | utils.history_manager:retrieve_and_filter_history:67 - Retrieved 105 main channel messages
+2025-05-23 15:26:35.365 | INFO     | utils.history_manager:retrieve_and_filter_history:107 - Identified 12 thread parent messages to search
+2025-05-23 15:26:35.365 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747225972.865989 (limit: 100)...
+2025-05-23 15:26:35.570 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1747225972.865989.
+2025-05-23 15:26:35.571 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747225917.136199 (limit: 100)...
+2025-05-23 15:26:35.789 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1747225917.136199.
+2025-05-23 15:26:35.789 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747229885.082289 (limit: 100)...
+2025-05-23 15:26:36.057 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 16 messages from thread 1747229885.082289.
+2025-05-23 15:26:36.057 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747735398.888529 (limit: 100)...
+2025-05-23 15:26:36.266 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747735398.888529.
+2025-05-23 15:26:36.266 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747398469.291069 (limit: 100)...
+2025-05-23 15:26:36.473 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747398469.291069.
+2025-05-23 15:26:36.473 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747240286.113569 (limit: 100)...
+2025-05-23 15:26:36.683 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747240286.113569.
+2025-05-23 15:26:36.683 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747154183.175429 (limit: 100)...
+2025-05-23 15:26:36.945 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747154183.175429.
+2025-05-23 15:26:36.945 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748023621.862269 (limit: 100)...
+2025-05-23 15:26:37.157 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1748023621.862269.
+2025-05-23 15:26:37.157 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747712176.750479 (limit: 100)...
+2025-05-23 15:26:37.366 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747712176.750479.
+2025-05-23 15:26:37.367 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747256395.819809 (limit: 100)...
+2025-05-23 15:26:37.574 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747256395.819809.
+2025-05-23 15:26:37.575 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747239317.848699 (limit: 100)...
+2025-05-23 15:26:37.801 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747239317.848699.
+2025-05-23 15:26:37.802 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747151549.684699 (limit: 100)...
+2025-05-23 15:26:38.016 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 7 messages from thread 1747151549.684699.
+2025-05-23 15:26:38.016 | INFO     | utils.history_manager:retrieve_and_filter_history:128 - Retrieved 99 total messages from 12 threads
+2025-05-23 15:26:38.017 | INFO     | utils.history_manager:retrieve_and_filter_history:148 - Combined into 192 unique messages after deduplication
+2025-05-23 15:26:38.017 | INFO     | utils.history_manager:retrieve_and_filter_history:153 - Filtering messages containing topic: 'ketchup'
+2025-05-23 15:26:38.017 | INFO     | utils.history_manager:find_messages_containing_topic:419 - Searching for topic 'ketchup' in 192 messages
+2025-05-23 15:26:38.019 | INFO     | utils.history_manager:find_messages_containing_topic:476 - 📊 Search results for topic 'ketchup':
+2025-05-23 15:26:38.019 | INFO     | utils.history_manager:find_messages_containing_topic:477 -   - Total matches: 6
+2025-05-23 15:26:38.019 | INFO     | utils.history_manager:find_messages_containing_topic:478 -   - Skipped self-referential messages: 0
+2025-05-23 15:26:38.019 | INFO     | utils.history_manager:find_messages_containing_topic:479 -   - Matches in text field: 6
+2025-05-23 15:26:38.019 | INFO     | utils.history_manager:find_messages_containing_topic:480 -   - Matches only in blocks: 0
+2025-05-23 15:26:38.019 | INFO     | utils.history_manager:find_messages_containing_topic:481 -   - Matches only in attachments: 0
+2025-05-23 15:26:38.020 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - FOUND 6 MESSAGES CONTAINING TOPIC 'ketchup'
+2025-05-23 15:26:38.020 | INFO     | utils.history_manager:retrieve_and_filter_history:160 - Search ratio: 6/192 messages matched
+2025-05-23 15:26:38.020 | INFO     | utils.history_manager:retrieve_and_filter_history:164 - Sample matching message: What about ketchup - have we discussed ketchup, <@U08RG89NFK7>?
+2025-05-23 15:26:38.020 | INFO     | utils.history_manager:retrieve_and_filter_history:295 - Excluded current question, 6 -> 5 messages
+2025-05-23 15:26:38.020 | INFO     | utils.history_manager:retrieve_and_filter_history:300 - Retrieved 5 messages for Deep search for: ketchup
+2025-05-23 15:26:39.199 | INFO     | main:handle_mention:123 - Action handled message sending directly (e.g., rich blocks)
+2025-05-23 15:29:25.078 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-23 15:29:25.347 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-23 15:29:25.347 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-23 15:29:25.388 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-23 15:29:26.031 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-23 15:29:26.285 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-23 15:29:26.285 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-23 15:29:26.290 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-23 15:29:26.291 | INFO     | main:startup_event:186 - Slack bot started in socket mode.
+2025-05-23 15:29:26.319 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-23 15:29:43.709 | INFO     | actions.action_framework:__init__:714 - ActionRouter initialized with 6 actions
+2025-05-23 15:29:43.719 | INFO     | actions.action_framework:_get_action_for_text:728 - Selected action ContextResponseAction for message: And Meatfloaf - any mentions of Meatloaf, <@U08RG8...
+2025-05-23 15:29:43.720 | INFO     | utils.history_manager:extract_search_topic:306 - Extracting search topic from prompt: And Meatfloaf - any mentions of Meatloaf, ?
+2025-05-23 15:29:43.724 | INFO     | utils.history_manager:extract_search_topic:385 - Extracted multi-word capitalized topic: 'And Meatfloaf'
+2025-05-23 15:29:43.725 | INFO     | utils.history_manager:retrieve_and_filter_history:58 - Performing deep historical search for topic: 'And Meatfloaf'
+2025-05-23 15:29:43.725 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 2000)...
+2025-05-23 15:29:44.241 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 106 messages from channel C08SJ5EUTPT.
+2025-05-23 15:29:44.242 | INFO     | utils.history_manager:retrieve_and_filter_history:67 - Retrieved 106 main channel messages
+2025-05-23 15:29:44.242 | INFO     | utils.history_manager:retrieve_and_filter_history:107 - Identified 10 thread parent messages to search
+2025-05-23 15:29:44.243 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747229885.082289 (limit: 100)...
+2025-05-23 15:29:44.532 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 16 messages from thread 1747229885.082289.
+2025-05-23 15:29:44.533 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747735398.888529 (limit: 100)...
+2025-05-23 15:29:44.750 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747735398.888529.
+2025-05-23 15:29:44.750 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747398469.291069 (limit: 100)...
+2025-05-23 15:29:44.966 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747398469.291069.
+2025-05-23 15:29:44.966 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747240286.113569 (limit: 100)...
+2025-05-23 15:29:45.192 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747240286.113569.
+2025-05-23 15:29:45.193 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747154183.175429 (limit: 100)...
+2025-05-23 15:29:45.485 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747154183.175429.
+2025-05-23 15:29:45.485 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748023621.862269 (limit: 100)...
+2025-05-23 15:29:45.826 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1748023621.862269.
+2025-05-23 15:29:45.826 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747712176.750479 (limit: 100)...
+2025-05-23 15:29:46.040 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747712176.750479.
+2025-05-23 15:29:46.041 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747256395.819809 (limit: 100)...
+2025-05-23 15:29:46.254 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747256395.819809.
+2025-05-23 15:29:46.254 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747239317.848699 (limit: 100)...
+2025-05-23 15:29:46.466 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747239317.848699.
+2025-05-23 15:29:46.467 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747151549.684699 (limit: 100)...
+2025-05-23 15:29:46.686 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 7 messages from thread 1747151549.684699.
+2025-05-23 15:29:46.687 | INFO     | utils.history_manager:retrieve_and_filter_history:128 - Retrieved 95 total messages from 10 threads
+2025-05-23 15:29:46.687 | INFO     | utils.history_manager:retrieve_and_filter_history:148 - Combined into 191 unique messages after deduplication
+2025-05-23 15:29:46.687 | INFO     | utils.history_manager:retrieve_and_filter_history:153 - Filtering messages containing topic: 'And Meatfloaf'
+2025-05-23 15:29:46.688 | INFO     | utils.history_manager:find_messages_containing_topic:419 - Searching for topic 'And Meatfloaf' in 191 messages
+2025-05-23 15:29:46.689 | INFO     | utils.history_manager:find_messages_containing_topic:476 - 📊 Search results for topic 'And Meatfloaf':
+2025-05-23 15:29:46.689 | INFO     | utils.history_manager:find_messages_containing_topic:477 -   - Total matches: 1
+2025-05-23 15:29:46.689 | INFO     | utils.history_manager:find_messages_containing_topic:478 -   - Skipped self-referential messages: 0
+2025-05-23 15:29:46.689 | INFO     | utils.history_manager:find_messages_containing_topic:479 -   - Matches in text field: 1
+2025-05-23 15:29:46.690 | INFO     | utils.history_manager:find_messages_containing_topic:480 -   - Matches only in blocks: 0
+2025-05-23 15:29:46.690 | INFO     | utils.history_manager:find_messages_containing_topic:481 -   - Matches only in attachments: 0
+2025-05-23 15:29:46.690 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - FOUND 1 MESSAGES CONTAINING TOPIC 'And Meatfloaf'
+2025-05-23 15:29:46.690 | INFO     | utils.history_manager:retrieve_and_filter_history:160 - Search ratio: 1/191 messages matched
+2025-05-23 15:29:46.690 | INFO     | utils.history_manager:retrieve_and_filter_history:164 - Sample matching message: And Meatfloaf - any mentions of Meatloaf, <@U08RG89NFK7>?
+2025-05-23 15:29:46.691 | INFO     | utils.history_manager:retrieve_and_filter_history:300 - Retrieved 1 messages for Deep search for: And Meatfloaf
+2025-05-23 15:29:46.691 | INFO     | utils.history_manager:format_history_for_prompt:635 - Formatted message history: 224 characters
+2025-05-23 15:29:46.692 | INFO     | actions.action_framework:execute:252 - Fetching Notion context for user U089YKL1T4H
+2025-05-23 15:29:49.347 | INFO     | services.cached_notion_service:get_user_page_content:374 - Retrieved Notion page content for user U089YKL1T4H (length: 1090)
+2025-05-23 15:29:49.976 | INFO     | services.cached_notion_service:get_user_page_content:310 - Cache hit for user page content: U089YKL1T4H
+2025-05-23 15:29:49.976 | INFO     | utils.context_builder:get_enhanced_user_context:21 - Building enhanced context for user U089YKL1T4H
+2025-05-23 15:29:49.976 | INFO     | utils.context_builder:get_enhanced_user_context:23 - Using preferred name: Al
+2025-05-23 15:29:49.977 | INFO     | utils.context_builder:get_enhanced_user_context:26 - Page content length: 1090 chars
+2025-05-23 15:29:49.977 | INFO     | utils.context_builder:get_enhanced_user_context:89 - Generated enhanced context length: 2072 chars
+2025-05-23 15:29:49.977 | INFO     | actions.action_framework:execute:280 - History retrieval mode: unknown
+2025-05-23 15:29:49.978 | INFO     | actions.action_framework:execute:281 - Retrieved 1 relevant messages
+2025-05-23 15:29:49.978 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-23 15:29:50.274 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-23 15:29:50.281 | INFO     | handler.openai_service:get_completion_async:157 - Sending 679 tokens to OpenAI async. Model: gpt-4o
+2025-05-23 15:29:53.048 | INFO     | handler.openai_service:get_completion_async:177 - OpenAI response received successfully in 1 attempt(s)
+2025-05-23 15:29:53.512 | INFO     | main:handle_mention:122 - Sending action response message (length: 301)
+2025-05-23 15:29:53.512 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 301 chars):
+Yo, Meatloaf's the king, no doubt about that,  
+In the lyrics and beats, where legends are at.  
+Ain't no mentions here lately of his name or fame,  
+But in the Hall of Legends, he holds the flame.  
+
+If you need more juice on Meatloaf, just let me know,  
+And together we'll unravel the rockin' flow.
+2025-05-23 15:29:53.967 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1748028593.814829', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1748028593.814829', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': "Yo, Meatloaf's the king, no doubt about that,  \nIn the lyrics and beats, where legends are at.  \nAin't no mentions here lately of his name or fame,  \nBut in the Hall of Legends, he holds the flame.  \n\nIf you need more juice on Meatloaf, just let me know,  \nAnd together we'll unravel the rockin' flow.", 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1748028581.481779', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'c+rI', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': "Yo, Meatloaf's the king, no doubt about that,  \nIn the lyrics and beats, where legends are at.  \nAin't no mentions here lately of his name or fame,  \nBut in the Hall of Legends, he holds the flame.  \n\nIf you need more juice on Meatloaf, just let me know,  \nAnd together we'll unravel the rockin' flow."}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-05-23 15:31:15.202 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-23 15:31:15.302 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-23 15:31:15.302 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-23 15:31:15.347 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-23 15:31:15.977 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-23 15:31:16.169 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-23 15:31:16.169 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-23 15:31:16.177 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-23 15:31:16.177 | INFO     | main:startup_event:186 - Slack bot started in socket mode.
+2025-05-23 15:31:16.193 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-23 15:31:26.979 | INFO     | actions.action_framework:__init__:714 - ActionRouter initialized with 6 actions
+2025-05-23 15:31:26.989 | INFO     | actions.action_framework:can_handle:975 - HistoricalSearchAction matched pattern 8: (?:has|have|did|was|were)\s+\w+.*?(?:discussed|men...
+2025-05-23 15:31:26.990 | INFO     | actions.action_framework:_get_action_for_text:728 - Selected action HistoricalSearchAction for message: Have we discussed Meatloaf <@U08RG89NFK7>?...
+2025-05-23 15:31:26.991 | INFO     | utils.history_manager:extract_search_topic:306 - Extracting search topic from prompt: Have we discussed Meatloaf ?
+2025-05-23 15:31:26.995 | INFO     | utils.history_manager:extract_search_topic:362 - Extracted topic from direct pattern: 'meatloaf'
+2025-05-23 15:31:26.995 | INFO     | utils.history_manager:retrieve_and_filter_history:58 - Performing deep historical search for topic: 'meatloaf'
+2025-05-23 15:31:26.996 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 2000)...
+2025-05-23 15:31:27.588 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 107 messages from channel C08SJ5EUTPT.
+2025-05-23 15:31:27.588 | INFO     | utils.history_manager:retrieve_and_filter_history:67 - Retrieved 107 main channel messages
+2025-05-23 15:31:27.589 | INFO     | utils.history_manager:retrieve_and_filter_history:107 - Identified 18 thread parent messages to search
+2025-05-23 15:31:27.589 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748028581.481779 (limit: 100)...
+2025-05-23 15:31:27.792 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1748028581.481779.
+2025-05-23 15:31:27.793 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748023289.042409 (limit: 100)...
+2025-05-23 15:31:28.009 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1748023289.042409.
+2025-05-23 15:31:28.009 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747256201.527389 (limit: 100)...
+2025-05-23 15:31:28.235 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 4 messages from thread 1747256201.527389.
+2025-05-23 15:31:28.236 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747255578.422699 (limit: 100)...
+2025-05-23 15:31:28.439 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 4 messages from thread 1747255578.422699.
+2025-05-23 15:31:28.440 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747254862.608349 (limit: 100)...
+2025-05-23 15:31:28.652 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1747254862.608349.
+2025-05-23 15:31:28.652 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747240286.113569 (limit: 100)...
+2025-05-23 15:31:28.859 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747240286.113569.
+2025-05-23 15:31:28.860 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747240261.873949 (limit: 100)...
+2025-05-23 15:31:29.068 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1747240261.873949.
+2025-05-23 15:31:29.069 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747225824.843159 (limit: 100)...
+2025-05-23 15:31:29.278 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1747225824.843159.
+2025-05-23 15:31:29.278 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747225602.156339 (limit: 100)...
+2025-05-23 15:31:29.534 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1747225602.156339.
+2025-05-23 15:31:29.535 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747229885.082289 (limit: 100)...
+2025-05-23 15:31:29.790 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 16 messages from thread 1747229885.082289.
+2025-05-23 15:31:29.791 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747735398.888529 (limit: 100)...
+2025-05-23 15:31:30.010 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747735398.888529.
+2025-05-23 15:31:30.011 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747398469.291069 (limit: 100)...
+2025-05-23 15:31:30.227 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747398469.291069.
+2025-05-23 15:31:30.228 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747154183.175429 (limit: 100)...
+2025-05-23 15:31:30.502 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747154183.175429.
+2025-05-23 15:31:30.503 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748023621.862269 (limit: 100)...
+2025-05-23 15:31:30.732 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1748023621.862269.
+2025-05-23 15:31:30.732 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747712176.750479 (limit: 100)...
+2025-05-23 15:31:30.943 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747712176.750479.
+2025-05-23 15:31:30.944 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747256395.819809 (limit: 100)...
+2025-05-23 15:31:31.155 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747256395.819809.
+2025-05-23 15:31:31.156 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747239317.848699 (limit: 100)...
+2025-05-23 15:31:31.369 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747239317.848699.
+2025-05-23 15:31:31.370 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747151549.684699 (limit: 100)...
+2025-05-23 15:31:31.633 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 7 messages from thread 1747151549.684699.
+2025-05-23 15:31:31.633 | INFO     | utils.history_manager:retrieve_and_filter_history:128 - Retrieved 115 total messages from 18 threads
+2025-05-23 15:31:31.634 | INFO     | utils.history_manager:retrieve_and_filter_history:148 - Combined into 204 unique messages after deduplication
+2025-05-23 15:31:31.634 | INFO     | utils.history_manager:retrieve_and_filter_history:153 - Filtering messages containing topic: 'meatloaf'
+2025-05-23 15:31:31.634 | INFO     | utils.history_manager:find_messages_containing_topic:419 - Searching for topic 'meatloaf' in 204 messages
+2025-05-23 15:31:31.636 | INFO     | utils.history_manager:find_messages_containing_topic:476 - 📊 Search results for topic 'meatloaf':
+2025-05-23 15:31:31.636 | INFO     | utils.history_manager:find_messages_containing_topic:477 -   - Total matches: 28
+2025-05-23 15:31:31.636 | INFO     | utils.history_manager:find_messages_containing_topic:478 -   - Skipped self-referential messages: 0
+2025-05-23 15:31:31.636 | INFO     | utils.history_manager:find_messages_containing_topic:479 -   - Matches in text field: 28
+2025-05-23 15:31:31.636 | INFO     | utils.history_manager:find_messages_containing_topic:480 -   - Matches only in blocks: 0
+2025-05-23 15:31:31.636 | INFO     | utils.history_manager:find_messages_containing_topic:481 -   - Matches only in attachments: 0
+2025-05-23 15:31:31.636 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - FOUND 28 MESSAGES CONTAINING TOPIC 'meatloaf'
+2025-05-23 15:31:31.636 | INFO     | utils.history_manager:retrieve_and_filter_history:160 - Search ratio: 28/204 messages matched
+2025-05-23 15:31:31.637 | INFO     | utils.history_manager:retrieve_and_filter_history:164 - Sample matching message: Have we discussed Meatloaf <@U08RG89NFK7>?
+2025-05-23 15:31:31.637 | INFO     | utils.history_manager:retrieve_and_filter_history:295 - Excluded current question, 28 -> 27 messages
+2025-05-23 15:31:31.637 | INFO     | utils.history_manager:retrieve_and_filter_history:300 - Retrieved 27 messages for Deep search for: meatloaf
+2025-05-23 15:31:35.027 | INFO     | main:handle_mention:129 - Action handled message sending directly (e.g., rich blocks)

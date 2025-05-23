@@ -107,29 +107,51 @@ async def handle_mention(event, say, client):
         router = ActionRouter(services)
         action_response = await router.route_action(request)
         
-        # Send response to Slack
-        if action_response.success and action_response.message:
-            # Success! Remove thinking reaction and add check mark
-            slack_service.remove_reaction(channel_id, message_ts, "thinking_face")
-            slack_service.add_reaction(channel_id, message_ts, "white_check_mark")
-
-            response = slack_service.send_message(
-                channel_id, 
-                action_response.message,
-                action_response.thread_ts or thread_ts
-            )
+        # Handle the response based on success status
+        if action_response.success:
+            # STEP 1: Update reactions FIRST (before showing response)
+            try:
+                slack_service.remove_reaction(channel_id, message_ts, "thinking_face")
+                slack_service.add_reaction(channel_id, message_ts, "white_check_mark")
+                logger.debug("Successfully updated reactions before sending response")
+            except Exception as e:
+                logger.warning(f"Could not update reactions before response: {e}")
+            
+            # STEP 2: THEN send the response message
+            if action_response.message:
+                logger.info(f"Sending action response message (length: {len(action_response.message)})")
+                response = slack_service.send_message(
+                    channel_id, 
+                    action_response.message,
+                    action_response.thread_ts or thread_ts
+                )
+            else:
+                logger.info("Action handled message sending directly (e.g., rich blocks)")
+                response = {"ok": True, "ts": "handled_by_action"}
+                    
         else:
+            # STEP 1: Update reactions FIRST for errors too
+            try:
+                slack_service.add_reaction(channel_id, message_ts, "warning")
+                slack_service.remove_reaction(channel_id, message_ts, "thinking_face")
+                logger.debug("Successfully updated reactions before sending error response")
+            except Exception as e:
+                logger.warning(f"Could not update reactions before error response: {e}")
+            
+            # STEP 2: THEN send error message
             error_msg = action_response.error or "Unknown error"
             logger.error(f"Action failed: {error_msg}")
             
-            response = slack_service.send_message(
-                channel_id,
-                action_response.message or "I encountered an error processing your request.",
-                thread_ts
-            )
-            # Error occurred - remove thinking reaction and add warning
-            slack_service.remove_reaction(channel_id, message_ts, "thinking_face")
-            slack_service.add_reaction(channel_id, message_ts, "warning")
+            error_message = action_response.message or "I encountered an error processing your request."
+            response = slack_service.send_message(channel_id, error_message, thread_ts)
+            
+            # Update reactions for error response
+            try:
+                slack_service.add_reaction(channel_id, message_ts, "warning")
+                slack_service.remove_reaction(channel_id, message_ts, "thinking_face")
+                logger.debug("Successfully updated reactions for error response")
+            except Exception as e:
+                logger.warning(f"Could not update reactions after error response: {e}")
         
         # Update channel stats
         slack_service.update_channel_stats(channel_id, user_id, message_ts)
