@@ -3666,3 +3666,186 @@ Different tunes and sounds they always bring.
 In musicals, they make the world swing,  
 Like a melody that makes hearts sing. 🎶
 2025-05-14 17:02:48.337 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1747256568.317919', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1747256568.317919', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': 'Yo, "The Flowers that Bloom in the Spring,"  \nDifferent tunes and sounds they always bring.  \nIn musicals, they make the world swing,  \nLike a melody that makes hearts sing. :notes:', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1747256516.544399', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'vqU=', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': 'Yo, "The Flowers that Bloom in the Spring,"  \nDifferent tunes and sounds they always bring.  \nIn musicals, they make the world swing,  \nLike a melody that makes hearts sing. '}, {'type': 'emoji', 'name': 'notes', 'unicode': '1f3b6'}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-05-15 08:05:32.191 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-15 08:05:32.294 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-15 08:05:32.294 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-15 08:05:32.316 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-15 08:05:32.913 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-15 08:05:33.120 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-15 08:05:33.120 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-15 08:05:33.143 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-15 08:05:33.145 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-15 08:05:33.147 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-15 08:05:33.147 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-15 08:05:33.149 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-15 08:05:33.150 | WARNING  | actions.action_framework:validate_required_services:71 - Required services not available: slack
+2025-05-15 08:05:33.150 | WARNING  | actions.action_framework:validate_required_services:71 - Required services not available: web
+2025-05-15 08:05:33.159 | INFO     | actions.action_framework:__init__:712 - ActionRouter initialized with 4 actions
+2025-05-15 08:05:33.160 | INFO     | actions.action_framework:_get_action_for_text:726 - Selected action ContextResponseAction for message: Hello...
+2025-05-15 08:05:33.161 | INFO     | actions.action_framework:_get_action_for_text:726 - Selected action TodoAction for message: TODO: Buy milk...
+2025-05-15 08:05:33.167 | INFO     | actions.action_framework:__init__:712 - ActionRouter initialized with 4 actions
+2025-05-15 08:05:33.172 | INFO     | actions.action_framework:__init__:712 - ActionRouter initialized with 4 actions
+2025-05-15 08:05:33.174 | ERROR    | actions.action_framework:route_action:906 - Error in route_action: not enough values to unpack (expected 2, got 0)
+2025-05-15 08:05:33.177 | INFO     | actions.action_framework:__init__:712 - ActionRouter initialized with 4 actions
+2025-05-15 08:05:33.179 | ERROR    | actions.action_framework:route_action:906 - Error in route_action: not enough values to unpack (expected 2, got 0)
+2025-05-15 08:05:33.185 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-15 08:05:33.188 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-15 08:05:33.200 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-15 08:05:33.203 | INFO     | utils.history_manager:extract_search_topic:295 - Extracting search topic from prompt: how are you?
+2025-05-15 08:05:33.204 | INFO     | utils.history_manager:extract_search_topic:339 - No topic could be extracted from the prompt
+2025-05-15 08:05:33.207 | INFO     | utils.history_manager:retrieve_and_filter_history:290 - Retrieved 0 messages for Recent context
+2025-05-15 08:05:33.208 | INFO     | actions.action_framework:execute:252 - Fetching Notion context for user U12345
+2025-05-15 08:05:33.212 | INFO     | utils.context_builder:get_enhanced_user_context:21 - Building enhanced context for user U12345
+2025-05-15 08:05:33.212 | INFO     | utils.context_builder:get_enhanced_user_context:23 - Using preferred name: <MagicMock name='mock.get_user_preferred_name()' id='4577778896'>
+2025-05-15 08:05:33.213 | INFO     | utils.context_builder:get_enhanced_user_context:26 - Page content length: 0 chars
+2025-05-15 08:05:33.215 | INFO     | utils.context_builder:get_enhanced_user_context:89 - Generated enhanced context length: 164 chars
+2025-05-15 08:05:33.216 | INFO     | actions.action_framework:execute:280 - History retrieval mode: unknown
+2025-05-15 08:05:33.216 | INFO     | actions.action_framework:execute:281 - Retrieved 0 relevant messages
+2025-05-15 08:05:33.274 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-15 08:05:33.278 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-15 08:05:33.281 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-15 08:05:33.285 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-15 08:05:33.288 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-15 08:05:33.302 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=60s, max_size=100
+2025-05-15 08:05:33.303 | INFO     | services.cached_notion_service:invalidate_user_cache:115 - Cache invalidated for user U12345
+2025-05-15 08:05:33.304 | INFO     | services.cached_notion_service:invalidate_user_cache:115 - Cache invalidated for user U12345
+2025-05-15 08:05:33.315 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=60s, max_size=100
+2025-05-15 08:05:33.316 | INFO     | services.cached_notion_service:clear_cache:89 - Notion service caches cleared
+2025-05-15 08:05:33.328 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=60s, max_size=100
+2025-05-15 08:05:33.343 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=60s, max_size=100
+2025-05-15 08:05:33.354 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=60s, max_size=100
+2025-05-15 08:05:33.367 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=60s, max_size=100
+2025-05-15 08:05:33.377 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=60s, max_size=100
+2025-05-15 08:05:33.392 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=60s, max_size=100
+2025-05-15 08:05:33.404 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=60s, max_size=100
+2025-05-15 08:05:33.404 | INFO     | services.cached_notion_service:invalidate_user_cache:115 - Cache invalidated for user U12345
+2025-05-15 08:05:33.420 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=60s, max_size=100
+2025-05-15 08:05:33.430 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=60s, max_size=100
+2025-05-15 08:05:33.431 | INFO     | services.cached_notion_service:store_user_nickname:417 - Creating new Notion page for user U12345 with nickname: TestUser
+2025-05-15 08:05:33.431 | INFO     | services.cached_notion_service:invalidate_user_cache:115 - Cache invalidated for user U12345
+2025-05-15 08:05:33.433 | INFO     | services.cached_notion_service:store_user_nickname:413 - Updating Notion page for user U12345 with nickname: NewNickname
+2025-05-15 08:05:33.433 | INFO     | services.cached_notion_service:invalidate_user_cache:115 - Cache invalidated for user U12345
+2025-05-15 08:05:33.445 | INFO     | utils.history_manager:extract_search_topic:295 - Extracting search topic from prompt: has anyone discussed Python lately?
+2025-05-15 08:05:33.445 | INFO     | utils.history_manager:extract_search_topic:304 - Extracted topic from pattern: 'python lately'
+2025-05-15 08:05:33.449 | INFO     | utils.history_manager:find_messages_containing_topic:364 - Searching for topic 'Python' in 3 messages
+2025-05-15 08:05:33.449 | INFO     | utils.history_manager:find_messages_containing_topic:421 - 📊 Search results for topic 'Python':
+2025-05-15 08:05:33.450 | INFO     | utils.history_manager:find_messages_containing_topic:422 -   - Total matches: 2
+2025-05-15 08:05:33.450 | INFO     | utils.history_manager:find_messages_containing_topic:423 -   - Skipped self-referential messages: 0
+2025-05-15 08:05:33.450 | INFO     | utils.history_manager:find_messages_containing_topic:424 -   - Matches in text field: 2
+2025-05-15 08:05:33.450 | INFO     | utils.history_manager:find_messages_containing_topic:425 -   - Matches only in blocks: 0
+2025-05-15 08:05:33.450 | INFO     | utils.history_manager:find_messages_containing_topic:426 -   - Matches only in attachments: 0
+2025-05-15 08:05:33.454 | INFO     | utils.history_manager:format_history_for_prompt:580 - Formatted message history: 128 characters
+2025-05-15 08:05:33.454 | INFO     | utils.history_manager:format_history_for_prompt:580 - Formatted message history: 206 characters
+2025-05-15 08:05:33.457 | INFO     | utils.history_manager:extract_search_topic:295 - Extracting search topic from prompt: what do you think about TensorFlow?
+2025-05-15 08:05:33.458 | INFO     | utils.history_manager:extract_search_topic:317 - Extracted topic from direct pattern: 'tensorflow'
+2025-05-15 08:05:33.458 | INFO     | utils.history_manager:retrieve_and_filter_history:57 - Performing deep historical search for topic: 'tensorflow'
+2025-05-15 08:05:33.463 | INFO     | utils.history_manager:extract_search_topic:295 - Extracting search topic from prompt: how are you today?
+2025-05-15 08:05:33.464 | INFO     | utils.history_manager:extract_search_topic:339 - No topic could be extracted from the prompt
+2025-05-15 08:05:33.471 | INFO     | utils.history_manager:extract_search_topic:295 - Extracting search topic from prompt: has anyone discussed Python?
+2025-05-15 08:05:33.472 | INFO     | utils.history_manager:extract_search_topic:304 - Extracted topic from pattern: 'python'
+2025-05-15 08:05:33.473 | INFO     | utils.history_manager:retrieve_and_filter_history:57 - Performing deep historical search for topic: 'python'
+2025-05-15 08:05:33.683 | ERROR    | services.slack_service:add_reaction:118 - Failed to add reaction :thinking_face: to message 1617984000.000100: The request to the Slack API failed. (url: https://slack.com/api/reactions.add)
+The server responded with: {'ok': False, 'error': 'channel_not_found'}
+2025-05-15 08:05:33.909 | ERROR    | services.slack_service:get_user_info:207 - Failed to get user info for U12345: The request to the Slack API failed. (url: https://slack.com/api/users.info)
+The server responded with: {'ok': False, 'error': 'user_not_found'}
+2025-05-15 08:05:34.120 | ERROR    | services.slack_service:remove_reaction:145 - Failed to remove reaction :thinking_face: from message 1617984000.000100: The request to the Slack API failed. (url: https://slack.com/api/reactions.remove)
+The server responded with: {'ok': False, 'error': 'channel_not_found'}
+2025-05-15 08:05:34.322 | ERROR    | services.slack_service:add_reaction:118 - Failed to add reaction :white_check_mark: to message 1617984000.000100: The request to the Slack API failed. (url: https://slack.com/api/reactions.add)
+The server responded with: {'ok': False, 'error': 'channel_not_found'}
+2025-05-15 08:05:34.322 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C12345 (length: 26 chars):
+I'm doing well, thank you!
+2025-05-15 08:05:34.525 | ERROR    | services.slack_service:send_message:188 - [Slack POST] Channel: C12345, Text Length: 26, Text Preview: I'm doing well, thank you!
+2025-05-15 08:05:34.525 | ERROR    | services.slack_service:send_message:189 - Failed to send message: The request to the Slack API failed. (url: https://slack.com/api/chat.postMessage)
+The server responded with: {'ok': False, 'error': 'channel_not_found'}
+2025-05-15 08:05:34.739 | ERROR    | services.slack_service:add_reaction:118 - Failed to add reaction :thinking_face: to message 1617984000.000100: The request to the Slack API failed. (url: https://slack.com/api/reactions.add)
+The server responded with: {'ok': False, 'error': 'channel_not_found'}
+2025-05-15 08:05:34.940 | ERROR    | services.slack_service:remove_reaction:145 - Failed to remove reaction :thinking_face: from message 1617984000.000100: The request to the Slack API failed. (url: https://slack.com/api/reactions.remove)
+The server responded with: {'ok': False, 'error': 'channel_not_found'}
+2025-05-15 08:05:35.145 | ERROR    | services.slack_service:add_reaction:118 - Failed to add reaction :white_check_mark: to message 1617984000.000100: The request to the Slack API failed. (url: https://slack.com/api/reactions.add)
+The server responded with: {'ok': False, 'error': 'channel_not_found'}
+2025-05-15 08:05:35.146 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C12345 (length: 26 chars):
+I'm doing well, thank you!
+2025-05-15 08:05:35.347 | ERROR    | services.slack_service:send_message:188 - [Slack POST] Channel: C12345, Text Length: 26, Text Preview: I'm doing well, thank you!
+2025-05-15 08:05:35.347 | ERROR    | services.slack_service:send_message:189 - Failed to send message: The request to the Slack API failed. (url: https://slack.com/api/chat.postMessage)
+The server responded with: {'ok': False, 'error': 'channel_not_found'}
+2025-05-15 08:05:35.564 | ERROR    | services.slack_service:add_reaction:118 - Failed to add reaction :thinking_face: to message 1617984000.000100: The request to the Slack API failed. (url: https://slack.com/api/reactions.add)
+The server responded with: {'ok': False, 'error': 'channel_not_found'}
+2025-05-15 08:05:35.566 | ERROR    | main:handle_mention:139 - Error handling mention: Test error
+2025-05-15 08:05:35.769 | ERROR    | services.slack_service:remove_reaction:145 - Failed to remove reaction :thinking_face: from message 1617984000.000100: The request to the Slack API failed. (url: https://slack.com/api/reactions.remove)
+The server responded with: {'ok': False, 'error': 'channel_not_found'}
+2025-05-15 08:05:35.970 | ERROR    | services.slack_service:add_reaction:118 - Failed to add reaction :x: to message 1617984000.000100: The request to the Slack API failed. (url: https://slack.com/api/reactions.add)
+The server responded with: {'ok': False, 'error': 'channel_not_found'}
+2025-05-15 08:05:35.998 | INFO     | handler.memory_handler:handle_memory_instruction:53 - Processing memory instruction type: known_fact, content: 'I like coffee'
+2025-05-15 08:05:36.001 | INFO     | handler.memory_handler:handle_memory_instruction:53 - Processing memory instruction type: preference, content: 'short responses'
+2025-05-15 08:05:36.002 | INFO     | handler.memory_handler:handle_memory_instruction:53 - Processing memory instruction type: todo, content: 'buy milk'
+2025-05-15 08:05:36.003 | INFO     | handler.memory_handler:handle_memory_instruction:53 - Processing memory instruction type: work_location, content: 'seattle'
+2025-05-15 08:05:36.024 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-15 08:05:36.024 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-15 08:05:36.049 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-15 08:05:36.049 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-15 08:05:36.082 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-15 08:05:36.082 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-15 08:05:36.084 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-15 08:05:36.493 | INFO     | handler.openai_service:get_completion:101 - Sending 9 tokens to OpenAI. Model: gpt-4o
+2025-05-15 08:05:36.494 | ERROR    | handler.openai_service:get_completion:121 - Error getting OpenAI response: API error
+2025-05-15 08:05:36.517 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-15 08:05:36.517 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-15 08:05:36.541 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-15 08:05:36.541 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-15 08:05:36.567 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-15 08:05:36.567 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-15 08:05:36.591 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-15 08:05:36.591 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-15 08:05:36.594 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-15 08:05:36.637 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-15 08:05:36.638 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-15 08:05:36.857 | ERROR    | services.slack_service:_initialize_app:62 - Failed to initialize Slack app: `token` is invalid (auth.test result: {'ok': False, 'error': 'invalid_auth'})
+2025-05-15 08:05:37.059 | ERROR    | services.slack_service:_initialize_app:62 - Failed to initialize Slack app: `token` is invalid (auth.test result: {'ok': False, 'error': 'invalid_auth'})
+2025-05-15 08:05:37.263 | ERROR    | services.slack_service:_initialize_app:62 - Failed to initialize Slack app: `token` is invalid (auth.test result: {'ok': False, 'error': 'invalid_auth'})
+2025-05-15 08:05:37.463 | ERROR    | services.slack_service:_initialize_app:62 - Failed to initialize Slack app: `token` is invalid (auth.test result: {'ok': False, 'error': 'invalid_auth'})
+2025-05-15 08:05:37.464 | WARNING  | services.slack_service:_initialize_app:35 - Missing Slack credentials — using DummyApp.
+2025-05-15 08:05:37.666 | ERROR    | services.slack_service:_initialize_app:62 - Failed to initialize Slack app: `token` is invalid (auth.test result: {'ok': False, 'error': 'invalid_auth'})
+2025-05-15 08:05:37.666 | INFO     | services.slack_service:send_message:168 - Would send message to C12345: Test message
+2025-05-15 08:05:37.869 | ERROR    | services.slack_service:_initialize_app:62 - Failed to initialize Slack app: `token` is invalid (auth.test result: {'ok': False, 'error': 'invalid_auth'})
+2025-05-15 08:05:38.103 | ERROR    | services.slack_service:_initialize_app:62 - Failed to initialize Slack app: `token` is invalid (auth.test result: {'ok': False, 'error': 'invalid_auth'})
+2025-05-15 08:05:38.104 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C12345 (length: 11 chars):
+Hello world
+2025-05-15 08:05:38.104 | ERROR    | services.slack_service:send_message:188 - [Slack POST] Channel: C12345, Text Length: 11, Text Preview: Hello world
+2025-05-15 08:05:38.104 | ERROR    | services.slack_service:send_message:189 - Failed to send message: 'NoneType' object has no attribute 'client'
+2025-05-15 08:05:38.304 | ERROR    | services.slack_service:_initialize_app:62 - Failed to initialize Slack app: `token` is invalid (auth.test result: {'ok': False, 'error': 'invalid_auth'})
+2025-05-23 13:54:20.335 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-23 13:54:20.433 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-23 13:54:20.434 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-23 13:54:20.454 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-23 13:54:21.061 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-23 13:54:21.245 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-23 13:54:21.245 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-23 13:54:21.253 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-23 13:54:21.253 | INFO     | main:startup_event:164 - Slack bot started in socket mode.
+2025-05-23 13:54:21.276 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-23 13:54:38.455 | INFO     | actions.action_framework:__init__:712 - ActionRouter initialized with 4 actions
+2025-05-23 13:54:38.457 | INFO     | actions.action_framework:_get_action_for_text:726 - Selected action ContextResponseAction for message: <@U08RG89NFK7> are you around today ?...
+2025-05-23 13:54:38.459 | INFO     | utils.history_manager:extract_search_topic:295 - Extracting search topic from prompt: are you around today ?
+2025-05-23 13:54:38.460 | INFO     | utils.history_manager:extract_search_topic:339 - No topic could be extracted from the prompt
+2025-05-23 13:54:38.461 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748022876.292439 (limit: 100)...
+2025-05-23 13:54:38.687 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 1 messages from thread 1748022876.292439.
+2025-05-23 13:54:38.688 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 50)...
+2025-05-23 13:54:39.067 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 50 messages from channel C08SJ5EUTPT.
+2025-05-23 13:54:39.068 | INFO     | utils.history_manager:retrieve_and_filter_history:290 - Retrieved 50 messages for Recent context
+2025-05-23 13:54:39.253 | INFO     | utils.history_manager:format_history_for_prompt:580 - Formatted message history: 6304 characters
+2025-05-23 13:54:39.253 | INFO     | actions.action_framework:execute:252 - Fetching Notion context for user U089YKL1T4H
+2025-05-23 13:54:41.790 | INFO     | services.cached_notion_service:get_user_page_content:374 - Retrieved Notion page content for user U089YKL1T4H (length: 1090)
+2025-05-23 13:54:42.002 | INFO     | services.cached_notion_service:get_user_page_content:310 - Cache hit for user page content: U089YKL1T4H
+2025-05-23 13:54:42.002 | INFO     | utils.context_builder:get_enhanced_user_context:21 - Building enhanced context for user U089YKL1T4H
+2025-05-23 13:54:42.003 | INFO     | utils.context_builder:get_enhanced_user_context:23 - Using preferred name: Al
+2025-05-23 13:54:42.003 | INFO     | utils.context_builder:get_enhanced_user_context:26 - Page content length: 1090 chars
+2025-05-23 13:54:42.003 | INFO     | utils.context_builder:get_enhanced_user_context:89 - Generated enhanced context length: 2072 chars
+2025-05-23 13:54:42.004 | INFO     | actions.action_framework:execute:280 - History retrieval mode: unknown
+2025-05-23 13:54:42.004 | INFO     | actions.action_framework:execute:281 - Retrieved 50 relevant messages
+2025-05-23 13:54:42.004 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-23 13:54:43.363 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-23 13:54:43.367 | INFO     | handler.openai_service:get_completion_async:157 - Sending 2040 tokens to OpenAI async. Model: gpt-4o
+2025-05-23 13:54:44.908 | INFO     | handler.openai_service:get_completion_async:177 - OpenAI response received successfully in 1 attempt(s)
+2025-05-23 13:54:45.426 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 44 chars):
+Yes, I'm around today! How can I assist you?
+2025-05-23 13:54:45.801 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1748022885.805219', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1748022885.805219', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': "Yes, I'm around today! How can I assist you?", 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1748022876.292439', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'z42r', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': "Yes, I'm around today! How can I assist you?"}]}]}]}}
