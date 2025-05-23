@@ -3849,3 +3849,707 @@ Hello world
 2025-05-23 13:54:45.426 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 44 chars):
 Yes, I'm around today! How can I assist you?
 2025-05-23 13:54:45.801 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1748022885.805219', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1748022885.805219', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': "Yes, I'm around today! How can I assist you?", 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1748022876.292439', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'z42r', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': "Yes, I'm around today! How can I assist you?"}]}]}]}}
+2025-05-23 13:56:56.577 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-23 13:56:56.681 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-23 13:56:56.681 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-23 13:56:56.713 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-23 13:56:57.203 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-23 13:56:57.381 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-23 13:56:57.381 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-23 13:56:57.388 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-23 13:56:57.388 | INFO     | main:startup_event:164 - Slack bot started in socket mode.
+2025-05-23 13:56:57.410 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-23 13:57:47.903 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-23 13:57:48.006 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-23 13:57:48.006 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-23 13:57:48.105 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-23 13:57:48.754 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-23 13:57:49.055 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-23 13:57:49.055 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-23 13:57:49.061 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-23 13:57:49.061 | INFO     | main:startup_event:164 - Slack bot started in socket mode.
+2025-05-23 13:57:49.083 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-23 13:58:41.674 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-23 13:58:41.761 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-23 13:58:41.761 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-23 13:58:41.783 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-23 13:58:42.276 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-23 13:58:42.454 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-23 13:58:42.454 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-23 13:58:42.459 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-23 13:58:42.459 | INFO     | main:startup_event:164 - Slack bot started in socket mode.
+2025-05-23 13:58:42.480 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-23 13:58:52.307 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-23 13:58:52.360 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-23 13:58:52.360 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-23 13:58:52.381 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-23 13:58:52.766 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-23 13:58:52.944 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-23 13:58:52.944 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-23 13:58:52.953 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-23 13:58:52.954 | INFO     | main:startup_event:164 - Slack bot started in socket mode.
+2025-05-23 13:58:52.961 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-23 13:59:18.192 | INFO     | actions.action_framework:__init__:712 - ActionRouter initialized with 4 actions
+2025-05-23 13:59:18.198 | INFO     | actions.action_framework:_get_action_for_text:726 - Selected action ContextResponseAction for message: <@U08RG89NFK7> has anyone discussed Casablanca?...
+2025-05-23 13:59:18.222 | INFO     | utils.history_manager:extract_search_topic:295 - Extracting search topic from prompt: has anyone discussed Casablanca?
+2025-05-23 13:59:18.223 | INFO     | utils.history_manager:extract_search_topic:304 - Extracted topic from pattern: 'casablanca'
+2025-05-23 13:59:18.223 | INFO     | utils.history_manager:retrieve_and_filter_history:57 - Performing deep historical search for topic: 'casablanca'
+2025-05-23 13:59:18.226 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 2000)...
+2025-05-23 13:59:18.693 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 92 messages from channel C08SJ5EUTPT.
+2025-05-23 13:59:18.693 | INFO     | utils.history_manager:retrieve_and_filter_history:66 - Retrieved 92 main channel messages
+2025-05-23 13:59:18.694 | INFO     | utils.history_manager:retrieve_and_filter_history:106 - Identified 11 thread parent messages to search
+2025-05-23 13:59:18.694 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747340258.771419 (limit: 100)...
+2025-05-23 13:59:18.905 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1747340258.771419.
+2025-05-23 13:59:18.906 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747229885.082289 (limit: 100)...
+2025-05-23 13:59:19.170 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 16 messages from thread 1747229885.082289.
+2025-05-23 13:59:19.170 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747735398.888529 (limit: 100)...
+2025-05-23 13:59:19.401 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747735398.888529.
+2025-05-23 13:59:19.401 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747398469.291069 (limit: 100)...
+2025-05-23 13:59:19.614 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747398469.291069.
+2025-05-23 13:59:19.615 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747240286.113569 (limit: 100)...
+2025-05-23 13:59:19.827 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747240286.113569.
+2025-05-23 13:59:19.828 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747154183.175429 (limit: 100)...
+2025-05-23 13:59:20.098 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747154183.175429.
+2025-05-23 13:59:20.098 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747712176.750479 (limit: 100)...
+2025-05-23 13:59:20.322 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747712176.750479.
+2025-05-23 13:59:20.323 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747256395.819809 (limit: 100)...
+2025-05-23 13:59:20.531 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747256395.819809.
+2025-05-23 13:59:20.531 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747239317.848699 (limit: 100)...
+2025-05-23 13:59:20.739 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747239317.848699.
+2025-05-23 13:59:20.740 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747151549.684699 (limit: 100)...
+2025-05-23 13:59:20.951 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 7 messages from thread 1747151549.684699.
+2025-05-23 13:59:20.952 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747656778.369529 (limit: 100)...
+2025-05-23 13:59:21.168 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 6 messages from thread 1747656778.369529.
+2025-05-23 13:59:21.168 | INFO     | utils.history_manager:retrieve_and_filter_history:127 - Retrieved 95 total messages from 11 threads
+2025-05-23 13:59:21.169 | INFO     | utils.history_manager:retrieve_and_filter_history:147 - Combined into 176 unique messages after deduplication
+2025-05-23 13:59:21.169 | INFO     | utils.history_manager:retrieve_and_filter_history:152 - Filtering messages containing topic: 'casablanca'
+2025-05-23 13:59:21.169 | INFO     | utils.history_manager:find_messages_containing_topic:364 - Searching for topic 'casablanca' in 176 messages
+2025-05-23 13:59:21.170 | INFO     | utils.history_manager:find_messages_containing_topic:421 - 📊 Search results for topic 'casablanca':
+2025-05-23 13:59:21.170 | INFO     | utils.history_manager:find_messages_containing_topic:422 -   - Total matches: 3
+2025-05-23 13:59:21.170 | INFO     | utils.history_manager:find_messages_containing_topic:423 -   - Skipped self-referential messages: 0
+2025-05-23 13:59:21.170 | INFO     | utils.history_manager:find_messages_containing_topic:424 -   - Matches in text field: 3
+2025-05-23 13:59:21.171 | INFO     | utils.history_manager:find_messages_containing_topic:425 -   - Matches only in blocks: 0
+2025-05-23 13:59:21.171 | INFO     | utils.history_manager:find_messages_containing_topic:426 -   - Matches only in attachments: 0
+2025-05-23 13:59:21.171 | INFO     | utils.history_manager:retrieve_and_filter_history:158 - FOUND 3 MESSAGES CONTAINING TOPIC 'casablanca'
+2025-05-23 13:59:21.171 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - Search ratio: 3/176 messages matched
+2025-05-23 13:59:21.171 | INFO     | utils.history_manager:retrieve_and_filter_history:163 - Sample matching message: <@U08RG89NFK7> has anyone discussed Casablanca?
+2025-05-23 13:59:21.171 | INFO     | utils.history_manager:retrieve_and_filter_history:290 - Retrieved 3 messages for Deep search for: casablanca
+2025-05-23 13:59:21.367 | INFO     | utils.history_manager:format_history_for_prompt:580 - Formatted message history: 937 characters
+2025-05-23 13:59:21.367 | INFO     | actions.action_framework:execute:252 - Fetching Notion context for user U089YKL1T4H
+2025-05-23 13:59:22.101 | INFO     | services.cached_notion_service:get_user_page_content:374 - Retrieved Notion page content for user U089YKL1T4H (length: 1090)
+2025-05-23 13:59:22.297 | INFO     | services.cached_notion_service:get_user_page_content:310 - Cache hit for user page content: U089YKL1T4H
+2025-05-23 13:59:22.297 | INFO     | utils.context_builder:get_enhanced_user_context:21 - Building enhanced context for user U089YKL1T4H
+2025-05-23 13:59:22.297 | INFO     | utils.context_builder:get_enhanced_user_context:23 - Using preferred name: Al
+2025-05-23 13:59:22.298 | INFO     | utils.context_builder:get_enhanced_user_context:26 - Page content length: 1090 chars
+2025-05-23 13:59:22.298 | INFO     | utils.context_builder:get_enhanced_user_context:89 - Generated enhanced context length: 2072 chars
+2025-05-23 13:59:22.298 | INFO     | actions.action_framework:execute:280 - History retrieval mode: unknown
+2025-05-23 13:59:22.298 | INFO     | actions.action_framework:execute:281 - Retrieved 3 relevant messages
+2025-05-23 13:59:22.299 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-23 13:59:22.607 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-23 13:59:22.608 | INFO     | handler.openai_service:get_completion_async:157 - Sending 788 tokens to OpenAI async. Model: gpt-4o
+2025-05-23 13:59:24.482 | INFO     | handler.openai_service:get_completion_async:177 - OpenAI response received successfully in 1 attempt(s)
+2025-05-23 13:59:24.966 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 181 chars):
+SELLOUT!!! It seems Casablanca has been touched,  
+In terms of time zones' gentle tale discussed.  
+Yet deeper dives into the film remain,  
+A classic tale of love and war's domain.
+2025-05-23 13:59:25.395 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1748023165.298719', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1748023165.298719', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': "SELLOUT!!! It seems Casablanca has been touched,  \nIn terms of time zones' gentle tale discussed.  \nYet deeper dives into the film remain,  \nA classic tale of love and war's domain.", 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1748023155.911099', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'OI+w', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': "SELLOUT!!! It seems Casablanca has been touched,  \nIn terms of time zones' gentle tale discussed.  \nYet deeper dives into the film remain,  \nA classic tale of love and war's domain."}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-05-23 14:00:35.290 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-23 14:00:35.379 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-23 14:00:35.379 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-23 14:00:35.401 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-23 14:00:36.098 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-23 14:00:36.286 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-23 14:00:36.286 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-23 14:00:36.293 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-23 14:00:36.293 | INFO     | main:startup_event:164 - Slack bot started in socket mode.
+2025-05-23 14:00:36.313 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-23 14:02:07.348 | INFO     | actions.action_framework:__init__:712 - ActionRouter initialized with 4 actions
+2025-05-23 14:02:07.362 | INFO     | actions.action_framework:_get_action_for_text:726 - Selected action ContextResponseAction for message: Has anyone discussed Meatloaf? <@U08RG89NFK7>...
+2025-05-23 14:02:07.367 | INFO     | utils.history_manager:extract_search_topic:295 - Extracting search topic from prompt: Has anyone discussed Meatloaf?
+2025-05-23 14:02:07.368 | INFO     | utils.history_manager:extract_search_topic:304 - Extracted topic from pattern: 'meatloaf'
+2025-05-23 14:02:07.368 | INFO     | utils.history_manager:retrieve_and_filter_history:57 - Performing deep historical search for topic: 'meatloaf'
+2025-05-23 14:02:07.368 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 2000)...
+2025-05-23 14:02:07.827 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 93 messages from channel C08SJ5EUTPT.
+2025-05-23 14:02:07.828 | INFO     | utils.history_manager:retrieve_and_filter_history:66 - Retrieved 93 main channel messages
+2025-05-23 14:02:07.828 | INFO     | utils.history_manager:retrieve_and_filter_history:106 - Identified 16 thread parent messages to search
+2025-05-23 14:02:07.828 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747256201.527389 (limit: 100)...
+2025-05-23 14:02:08.138 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 4 messages from thread 1747256201.527389.
+2025-05-23 14:02:08.141 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747255578.422699 (limit: 100)...
+2025-05-23 14:02:08.384 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 4 messages from thread 1747255578.422699.
+2025-05-23 14:02:08.385 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747254862.608349 (limit: 100)...
+2025-05-23 14:02:08.595 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1747254862.608349.
+2025-05-23 14:02:08.598 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747240286.113569 (limit: 100)...
+2025-05-23 14:02:08.806 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747240286.113569.
+2025-05-23 14:02:08.807 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747240261.873949 (limit: 100)...
+2025-05-23 14:02:11.141 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1747240261.873949.
+2025-05-23 14:02:11.141 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747225824.843159 (limit: 100)...
+2025-05-23 14:02:11.391 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1747225824.843159.
+2025-05-23 14:02:11.392 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747225602.156339 (limit: 100)...
+2025-05-23 14:02:11.785 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1747225602.156339.
+2025-05-23 14:02:11.785 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747229885.082289 (limit: 100)...
+2025-05-23 14:02:12.084 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 16 messages from thread 1747229885.082289.
+2025-05-23 14:02:12.085 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747735398.888529 (limit: 100)...
+2025-05-23 14:02:12.292 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747735398.888529.
+2025-05-23 14:02:12.292 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747398469.291069 (limit: 100)...
+2025-05-23 14:02:12.598 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747398469.291069.
+2025-05-23 14:02:12.599 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747154183.175429 (limit: 100)...
+2025-05-23 14:02:12.874 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747154183.175429.
+2025-05-23 14:02:12.875 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747712176.750479 (limit: 100)...
+2025-05-23 14:02:13.151 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747712176.750479.
+2025-05-23 14:02:13.152 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747256395.819809 (limit: 100)...
+2025-05-23 14:02:13.368 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747256395.819809.
+2025-05-23 14:02:13.368 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747239317.848699 (limit: 100)...
+2025-05-23 14:02:13.591 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747239317.848699.
+2025-05-23 14:02:13.591 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747151549.684699 (limit: 100)...
+2025-05-23 14:02:13.840 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 7 messages from thread 1747151549.684699.
+2025-05-23 14:02:13.841 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747656778.369529 (limit: 100)...
+2025-05-23 14:02:14.065 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 6 messages from thread 1747656778.369529.
+2025-05-23 14:02:14.105 | INFO     | utils.history_manager:retrieve_and_filter_history:127 - Retrieved 109 total messages from 16 threads
+2025-05-23 14:02:14.106 | INFO     | utils.history_manager:retrieve_and_filter_history:147 - Combined into 186 unique messages after deduplication
+2025-05-23 14:02:14.108 | INFO     | utils.history_manager:retrieve_and_filter_history:152 - Filtering messages containing topic: 'meatloaf'
+2025-05-23 14:02:14.108 | INFO     | utils.history_manager:find_messages_containing_topic:364 - Searching for topic 'meatloaf' in 186 messages
+2025-05-23 14:02:14.109 | INFO     | utils.history_manager:find_messages_containing_topic:421 - 📊 Search results for topic 'meatloaf':
+2025-05-23 14:02:14.109 | INFO     | utils.history_manager:find_messages_containing_topic:422 -   - Total matches: 24
+2025-05-23 14:02:14.109 | INFO     | utils.history_manager:find_messages_containing_topic:423 -   - Skipped self-referential messages: 0
+2025-05-23 14:02:14.110 | INFO     | utils.history_manager:find_messages_containing_topic:424 -   - Matches in text field: 24
+2025-05-23 14:02:14.110 | INFO     | utils.history_manager:find_messages_containing_topic:425 -   - Matches only in blocks: 0
+2025-05-23 14:02:14.111 | INFO     | utils.history_manager:find_messages_containing_topic:426 -   - Matches only in attachments: 0
+2025-05-23 14:02:14.111 | INFO     | utils.history_manager:retrieve_and_filter_history:158 - FOUND 24 MESSAGES CONTAINING TOPIC 'meatloaf'
+2025-05-23 14:02:14.111 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - Search ratio: 24/186 messages matched
+2025-05-23 14:02:14.112 | INFO     | utils.history_manager:retrieve_and_filter_history:163 - Sample matching message: Has anyone discussed Meatloaf? <@U08RG89NFK7>
+2025-05-23 14:02:14.112 | INFO     | utils.history_manager:retrieve_and_filter_history:290 - Retrieved 24 messages for Deep search for: meatloaf
+2025-05-23 14:02:14.300 | INFO     | utils.history_manager:format_history_for_prompt:580 - Formatted message history: 7040 characters
+2025-05-23 14:02:14.301 | INFO     | actions.action_framework:execute:252 - Fetching Notion context for user U089YKL1T4H
+2025-05-23 14:02:14.996 | INFO     | services.cached_notion_service:get_user_page_content:374 - Retrieved Notion page content for user U089YKL1T4H (length: 1090)
+2025-05-23 14:02:15.593 | INFO     | services.cached_notion_service:get_user_page_content:310 - Cache hit for user page content: U089YKL1T4H
+2025-05-23 14:02:15.593 | INFO     | utils.context_builder:get_enhanced_user_context:21 - Building enhanced context for user U089YKL1T4H
+2025-05-23 14:02:15.593 | INFO     | utils.context_builder:get_enhanced_user_context:23 - Using preferred name: Al
+2025-05-23 14:02:15.593 | INFO     | utils.context_builder:get_enhanced_user_context:26 - Page content length: 1090 chars
+2025-05-23 14:02:15.594 | INFO     | utils.context_builder:get_enhanced_user_context:89 - Generated enhanced context length: 2072 chars
+2025-05-23 14:02:15.595 | INFO     | actions.action_framework:execute:280 - History retrieval mode: unknown
+2025-05-23 14:02:15.596 | INFO     | actions.action_framework:execute:281 - Retrieved 24 relevant messages
+2025-05-23 14:02:15.596 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-23 14:02:16.060 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-23 14:02:16.063 | INFO     | handler.openai_service:get_completion_async:157 - Sending 1733 tokens to OpenAI async. Model: gpt-4o
+2025-05-23 14:02:19.303 | INFO     | handler.openai_service:get_completion_async:177 - OpenAI response received successfully in 1 attempt(s)
+2025-05-23 14:02:19.862 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 257 chars):
+Aye, talk of Meatloaf has indeed been made! You had quite the back-and-forth regarding its kingly status among your Known Facts, which led to attempts at its noble deletion. Let me know if there's a need for more pirate tales or royal dish discussions! 🧟‍♀️
+2025-05-23 14:02:20.355 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1748023340.333169', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1748023340.333169', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': "Aye, talk of Meatloaf has indeed been made! You had quite the back-and-forth regarding its kingly status among your Known Facts, which led to attempts at its noble deletion. Let me know if there's a need for more pirate tales or royal dish discussions! :female_zombie:", 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1748023289.042409', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': '7O0n', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': "Aye, talk of Meatloaf has indeed been made! You had quite the back-and-forth regarding its kingly status among your Known Facts, which led to attempts at its noble deletion. Let me know if there's a need for more pirate tales or royal dish discussions! "}, {'type': 'emoji', 'name': 'female_zombie', 'unicode': '1f9df-200d-2640-fe0f'}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-05-23 14:07:04.037 | INFO     | actions.action_framework:__init__:712 - ActionRouter initialized with 4 actions
+2025-05-23 14:07:04.040 | INFO     | actions.action_framework:_get_action_for_text:726 - Selected action ContextResponseAction for message: <@U08RG89NFK7> why did Infocom fail?...
+2025-05-23 14:07:04.041 | INFO     | utils.history_manager:extract_search_topic:295 - Extracting search topic from prompt: why did Infocom fail?
+2025-05-23 14:07:04.070 | INFO     | utils.history_manager:extract_search_topic:329 - Extracted capitalized topic: 'Infocom'
+2025-05-23 14:07:04.071 | INFO     | utils.history_manager:retrieve_and_filter_history:57 - Performing deep historical search for topic: 'Infocom'
+2025-05-23 14:07:04.071 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 2000)...
+2025-05-23 14:07:04.654 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 94 messages from channel C08SJ5EUTPT.
+2025-05-23 14:07:04.657 | INFO     | utils.history_manager:retrieve_and_filter_history:66 - Retrieved 94 main channel messages
+2025-05-23 14:07:04.657 | INFO     | utils.history_manager:retrieve_and_filter_history:106 - Identified 10 thread parent messages to search
+2025-05-23 14:07:04.658 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747229885.082289 (limit: 100)...
+2025-05-23 14:07:04.917 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 16 messages from thread 1747229885.082289.
+2025-05-23 14:07:04.918 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747735398.888529 (limit: 100)...
+2025-05-23 14:07:05.170 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747735398.888529.
+2025-05-23 14:07:05.170 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747398469.291069 (limit: 100)...
+2025-05-23 14:07:05.446 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747398469.291069.
+2025-05-23 14:07:05.447 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747240286.113569 (limit: 100)...
+2025-05-23 14:07:05.652 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747240286.113569.
+2025-05-23 14:07:05.653 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747154183.175429 (limit: 100)...
+2025-05-23 14:07:05.943 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747154183.175429.
+2025-05-23 14:07:05.944 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747712176.750479 (limit: 100)...
+2025-05-23 14:07:06.151 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747712176.750479.
+2025-05-23 14:07:06.151 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747256395.819809 (limit: 100)...
+2025-05-23 14:07:06.358 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747256395.819809.
+2025-05-23 14:07:06.358 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747239317.848699 (limit: 100)...
+2025-05-23 14:07:06.563 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747239317.848699.
+2025-05-23 14:07:06.563 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747151549.684699 (limit: 100)...
+2025-05-23 14:07:06.838 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 7 messages from thread 1747151549.684699.
+2025-05-23 14:07:06.839 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747656778.369529 (limit: 100)...
+2025-05-23 14:07:07.058 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 6 messages from thread 1747656778.369529.
+2025-05-23 14:07:07.058 | INFO     | utils.history_manager:retrieve_and_filter_history:127 - Retrieved 93 total messages from 10 threads
+2025-05-23 14:07:07.059 | INFO     | utils.history_manager:retrieve_and_filter_history:147 - Combined into 177 unique messages after deduplication
+2025-05-23 14:07:07.059 | INFO     | utils.history_manager:retrieve_and_filter_history:152 - Filtering messages containing topic: 'Infocom'
+2025-05-23 14:07:07.059 | INFO     | utils.history_manager:find_messages_containing_topic:364 - Searching for topic 'Infocom' in 177 messages
+2025-05-23 14:07:07.060 | INFO     | utils.history_manager:find_messages_containing_topic:421 - 📊 Search results for topic 'Infocom':
+2025-05-23 14:07:07.060 | INFO     | utils.history_manager:find_messages_containing_topic:422 -   - Total matches: 1
+2025-05-23 14:07:07.060 | INFO     | utils.history_manager:find_messages_containing_topic:423 -   - Skipped self-referential messages: 0
+2025-05-23 14:07:07.060 | INFO     | utils.history_manager:find_messages_containing_topic:424 -   - Matches in text field: 1
+2025-05-23 14:07:07.060 | INFO     | utils.history_manager:find_messages_containing_topic:425 -   - Matches only in blocks: 0
+2025-05-23 14:07:07.061 | INFO     | utils.history_manager:find_messages_containing_topic:426 -   - Matches only in attachments: 0
+2025-05-23 14:07:07.061 | INFO     | utils.history_manager:retrieve_and_filter_history:158 - FOUND 1 MESSAGES CONTAINING TOPIC 'Infocom'
+2025-05-23 14:07:07.061 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - Search ratio: 1/177 messages matched
+2025-05-23 14:07:07.061 | INFO     | utils.history_manager:retrieve_and_filter_history:163 - Sample matching message: <@U08RG89NFK7> why did Infocom fail?
+2025-05-23 14:07:07.061 | INFO     | utils.history_manager:retrieve_and_filter_history:290 - Retrieved 1 messages for Deep search for: Infocom
+2025-05-23 14:07:07.062 | INFO     | utils.history_manager:format_history_for_prompt:580 - Formatted message history: 175 characters
+2025-05-23 14:07:07.062 | INFO     | actions.action_framework:execute:252 - Fetching Notion context for user U089YKL1T4H
+2025-05-23 14:07:07.062 | INFO     | services.cached_notion_service:get_user_page_content:310 - Cache hit for user page content: U089YKL1T4H
+2025-05-23 14:07:07.063 | INFO     | services.cached_notion_service:get_user_page_content:310 - Cache hit for user page content: U089YKL1T4H
+2025-05-23 14:07:07.063 | INFO     | utils.context_builder:get_enhanced_user_context:21 - Building enhanced context for user U089YKL1T4H
+2025-05-23 14:07:07.063 | INFO     | utils.context_builder:get_enhanced_user_context:23 - Using preferred name: Al
+2025-05-23 14:07:07.064 | INFO     | utils.context_builder:get_enhanced_user_context:26 - Page content length: 1090 chars
+2025-05-23 14:07:07.064 | INFO     | utils.context_builder:get_enhanced_user_context:89 - Generated enhanced context length: 2072 chars
+2025-05-23 14:07:07.064 | INFO     | actions.action_framework:execute:280 - History retrieval mode: unknown
+2025-05-23 14:07:07.064 | INFO     | actions.action_framework:execute:281 - Retrieved 1 relevant messages
+2025-05-23 14:07:07.065 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-23 14:07:07.070 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-23 14:07:07.071 | INFO     | handler.openai_service:get_completion_async:157 - Sending 665 tokens to OpenAI async. Model: gpt-4o
+2025-05-23 14:07:13.897 | INFO     | handler.openai_service:get_completion_async:177 - OpenAI response received successfully in 1 attempt(s)
+2025-05-23 14:07:14.418 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 940 chars):
+Ah, the saga of Infocom, a tale woven with the chaotic whims of technology's heart. You see, Infocom, the harbinger of text adventures with its beguiling Zork series and others, couldn't quite parley its initial acclaim into lasting success. It stumbled into the maw of technical evolution and market demand, like a drunkard at a fancy gala! 
+
+First, the rise of graphical games beckoned the gaudy masses, who flocked like pigeons to breadcrumbs, leaving text adventures as yesterday's news. Infocom's attempt to woo the spreadsheet market with its software package "Cornerstone" was as effective as a fart in a windstorm, burning through cash without a whiff of success. 
+
+Also, being gobbled up by Activision, those scallywags, didn't help either—corporate discord and priorities more tangled than a soap opera's plot. Alas, poor Infocom found itself outgunned and outmaneuvered, a victim of turbulent tides in the gaming industry's seas.
+2025-05-23 14:07:15.109 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1748023634.869429', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1748023634.869429', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': 'Ah, the saga of Infocom, a tale woven with the chaotic whims of technology\'s heart. You see, Infocom, the harbinger of text adventures with its beguiling Zork series and others, couldn\'t quite parley its initial acclaim into lasting success. It stumbled into the maw of technical evolution and market demand, like a drunkard at a fancy gala! \n\nFirst, the rise of graphical games beckoned the gaudy masses, who flocked like pigeons to breadcrumbs, leaving text adventures as yesterday\'s news. Infocom\'s attempt to woo the spreadsheet market with its software package "Cornerstone" was as effective as a fart in a windstorm, burning through cash without a whiff of success. \n\nAlso, being gobbled up by Activision, those scallywags, didn\'t help either—corporate discord and priorities more tangled than a soap opera\'s plot. Alas, poor Infocom found itself outgunned and outmaneuvered, a victim of turbulent tides in the gaming industry\'s seas.', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1748023621.862269', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'AKv', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': 'Ah, the saga of Infocom, a tale woven with the chaotic whims of technology\'s heart. You see, Infocom, the harbinger of text adventures with its beguiling Zork series and others, couldn\'t quite parley its initial acclaim into lasting success. It stumbled into the maw of technical evolution and market demand, like a drunkard at a fancy gala! \n\nFirst, the rise of graphical games beckoned the gaudy masses, who flocked like pigeons to breadcrumbs, leaving text adventures as yesterday\'s news. Infocom\'s attempt to woo the spreadsheet market with its software package "Cornerstone" was as effective as a fart in a windstorm, burning through cash without a whiff of success. \n\nAlso, being gobbled up by Activision, those scallywags, didn\'t help either—corporate discord and priorities more tangled than a soap opera\'s plot. Alas, poor Infocom found itself outgunned and outmaneuvered, a victim of turbulent tides in the gaming industry\'s seas.'}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-05-23 14:09:49.508 | INFO     | actions.action_framework:__init__:712 - ActionRouter initialized with 4 actions
+2025-05-23 14:09:49.511 | INFO     | actions.action_framework:_get_action_for_text:726 - Selected action ContextResponseAction for message: How would you rank their top 10 games <@U08RG89NFK...
+2025-05-23 14:09:49.511 | INFO     | utils.history_manager:extract_search_topic:295 - Extracting search topic from prompt: How would you rank their top 10 games ?
+2025-05-23 14:09:49.511 | INFO     | utils.history_manager:extract_search_topic:329 - Extracted capitalized topic: 'How'
+2025-05-23 14:09:49.512 | INFO     | utils.history_manager:retrieve_and_filter_history:57 - Performing deep historical search for topic: 'How'
+2025-05-23 14:09:49.512 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 2000)...
+2025-05-23 14:09:50.042 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 94 messages from channel C08SJ5EUTPT.
+2025-05-23 14:09:50.043 | INFO     | utils.history_manager:retrieve_and_filter_history:66 - Retrieved 94 main channel messages
+2025-05-23 14:09:50.043 | INFO     | utils.history_manager:retrieve_and_filter_history:106 - Identified 13 thread parent messages to search
+2025-05-23 14:09:50.043 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747650576.571969 (limit: 100)...
+2025-05-23 14:09:50.259 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1747650576.571969.
+2025-05-23 14:09:50.259 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747398469.291069 (limit: 100)...
+2025-05-23 14:09:50.467 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747398469.291069.
+2025-05-23 14:09:50.467 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747273129.003189 (limit: 100)...
+2025-05-23 14:09:50.694 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1747273129.003189.
+2025-05-23 14:09:50.701 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747228640.850849 (limit: 100)...
+2025-05-23 14:09:50.906 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 4 messages from thread 1747228640.850849.
+2025-05-23 14:09:50.906 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747154183.175429 (limit: 100)...
+2025-05-23 14:09:51.176 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747154183.175429.
+2025-05-23 14:09:51.176 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747229885.082289 (limit: 100)...
+2025-05-23 14:09:51.445 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 16 messages from thread 1747229885.082289.
+2025-05-23 14:09:51.446 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747735398.888529 (limit: 100)...
+2025-05-23 14:09:51.658 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747735398.888529.
+2025-05-23 14:09:51.659 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747240286.113569 (limit: 100)...
+2025-05-23 14:09:51.873 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747240286.113569.
+2025-05-23 14:09:51.873 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747712176.750479 (limit: 100)...
+2025-05-23 14:09:52.092 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747712176.750479.
+2025-05-23 14:09:52.093 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747256395.819809 (limit: 100)...
+2025-05-23 14:09:52.296 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747256395.819809.
+2025-05-23 14:09:52.296 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747239317.848699 (limit: 100)...
+2025-05-23 14:09:52.506 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747239317.848699.
+2025-05-23 14:09:52.507 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747151549.684699 (limit: 100)...
+2025-05-23 14:09:52.719 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 7 messages from thread 1747151549.684699.
+2025-05-23 14:09:52.719 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747656778.369529 (limit: 100)...
+2025-05-23 14:09:52.934 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 6 messages from thread 1747656778.369529.
+2025-05-23 14:09:52.935 | INFO     | utils.history_manager:retrieve_and_filter_history:127 - Retrieved 101 total messages from 13 threads
+2025-05-23 14:09:52.935 | INFO     | utils.history_manager:retrieve_and_filter_history:147 - Combined into 182 unique messages after deduplication
+2025-05-23 14:09:52.935 | INFO     | utils.history_manager:retrieve_and_filter_history:152 - Filtering messages containing topic: 'How'
+2025-05-23 14:09:52.936 | INFO     | utils.history_manager:find_messages_containing_topic:364 - Searching for topic 'How' in 182 messages
+2025-05-23 14:09:52.937 | INFO     | utils.history_manager:find_messages_containing_topic:421 - 📊 Search results for topic 'How':
+2025-05-23 14:09:52.937 | INFO     | utils.history_manager:find_messages_containing_topic:422 -   - Total matches: 11
+2025-05-23 14:09:52.938 | INFO     | utils.history_manager:find_messages_containing_topic:423 -   - Skipped self-referential messages: 0
+2025-05-23 14:09:52.938 | INFO     | utils.history_manager:find_messages_containing_topic:424 -   - Matches in text field: 11
+2025-05-23 14:09:52.938 | INFO     | utils.history_manager:find_messages_containing_topic:425 -   - Matches only in blocks: 0
+2025-05-23 14:09:52.938 | INFO     | utils.history_manager:find_messages_containing_topic:426 -   - Matches only in attachments: 0
+2025-05-23 14:09:52.938 | INFO     | utils.history_manager:retrieve_and_filter_history:158 - FOUND 11 MESSAGES CONTAINING TOPIC 'How'
+2025-05-23 14:09:52.938 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - Search ratio: 11/182 messages matched
+2025-05-23 14:09:52.939 | INFO     | utils.history_manager:retrieve_and_filter_history:163 - Sample matching message: Good morning <@U08RG89NFK7> ! How many championships have the Knicks won and in what years? Also how
+2025-05-23 14:09:52.939 | INFO     | utils.history_manager:retrieve_and_filter_history:290 - Retrieved 11 messages for Deep search for: How
+2025-05-23 14:09:52.940 | INFO     | utils.history_manager:format_history_for_prompt:580 - Formatted message history: 3708 characters
+2025-05-23 14:09:52.940 | INFO     | actions.action_framework:execute:252 - Fetching Notion context for user U089YKL1T4H
+2025-05-23 14:09:53.933 | INFO     | services.cached_notion_service:get_user_page_content:374 - Retrieved Notion page content for user U089YKL1T4H (length: 1090)
+2025-05-23 14:09:54.240 | INFO     | services.cached_notion_service:get_user_page_content:310 - Cache hit for user page content: U089YKL1T4H
+2025-05-23 14:09:54.241 | INFO     | utils.context_builder:get_enhanced_user_context:21 - Building enhanced context for user U089YKL1T4H
+2025-05-23 14:09:54.241 | INFO     | utils.context_builder:get_enhanced_user_context:23 - Using preferred name: Al
+2025-05-23 14:09:54.241 | INFO     | utils.context_builder:get_enhanced_user_context:26 - Page content length: 1090 chars
+2025-05-23 14:09:54.241 | INFO     | utils.context_builder:get_enhanced_user_context:89 - Generated enhanced context length: 2072 chars
+2025-05-23 14:09:54.242 | INFO     | actions.action_framework:execute:280 - History retrieval mode: unknown
+2025-05-23 14:09:54.242 | INFO     | actions.action_framework:execute:281 - Retrieved 11 relevant messages
+2025-05-23 14:09:54.242 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-23 14:09:54.246 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-23 14:09:54.248 | INFO     | handler.openai_service:get_completion_async:157 - Sending 1194 tokens to OpenAI async. Model: gpt-4o
+2025-05-23 14:09:56.392 | INFO     | handler.openai_service:get_completion_async:177 - OpenAI response received successfully in 1 attempt(s)
+2025-05-23 14:09:56.835 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 181 chars):
+I'm sorry, I can't rank their top 10 games without more context or knowing which games you're referring to. Could you provide more details or specify the games you're interested in?
+2025-05-23 14:09:57.281 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1748023797.198939', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1748023797.198939', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': "I'm sorry, I can't rank their top 10 games without more context or knowing which games you're referring to. Could you provide more details or specify the games you're interested in?", 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1748023621.862269', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': '6Bb', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': "I'm sorry, I can't rank their top 10 games without more context or knowing which games you're referring to. Could you provide more details or specify the games you're interested in?"}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-05-23 14:10:18.575 | INFO     | actions.action_framework:__init__:712 - ActionRouter initialized with 4 actions
+2025-05-23 14:10:18.578 | INFO     | actions.action_framework:_get_action_for_text:726 - Selected action ContextResponseAction for message: <@U08RG89NFK7> the top 10 Infocom games, as we wer...
+2025-05-23 14:10:18.579 | INFO     | utils.history_manager:extract_search_topic:295 - Extracting search topic from prompt: the top 10 Infocom games, as we were discussing
+2025-05-23 14:10:18.579 | INFO     | utils.history_manager:extract_search_topic:329 - Extracted capitalized topic: 'Infocom'
+2025-05-23 14:10:18.579 | INFO     | utils.history_manager:retrieve_and_filter_history:57 - Performing deep historical search for topic: 'Infocom'
+2025-05-23 14:10:18.579 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 2000)...
+2025-05-23 14:10:19.038 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 94 messages from channel C08SJ5EUTPT.
+2025-05-23 14:10:19.038 | INFO     | utils.history_manager:retrieve_and_filter_history:66 - Retrieved 94 main channel messages
+2025-05-23 14:10:19.039 | INFO     | utils.history_manager:retrieve_and_filter_history:106 - Identified 11 thread parent messages to search
+2025-05-23 14:10:19.039 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748023621.862269 (limit: 100)...
+2025-05-23 14:10:19.250 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 5 messages from thread 1748023621.862269.
+2025-05-23 14:10:19.251 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747229885.082289 (limit: 100)...
+2025-05-23 14:10:19.522 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 16 messages from thread 1747229885.082289.
+2025-05-23 14:10:19.522 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747735398.888529 (limit: 100)...
+2025-05-23 14:10:19.945 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747735398.888529.
+2025-05-23 14:10:19.946 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747398469.291069 (limit: 100)...
+2025-05-23 14:10:20.151 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747398469.291069.
+2025-05-23 14:10:20.152 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747240286.113569 (limit: 100)...
+2025-05-23 14:10:20.367 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747240286.113569.
+2025-05-23 14:10:20.367 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747154183.175429 (limit: 100)...
+2025-05-23 14:10:20.630 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747154183.175429.
+2025-05-23 14:10:20.633 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747712176.750479 (limit: 100)...
+2025-05-23 14:10:20.843 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747712176.750479.
+2025-05-23 14:10:20.844 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747256395.819809 (limit: 100)...
+2025-05-23 14:10:21.435 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747256395.819809.
+2025-05-23 14:10:21.436 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747239317.848699 (limit: 100)...
+2025-05-23 14:10:21.665 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747239317.848699.
+2025-05-23 14:10:21.665 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747151549.684699 (limit: 100)...
+2025-05-23 14:10:21.878 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 7 messages from thread 1747151549.684699.
+2025-05-23 14:10:21.879 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747656778.369529 (limit: 100)...
+2025-05-23 14:10:22.094 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 6 messages from thread 1747656778.369529.
+2025-05-23 14:10:22.094 | INFO     | utils.history_manager:retrieve_and_filter_history:127 - Retrieved 98 total messages from 11 threads
+2025-05-23 14:10:22.095 | INFO     | utils.history_manager:retrieve_and_filter_history:147 - Combined into 181 unique messages after deduplication
+2025-05-23 14:10:22.095 | INFO     | utils.history_manager:retrieve_and_filter_history:152 - Filtering messages containing topic: 'Infocom'
+2025-05-23 14:10:22.095 | INFO     | utils.history_manager:find_messages_containing_topic:364 - Searching for topic 'Infocom' in 181 messages
+2025-05-23 14:10:22.096 | INFO     | utils.history_manager:find_messages_containing_topic:421 - 📊 Search results for topic 'Infocom':
+2025-05-23 14:10:22.097 | INFO     | utils.history_manager:find_messages_containing_topic:422 -   - Total matches: 3
+2025-05-23 14:10:22.097 | INFO     | utils.history_manager:find_messages_containing_topic:423 -   - Skipped self-referential messages: 0
+2025-05-23 14:10:22.097 | INFO     | utils.history_manager:find_messages_containing_topic:424 -   - Matches in text field: 3
+2025-05-23 14:10:22.097 | INFO     | utils.history_manager:find_messages_containing_topic:425 -   - Matches only in blocks: 0
+2025-05-23 14:10:22.097 | INFO     | utils.history_manager:find_messages_containing_topic:426 -   - Matches only in attachments: 0
+2025-05-23 14:10:22.097 | INFO     | utils.history_manager:retrieve_and_filter_history:158 - FOUND 3 MESSAGES CONTAINING TOPIC 'Infocom'
+2025-05-23 14:10:22.098 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - Search ratio: 3/181 messages matched
+2025-05-23 14:10:22.098 | INFO     | utils.history_manager:retrieve_and_filter_history:163 - Sample matching message: <@U08RG89NFK7> why did Infocom fail?
+2025-05-23 14:10:22.098 | INFO     | utils.history_manager:retrieve_and_filter_history:290 - Retrieved 3 messages for Deep search for: Infocom
+2025-05-23 14:10:22.099 | INFO     | utils.history_manager:format_history_for_prompt:580 - Formatted message history: 2197 characters
+2025-05-23 14:10:22.099 | INFO     | actions.action_framework:execute:252 - Fetching Notion context for user U089YKL1T4H
+2025-05-23 14:10:22.100 | INFO     | services.cached_notion_service:get_user_page_content:310 - Cache hit for user page content: U089YKL1T4H
+2025-05-23 14:10:22.100 | INFO     | services.cached_notion_service:get_user_page_content:310 - Cache hit for user page content: U089YKL1T4H
+2025-05-23 14:10:22.100 | INFO     | utils.context_builder:get_enhanced_user_context:21 - Building enhanced context for user U089YKL1T4H
+2025-05-23 14:10:22.100 | INFO     | utils.context_builder:get_enhanced_user_context:23 - Using preferred name: Al
+2025-05-23 14:10:22.101 | INFO     | utils.context_builder:get_enhanced_user_context:26 - Page content length: 1090 chars
+2025-05-23 14:10:22.101 | INFO     | utils.context_builder:get_enhanced_user_context:89 - Generated enhanced context length: 2072 chars
+2025-05-23 14:10:22.101 | INFO     | actions.action_framework:execute:280 - History retrieval mode: unknown
+2025-05-23 14:10:22.101 | INFO     | actions.action_framework:execute:281 - Retrieved 3 relevant messages
+2025-05-23 14:10:22.101 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-23 14:10:22.104 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-23 14:10:22.105 | INFO     | handler.openai_service:get_completion_async:157 - Sending 923 tokens to OpenAI async. Model: gpt-4o
+2025-05-23 14:10:25.516 | INFO     | handler.openai_service:get_completion_async:177 - OpenAI response received successfully in 1 attempt(s)
+2025-05-23 14:10:26.032 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 394 chars):
+Certainly! Here are the top 10 Infocom games that were being discussed:
+
+1. Zork I: The Great Underground Empire
+2. Zork II: The Wizard of Frobozz
+3. Zork III: The Dungeon Master
+4. The Hitchhiker's Guide to the Galaxy
+5. Planetfall
+6. Enchanter
+7. Deadline
+8. Suspended
+9. Wishbringer
+10. A Mind Forever Voyaging
+
+These games stand as some of Infocom's most iconic and beloved text adventures.
+2025-05-23 14:10:26.498 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1748023826.348659', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1748023826.348659', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': "Certainly! Here are the top 10 Infocom games that were being discussed:\n\n1. Zork I: The Great Underground Empire\n2. Zork II: The Wizard of Frobozz\n3. Zork III: The Dungeon Master\n4. The Hitchhiker's Guide to the Galaxy\n5. Planetfall\n6. Enchanter\n7. Deadline\n8. Suspended\n9. Wishbringer\n10. A Mind Forever Voyaging\n\nThese games stand as some of Infocom's most iconic and beloved text adventures.", 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1748023621.862269', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': '3qUD', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': "Certainly! Here are the top 10 Infocom games that were being discussed:\n\n1. Zork I: The Great Underground Empire\n2. Zork II: The Wizard of Frobozz\n3. Zork III: The Dungeon Master\n4. The Hitchhiker's Guide to the Galaxy\n5. Planetfall\n6. Enchanter\n7. Deadline\n8. Suspended\n9. Wishbringer\n10. A Mind Forever Voyaging\n\nThese games stand as some of Infocom's most iconic and beloved text adventures."}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-05-23 14:11:05.377 | INFO     | actions.action_framework:__init__:712 - ActionRouter initialized with 4 actions
+2025-05-23 14:11:06.083 | INFO     | actions.action_framework:_get_action_for_text:726 - Selected action ContextResponseAction for message: Has there ever been a text-based game that has eve...
+2025-05-23 14:11:06.084 | INFO     | utils.history_manager:extract_search_topic:295 - Extracting search topic from prompt: Has there ever been a text-based game that has even come close to these 10 since Infocom ?
+2025-05-23 14:11:06.084 | INFO     | utils.history_manager:extract_search_topic:329 - Extracted capitalized topic: 'Infocom'
+2025-05-23 14:11:06.084 | INFO     | utils.history_manager:retrieve_and_filter_history:57 - Performing deep historical search for topic: 'Infocom'
+2025-05-23 14:11:06.084 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 2000)...
+2025-05-23 14:11:06.617 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 94 messages from channel C08SJ5EUTPT.
+2025-05-23 14:11:06.617 | INFO     | utils.history_manager:retrieve_and_filter_history:66 - Retrieved 94 main channel messages
+2025-05-23 14:11:06.618 | INFO     | utils.history_manager:retrieve_and_filter_history:106 - Identified 10 thread parent messages to search
+2025-05-23 14:11:06.618 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748023621.862269 (limit: 100)...
+2025-05-23 14:11:06.856 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 7 messages from thread 1748023621.862269.
+2025-05-23 14:11:06.856 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747229885.082289 (limit: 100)...
+2025-05-23 14:11:07.119 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 16 messages from thread 1747229885.082289.
+2025-05-23 14:11:07.120 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747735398.888529 (limit: 100)...
+2025-05-23 14:11:07.463 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747735398.888529.
+2025-05-23 14:11:07.464 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747398469.291069 (limit: 100)...
+2025-05-23 14:11:07.692 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747398469.291069.
+2025-05-23 14:11:07.692 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747240286.113569 (limit: 100)...
+2025-05-23 14:11:08.274 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747240286.113569.
+2025-05-23 14:11:08.279 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747154183.175429 (limit: 100)...
+2025-05-23 14:11:08.551 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747154183.175429.
+2025-05-23 14:11:08.552 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747712176.750479 (limit: 100)...
+2025-05-23 14:11:08.769 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747712176.750479.
+2025-05-23 14:11:08.770 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747256395.819809 (limit: 100)...
+2025-05-23 14:11:09.196 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747256395.819809.
+2025-05-23 14:11:09.196 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747239317.848699 (limit: 100)...
+2025-05-23 14:11:09.426 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747239317.848699.
+2025-05-23 14:11:09.427 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747151549.684699 (limit: 100)...
+2025-05-23 14:11:09.647 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 7 messages from thread 1747151549.684699.
+2025-05-23 14:11:09.647 | INFO     | utils.history_manager:retrieve_and_filter_history:127 - Retrieved 94 total messages from 10 threads
+2025-05-23 14:11:09.647 | INFO     | utils.history_manager:retrieve_and_filter_history:147 - Combined into 178 unique messages after deduplication
+2025-05-23 14:11:09.648 | INFO     | utils.history_manager:retrieve_and_filter_history:152 - Filtering messages containing topic: 'Infocom'
+2025-05-23 14:11:09.648 | INFO     | utils.history_manager:find_messages_containing_topic:364 - Searching for topic 'Infocom' in 178 messages
+2025-05-23 14:11:09.649 | INFO     | utils.history_manager:find_messages_containing_topic:421 - 📊 Search results for topic 'Infocom':
+2025-05-23 14:11:09.649 | INFO     | utils.history_manager:find_messages_containing_topic:422 -   - Total matches: 5
+2025-05-23 14:11:09.649 | INFO     | utils.history_manager:find_messages_containing_topic:423 -   - Skipped self-referential messages: 0
+2025-05-23 14:11:09.649 | INFO     | utils.history_manager:find_messages_containing_topic:424 -   - Matches in text field: 5
+2025-05-23 14:11:09.650 | INFO     | utils.history_manager:find_messages_containing_topic:425 -   - Matches only in blocks: 0
+2025-05-23 14:11:09.650 | INFO     | utils.history_manager:find_messages_containing_topic:426 -   - Matches only in attachments: 0
+2025-05-23 14:11:09.650 | INFO     | utils.history_manager:retrieve_and_filter_history:158 - FOUND 5 MESSAGES CONTAINING TOPIC 'Infocom'
+2025-05-23 14:11:09.650 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - Search ratio: 5/178 messages matched
+2025-05-23 14:11:09.650 | INFO     | utils.history_manager:retrieve_and_filter_history:163 - Sample matching message: <@U08RG89NFK7> why did Infocom fail?
+2025-05-23 14:11:09.650 | INFO     | utils.history_manager:retrieve_and_filter_history:290 - Retrieved 5 messages for Deep search for: Infocom
+2025-05-23 14:11:09.651 | INFO     | utils.history_manager:format_history_for_prompt:580 - Formatted message history: 3212 characters
+2025-05-23 14:11:09.652 | INFO     | actions.action_framework:execute:252 - Fetching Notion context for user U089YKL1T4H
+2025-05-23 14:11:09.652 | INFO     | services.cached_notion_service:get_user_page_content:310 - Cache hit for user page content: U089YKL1T4H
+2025-05-23 14:11:09.653 | INFO     | services.cached_notion_service:get_user_page_content:310 - Cache hit for user page content: U089YKL1T4H
+2025-05-23 14:11:09.653 | INFO     | utils.context_builder:get_enhanced_user_context:21 - Building enhanced context for user U089YKL1T4H
+2025-05-23 14:11:09.653 | INFO     | utils.context_builder:get_enhanced_user_context:23 - Using preferred name: Al
+2025-05-23 14:11:09.653 | INFO     | utils.context_builder:get_enhanced_user_context:26 - Page content length: 1090 chars
+2025-05-23 14:11:09.654 | INFO     | utils.context_builder:get_enhanced_user_context:89 - Generated enhanced context length: 2072 chars
+2025-05-23 14:11:09.654 | INFO     | actions.action_framework:execute:280 - History retrieval mode: unknown
+2025-05-23 14:11:09.654 | INFO     | actions.action_framework:execute:281 - Retrieved 5 relevant messages
+2025-05-23 14:11:09.654 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-23 14:11:09.656 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-23 14:11:09.658 | INFO     | handler.openai_service:get_completion_async:157 - Sending 1087 tokens to OpenAI async. Model: gpt-4o
+2025-05-23 14:11:15.064 | INFO     | handler.openai_service:get_completion_async:177 - OpenAI response received successfully in 1 attempt(s)
+2025-05-23 14:11:15.525 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 362 chars):
+Since the days of Infocom's text adventures, a few text-based games have garnered significant acclaim. Notably, "1993's "Anchorhead" and 2005's "The Dreamhold" have stood out, captivating players with compelling narratives and intricate puzzles akin to Infocom's best. These games are often highlighted for their depth and creativity in the text adventure genre.
+2025-05-23 14:11:16.052 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1748023875.831989', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1748023875.831989', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': 'Since the days of Infocom\'s text adventures, a few text-based games have garnered significant acclaim. Notably, "1993\'s "Anchorhead" and 2005\'s "The Dreamhold" have stood out, captivating players with compelling narratives and intricate puzzles akin to Infocom\'s best. These games are often highlighted for their depth and creativity in the text adventure genre.', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1748023621.862269', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'RdH', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': 'Since the days of Infocom\'s text adventures, a few text-based games have garnered significant acclaim. Notably, "1993\'s "Anchorhead" and 2005\'s "The Dreamhold" have stood out, captivating players with compelling narratives and intricate puzzles akin to Infocom\'s best. These games are often highlighted for their depth and creativity in the text adventure genre.'}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-05-23 14:12:09.965 | INFO     | actions.action_framework:__init__:712 - ActionRouter initialized with 4 actions
+2025-05-23 14:12:09.974 | INFO     | actions.action_framework:_get_action_for_text:726 - Selected action ContextResponseAction for message: <@U08RG89NFK7> did Leonardo DaVinci design stairca...
+2025-05-23 14:12:09.975 | INFO     | utils.history_manager:extract_search_topic:295 - Extracting search topic from prompt: did Leonardo DaVinci design staircases?
+2025-05-23 14:12:09.975 | INFO     | utils.history_manager:extract_search_topic:329 - Extracted capitalized topic: 'Leonardo'
+2025-05-23 14:12:09.975 | INFO     | utils.history_manager:retrieve_and_filter_history:57 - Performing deep historical search for topic: 'Leonardo'
+2025-05-23 14:12:09.975 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 2000)...
+2025-05-23 14:12:10.733 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 95 messages from channel C08SJ5EUTPT.
+2025-05-23 14:12:10.733 | INFO     | utils.history_manager:retrieve_and_filter_history:66 - Retrieved 95 main channel messages
+2025-05-23 14:12:10.734 | INFO     | utils.history_manager:retrieve_and_filter_history:106 - Identified 10 thread parent messages to search
+2025-05-23 14:12:10.734 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747229885.082289 (limit: 100)...
+2025-05-23 14:12:11.005 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 16 messages from thread 1747229885.082289.
+2025-05-23 14:12:11.005 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747735398.888529 (limit: 100)...
+2025-05-23 14:12:11.234 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747735398.888529.
+2025-05-23 14:12:11.234 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747398469.291069 (limit: 100)...
+2025-05-23 14:12:11.450 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747398469.291069.
+2025-05-23 14:12:11.451 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747240286.113569 (limit: 100)...
+2025-05-23 14:12:11.661 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747240286.113569.
+2025-05-23 14:12:11.662 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747154183.175429 (limit: 100)...
+2025-05-23 14:12:11.926 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747154183.175429.
+2025-05-23 14:12:11.927 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748023621.862269 (limit: 100)...
+2025-05-23 14:12:12.161 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1748023621.862269.
+2025-05-23 14:12:12.162 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747712176.750479 (limit: 100)...
+2025-05-23 14:12:12.375 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747712176.750479.
+2025-05-23 14:12:12.382 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747256395.819809 (limit: 100)...
+2025-05-23 14:12:12.592 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747256395.819809.
+2025-05-23 14:12:12.593 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747239317.848699 (limit: 100)...
+2025-05-23 14:12:12.843 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747239317.848699.
+2025-05-23 14:12:12.843 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747151549.684699 (limit: 100)...
+2025-05-23 14:12:13.059 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 7 messages from thread 1747151549.684699.
+2025-05-23 14:12:13.060 | INFO     | utils.history_manager:retrieve_and_filter_history:127 - Retrieved 95 total messages from 10 threads
+2025-05-23 14:12:13.060 | INFO     | utils.history_manager:retrieve_and_filter_history:147 - Combined into 180 unique messages after deduplication
+2025-05-23 14:12:13.060 | INFO     | utils.history_manager:retrieve_and_filter_history:152 - Filtering messages containing topic: 'Leonardo'
+2025-05-23 14:12:13.060 | INFO     | utils.history_manager:find_messages_containing_topic:364 - Searching for topic 'Leonardo' in 180 messages
+2025-05-23 14:12:13.062 | INFO     | utils.history_manager:find_messages_containing_topic:421 - 📊 Search results for topic 'Leonardo':
+2025-05-23 14:12:13.062 | INFO     | utils.history_manager:find_messages_containing_topic:422 -   - Total matches: 1
+2025-05-23 14:12:13.062 | INFO     | utils.history_manager:find_messages_containing_topic:423 -   - Skipped self-referential messages: 0
+2025-05-23 14:12:13.062 | INFO     | utils.history_manager:find_messages_containing_topic:424 -   - Matches in text field: 1
+2025-05-23 14:12:13.062 | INFO     | utils.history_manager:find_messages_containing_topic:425 -   - Matches only in blocks: 0
+2025-05-23 14:12:13.063 | INFO     | utils.history_manager:find_messages_containing_topic:426 -   - Matches only in attachments: 0
+2025-05-23 14:12:13.063 | INFO     | utils.history_manager:retrieve_and_filter_history:158 - FOUND 1 MESSAGES CONTAINING TOPIC 'Leonardo'
+2025-05-23 14:12:13.063 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - Search ratio: 1/180 messages matched
+2025-05-23 14:12:13.063 | INFO     | utils.history_manager:retrieve_and_filter_history:163 - Sample matching message: <@U08RG89NFK7> did Leonardo DaVinci design staircases?
+2025-05-23 14:12:13.063 | INFO     | utils.history_manager:retrieve_and_filter_history:290 - Retrieved 1 messages for Deep search for: Leonardo
+2025-05-23 14:12:13.064 | INFO     | utils.history_manager:format_history_for_prompt:580 - Formatted message history: 212 characters
+2025-05-23 14:12:13.065 | INFO     | actions.action_framework:execute:252 - Fetching Notion context for user U089YKL1T4H
+2025-05-23 14:12:13.065 | INFO     | services.cached_notion_service:get_user_page_content:310 - Cache hit for user page content: U089YKL1T4H
+2025-05-23 14:12:13.066 | INFO     | services.cached_notion_service:get_user_page_content:310 - Cache hit for user page content: U089YKL1T4H
+2025-05-23 14:12:13.066 | INFO     | utils.context_builder:get_enhanced_user_context:21 - Building enhanced context for user U089YKL1T4H
+2025-05-23 14:12:13.066 | INFO     | utils.context_builder:get_enhanced_user_context:23 - Using preferred name: Al
+2025-05-23 14:12:13.066 | INFO     | utils.context_builder:get_enhanced_user_context:26 - Page content length: 1090 chars
+2025-05-23 14:12:13.066 | INFO     | utils.context_builder:get_enhanced_user_context:89 - Generated enhanced context length: 2072 chars
+2025-05-23 14:12:13.066 | INFO     | actions.action_framework:execute:280 - History retrieval mode: unknown
+2025-05-23 14:12:13.067 | INFO     | actions.action_framework:execute:281 - Retrieved 1 relevant messages
+2025-05-23 14:12:13.067 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-23 14:12:13.068 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-23 14:12:13.069 | INFO     | handler.openai_service:get_completion_async:157 - Sending 671 tokens to OpenAI async. Model: gpt-4o
+2025-05-23 14:12:16.479 | INFO     | handler.openai_service:get_completion_async:177 - OpenAI response received successfully in 1 attempt(s)
+2025-05-23 14:12:16.986 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 328 chars):
+Oh, absolutely, darling! Leonardo Da Vinci indeed dabbled in designing staircases. The man was a genius who poked his nose into everything! He sketched a double-helix staircase for the Château de Chambord in France. Fancy, ain't it? His designs were all about elegance and functionality. Cheers to the ultimate Renaissance man! 
+2025-05-23 14:12:17.396 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1748023937.295129', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1748023937.295129', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': "Oh, absolutely, darling! Leonardo Da Vinci indeed dabbled in designing staircases. The man was a genius who poked his nose into everything! He sketched a double-helix staircase for the Château de Chambord in France. Fancy, ain't it? His designs were all about elegance and functionality. Cheers to the ultimate Renaissance man! ", 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1748023927.807219', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'fY=', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': "Oh, absolutely, darling! Leonardo Da Vinci indeed dabbled in designing staircases. The man was a genius who poked his nose into everything! He sketched a double-helix staircase for the Château de Chambord in France. Fancy, ain't it? His designs were all about elegance and functionality. Cheers to the ultimate Renaissance man!"}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-05-23 14:13:00.986 | INFO     | actions.action_framework:__init__:712 - ActionRouter initialized with 4 actions
+2025-05-23 14:13:00.997 | INFO     | actions.action_framework:_get_action_for_text:726 - Selected action ContextResponseAction for message: How does Leonardo's staircases compare to Michelan...
+2025-05-23 14:13:00.998 | INFO     | utils.history_manager:extract_search_topic:295 - Extracting search topic from prompt: How does Leonardo's staircases compare to Michelangelo's staircases, ?
+2025-05-23 14:13:00.998 | INFO     | utils.history_manager:extract_search_topic:329 - Extracted capitalized topic: 'Michelangelo'
+2025-05-23 14:13:00.998 | INFO     | utils.history_manager:retrieve_and_filter_history:57 - Performing deep historical search for topic: 'Michelangelo'
+2025-05-23 14:13:00.998 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 2000)...
+2025-05-23 14:13:01.746 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 95 messages from channel C08SJ5EUTPT.
+2025-05-23 14:13:01.747 | INFO     | utils.history_manager:retrieve_and_filter_history:66 - Retrieved 95 main channel messages
+2025-05-23 14:13:01.747 | INFO     | utils.history_manager:retrieve_and_filter_history:106 - Identified 10 thread parent messages to search
+2025-05-23 14:13:01.748 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747229885.082289 (limit: 100)...
+2025-05-23 14:13:02.023 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 16 messages from thread 1747229885.082289.
+2025-05-23 14:13:02.024 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747735398.888529 (limit: 100)...
+2025-05-23 14:13:02.266 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747735398.888529.
+2025-05-23 14:13:02.337 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747398469.291069 (limit: 100)...
+2025-05-23 14:13:02.716 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747398469.291069.
+2025-05-23 14:13:02.717 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747240286.113569 (limit: 100)...
+2025-05-23 14:13:02.925 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747240286.113569.
+2025-05-23 14:13:02.926 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747154183.175429 (limit: 100)...
+2025-05-23 14:13:03.187 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747154183.175429.
+2025-05-23 14:13:03.188 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748023621.862269 (limit: 100)...
+2025-05-23 14:13:03.401 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1748023621.862269.
+2025-05-23 14:13:03.402 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747712176.750479 (limit: 100)...
+2025-05-23 14:13:03.609 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747712176.750479.
+2025-05-23 14:13:03.609 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747256395.819809 (limit: 100)...
+2025-05-23 14:13:03.833 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747256395.819809.
+2025-05-23 14:13:03.834 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747239317.848699 (limit: 100)...
+2025-05-23 14:13:04.050 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747239317.848699.
+2025-05-23 14:13:04.050 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747151549.684699 (limit: 100)...
+2025-05-23 14:13:04.261 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 7 messages from thread 1747151549.684699.
+2025-05-23 14:13:04.261 | INFO     | utils.history_manager:retrieve_and_filter_history:127 - Retrieved 95 total messages from 10 threads
+2025-05-23 14:13:04.261 | INFO     | utils.history_manager:retrieve_and_filter_history:147 - Combined into 180 unique messages after deduplication
+2025-05-23 14:13:04.261 | INFO     | utils.history_manager:retrieve_and_filter_history:152 - Filtering messages containing topic: 'Michelangelo'
+2025-05-23 14:13:04.262 | INFO     | utils.history_manager:find_messages_containing_topic:364 - Searching for topic 'Michelangelo' in 180 messages
+2025-05-23 14:13:04.263 | INFO     | utils.history_manager:find_messages_containing_topic:421 - 📊 Search results for topic 'Michelangelo':
+2025-05-23 14:13:04.263 | INFO     | utils.history_manager:find_messages_containing_topic:422 -   - Total matches: 0
+2025-05-23 14:13:04.263 | INFO     | utils.history_manager:find_messages_containing_topic:423 -   - Skipped self-referential messages: 0
+2025-05-23 14:13:04.263 | INFO     | utils.history_manager:find_messages_containing_topic:424 -   - Matches in text field: 0
+2025-05-23 14:13:04.263 | INFO     | utils.history_manager:find_messages_containing_topic:425 -   - Matches only in blocks: 0
+2025-05-23 14:13:04.263 | INFO     | utils.history_manager:find_messages_containing_topic:426 -   - Matches only in attachments: 0
+2025-05-23 14:13:04.263 | INFO     | utils.history_manager:retrieve_and_filter_history:158 - FOUND 0 MESSAGES CONTAINING TOPIC 'Michelangelo'
+2025-05-23 14:13:04.264 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - Search ratio: 0/180 messages matched
+2025-05-23 14:13:04.264 | WARNING  | utils.history_manager:retrieve_and_filter_history:167 - No matches found for topic 'Michelangelo'. Trying looser matching...
+2025-05-23 14:13:04.264 | INFO     | utils.history_manager:retrieve_and_filter_history:176 - Trying variation: 'michelangelo'
+2025-05-23 14:13:04.265 | INFO     | utils.history_manager:retrieve_and_filter_history:176 - Trying variation: 'Michelangelo'
+2025-05-23 14:13:04.265 | INFO     | utils.history_manager:retrieve_and_filter_history:176 - Trying variation: 'MICHELANGELO'
+2025-05-23 14:13:04.266 | INFO     | utils.history_manager:retrieve_and_filter_history:290 - Retrieved 0 messages for Deep search for: Michelangelo
+2025-05-23 14:13:04.267 | INFO     | actions.action_framework:execute:252 - Fetching Notion context for user U089YKL1T4H
+2025-05-23 14:13:04.267 | INFO     | services.cached_notion_service:get_user_page_content:310 - Cache hit for user page content: U089YKL1T4H
+2025-05-23 14:13:04.269 | INFO     | services.cached_notion_service:get_user_page_content:310 - Cache hit for user page content: U089YKL1T4H
+2025-05-23 14:13:04.270 | INFO     | utils.context_builder:get_enhanced_user_context:21 - Building enhanced context for user U089YKL1T4H
+2025-05-23 14:13:04.271 | INFO     | utils.context_builder:get_enhanced_user_context:23 - Using preferred name: Al
+2025-05-23 14:13:04.271 | INFO     | utils.context_builder:get_enhanced_user_context:26 - Page content length: 1090 chars
+2025-05-23 14:13:04.271 | INFO     | utils.context_builder:get_enhanced_user_context:89 - Generated enhanced context length: 2072 chars
+2025-05-23 14:13:04.272 | INFO     | actions.action_framework:execute:280 - History retrieval mode: unknown
+2025-05-23 14:13:04.274 | INFO     | actions.action_framework:execute:281 - Retrieved 0 relevant messages
+2025-05-23 14:13:04.274 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-23 14:13:04.279 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-05-23 14:13:04.282 | INFO     | handler.openai_service:get_completion_async:157 - Sending 647 tokens to OpenAI async. Model: gpt-4o
+2025-05-23 14:13:15.476 | INFO     | handler.openai_service:get_completion_async:177 - OpenAI response received successfully in 1 attempt(s)
+2025-05-23 14:13:15.970 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 1082 chars):
+Ah, comparing Leonardo's spirals to Michelangelo's ascent—strap in, it’s a historical bumpy ride! Picture this: Leonardo da Vinci, the original Renaissance man, crafted staircases like he painted—meticulous and forward-thinking. Known for his love of engineering marvels, his staircases often featured complex designs that played with light and geometry, intricate spirals that somehow made climbing feel like poetry in motion. 
+
+Now, Michelangelo, the rock star sculptor of his time, was no slouch either! When he wasn’t chiseling marble into gods and giants, he used his architectural flair to whip up staircases that were as dramatic as his Sistine ceilings. His designs were more straightforward but monumental, providing an elegant backdrop that's almost as boss as his David.
+
+So, imagine Leonardo's steps as a dance with dimensions, while Michelangelo's are a muscular march to destiny. That’s how these titans of history climb to their reputations! Now go ahead and imagine them high-fiving over a barrel of Tuscan wine after a long day of stair-making. Cheers to that, huh?
+2025-05-23 14:13:16.302 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1748023996.270589', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1748023996.270589', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': "Ah, comparing Leonardo's spirals to Michelangelo's ascent—strap in, it’s a historical bumpy ride! Picture this: Leonardo da Vinci, the original Renaissance man, crafted staircases like he painted—meticulous and forward-thinking. Known for his love of engineering marvels, his staircases often featured complex designs that played with light and geometry, intricate spirals that somehow made climbing feel like poetry in motion. \n\nNow, Michelangelo, the rock star sculptor of his time, was no slouch either! When he wasn’t chiseling marble into gods and giants, he used his architectural flair to whip up staircases that were as dramatic as his Sistine ceilings. His designs were more straightforward but monumental, providing an elegant backdrop that's almost as boss as his David.\n\nSo, imagine Leonardo's steps as a dance with dimensions, while Michelangelo's are a muscular march to destiny. That’s how these titans of history climb to their reputations! Now go ahead and imagine them high-fiving over a barrel of Tuscan wine after a long day of stair-making. Cheers to that, huh?", 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1748023927.807219', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': '/1im', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': "Ah, comparing Leonardo's spirals to Michelangelo's ascent—strap in, it’s a historical bumpy ride! Picture this: Leonardo da Vinci, the original Renaissance man, crafted staircases like he painted—meticulous and forward-thinking. Known for his love of engineering marvels, his staircases often featured complex designs that played with light and geometry, intricate spirals that somehow made climbing feel like poetry in motion. \n\nNow, Michelangelo, the rock star sculptor of his time, was no slouch either! When he wasn’t chiseling marble into gods and giants, he used his architectural flair to whip up staircases that were as dramatic as his Sistine ceilings. His designs were more straightforward but monumental, providing an elegant backdrop that's almost as boss as his David.\n\nSo, imagine Leonardo's steps as a dance with dimensions, while Michelangelo's are a muscular march to destiny. That’s how these titans of history climb to their reputations! Now go ahead and imagine them high-fiving over a barrel of Tuscan wine after a long day of stair-making. Cheers to that, huh?"}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-05-23 14:14:05.064 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-23 14:14:05.159 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-23 14:14:05.159 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-23 14:14:05.181 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-23 14:14:05.599 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-23 14:14:05.780 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-23 14:14:05.780 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-23 14:14:05.786 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-23 14:14:05.787 | INFO     | main:startup_event:164 - Slack bot started in socket mode.
+2025-05-23 14:14:05.814 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-23 14:15:36.009 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-23 14:15:36.100 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-23 14:15:36.101 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-23 14:15:36.121 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-23 14:15:36.601 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-23 14:15:36.779 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-23 14:15:36.779 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-23 14:15:36.791 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-23 14:15:36.791 | INFO     | main:startup_event:164 - Slack bot started in socket mode.
+2025-05-23 14:15:36.816 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-23 14:15:54.329 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-23 14:15:54.461 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-23 14:15:54.461 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-23 14:15:54.493 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-23 14:15:55.032 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-23 14:15:55.278 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-23 14:15:55.278 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-23 14:15:55.284 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-23 14:15:55.284 | INFO     | main:startup_event:164 - Slack bot started in socket mode.
+2025-05-23 14:15:55.301 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-23 14:19:29.096 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-23 14:19:29.222 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-23 14:19:29.222 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-23 14:19:29.251 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-23 14:19:29.752 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-23 14:19:29.932 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-23 14:19:29.933 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-23 14:19:29.940 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-23 14:19:29.940 | INFO     | main:startup_event:164 - Slack bot started in socket mode.
+2025-05-23 14:19:29.965 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-23 14:20:12.869 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-23 14:20:12.966 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-23 14:20:12.966 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-23 14:20:12.988 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-23 14:20:13.522 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-23 14:20:13.720 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-23 14:20:13.721 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-23 14:20:13.743 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-23 14:20:13.769 | INFO     | main:startup_event:164 - Slack bot started in socket mode.
+2025-05-23 14:20:13.857 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-23 14:20:16.619 | INFO     | main:<module>:28 - Starting application in development mode
+2025-05-23 14:20:16.679 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-05-23 14:20:16.679 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-05-23 14:20:16.706 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-05-23 14:20:17.110 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-05-23 14:20:17.501 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-05-23 14:20:17.502 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-05-23 14:20:17.517 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-05-23 14:20:17.517 | INFO     | main:startup_event:164 - Slack bot started in socket mode.
+2025-05-23 14:20:17.534 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-05-23 14:20:42.604 | INFO     | actions.action_framework:__init__:714 - ActionRouter initialized with 6 actions
+2025-05-23 14:20:42.609 | INFO     | actions.action_framework:_get_action_for_text:728 - Selected action HistoricalSearchAction for message: <@U08RG89NFK7> has anyone discussed Casablanca?...
+2025-05-23 14:20:42.624 | INFO     | utils.history_manager:extract_search_topic:295 - Extracting search topic from prompt: has anyone discussed Casablanca?
+2025-05-23 14:20:42.625 | INFO     | utils.history_manager:extract_search_topic:304 - Extracted topic from pattern: 'casablanca'
+2025-05-23 14:20:42.625 | INFO     | utils.history_manager:retrieve_and_filter_history:57 - Performing deep historical search for topic: 'casablanca'
+2025-05-23 14:20:42.626 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 2000)...
+2025-05-23 14:20:43.165 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 96 messages from channel C08SJ5EUTPT.
+2025-05-23 14:20:43.165 | INFO     | utils.history_manager:retrieve_and_filter_history:66 - Retrieved 96 main channel messages
+2025-05-23 14:20:43.165 | INFO     | utils.history_manager:retrieve_and_filter_history:106 - Identified 12 thread parent messages to search
+2025-05-23 14:20:43.166 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748023155.911099 (limit: 100)...
+2025-05-23 14:20:43.456 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1748023155.911099.
+2025-05-23 14:20:43.456 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747340258.771419 (limit: 100)...
+2025-05-23 14:20:43.662 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1747340258.771419.
+2025-05-23 14:20:43.663 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747229885.082289 (limit: 100)...
+2025-05-23 14:20:43.929 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 16 messages from thread 1747229885.082289.
+2025-05-23 14:20:43.929 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747735398.888529 (limit: 100)...
+2025-05-23 14:20:44.134 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747735398.888529.
+2025-05-23 14:20:44.143 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747398469.291069 (limit: 100)...
+2025-05-23 14:20:44.388 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747398469.291069.
+2025-05-23 14:20:44.388 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747240286.113569 (limit: 100)...
+2025-05-23 14:20:44.594 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747240286.113569.
+2025-05-23 14:20:44.595 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747154183.175429 (limit: 100)...
+2025-05-23 14:20:44.873 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747154183.175429.
+2025-05-23 14:20:44.873 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748023621.862269 (limit: 100)...
+2025-05-23 14:20:45.091 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1748023621.862269.
+2025-05-23 14:20:45.092 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747712176.750479 (limit: 100)...
+2025-05-23 14:20:45.299 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747712176.750479.
+2025-05-23 14:20:45.299 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747256395.819809 (limit: 100)...
+2025-05-23 14:20:45.519 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747256395.819809.
+2025-05-23 14:20:45.519 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747239317.848699 (limit: 100)...
+2025-05-23 14:20:45.732 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747239317.848699.
+2025-05-23 14:20:45.732 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747151549.684699 (limit: 100)...
+2025-05-23 14:20:46.006 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 7 messages from thread 1747151549.684699.
+2025-05-23 14:20:46.006 | INFO     | utils.history_manager:retrieve_and_filter_history:127 - Retrieved 99 total messages from 12 threads
+2025-05-23 14:20:46.006 | INFO     | utils.history_manager:retrieve_and_filter_history:147 - Combined into 183 unique messages after deduplication
+2025-05-23 14:20:46.007 | INFO     | utils.history_manager:retrieve_and_filter_history:152 - Filtering messages containing topic: 'casablanca'
+2025-05-23 14:20:46.007 | INFO     | utils.history_manager:find_messages_containing_topic:364 - Searching for topic 'casablanca' in 183 messages
+2025-05-23 14:20:46.008 | INFO     | utils.history_manager:find_messages_containing_topic:421 - 📊 Search results for topic 'casablanca':
+2025-05-23 14:20:46.008 | INFO     | utils.history_manager:find_messages_containing_topic:422 -   - Total matches: 5
+2025-05-23 14:20:46.009 | INFO     | utils.history_manager:find_messages_containing_topic:423 -   - Skipped self-referential messages: 0
+2025-05-23 14:20:46.009 | INFO     | utils.history_manager:find_messages_containing_topic:424 -   - Matches in text field: 5
+2025-05-23 14:20:46.009 | INFO     | utils.history_manager:find_messages_containing_topic:425 -   - Matches only in blocks: 0
+2025-05-23 14:20:46.009 | INFO     | utils.history_manager:find_messages_containing_topic:426 -   - Matches only in attachments: 0
+2025-05-23 14:20:46.009 | INFO     | utils.history_manager:retrieve_and_filter_history:158 - FOUND 5 MESSAGES CONTAINING TOPIC 'casablanca'
+2025-05-23 14:20:46.009 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - Search ratio: 5/183 messages matched
+2025-05-23 14:20:46.009 | INFO     | utils.history_manager:retrieve_and_filter_history:163 - Sample matching message: <@U08RG89NFK7> has anyone discussed Casablanca?
+2025-05-23 14:20:46.009 | INFO     | utils.history_manager:retrieve_and_filter_history:290 - Retrieved 5 messages for Deep search for: casablanca
+2025-05-23 14:20:47.215 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 1060 chars):
+✅ Yes! I found 5 message(s) about 'casablanca' in 3 conversation(s):
+
+**1. Thread started by roberto** (1 message)
+💬 **roberto:** <@U08RG89NFK7> has anyone discussed Casablanca?  has anyone discussed Casablanca?
+🔗 [Jump to conversation](https://staceyhub.slack.com/archives/C08SJ5EUTPT/p1748024440347959)
+
+**2. Thread started by roberto** (2 messages)
+💬 **roberto:** <@U08RG89NFK7> has anyone discussed Casablanca?  has anyone discussed Casablanca?
+🔗 [Jump to conversation](https://staceyhub.slack.com/archives/C08SJ5EUTPT/p1748023155911099?thread_ts=1748023155.911099&cid=C08SJ5EUTPT)
+
+**3. Thread started by roberto** (2 messages)
+💬 **roberto:** Hey <@U08RG89NFK7> if it’s eight o clock in Casablanca what time is it in New York? I bet they’re asleep in New York. I bet they’re asleep all over Americ...
+🔗 [Jump to conversation](https://staceyhub.slack.com/archives/C08SJ5EUTPT/p1747340258771419?thread_ts=1747340258.771419&cid=C08SJ5EUTPT)
+
+💡 *Want more details? Try:*
+• "Show me more conversations about casablanca"
+• "Summarize the casablanca discussions"
+2025-05-23 14:20:47.668 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1748024447.562859', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1748024447.562859', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': ':white_check_mark: Yes! I found 5 message(s) about \'casablanca\' in 3 conversation(s):\n\n**1. Thread started by roberto** (1 message)\n:speech_balloon: **roberto:** <@U08RG89NFK7> has anyone discussed Casablanca?  has anyone discussed Casablanca?\n:link: [Jump to conversation](<https://staceyhub.slack.com/archives/C08SJ5EUTPT/p1748024440347959>)\n\n**2. Thread started by roberto** (2 messages)\n:speech_balloon: **roberto:** <@U08RG89NFK7> has anyone discussed Casablanca?  has anyone discussed Casablanca?\n:link: [Jump to conversation](<https://staceyhub.slack.com/archives/C08SJ5EUTPT/p1748023155911099?thread_ts=1748023155.911099&amp;cid=C08SJ5EUTPT>)\n\n**3. Thread started by roberto** (2 messages)\n:speech_balloon: **roberto:** Hey <@U08RG89NFK7> if it’s eight o clock in Casablanca what time is it in New York? I bet they’re asleep in New York. I bet they’re asleep all over Americ...\n:link: [Jump to conversation](<https://staceyhub.slack.com/archives/C08SJ5EUTPT/p1747340258771419?thread_ts=1747340258.771419&amp;cid=C08SJ5EUTPT>)\n\n:bulb: *Want more details? Try:*\n• "Show me more conversations about casablanca"\n• "Summarize the casablanca discussions"', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1748024440.347959', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'bwfL+', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'emoji', 'name': 'white_check_mark', 'unicode': '2705'}, {'type': 'text', 'text': " Yes! I found 5 message(s) about 'casablanca' in 3 conversation(s):\n\n**1. Thread started by roberto** (1 message)\n"}, {'type': 'emoji', 'name': 'speech_balloon', 'unicode': '1f4ac'}, {'type': 'text', 'text': ' **roberto:** '}, {'type': 'user', 'user_id': 'U08RG89NFK7'}, {'type': 'text', 'text': ' has anyone discussed Casablanca?  has anyone discussed Casablanca?\n'}, {'type': 'emoji', 'name': 'link', 'unicode': '1f517'}, {'type': 'text', 'text': ' [Jump to conversation]('}, {'type': 'link', 'url': 'https://staceyhub.slack.com/archives/C08SJ5EUTPT/p1748024440347959'}, {'type': 'text', 'text': ')\n\n**2. Thread started by roberto** (2 messages)\n'}, {'type': 'emoji', 'name': 'speech_balloon', 'unicode': '1f4ac'}, {'type': 'text', 'text': ' **roberto:** '}, {'type': 'user', 'user_id': 'U08RG89NFK7'}, {'type': 'text', 'text': ' has anyone discussed Casablanca?  has anyone discussed Casablanca?\n'}, {'type': 'emoji', 'name': 'link', 'unicode': '1f517'}, {'type': 'text', 'text': ' [Jump to conversation]('}, {'type': 'link', 'url': 'https://staceyhub.slack.com/archives/C08SJ5EUTPT/p1748023155911099?thread_ts=1748023155.911099&amp;cid=C08SJ5EUTPT', 'text': 'https://staceyhub.slack.com/archives/C08SJ5EUTPT/p1748023155911099?thread_ts=1748023155.911099&cid=C08SJ5EUTPT'}, {'type': 'text', 'text': ')\n\n**3. Thread started by roberto** (2 messages)\n'}, {'type': 'emoji', 'name': 'speech_balloon', 'unicode': '1f4ac'}, {'type': 'text', 'text': ' **roberto:** Hey '}, {'type': 'user', 'user_id': 'U08RG89NFK7'}, {'type': 'text', 'text': ' if it’s eight o clock in Casablanca what time is it in New York? I bet they’re asleep in New York. I bet they’re asleep all over Americ...\n'}, {'type': 'emoji', 'name': 'link', 'unicode': '1f517'}, {'type': 'text', 'text': ' [Jump to conversation]('}, {'type': 'link', 'url': 'https://staceyhub.slack.com/archives/C08SJ5EUTPT/p1747340258771419?thread_ts=1747340258.771419&amp;cid=C08SJ5EUTPT', 'text': 'https://staceyhub.slack.com/archives/C08SJ5EUTPT/p1747340258771419?thread_ts=1747340258.771419&cid=C08SJ5EUTPT'}, {'type': 'text', 'text': ')\n\n'}, {'type': 'emoji', 'name': 'bulb', 'unicode': '1f4a1'}, {'type': 'text', 'text': ' '}, {'type': 'text', 'text': 'Want more details? Try:', 'style': {'bold': True}}, {'type': 'text', 'text': '\n• "Show me more conversations about casablanca"\n• "Summarize the casablanca discussions"'}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}

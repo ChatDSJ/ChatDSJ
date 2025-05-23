@@ -701,12 +701,14 @@ class ActionRouter:
         """
         self.services = services
         
-        # Register all available actions
+        # Register all available actions - ORDER MATTERS!
         self.actions = [
             TodoAction(services),
             YoutubeSummarizeAction(services),
             RetrieveSummarizeAction(services),
-            ContextResponseAction(services)  # Always last as fallback
+            HistoricalSearchAction(services),
+            SearchFollowUpAction(services),    
+            ContextResponseAction(services)
         ]
         
         logger.info(f"ActionRouter initialized with {len(self.actions)} actions")
@@ -910,6 +912,248 @@ class ActionRouter:
                 thread_ts=request.thread_ts
             )
     
+class HistoricalSearchAction(Action):
+    """
+    Enhanced action for historical search queries with rich thread display.
+    """
+    
+    def get_required_services(self) -> List[str]:
+        """Get required services for historical search."""
+        return ["slack", "openai"]
+    
+    def can_handle(self, text: str) -> bool:
+        """
+        Check if this is a historical search query.
+        
+        Args:
+            text: The message text
+            
+        Returns:
+            True if this is a search query, False otherwise
+        """
+        search_patterns = [
+            r"(?:has|have|did)\s+anyone\s+(?:talk|discuss|mention)(?:ed)?\s+(?:about\s+)?",
+            r"(?:was|were)\s+.*?\s+(?:discussed|mentioned|talked about)",
+            r"(?:any|are there)\s+discussions?\s+(?:about|on|regarding)\s+",
+            r"(?:find|search|show).*?(?:discussions?|conversations?|messages?)",
+            r"when\s+(?:did|was).*?(?:discussed|mentioned)"
+        ]
+        
+        for pattern in search_patterns:
+            if re.search(pattern, text.lower()):
+                return True
+        return False
+    
+    async def execute(self, request: ActionRequest) -> ActionResponse:
+        """
+        Execute enhanced historical search with rich thread display.
+        
+        Args:
+            request: The action request
+            
+        Returns:
+            Action response with rich search results
+        """
+        try:
+            # Validate required services
+            if not self.services.validate_required_services(self.get_required_services()):
+                return ActionResponse(
+                    success=False,
+                    error="Required services not available"
+                )
+            
+            # Import and initialize history manager
+            from utils.history_manager import HistoryManager
+            history_manager = HistoryManager()
+            
+            # Perform the search
+            filtered_messages, query_params = await history_manager.retrieve_and_filter_history(
+                self.services.slack_service,
+                request.channel_id,
+                request.thread_ts,
+                request.prompt
+            )
+            
+            # Build user display names dictionary
+            user_display_names = {}
+            for msg in filtered_messages:
+                user_id = msg.get("user") or msg.get("bot_id")
+                if user_id and user_id not in user_display_names:
+                    user_display_names[user_id] = await asyncio.to_thread(
+                        self.services.slack_service.get_user_display_name,
+                        user_id
+                    )
+            
+            # Format search results with thread information
+            search_results = history_manager.format_search_results_with_threads(
+                filtered_messages,
+                query_params,
+                user_display_names,
+                self.services.slack_service.bot_user_id,
+                request.channel_id,
+                self.services.slack_service
+            )
+            
+            # Build rich response message
+            response_message = self.build_rich_search_response(search_results)
+            
+            return ActionResponse(
+                success=True,
+                message=response_message,
+                thread_ts=request.thread_ts
+            )
+            
+        except Exception as e:
+            logger.error(f"Error in HistoricalSearchAction: {e}", exc_info=True)
+            return ActionResponse(
+                success=False,
+                error=str(e),
+                message="I encountered an error while searching through the message history.",
+                thread_ts=request.thread_ts
+            )
+    
+    def build_rich_search_response(self, search_results: Dict[str, Any]) -> str:
+        """
+        Build a rich response message with thread links and excerpts.
+        
+        Args:
+            search_results: Formatted search results
+            
+        Returns:
+            Rich response message
+        """
+        if not search_results.get("show_details"):
+            return search_results.get("summary", "No results found.")
+        
+        message_parts = [search_results["summary"]]
+        threads = search_results.get("threads", [])
+        
+        # Add thread summaries with links
+        for i, thread in enumerate(threads[:5], 1):  # Limit to 5 most relevant
+            excerpt = thread["excerpt"]
+            link = thread["link"]
+            starter = thread["starter"]
+            msg_count = thread["message_count"]
+            
+            thread_summary = (
+                f"\n**{i}. Thread started by {starter}** ({msg_count} message{'s' if msg_count != 1 else ''})\n"
+                f"💬 {excerpt}\n"
+                f"🔗 [Jump to conversation]({link})"
+            )
+            message_parts.append(thread_summary)
+        
+        # Add footer with options
+        if len(threads) > 5:
+            message_parts.append(f"\n_Showing 5 of {len(threads)} conversations. Ask for more details if needed._")
+        
+        # Add interactive options
+        topic = search_results.get("topic", "this topic")
+        message_parts.append(f"\n💡 *Want more details? Try:*\n• \"Show me more conversations about {topic}\"\n• \"Summarize the {topic} discussions\"")
+        
+        return "\n".join(message_parts)
+
+class SearchFollowUpAction(Action):
+    """
+    Action for handling follow-up requests to search results.
+    """
+    
+    def get_required_services(self) -> List[str]:
+        return ["slack"]
+    
+    def can_handle(self, text: str) -> bool:
+        """Check if this is a follow-up to a search query."""
+        followup_patterns = [
+            r"show me more conversations?",
+            r"more details",
+            r"see the actual (?:messages|conversations|threads)",
+            r"take me to (?:the )?(?:thread|conversation)s?",
+            r"(?:show|display) (?:the )?(?:full )?(?:thread|conversation)s?",
+            r"summarize (?:the )?.*?discussions?",
+            r"what exactly (?:did|was) (?:said|discussed)"
+        ]
+        
+        for pattern in followup_patterns:
+            if re.search(pattern, text.lower()):
+                return True
+        return False
+    
+    async def execute(self, request: ActionRequest) -> ActionResponse:
+        """Handle follow-up requests with enhanced detail."""
+        # Implementation would depend on storing context from previous searches
+        # This could use thread_ts to maintain conversation state
+        
+        return ActionResponse(
+            success=True,
+            message="I can help you explore those conversations in more detail. Which specific thread would you like to see?",
+            thread_ts=request.thread_ts
+        )
+
+# Helper function to create Slack blocks for rich formatting
+def create_search_result_blocks(search_results: Dict[str, Any], channel_name: str) -> List[Dict[str, Any]]:
+    """
+    Create Slack blocks for rich search result display.
+    
+    Args:
+        search_results: Formatted search results
+        channel_name: Human-readable channel name
+        
+    Returns:
+        List of Slack blocks
+    """
+    blocks = []
+    
+    # Header section
+    blocks.append({
+        "type": "section",
+        "text": {
+            "type": "mrkdwn",
+            "text": search_results["summary"]
+        }
+    })
+    
+    # Divider
+    if search_results.get("show_details"):
+        blocks.append({"type": "divider"})
+    
+    # Thread results
+    threads = search_results.get("threads", [])
+    for i, thread in enumerate(threads[:3], 1):  # Show top 3 in blocks
+        excerpt = thread["excerpt"]
+        link = thread["link"]
+        starter = thread["starter"]
+        msg_count = thread["message_count"]
+        
+        blocks.append({
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": f"*{i}. Thread by {starter}* ({msg_count} messages)\n{excerpt}"
+            },
+            "accessory": {
+                "type": "button",
+                "text": {
+                    "type": "plain_text",
+                    "text": "Jump to Thread"
+                },
+                "url": link,
+                "action_id": f"jump_to_thread_{thread['thread_ts']}"
+            }
+        })
+    
+    # Footer with additional options
+    if len(threads) > 3:
+        blocks.append({
+            "type": "context",
+            "elements": [
+                {
+                    "type": "mrkdwn",
+                    "text": f"Showing 3 of {len(threads)} conversations. Ask for more details if needed."
+                }
+            ]
+        })
+    
+    return blocks
+
 # Example of how to use the action framework
 async def process_slack_mention(event: Dict[str, Any], services: ServiceContainer) -> Dict[str, Any]:
     """

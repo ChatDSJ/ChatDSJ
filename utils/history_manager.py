@@ -580,3 +580,150 @@ class HistoryManager:
             logger.info(f"Formatted message history: {len(formatted_result)} characters")
             
             return formatted_result
+    
+    def generate_thread_permalink(self, channel_id: str, message_ts: str, team_id: Optional[str] = None) -> str:
+        """
+        Generate a Slack permalink for a specific message/thread.
+        
+        Args:
+            channel_id: The channel ID
+            message_ts: The message timestamp
+            team_id: Optional team ID (can be retrieved from Slack API)
+            
+        Returns:
+            Slack permalink URL
+        """
+        # Convert timestamp to Slack's permalink format
+        ts_for_url = message_ts.replace('.', '')
+        if team_id:
+            return f"https://{team_id}.slack.com/archives/{channel_id}/p{ts_for_url}"
+        else:
+            # Fallback format - may need team domain
+            return f"https://app.slack.com/client/T{channel_id}/{channel_id}/thread/{channel_id}-{ts_for_url}"
+
+    def format_search_results_with_threads(self, 
+                                     filtered_messages: List[Dict[str, Any]],
+                                     query_params: Dict[str, Any],
+                                     user_display_names: Dict[str, str],
+                                     bot_user_id: str,
+                                     channel_id: str,
+                                     slack_service=None) -> Dict[str, Any]:
+        """
+        Format search results with specific conversations and thread links.
+        
+        Returns:
+            Dict with formatted response and metadata for rich display
+        """
+        if not filtered_messages:
+            return {
+                "summary": f"No discussions found about '{query_params.get('search_topic', 'this topic')}'",
+                "threads": [],
+                "show_details": False
+            }
+        
+        topic = query_params.get('search_topic', 'this topic')
+        
+        # Group messages by thread
+        thread_groups = defaultdict(list)
+        for msg in filtered_messages:
+            thread_key = msg.get("thread_ts") or msg.get("ts")
+            thread_groups[thread_key].append(msg)
+        
+        # Create thread summaries with links
+        threads_info = []
+        conversation_excerpts = []
+        
+        for thread_ts, messages in thread_groups.items():
+            # Sort messages chronologically
+            sorted_msgs = sorted(messages, key=lambda m: float(m.get("ts", "0")))
+            
+            # Get the first message (thread starter)
+            first_msg = sorted_msgs[0]
+            first_user = first_msg.get("user") or first_msg.get("bot_id", "unknown")
+            first_user_name = user_display_names.get(first_user, f"User {first_user}")
+            
+            # Extract relevant excerpt around the topic mention
+            relevant_excerpt = self.extract_relevant_excerpt(sorted_msgs, topic, user_display_names)
+            
+            # Generate thread permalink using Slack service if available
+            if slack_service and hasattr(slack_service, 'generate_message_permalink'):
+                thread_link = slack_service.generate_message_permalink(channel_id, thread_ts)
+            else:
+                # Fallback to simple URL construction
+                ts_for_url = thread_ts.replace('.', '')
+                thread_link = f"https://app.slack.com/client/archives/{channel_id}/p{ts_for_url}"
+            
+            thread_info = {
+                "thread_ts": thread_ts,
+                "starter": first_user_name,
+                "message_count": len(messages),
+                "excerpt": relevant_excerpt,
+                "link": thread_link,
+                "timestamp": first_msg.get("ts")
+            }
+            
+            threads_info.append(thread_info)
+            conversation_excerpts.append(relevant_excerpt)
+        
+        # Sort threads by recency
+        threads_info.sort(key=lambda x: float(x["timestamp"]), reverse=True)
+        
+        # Create rich summary
+        thread_count = len(threads_info)
+        message_count = len(filtered_messages)
+        
+        summary = f"✅ Yes! I found {message_count} message(s) about '{topic}' in {thread_count} conversation(s):"
+        
+        return {
+            "summary": summary,
+            "threads": threads_info,
+            "show_details": True,
+            "topic": topic,
+            "conversation_excerpts": conversation_excerpts[:3]  # Limit for display
+        }
+
+    def extract_relevant_excerpt(self, messages: List[Dict[str, Any]], topic: str, user_display_names: Dict[str, str], context_window: int = 100) -> str:
+        """
+        Extract a relevant excerpt around where the topic is mentioned.
+        
+        Args:
+            messages: Messages in the thread
+            topic: The search topic
+            user_display_names: User name mapping
+            context_window: Characters of context around the mention
+            
+        Returns:
+            Formatted excerpt string
+        """
+        topic_lower = topic.lower()
+        
+        for msg in messages:
+            full_text = self.extract_full_message_text(msg)
+            if topic_lower in full_text.lower():
+                user_id = msg.get("user") or msg.get("bot_id", "unknown")
+                user_name = user_display_names.get(user_id, f"User {user_id}")
+                
+                # Find the position of the topic mention
+                mention_pos = full_text.lower().find(topic_lower)
+                
+                # Extract context around the mention
+                start_pos = max(0, mention_pos - context_window)
+                end_pos = min(len(full_text), mention_pos + len(topic) + context_window)
+                
+                excerpt = full_text[start_pos:end_pos]
+                if start_pos > 0:
+                    excerpt = "..." + excerpt
+                if end_pos < len(full_text):
+                    excerpt = excerpt + "..."
+                
+                return f"**{user_name}:** {excerpt}"
+        
+        # Fallback: return first message
+        if messages:
+            first_msg = messages[0]
+            user_id = first_msg.get("user") or first_msg.get("bot_id", "unknown")
+            user_name = user_display_names.get(user_id, f"User {user_id}")
+            text = self.extract_full_message_text(first_msg)[:200]
+            return f"**{user_name}:** {text}..."
+        
+        return "No excerpt available"

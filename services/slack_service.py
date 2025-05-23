@@ -306,3 +306,101 @@ class SlackService:
                 "last_updated": datetime.now()
             }
         return self.channel_data[channel_id]
+    
+    def get_team_info(self) -> Dict[str, Any]:
+        """Get team information including domain for permalink generation."""
+        if self.is_dummy:
+            return {"team": {"domain": "dummy-team"}}
+        
+        try:
+            return self.app.client.team_info()
+        except Exception as e:
+            logger.error(f"Failed to get team info: {e}")
+            return {"team": {"domain": "unknown-team"}}
+
+    def generate_message_permalink(self, channel_id: str, message_ts: str) -> str:
+        """
+        Generate a proper Slack permalink for a message.
+        
+        Args:
+            channel_id: The channel ID
+            message_ts: The message timestamp
+            
+        Returns:
+            Slack permalink URL
+        """
+        if self.is_dummy:
+            return f"https://dummy-team.slack.com/archives/{channel_id}/p{message_ts.replace('.', '')}"
+        
+        try:
+            # Use Slack's official permalink API
+            response = self.app.client.chat_getPermalink(
+                channel=channel_id,
+                message_ts=message_ts
+            )
+            
+            if response.get("ok") and response.get("permalink"):
+                return response["permalink"]
+            else:
+                logger.warning(f"Failed to get permalink from Slack API: {response}")
+                # Fallback to manual construction
+                return self._construct_permalink_fallback(channel_id, message_ts)
+                
+        except Exception as e:
+            logger.error(f"Error generating permalink: {e}")
+            return self._construct_permalink_fallback(channel_id, message_ts)
+
+    def _construct_permalink_fallback(self, channel_id: str, message_ts: str) -> str:
+        """Fallback method to construct permalink when API fails."""
+        team_info = self.get_team_info()
+        team_domain = team_info.get("team", {}).get("domain", "your-team")
+        ts_for_url = message_ts.replace('.', '')
+        return f"https://{team_domain}.slack.com/archives/{channel_id}/p{ts_for_url}"
+
+    def get_channel_name(self, channel_id: str) -> str:
+        """Get the human-readable channel name."""
+        if self.is_dummy:
+            return f"channel-{channel_id}"
+        
+        try:
+            response = self.app.client.conversations_info(channel=channel_id)
+            if response.get("ok") and response.get("channel"):
+                return response["channel"].get("name", channel_id)
+        except Exception as e:
+            logger.error(f"Failed to get channel name for {channel_id}: {e}")
+        
+        return channel_id
+
+    def send_rich_message(self, channel_id: str, blocks: List[Dict[str, Any]], text: str, thread_ts: Optional[str] = None) -> Dict[str, Any]:
+        """
+        Send a rich message with blocks for better formatting.
+        
+        Args:
+            channel_id: The channel ID
+            blocks: Slack blocks for rich formatting
+            text: Fallback text for notifications
+            thread_ts: Optional thread timestamp
+            
+        Returns:
+            Slack API response
+        """
+        if self.is_dummy:
+            logger.info(f"Would send rich message to {channel_id}: {text}")
+            return {"ok": True, "ts": "dummy_ts"}
+        
+        try:
+            response = self.app.client.chat_postMessage(
+                channel=channel_id,
+                blocks=blocks,
+                text=text,  # Fallback text for notifications
+                thread_ts=thread_ts
+            )
+            
+            if response.get("ok") and response.get("ts"):
+                self.bot_message_timestamps.add(response["ts"])
+            
+            return response
+        except Exception as e:
+            logger.error(f"Failed to send rich message: {e}")
+            # Fallback to plain text
+            return self.send_message(channel_id, text, thread_ts)
