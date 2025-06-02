@@ -389,7 +389,7 @@ class CachedNotionService:
         nickname: str, 
         slack_display_name: Optional[str] = None
     ) -> bool:
-        """Store a user's nickname in their Notion page."""
+        """Store a user's nickname in their Notion page with verification."""
         if not self.is_available():
             logger.warning("Notion client not available. Cannot store nickname.")
             return False
@@ -499,9 +499,15 @@ class CachedNotionService:
                     children=initial_body_content
                 )
             
-            # Invalidate cache for this user
-            self.invalidate_user_cache(slack_user_id)
+            # FIXED: Verify the nickname was actually stored before invalidating cache
+            stored_name = self.get_user_preferred_name(slack_user_id)
+            if stored_name != nickname:
+                logger.error(f"Nickname verification failed for user {slack_user_id}. Expected: {nickname}, Got: {stored_name}")
+                return False
             
+            # Only invalidate cache after successful verification
+            self.invalidate_user_cache(slack_user_id)
+            logger.info(f"Successfully stored and verified nickname '{nickname}' for user {slack_user_id}")
             return True
             
         except Exception as e:
@@ -518,6 +524,8 @@ class CachedNotionService:
         """
         Process a nickname command and update Notion.
         
+        FIXED: More specific patterns to avoid conflicts with memory commands.
+        
         Args:
             prompt_text: The user's message text
             slack_user_id: The Slack user ID
@@ -526,38 +534,70 @@ class CachedNotionService:
         Returns:
             A tuple of (response_message, success_boolean)
         """
-        # Extract nickname from text using regex patterns
+        # FIXED: Check if this is likely a memory command first
+        # If it starts with memory keywords, don't treat as nickname
+        memory_indicators = [
+            "remember that", "remember:", "fact:", "fact that", 
+            "store that", "note that", "keep in mind that"
+        ]
+        
+        prompt_lower = prompt_text.lower()
+        for indicator in memory_indicators:
+            if indicator in prompt_lower:
+                logger.debug(f"Detected memory indicator '{indicator}' in text, not treating as nickname command")
+                return None, False
+        
+        # Extract nickname from text using FIXED more specific regex patterns
         nickname = None
         
-        # Pattern 1: Quoted names - "call me 'John'"
-        quoted_pattern = r'(?:call me|my name is|i\'m|i am)\s+[\'"]([a-zA-Z0-9\s\'-]+)[\'"]'
+        # FIXED Pattern 1: Explicit "call me" commands with quotes
+        quoted_pattern = r'(?:call me|please call me|you can call me)\s+[\'"]([a-zA-Z0-9\s\'-]+)[\'"]'
         match = re.search(quoted_pattern, prompt_text, re.IGNORECASE)
         if match:
             nickname = match.group(1).strip()
+            logger.debug(f"Matched quoted call me pattern: {nickname}")
         
-        # Pattern 2: Unquoted names - "call me John"
+        # FIXED Pattern 2: Explicit "call me" commands without quotes
         if not nickname:
-            unquoted_pattern = r'(?:call me|my name is|i\'m|i am)\s+([a-zA-Z0-9\s\'-]+(?: [a-zA-Z0-9\s\'-]+)*)'
-            match = re.search(unquoted_pattern, prompt_text, re.IGNORECASE)
+            call_me_pattern = r'(?:call me|please call me|you can call me)\s+([a-zA-Z0-9\s\'-]+?)(?:\.|$|,|\!|\?)'
+            match = re.search(call_me_pattern, prompt_text, re.IGNORECASE)
             if match:
                 nickname = match.group(1).strip()
                 # Clean up potential trailing punctuation
                 nickname = re.sub(r'[.,!?]$', '', nickname)
+                logger.debug(f"Matched call me pattern: {nickname}")
         
-        # Pattern 3: "X is my name/nickname"
+        # FIXED Pattern 3: "My name is" but ONLY if it's a simple declaration, not part of a memory statement
         if not nickname:
-            suffix_pattern = r'([a-zA-Z0-9\s\'-]+(?: [a-zA-Z0-9\s\'-]+)*)\s*(?:is my name|is my nickname)'
-            match = re.search(suffix_pattern, prompt_text, re.IGNORECASE)
+            # Only match if it's at the start of the sentence or after punctuation
+            name_pattern = r'(?:^|[.!?]\s+)(?:my name is|i\'m called|i go by)\s+([a-zA-Z0-9\s\'-]+?)(?:\.|$|,|\!|\?)'
+            match = re.search(name_pattern, prompt_text, re.IGNORECASE)
             if match:
                 nickname = match.group(1).strip()
-                # Clean up potential trailing punctuation
                 nickname = re.sub(r'[.,!?]$', '', nickname)
+                logger.debug(f"Matched name declaration pattern: {nickname}")
+        
+        # FIXED: Do NOT match "I am" patterns as they're too likely to be memory statements
         
         # If no nickname found, return None
         if not nickname:
+            logger.debug("No nickname pattern matched")
             return None, False
         
-        # Store the nickname
+        # Additional validation: nickname should be reasonably short
+        if len(nickname) > 50:
+            logger.debug(f"Nickname too long ({len(nickname)} chars), likely not a nickname command")
+            return None, False
+        
+        # Additional validation: avoid common memory statement fragments
+        memory_words = ["that", "how", "when", "where", "what", "why", "because", "since", "as", "like"]
+        if any(word in nickname.lower() for word in memory_words):
+            logger.debug(f"Nickname contains memory-like words, likely not a nickname command: {nickname}")
+            return None, False
+        
+        logger.info(f"Processing nickname command for user {slack_user_id}: '{nickname}'")
+        
+        # Store the nickname with verification
         success = self.store_user_nickname(slack_user_id, nickname, slack_display_name)
         
         if success:

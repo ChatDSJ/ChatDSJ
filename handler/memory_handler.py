@@ -25,7 +25,7 @@ class PropertyType(Enum):
     SLACK_USER_ID = "SlackUserID"
 
 class MemoryHandler:
-    """Enhanced memory handler for structured user profiles."""
+    """Enhanced memory handler for structured user profiles with improved persistence."""
     
     def __init__(self, notion_service):
         """Initialize with a reference to the Notion service."""
@@ -67,11 +67,27 @@ class MemoryHandler:
         
         elif memory_type == "known_fact":
             success = self.add_known_fact(slack_user_id, cleaned_content)
-            return "✅ Added to your Known Facts: \"" + cleaned_content + "\"" if success else "Sorry, I couldn't remember that right now."
+            if success:
+                # FIXED: Verify the fact was actually stored
+                if self.verify_fact_stored(slack_user_id, cleaned_content):
+                    return "✅ Added to your Known Facts: \"" + cleaned_content + "\""
+                else:
+                    logger.error(f"Fact storage verification failed for user {slack_user_id}")
+                    return "❌ I tried to store that fact, but verification failed. Please try again."
+            else:
+                return "Sorry, I couldn't remember that right now."
         
         elif memory_type == "preference":
             success = self.add_preference(slack_user_id, cleaned_content)
-            return "✅ Added to your Preferences: \"" + cleaned_content + "\"" if success else "Sorry, I couldn't save that preference right now."
+            if success:
+                # FIXED: Verify the preference was actually stored
+                if self.verify_preference_stored(slack_user_id, cleaned_content):
+                    return "✅ Added to your Preferences: \"" + cleaned_content + "\""
+                else:
+                    logger.error(f"Preference storage verification failed for user {slack_user_id}")
+                    return "❌ I tried to store that preference, but verification failed. Please try again."
+            else:
+                return "Sorry, I couldn't save that preference right now."
         
         elif memory_type == "project_replace":
             success = self.replace_projects(slack_user_id, cleaned_content)
@@ -85,7 +101,7 @@ class MemoryHandler:
             success = self.add_todo(slack_user_id, cleaned_content)
             return "✅ Added to your TODO list: \"" + cleaned_content + "\"" if success else "Sorry, I couldn't add that to your TODO list right now."
         
-        # New management commands
+        # Management commands
         elif memory_type == "list_facts":
             facts = self.get_known_facts(slack_user_id)
             if not facts:
@@ -108,12 +124,12 @@ class MemoryHandler:
             return f"Here are your stored projects:\n\n{projects_list}"
         
         elif memory_type == "delete_fact":
-            # IMPROVED: More explicit feedback with detailed info about what was deleted or not found
+            # Get current facts for better error reporting
             before_facts = self.get_known_facts(slack_user_id)
             success = self.delete_known_fact(slack_user_id, cleaned_content)
             
             if success:
-                # Get facts after deletion to confirm what was deleted
+                # Verify deletion worked
                 after_facts = self.get_known_facts(slack_user_id)
                 
                 # Find which fact was deleted by comparing before and after
@@ -125,18 +141,19 @@ class MemoryHandler:
                 
                 if deleted_fact:
                     return f"✅ Successfully removed \"{deleted_fact}\" from your Known Facts."
-                else:
+                elif len(after_facts) < len(before_facts):
                     return f"✅ Removed fact about \"{cleaned_content}\" from your Known Facts."
+                else:
+                    logger.warning(f"Delete operation claimed success but no facts were actually removed")
+                    return f"❌ Deletion verification failed. The fact may still exist."
             else:
-                # If deletion failed, check if there are any facts containing the fragment
+                # Check if matching facts exist
                 matching_facts = [fact for fact in before_facts if cleaned_content.lower() in fact.lower()]
                 
                 if matching_facts:
-                    # Facts matching the fragment exist, but deletion failed
                     facts_list = "\n".join([f"• {fact}" for fact in matching_facts])
-                    return f"❌ Error: I found facts matching \"{cleaned_content}\" but couldn't delete them. Technical issue.\n\nMatching facts:\n{facts_list}"
+                    return f"❌ I found facts matching \"{cleaned_content}\" but couldn't delete them:\n\n{facts_list}\n\nPlease try again with more specific text."
                 else:
-                    # No facts matching the fragment exist
                     return f"❓ I couldn't find any facts containing \"{cleaned_content}\" to remove."
         
         elif memory_type == "delete_preference":
@@ -203,7 +220,7 @@ class MemoryHandler:
             logger.debug(f"Detected list projects command")
             return "list_projects", None
         
-        # Delete commands - FIX: Added "known" as an optional word
+        # Delete commands
         if re.match(r'^(?:remove|delete)\s+(?:my\s+)?(?:known\s+)?fact', lowered):
             content = re.sub(r'^(?:remove|delete)\s+(?:my\s+)?(?:known\s+)?fact\s+(?:about\s+)?', '', text, flags=re.IGNORECASE).strip()
             logger.info(f"Detected delete fact command with content: '{content}'")
@@ -233,7 +250,6 @@ class MemoryHandler:
             core_content = re.sub(prefix, "", core_content, flags=re.IGNORECASE)
         
         # Location patterns - check these before other patterns
-        # These need to check both the original text and the content after "remember"
         location_patterns = [
             (r"\bi (?:work|am working)(?:\s+in|\s+at|\s+from|\s+remotely\s+from|\s+remotely\s+in)\s+(.*?)(?:\.|\s*$)", "work_location"),
             (r"\bi (?:live|reside|am living|am from|was born in|moved to)\s+(.*?)(?:\.|\s*$)", "home_location")
@@ -304,6 +320,72 @@ class MemoryHandler:
         logger.debug(f"No memory instruction pattern matched for: {text}")
         return "unknown", None
 
+    def verify_fact_stored(self, slack_user_id: str, fact_text: str) -> bool:
+        """
+        Verify that a fact was actually stored in Notion.
+        
+        Args:
+            slack_user_id: The Slack user ID
+            fact_text: The fact text to verify
+            
+        Returns:
+            True if the fact is found in Notion, False otherwise
+        """
+        try:
+            # Clear cache to force fresh read from Notion
+            self.notion_service.invalidate_user_cache(slack_user_id)
+            
+            # Get fresh facts from Notion
+            facts = self.get_known_facts(slack_user_id)
+            
+            # Check if our fact is in the list
+            fact_lower = fact_text.lower()
+            for stored_fact in facts:
+                if fact_lower in stored_fact.lower() or stored_fact.lower() in fact_lower:
+                    logger.info(f"Fact verification successful: '{fact_text}' found as '{stored_fact}'")
+                    return True
+            
+            logger.warning(f"Fact verification failed: '{fact_text}' not found in stored facts")
+            logger.debug(f"Current facts: {facts}")
+            return False
+            
+        except Exception as e:
+            logger.error(f"Error verifying fact storage: {e}", exc_info=True)
+            return False
+
+    def verify_preference_stored(self, slack_user_id: str, preference_text: str) -> bool:
+        """
+        Verify that a preference was actually stored in Notion.
+        
+        Args:
+            slack_user_id: The Slack user ID
+            preference_text: The preference text to verify
+            
+        Returns:
+            True if the preference is found in Notion, False otherwise
+        """
+        try:
+            # Clear cache to force fresh read from Notion
+            self.notion_service.invalidate_user_cache(slack_user_id)
+            
+            # Get fresh preferences from Notion
+            preferences = self.get_preferences(slack_user_id)
+            
+            # Check if our preference is in the list
+            pref_lower = preference_text.lower()
+            for stored_pref in preferences:
+                if pref_lower in stored_pref.lower() or stored_pref.lower() in pref_lower:
+                    logger.info(f"Preference verification successful: '{preference_text}' found as '{stored_pref}'")
+                    return True
+            
+            logger.warning(f"Preference verification failed: '{preference_text}' not found in stored preferences")
+            logger.debug(f"Current preferences: {preferences}")
+            return False
+            
+        except Exception as e:
+            logger.error(f"Error verifying preference storage: {e}", exc_info=True)
+            return False
+
     def get_known_facts(self, slack_user_id: str) -> List[str]:
         """
         Get all known facts for a user.
@@ -319,26 +401,51 @@ class MemoryHandler:
             return []
         
         facts = []
-        section_block = self._find_section_block(page_id, SectionType.KNOWN_FACTS.value)
-        if not section_block:
-            return []
         
         try:
-            children_response = self.notion_service.client.blocks.children.list(
-                block_id=section_block.get("id")
-            )
+            # Get all blocks on the page first
+            all_blocks = self.notion_service.client.blocks.children.list(block_id=page_id)
+            blocks = all_blocks.get("results", [])
             
-            for block in children_response.get("results", []):
-                if block.get("type") == "bulleted_list_item":
+            # Find the Known Facts section and collect all bulleted list items that follow it
+            in_known_facts_section = False
+            
+            for block in blocks:
+                block_type = block.get("type")
+                
+                # Check if this is a heading (potentially the Known Facts section)
+                if block_type in ["heading_1", "heading_2", "heading_3"]:
+                    heading_text = ""
+                    rich_text = block.get(block_type, {}).get("rich_text", [])
+                    
+                    for text_item in rich_text:
+                        heading_text += text_item.get("plain_text", "")
+                    
+                    # Found Known Facts section - now we'll collect items until the next section
+                    if heading_text == "Known Facts":
+                        in_known_facts_section = True
+                        logger.debug(f"Found Known Facts section")
+                        continue
+                    # If we find another heading and we were in Known Facts section, exit the section
+                    elif in_known_facts_section:
+                        in_known_facts_section = False
+                        logger.debug(f"Exiting Known Facts section at heading: {heading_text}")
+                
+                # If we're in the Known Facts section, collect bulleted list items
+                elif in_known_facts_section and block_type == "bulleted_list_item":
                     text_content = ""
                     rich_text = block.get("bulleted_list_item", {}).get("rich_text", [])
                     
                     for text_item in rich_text:
                         text_content += text_item.get("plain_text", "")
                     
-                    facts.append(text_content)
+                    if text_content:
+                        facts.append(text_content)
+                        logger.debug(f"Found fact: {text_content}")
             
+            logger.info(f"Retrieved {len(facts)} facts for user {slack_user_id}")
             return facts
+            
         except Exception as e:
             logger.error(f"Error getting known facts for user {slack_user_id}: {e}", exc_info=True)
             return []
@@ -403,38 +510,8 @@ class MemoryHandler:
                         logger.debug(f"Found preference: {text_content}")
                 
             logger.info(f"Retrieved {len(preferences)} preferences for user {slack_user_id}")
-            
-            # If we didn't find any preferences using the section method, try a direct search
-            if not preferences:
-                logger.warning(f"No preferences found in section. Trying direct bullet scan.")
-                preference_section_block = self._find_section_block(page_id, "Preferences")
-                if preference_section_block:
-                    # Find bullets after the preferences heading
-                    section_index = -1
-                    for i, block in enumerate(blocks):
-                        if block.get("id") == preference_section_block.get("id"):
-                            section_index = i
-                            break
-                    
-                    if section_index >= 0:
-                        # Look at the blocks after the section heading
-                        for i in range(section_index + 1, len(blocks)):
-                            block = blocks[i]
-                            if block.get("type") == "heading_2":  # Next section
-                                break
-                            
-                            if block.get("type") == "bulleted_list_item":
-                                text_content = ""
-                                rich_text = block.get("bulleted_list_item", {}).get("rich_text", [])
-                                
-                                for text_item in rich_text:
-                                    text_content += text_item.get("plain_text", "")
-                                
-                                if text_content:
-                                    preferences.append(text_content)
-                                    logger.debug(f"Found preference (direct scan): {text_content}")
-            
             return preferences
+            
         except Exception as e:
             logger.error(f"Error getting preferences for user {slack_user_id}: {e}", exc_info=True)
             return []
@@ -498,44 +575,45 @@ class MemoryHandler:
         
         logger.debug(f"Found user page ID: {page_id}")
         
-        # Try to find the Known Facts section
-        section_block = self._find_section_block(page_id, SectionType.KNOWN_FACTS.value)
-        if not section_block:
-            logger.error(f"No 'Known Facts' section found in page {page_id}")
-            return False
-        
-        logger.debug(f"Found 'Known Facts' section ID: {section_block.get('id')}")
-        
         try:
-            # Get all the blocks in the Known Facts section
-            children_response = self.notion_service.client.blocks.children.list(
-                block_id=section_block.get("id")
-            )
+            # Get all blocks in the page to find Known Facts section
+            all_blocks_response = self.notion_service.client.blocks.children.list(block_id=page_id)
+            all_blocks = all_blocks_response.get("results", [])
             
-            results = children_response.get("results", [])
-            logger.debug(f"Found {len(results)} items in 'Known Facts' section")
+            # Find the Known Facts section and items under it
+            facts_section_idx = -1
+            next_section_idx = len(all_blocks)
             
-            # Log all facts for debugging
-            found_facts = []
-            for block in results:
-                if block.get("type") == "bulleted_list_item":
+            for i, block in enumerate(all_blocks):
+                block_type = block.get("type")
+                if block_type in ["heading_1", "heading_2", "heading_3"]:
                     text_content = ""
-                    rich_text = block.get("bulleted_list_item", {}).get("rich_text", [])
+                    rich_text = block.get(block_type, {}).get("rich_text", [])
                     
                     for text_item in rich_text:
                         text_content += text_item.get("plain_text", "")
                     
-                    if text_content:
-                        found_facts.append(text_content)
+                    if "Known Facts" in text_content:
+                        facts_section_idx = i
+                    elif facts_section_idx >= 0 and i > facts_section_idx:
+                        # This is the next section after Known Facts
+                        next_section_idx = i
+                        break
             
-            logger.info(f"All facts in section: {found_facts}")
+            if facts_section_idx < 0:
+                logger.error(f"No 'Known Facts' section found in page {page_id}")
+                return False
             
-            # Track if we've successfully deleted anything
+            logger.info(f"Found Known Facts at index {facts_section_idx}, next section at {next_section_idx}")
+            
+            # Track deletions
             successful_deletion = False
             deleted_facts = []
             
-            # First look directly in the section block's children
-            for block in results:
+            # Look at all blocks between Facts section and next section
+            for i in range(facts_section_idx + 1, next_section_idx):
+                block = all_blocks[i]
+                
                 if block.get("type") == "bulleted_list_item":
                     text_content = ""
                     rich_text = block.get("bulleted_list_item", {}).get("rich_text", [])
@@ -543,11 +621,10 @@ class MemoryHandler:
                     for text_item in rich_text:
                         text_content += text_item.get("plain_text", "")
                     
-                    logger.debug(f"Checking fact item: '{text_content}'")
+                    logger.debug(f"Checking fact: '{text_content}'")
                     
-                    # Check if this fact contains our search fragment
                     if fact_fragment.lower() in text_content.lower():
-                        logger.info(f"Found matching fact: '{text_content}' contains '{fact_fragment}'")
+                        logger.info(f"Found matching fact: '{text_content}'")
                         
                         try:
                             self.notion_service.client.blocks.delete(block_id=block.get("id"))
@@ -557,70 +634,27 @@ class MemoryHandler:
                             
                         except Exception as delete_e:
                             logger.error(f"Error deleting block {block.get('id')}: {delete_e}")
+                            return False
             
-            # If we haven't found anything yet, look more broadly in the page
-            if not successful_deletion:
-                logger.info(f"No facts found in section children. Checking the entire page...")
-                
-                # Get all blocks in the page
-                all_blocks_response = self.notion_service.client.blocks.children.list(block_id=page_id)
-                all_blocks = all_blocks_response.get("results", [])
-                
-                # Find the Known Facts section to know where to stop
-                facts_section_idx = -1
-                next_section_idx = len(all_blocks)
-                
-                for i, block in enumerate(all_blocks):
-                    block_type = block.get("type")
-                    if block_type in ["heading_1", "heading_2", "heading_3"]:
-                        text_content = ""
-                        rich_text = block.get(block_type, {}).get("rich_text", [])
-                        
-                        for text_item in rich_text:
-                            text_content += text_item.get("plain_text", "")
-                        
-                        if "Known Facts" in text_content:
-                            facts_section_idx = i
-                        elif facts_section_idx >= 0 and i > facts_section_idx:
-                            # This is the next section after Known Facts
-                            next_section_idx = i
-                            break
-                
-                # If we found the Known Facts section
-                if facts_section_idx >= 0:
-                    logger.info(f"Found Known Facts at index {facts_section_idx}, next section at {next_section_idx}")
-                    
-                    # Look at all blocks between Facts section and next section
-                    for i in range(facts_section_idx + 1, next_section_idx):
-                        block = all_blocks[i]
-                        
-                        if block.get("type") == "bulleted_list_item":
-                            text_content = ""
-                            rich_text = block.get("bulleted_list_item", {}).get("rich_text", [])
-                            
-                            for text_item in rich_text:
-                                text_content += text_item.get("plain_text", "")
-                            
-                            logger.debug(f"Checking fact in page: '{text_content}'")
-                            
-                            if fact_fragment.lower() in text_content.lower():
-                                logger.info(f"Found matching fact in page: '{text_content}'")
-                                
-                                try:
-                                    self.notion_service.client.blocks.delete(block_id=block.get("id"))
-                                    logger.info(f"Successfully deleted block with ID {block.get('id')}")
-                                    successful_deletion = True
-                                    deleted_facts.append(text_content)
-                                    
-                                except Exception as delete_e:
-                                    logger.error(f"Error deleting block {block.get('id')}: {delete_e}")
-            
-            # Invalidate cache if we deleted anything
+            # FIXED: Only invalidate cache after successful deletion AND verification
             if successful_deletion:
-                self.notion_service.invalidate_user_cache(slack_user_id)
-                logger.info(f"Successfully deleted facts: {deleted_facts}")
+                # Verify the deletion actually worked
+                updated_facts = self.get_known_facts(slack_user_id)
+                deletion_verified = True
+                for deleted_fact in deleted_facts:
+                    if any(deleted_fact.lower() in existing_fact.lower() for existing_fact in updated_facts):
+                        logger.error(f"Deletion verification failed: '{deleted_fact}' still exists")
+                        deletion_verified = False
+                
+                if deletion_verified:
+                    self.notion_service.invalidate_user_cache(slack_user_id)
+                    logger.info(f"Successfully deleted and verified facts: {deleted_facts}")
+                    return True
+                else:
+                    logger.error(f"Deletion verification failed, not invalidating cache")
+                    return False
             
-            return successful_deletion
+            return False
             
         except Exception as e:
             logger.error(f"Error searching for facts to delete: {e}", exc_info=True)
@@ -661,7 +695,7 @@ class MemoryHandler:
                     if preference_fragment.lower() in text_content.lower():
                         self.notion_service.client.blocks.delete(block_id=block.get("id"))
                         
-                        # Invalidate cache
+                        # Only invalidate cache after successful deletion
                         self.notion_service.invalidate_user_cache(slack_user_id)
                         
                         return True
@@ -706,7 +740,7 @@ class MemoryHandler:
                     if project_fragment.lower() in text_content.lower():
                         self.notion_service.client.blocks.delete(block_id=block.get("id"))
                         
-                        # Invalidate cache
+                        # Only invalidate cache after successful deletion
                         self.notion_service.invalidate_user_cache(slack_user_id)
                         
                         return True
@@ -716,208 +750,9 @@ class MemoryHandler:
             logger.error(f"Error deleting project for user {slack_user_id}: {e}", exc_info=True)
             return False
     
-    def update_user_name(self, slack_user_id: str, name: str) -> bool:
-        """
-        Update a user's preferred name.
-        
-        Args:
-            slack_user_id: The Slack user ID
-            name: The preferred name
-            
-        Returns:
-            True if successful, False otherwise
-        """
-        try:
-            # 1. Update the property
-            success = self.notion_service.store_user_nickname(slack_user_id, name)
-            if not success:
-                return False
-            
-            # 2. Get the page ID
-            page_id = self.notion_service.get_user_page_id(slack_user_id)
-            if not page_id:
-                return False
-            
-            # 3. Find and update the "Name: [PreferredName property]" in Basic Information section
-            section_block = self._find_section_block(page_id, SectionType.BASIC_INFO.value)
-            if not section_block:
-                # Create the Basic Information section if it doesn't exist
-                self._create_section(page_id, SectionType.BASIC_INFO.value)
-                return True  # The property is already updated, so return True
-            
-            # Find the Name item in the Basic Information section
-            name_block = self._find_text_block_in_section(
-                page_id, 
-                section_block.get("id"), 
-                "Name:", 
-                exact_match=False
-            )
-            
-            if name_block:
-                # Update the existing Name block
-                self.notion_service.client.blocks.update(
-                    block_id=name_block.get("id"),
-                    bulleted_list_item={
-                        "rich_text": [{
-                            "type": "text",
-                            "text": {"content": f"Name: [{PropertyType.PREFERRED_NAME.value} property]"}
-                        }]
-                    }
-                )
-            else:
-                # Add a new Name block
-                self.notion_service.client.blocks.children.append(
-                    block_id=section_block.get("id"),
-                    children=[{
-                        "object": "block",
-                        "type": "bulleted_list_item",
-                        "bulleted_list_item": {
-                            "rich_text": [{
-                                "type": "text",
-                                "text": {"content": f"Name: [{PropertyType.PREFERRED_NAME.value} property]"}
-                            }]
-                        }
-                    }]
-                )
-            
-            # Invalidate cache
-            self.notion_service.invalidate_user_cache(slack_user_id)
-            
-            return True
-        
-        except Exception as e:
-            logger.error(f"Error updating user name for {slack_user_id}: {e}", exc_info=True)
-            return False
-    
-    def update_location(self, slack_user_id: str, location_type: str, location: str) -> bool:
-        """
-        Update a user's location.
-        
-        Args:
-            slack_user_id: The Slack user ID
-            location_type: Either "work" or "home"
-            location: The location value
-            
-        Returns:
-            True if successful, False otherwise
-        """
-        try:
-            # 1. Determine the property name
-            property_name = PropertyType.WORK_LOCATION.value if location_type == "work" else PropertyType.HOME_LOCATION.value
-            
-            # 2. Get the page ID
-            page_id = self.notion_service.get_user_page_id(slack_user_id)
-            if not page_id:
-                # Create a new user page if it doesn't exist
-                success = self.notion_service.store_user_nickname(slack_user_id, slack_user_id)
-                if not success:
-                    return False
-                
-                # Get the new page ID
-                page_id = self.notion_service.get_user_page_id(slack_user_id)
-                if not page_id:
-                    return False
-            
-            # 3. Update the property in the database
-            properties_update = {
-                property_name: {"rich_text": [{"type": "text", "text": {"content": location}}]}
-            }
-            self.notion_service.client.pages.update(page_id=page_id, properties=properties_update)
-            
-            # 4. Find or create the Location Information section
-            location_section_block = self.ensure_section_exists(page_id, SectionType.LOCATION_INFO.value)
-            if not location_section_block:
-                logger.error(f"Failed to create Location Information section for user {slack_user_id}")
-                return False
-            
-            # 5. Prepare the location text for display
-            location_label = "Work Location:" if location_type == "work" else "Home Location:"
-            location_bullet = {
-                "object": "block",
-                "type": "bulleted_list_item",
-                "bulleted_list_item": {
-                    "rich_text": [{
-                        "type": "text",
-                        "text": {"content": f"{location_label} [{property_name} property] {location}"}
-                    }]
-                }
-            }
-            
-            # 6. Find existing location bullets
-            existing_location_bullets = []
-            try:
-                # Get all blocks on the page
-                page_blocks = self.notion_service.client.blocks.children.list(block_id=page_id)
-                
-                # Find the Location Information section to get its position
-                section_index = -1
-                for i, block in enumerate(page_blocks.get("results", [])):
-                    if block.get("id") == location_section_block.get("id"):
-                        section_index = i
-                        break
-                
-                if section_index >= 0:
-                    # Look for location bullets after the section header
-                    for i in range(section_index + 1, len(page_blocks.get("results", []))):
-                        block = page_blocks.get("results")[i]
-                        if block.get("type") == "heading_2":  # Found next section
-                            break
-                        
-                        if block.get("type") == "bulleted_list_item":
-                            text_content = ""
-                            rich_text = block.get("bulleted_list_item", {}).get("rich_text", [])
-                            for text_item in rich_text:
-                                text_content += text_item.get("plain_text", "")
-                            
-                            # Check if this is our location type
-                            current_label = "Work Location:" if location_type == "work" else "Home Location:"
-                            if current_label in text_content:
-                                # Found a matching location bullet
-                                existing_location_bullets.append((i, block))
-            except Exception as e:
-                logger.warning(f"Error finding existing location bullets: {e}")
-            
-            # 7. Delete existing location bullets for this type
-            for _, block in existing_location_bullets:
-                try:
-                    self.notion_service.client.blocks.delete(block_id=block.get("id"))
-                except Exception as e:
-                    logger.warning(f"Error deleting existing location bullet: {e}")
-            
-            # 8. Add the new location bullet after the section heading
-            try:
-                # Insert after the section heading
-                self.notion_service.client.blocks.children.append(
-                    block_id=page_id,  # Append to the page
-                    children=[location_bullet],
-                    after=location_section_block.get("id")  # After the section heading
-                )
-            except Exception as e:
-                logger.warning(f"Error adding location bullet after section: {e}")
-                
-                # Fallback - try adding at the page level without positioning
-                try:
-                    self.notion_service.client.blocks.children.append(
-                        block_id=page_id,
-                        children=[location_bullet]
-                    )
-                except Exception as e2:
-                    logger.error(f"Error adding location bullet to page: {e2}")
-                    # The property was still updated, so don't return False here
-            
-            # Invalidate cache
-            self.notion_service.invalidate_user_cache(slack_user_id)
-            
-            # Return success if we at least updated the property
-            return True
-        
-        except Exception as e:
-            logger.error(f"Error updating location for user {slack_user_id}: {e}", exc_info=True)
-            return False
-    
     def add_known_fact(self, slack_user_id: str, fact_text: str) -> bool:
         """
-        Add a fact to the Known Facts section.
+        Add a fact to the Known Facts section with improved error handling.
         
         Args:
             slack_user_id: The Slack user ID
@@ -926,18 +761,22 @@ class MemoryHandler:
         Returns:
             True if successful, False otherwise
         """
+        logger.info(f"Adding known fact for user {slack_user_id}: '{fact_text}'")
+        
         try:
             # Get or create user page
             page_id = self.notion_service.get_user_page_id(slack_user_id)
             if not page_id:
                 # Create a new user page if it doesn't exist
-                success = self.notion_service.store_user_nickname(slack_user_id, slack_user_id)
+                success = self.notion_service.store_user_nickname(slack_user_id, slack_user_id, None)
                 if not success:
+                    logger.error(f"Failed to create user page for {slack_user_id}")
                     return False
                 
                 # Get the new page ID
                 page_id = self.notion_service.get_user_page_id(slack_user_id)
                 if not page_id:
+                    logger.error(f"Failed to get page ID after creation for {slack_user_id}")
                     return False
             
             # Ensure the Known Facts section exists
@@ -958,53 +797,59 @@ class MemoryHandler:
                 }
             }
             
-            # Try to insert the fact after the heading
+            # FIXED: More robust insertion logic
             try:
+                # Get the current page structure
                 page_blocks = self.notion_service.client.blocks.children.list(block_id=page_id)
-                insert_after_id = None
                 
+                # Find the Known Facts section index
+                known_facts_index = -1
                 for i, block in enumerate(page_blocks.get("results", [])):
                     if block.get("id") == known_facts_section.get("id"):
-                        insert_after_id = block.get("id")
+                        known_facts_index = i
                         break
                 
-                if insert_after_id:
-                    # Insert directly after the heading in the page
+                if known_facts_index >= 0:
+                    # Insert after the heading using the page-level API
                     self.notion_service.client.blocks.children.append(
                         block_id=page_id,
                         children=[new_fact_block],
-                        after=insert_after_id
+                        after=known_facts_section.get("id")
                     )
+                    logger.info(f"Successfully inserted fact after Known Facts heading")
                 else:
-                    # Fallback if we can't find the section
+                    # Fallback: append to page
                     self.notion_service.client.blocks.children.append(
                         block_id=page_id,
                         children=[new_fact_block]
                     )
-            except Exception as e:
-                logger.warning(f"Failed to append fact after section: {e}")
+                    logger.warning(f"Used fallback insertion method for fact")
                 
-                # Fallback - try adding directly to the page without positioning
+                logger.info(f"Successfully added fact to Notion for user {slack_user_id}")
+                return True
+                
+            except Exception as insert_error:
+                logger.error(f"Error inserting fact block: {insert_error}")
+                
+                # Final fallback: try direct page append
                 try:
                     self.notion_service.client.blocks.children.append(
                         block_id=page_id,
                         children=[new_fact_block]
                     )
-                except Exception as e2:
-                    logger.error(f"Failed to add fact to page: {e2}")
+                    logger.info(f"Used final fallback insertion for fact")
+                    return True
+                except Exception as final_error:
+                    logger.error(f"Final fallback insertion failed: {final_error}")
                     return False
             
-            # Invalidate cache
-            self.notion_service.invalidate_user_cache(slack_user_id)
-            
-            return True
         except Exception as e:
             logger.error(f"Error adding known fact for user {slack_user_id}: {e}", exc_info=True)
             return False
     
     def add_preference(self, slack_user_id: str, preference: str) -> bool:
         """
-        Add a preference to the Preferences section.
+        Add a preference to the Preferences section with improved error handling.
         
         Args:
             slack_user_id: The Slack user ID
@@ -1013,27 +858,31 @@ class MemoryHandler:
         Returns:
             True if successful, False otherwise
         """
+        logger.info(f"Adding preference for user {slack_user_id}: '{preference}'")
+        
         try:
-            # 1. Get the page ID
+            # Get the page ID
             page_id = self.notion_service.get_user_page_id(slack_user_id)
             if not page_id:
                 # Create a new user page if it doesn't exist
-                success = self.notion_service.store_user_nickname(slack_user_id, slack_user_id)
+                success = self.notion_service.store_user_nickname(slack_user_id, slack_user_id, None)
                 if not success:
+                    logger.error(f"Failed to create user page for {slack_user_id}")
                     return False
                 
                 # Get the new page ID
                 page_id = self.notion_service.get_user_page_id(slack_user_id)
                 if not page_id:
+                    logger.error(f"Failed to get page ID after creation for {slack_user_id}")
                     return False
             
-            # 2. Ensure the Preferences section exists
+            # Ensure the Preferences section exists
             preferences_section_block = self.ensure_section_exists(page_id, SectionType.PREFERENCES.value)
             if not preferences_section_block:
                 logger.error(f"Failed to create Preferences section for user {slack_user_id}")
                 return False
             
-            # 3. Create the new preference bullet point
+            # Create the new preference bullet point
             new_preference_block = {
                 "object": "block",
                 "type": "bulleted_list_item",
@@ -1045,46 +894,49 @@ class MemoryHandler:
                 }
             }
             
-            # 4. Try to insert the preference after the section heading
+            # Insert the preference after the section heading
             try:
                 page_blocks = self.notion_service.client.blocks.children.list(block_id=page_id)
-                insert_after_id = None
                 
+                preferences_index = -1
                 for i, block in enumerate(page_blocks.get("results", [])):
                     if block.get("id") == preferences_section_block.get("id"):
-                        insert_after_id = block.get("id")
+                        preferences_index = i
                         break
                 
-                if insert_after_id:
-                    # Insert directly after the heading in the page
+                if preferences_index >= 0:
+                    # Insert after the heading
                     self.notion_service.client.blocks.children.append(
-                        block_id=page_id,  # Insert at page level, not heading level
+                        block_id=page_id,
                         children=[new_preference_block],
-                        after=insert_after_id  # Insert after the heading
+                        after=preferences_section_block.get("id")
                     )
+                    logger.info(f"Successfully inserted preference after Preferences heading")
                 else:
-                    # Fallback if we can't find the section
+                    # Fallback
                     self.notion_service.client.blocks.children.append(
                         block_id=page_id,
                         children=[new_preference_block]
                     )
-            except Exception as e:
-                logger.warning(f"Failed to append preference after section: {e}")
+                    logger.warning(f"Used fallback insertion method for preference")
                 
-                # Fallback - try adding directly to the page without positioning
+                logger.info(f"Successfully added preference to Notion for user {slack_user_id}")
+                return True
+                
+            except Exception as insert_error:
+                logger.error(f"Error inserting preference block: {insert_error}")
+                
+                # Fallback
                 try:
                     self.notion_service.client.blocks.children.append(
                         block_id=page_id,
                         children=[new_preference_block]
                     )
-                except Exception as e2:
-                    logger.error(f"Failed to add preference to page: {e2}")
+                    logger.info(f"Used fallback insertion for preference")
+                    return True
+                except Exception as final_error:
+                    logger.error(f"Fallback insertion failed: {final_error}")
                     return False
-            
-            # 5. Invalidate cache
-            self.notion_service.invalidate_user_cache(slack_user_id)
-            
-            return True
             
         except Exception as e:
             logger.error(f"Error adding preference for {slack_user_id}: {e}", exc_info=True)
@@ -1102,11 +954,11 @@ class MemoryHandler:
             True if successful, False otherwise
         """
         try:
-            # 1. Get the page ID
+            # Get the page ID
             page_id = self.notion_service.get_user_page_id(slack_user_id)
             if not page_id:
                 # Create a new user page if it doesn't exist
-                success = self.notion_service.store_user_nickname(slack_user_id, slack_user_id)
+                success = self.notion_service.store_user_nickname(slack_user_id, slack_user_id, None)
                 if not success:
                     return False
                 
@@ -1115,7 +967,7 @@ class MemoryHandler:
                 if not page_id:
                     return False
             
-            # 2. Find the Projects section
+            # Find the Projects section
             projects_section_block = self._find_section_block(page_id, SectionType.PROJECTS.value)
             
             # If no Projects section exists, create it
@@ -1150,125 +1002,53 @@ class MemoryHandler:
                     children=new_blocks
                 )
                 
-                # Invalidate cache
+                # Only invalidate cache after successful operation
                 self.notion_service.invalidate_user_cache(slack_user_id)
                 
                 return True
             
-            # 3. If the Projects section exists, get its children
+            # Delete existing project section and recreate
             try:
-                children_response = self.notion_service.client.blocks.children.list(
-                    block_id=projects_section_block.get("id")
+                self.notion_service.client.blocks.delete(block_id=projects_section_block.get("id"))
+                
+                # Add new section after deletion
+                new_blocks = [
+                    {
+                        "object": "block",
+                        "type": "heading_2",
+                        "heading_2": {
+                            "rich_text": [{
+                                "type": "text",
+                                "text": {"content": SectionType.PROJECTS.value}
+                            }]
+                        }
+                    },
+                    {
+                        "object": "block",
+                        "type": "bulleted_list_item",
+                        "bulleted_list_item": {
+                            "rich_text": [{
+                                "type": "text",
+                                "text": {"content": project_name}
+                            }]
+                        }
+                    }
+                ]
+                
+                # Add the new section directly to the page
+                self.notion_service.client.blocks.children.append(
+                    block_id=page_id,
+                    children=new_blocks
                 )
                 
-                # 4. Delete all existing project bullet points
-                for block in children_response.get("results", []):
-                    if block.get("type") == "bulleted_list_item":
-                        self.notion_service.client.blocks.delete(block_id=block.get("id"))
-            except Exception as e:
-                # If we can't get children of the section (which is the issue from the error),
-                # we need a different approach
-                logger.warning(f"Cannot get children of Projects section: {e}")
+                # Only invalidate cache after successful operation
+                self.notion_service.invalidate_user_cache(slack_user_id)
                 
-                # Try to delete the section and recreate it
-                try:
-                    self.notion_service.client.blocks.delete(block_id=projects_section_block.get("id"))
-                    
-                    # Add new section after deletion
-                    new_blocks = [
-                        {
-                            "object": "block",
-                            "type": "heading_2",
-                            "heading_2": {
-                                "rich_text": [{
-                                    "type": "text",
-                                    "text": {"content": SectionType.PROJECTS.value}
-                                }]
-                            }
-                        },
-                        {
-                            "object": "block",
-                            "type": "bulleted_list_item",
-                            "bulleted_list_item": {
-                                "rich_text": [{
-                                    "type": "text",
-                                    "text": {"content": project_name}
-                                }]
-                            }
-                        }
-                    ]
-                    
-                    # Add the new section directly to the page
-                    self.notion_service.client.blocks.children.append(
-                        block_id=page_id,
-                        children=new_blocks
-                    )
-                    
-                    # Invalidate cache
-                    self.notion_service.invalidate_user_cache(slack_user_id)
-                    
-                    return True
-                except Exception as delete_error:
-                    logger.error(f"Failed to delete and recreate Projects section: {delete_error}")
-                    return False
-            
-            # 5. Add the new project as a bullet point directly after the heading
-            # First find where to insert the new bullet
-            try:
-                page_blocks = self.notion_service.client.blocks.children.list(block_id=page_id)
-                insert_after_id = None
-                
-                for i, block in enumerate(page_blocks.get("results", [])):
-                    if block.get("id") == projects_section_block.get("id"):
-                        insert_after_id = block.get("id")
-                        break
-                
-                if insert_after_id:
-                    # Insert the new bullet point directly after the heading in the page
-                    new_bullet = {
-                        "object": "block",
-                        "type": "bulleted_list_item",
-                        "bulleted_list_item": {
-                            "rich_text": [{
-                                "type": "text",
-                                "text": {"content": project_name}
-                            }]
-                        }
-                    }
-                    
-                    self.notion_service.client.blocks.children.append(
-                        block_id=page_id,  # Insert directly in the page, not the heading
-                        children=[new_bullet],
-                        after=insert_after_id  # Insert after the heading
-                    )
-                else:
-                    # Fallback if we can't find the section in the page blocks
-                    logger.warning("Couldn't locate projects section in page blocks")
-                    
-                    # Add new bullet directly to the page
-                    new_bullet = {
-                        "object": "block",
-                        "type": "bulleted_list_item",
-                        "bulleted_list_item": {
-                            "rich_text": [{
-                                "type": "text",
-                                "text": {"content": project_name}
-                            }]
-                        }
-                    }
-                    
-                    self.notion_service.client.blocks.children.append(
-                        block_id=page_id,
-                        children=[new_bullet]
-                    )
-            except Exception as e:
-                logger.error(f"Failed to add new project bullet: {e}")
+                return True
+            except Exception as delete_error:
+                logger.error(f"Failed to delete and recreate Projects section: {delete_error}")
                 return False
             
-            # Invalidate cache
-            self.notion_service.invalidate_user_cache(slack_user_id)
-            
-            return True
         except Exception as e:
             logger.error(f"Error replacing projects for user {slack_user_id}: {e}", exc_info=True)
             return False
@@ -1285,11 +1065,11 @@ class MemoryHandler:
             True if successful, False otherwise
         """
         try:
-            # 1. Get the page ID
+            # Get the page ID
             page_id = self.notion_service.get_user_page_id(slack_user_id)
             if not page_id:
                 # Create a new user page if it doesn't exist
-                success = self.notion_service.store_user_nickname(slack_user_id, slack_user_id)
+                success = self.notion_service.store_user_nickname(slack_user_id, slack_user_id, None)
                 if not success:
                     return False
                 
@@ -1298,13 +1078,13 @@ class MemoryHandler:
                 if not page_id:
                     return False
             
-            # 2. Find the Projects section
+            # Find the Projects section
             projects_section_block = self._find_section_block(page_id, SectionType.PROJECTS.value)
             if not projects_section_block:
                 # Create the Projects section if it doesn't exist
                 projects_section_block = self._create_section(page_id, SectionType.PROJECTS.value)
             
-            # 3. Add the new project as a bullet point
+            # Add the new project as a bullet point
             self.notion_service.client.blocks.children.append(
                 block_id=projects_section_block.get("id"),
                 children=[{
@@ -1319,7 +1099,7 @@ class MemoryHandler:
                 }]
             )
             
-            # Invalidate cache
+            # Only invalidate cache after successful operation
             self.notion_service.invalidate_user_cache(slack_user_id)
             
             return True

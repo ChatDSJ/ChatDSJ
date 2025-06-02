@@ -179,8 +179,7 @@ class ContextResponseAction(Action):
     
     async def execute(self, request: ActionRequest) -> ActionResponse:
         """
-        Execute the context response action with direct Notion context inclusion.
-        Uses an approach similar to the previously working implementation.
+        Execute the context response action with enhanced error handling.
         
         Args:
             request: The action request
@@ -196,19 +195,8 @@ class ContextResponseAction(Action):
                     error="Required services not available"
                 )
             
-            # Try to handle memory instruction first
-            memory_response = await asyncio.to_thread(
-                self.services.notion_service.handle_memory_instruction,
-                request.user_id,
-                request.prompt
-            )
-
-            if memory_response:
-                return ActionResponse(
-                    success=True,
-                    message=memory_response,
-                    thread_ts=request.thread_ts
-                )
+            # FIXED: Memory instruction handling moved to main.py for proper order
+            # This action no longer handles memory instructions directly to avoid conflicts
             
             # Import and initialize history manager
             from utils.history_manager import HistoryManager
@@ -227,10 +215,14 @@ class ContextResponseAction(Action):
             for msg in filtered_messages:
                 user_id = msg.get("user") or msg.get("bot_id")
                 if user_id and user_id not in user_display_names:
-                    user_display_names[user_id] = await asyncio.to_thread(
-                        self.services.slack_service.get_user_display_name,
-                        user_id
-                    )
+                    try:
+                        user_display_names[user_id] = await asyncio.to_thread(
+                            self.services.slack_service.get_user_display_name,
+                            user_id
+                        )
+                    except Exception as name_error:
+                        logger.warning(f"Failed to get display name for user {user_id}: {name_error}")
+                        user_display_names[user_id] = f"User {user_id}"
             
             # Format the filtered messages based on query type
             formatted_history_text = history_manager.format_history_for_prompt(
@@ -248,44 +240,65 @@ class ContextResponseAction(Action):
                 self.services.slack_service.bot_user_id
             )
             
-            # Get user-specific context from Notion
+            # Get user-specific context from Notion with error handling
             logger.info(f"Fetching Notion context for user {request.user_id}")
             
-            # Get both page content and properties
-            user_page_content = await asyncio.to_thread(
-                self.services.notion_service.get_user_page_content,
-                request.user_id
-            )
-            
-            user_page_properties = await asyncio.to_thread(
-                self.services.notion_service.get_user_page_properties,
-                request.user_id
-            )
-            
-            user_preferred_name = await asyncio.to_thread(
-                self.services.notion_service.get_user_preferred_name,
-                request.user_id
-            )
+            try:
+                # Get both page content and properties
+                user_page_content = await asyncio.to_thread(
+                    self.services.notion_service.get_user_page_content,
+                    request.user_id
+                )
+                
+                user_page_properties = await asyncio.to_thread(
+                    self.services.notion_service.get_user_page_properties,
+                    request.user_id
+                )
+                
+                user_preferred_name = await asyncio.to_thread(
+                    self.services.notion_service.get_user_preferred_name,
+                    request.user_id
+                )
+                
+            except Exception as notion_error:
+                logger.error(f"Error fetching Notion context for user {request.user_id}: {notion_error}")
+                # Continue with empty context rather than failing completely
+                user_page_content = None
+                user_page_properties = None
+                user_preferred_name = None
             
             # Use enhanced context builder to emphasize preferences
-            from utils.context_builder import get_enhanced_user_context
-            user_specific_context = await asyncio.to_thread(
-                get_enhanced_user_context,
-                self.services.notion_service,
-                request.user_id,
-                ""  # No base prompt needed, it will be added in get_completion_async
-            )
+            try:
+                from utils.context_builder import get_enhanced_user_context
+                user_specific_context = await asyncio.to_thread(
+                    get_enhanced_user_context,
+                    self.services.notion_service,
+                    request.user_id,
+                    ""  # No base prompt needed, it will be added in get_completion_async
+                )
+            except Exception as context_error:
+                logger.error(f"Error building user context: {context_error}")
+                user_specific_context = ""
             
             # Log summary of chat history processing
             logger.info(f"History retrieval mode: {query_params.get('mode', 'unknown')}")
             logger.info(f"Retrieved {len(filtered_messages)} relevant messages")
             
-            # Generate response using direct approach
-            response_text, usage = await self.services.openai_service.get_completion_async(
-                prompt=request.prompt,
-                conversation_history=formatted_history,
-                user_specific_context=user_specific_context
-            )
+            # Generate response using direct approach with enhanced error handling
+            try:
+                response_text, usage = await self.services.openai_service.get_completion_async(
+                    prompt=request.prompt,
+                    conversation_history=formatted_history,
+                    user_specific_context=user_specific_context
+                )
+            except Exception as openai_error:
+                logger.error(f"OpenAI API error: {openai_error}")
+                return ActionResponse(
+                    success=False,
+                    error=f"OpenAI API error: {str(openai_error)}",
+                    message="I'm sorry, I'm having trouble connecting to my AI service right now. Please try again in a moment.",
+                    thread_ts=request.thread_ts
+                )
             
             if not response_text:
                 return ActionResponse(
@@ -305,7 +318,7 @@ class ContextResponseAction(Action):
             return ActionResponse(
                 success=False,
                 error=str(e),
-                message="I encountered an error while processing your request.",
+                message="I encountered an error while processing your request. Please try again.",
                 thread_ts=request.thread_ts
             )
     
@@ -353,19 +366,7 @@ class RetrieveSummarizeAction(Action):
                     error="Required services not available"
                 )
             
-            # Try to handle as a memory instruction first
-            memory_response = await asyncio.to_thread(
-                self.services.notion_service.handle_memory_instruction,
-                request.user_id,
-                request.prompt
-            )
-            
-            if memory_response:
-                return ActionResponse(
-                    success=True,
-                    message=memory_response,
-                    thread_ts=request.thread_ts
-                )
+            # FIXED: Memory instruction handling moved to main.py - removed from here
             
             # Extract URL from text
             url_pattern = r'https?://(?:[-\w.]|(?:%[\da-fA-F]{2}))+'
@@ -381,8 +382,17 @@ class RetrieveSummarizeAction(Action):
             
             url = match.group(0)
             
-            # Fetch web content
-            content = await self.services.web_service.fetch_content(url)
+            # Fetch web content with error handling
+            try:
+                content = await self.services.web_service.fetch_content(url)
+            except Exception as web_error:
+                logger.error(f"Web service error: {web_error}")
+                return ActionResponse(
+                    success=False,
+                    error=f"Web fetch error: {str(web_error)}",
+                    message=f"I couldn't fetch content from {url}. The site may be unavailable or blocking access.",
+                    thread_ts=request.thread_ts
+                )
             
             if not content:
                 return ActionResponse(
@@ -392,12 +402,21 @@ class RetrieveSummarizeAction(Action):
                     thread_ts=request.thread_ts
                 )
             
-            # Generate summary
-            summary_prompt = f"Please summarize the following web content from {url}:\n\n{content[:10000]}..."
-            summary, _ = await self.services.openai_service.get_completion_async(
-                prompt=summary_prompt,
-                max_tokens=500
-            )
+            # Generate summary with error handling
+            try:
+                summary_prompt = f"Please summarize the following web content from {url}:\n\n{content[:10000]}..."
+                summary, _ = await self.services.openai_service.get_completion_async(
+                    prompt=summary_prompt,
+                    max_tokens=500
+                )
+            except Exception as openai_error:
+                logger.error(f"OpenAI summarization error: {openai_error}")
+                return ActionResponse(
+                    success=False,
+                    error=f"Summarization error: {str(openai_error)}",
+                    message="I was able to fetch the content, but couldn't generate a summary due to an AI service issue.",
+                    thread_ts=request.thread_ts
+                )
             
             if not summary:
                 return ActionResponse(
@@ -407,25 +426,38 @@ class RetrieveSummarizeAction(Action):
                     thread_ts=request.thread_ts
                 )
             
-            # Create a Notion page with the summary
-            notion_page_id = await asyncio.to_thread(
-                self.services.notion_service.create_content_page,
-                f"Summary of {url}",
-                f"# Summary of {url}\n\n{summary}\n\n## Full Content\n\n{content[:20000]}..."
-            )
+            # Create a Notion page with the summary (with error handling)
+            try:
+                notion_page_id = await asyncio.to_thread(
+                    self.services.notion_service.create_content_page,
+                    f"Summary of {url}",
+                    f"# Summary of {url}\n\n{summary}\n\n## Full Content\n\n{content[:20000]}..."
+                )
+            except Exception as notion_error:
+                logger.error(f"Notion page creation error: {notion_error}")
+                # Continue without Notion storage
+                notion_page_id = None
             
             # Generate a shorter summary for Slack
-            mini_summary_prompt = f"Please create a very short summary (2-3 sentences) of this content from {url}:\n\n{summary}"
-            mini_summary, _ = await self.services.openai_service.get_completion_async(
-                prompt=mini_summary_prompt,
-                max_tokens=100
-            )
+            try:
+                mini_summary_prompt = f"Please create a very short summary (2-3 sentences) of this content from {url}:\n\n{summary}"
+                mini_summary, _ = await self.services.openai_service.get_completion_async(
+                    prompt=mini_summary_prompt,
+                    max_tokens=100
+                )
+            except Exception as mini_summary_error:
+                logger.warning(f"Mini summary generation failed: {mini_summary_error}")
+                # Use original summary if mini summary fails
+                mini_summary = summary[:200] + "..." if len(summary) > 200 else summary
             
             # Construct response message
-            response_message = (
-                f"*Summary of {url}*\n\n{mini_summary}\n\n"
-                f"I've saved a more detailed summary in Notion: {self.services.notion_service.get_page_url(notion_page_id)}"
-            )
+            if notion_page_id:
+                response_message = (
+                    f"*Summary of {url}*\n\n{mini_summary}\n\n"
+                    f"I've saved a more detailed summary in Notion: {self.services.notion_service.get_page_url(notion_page_id)}"
+                )
+            else:
+                response_message = f"*Summary of {url}*\n\n{mini_summary}\n\n_Note: Unable to save to Notion at this time._"
             
             return ActionResponse(
                 success=True,
@@ -509,9 +541,18 @@ class YoutubeSummarizeAction(Action):
                     thread_ts=request.thread_ts
                 )
             
-            # Fetch video info and transcript
-            video_info = await self.services.youtube_service.get_video_info(youtube_url)
-            transcript = await self.services.youtube_service.get_transcript(youtube_url)
+            # Fetch video info and transcript with error handling
+            try:
+                video_info = await self.services.youtube_service.get_video_info(youtube_url)
+                transcript = await self.services.youtube_service.get_transcript(youtube_url)
+            except Exception as youtube_error:
+                logger.error(f"YouTube service error: {youtube_error}")
+                return ActionResponse(
+                    success=False,
+                    error=f"YouTube fetch error: {str(youtube_error)}",
+                    message=f"I couldn't fetch transcript for {youtube_url}. The video may not have captions available or there was a service issue.",
+                    thread_ts=request.thread_ts
+                )
             
             if not transcript:
                 return ActionResponse(
@@ -521,18 +562,27 @@ class YoutubeSummarizeAction(Action):
                     thread_ts=request.thread_ts
                 )
             
-            # Generate summary
-            summary_prompt = (
-                f"Please summarize the following YouTube video transcript:\n\n"
-                f"Title: {video_info.get('title', 'Unknown')}\n"
-                f"Channel: {video_info.get('channel', 'Unknown')}\n"
-                f"Transcript:\n{transcript[:10000]}..."
-            )
-            
-            summary, _ = await self.services.openai_service.get_completion_async(
-                prompt=summary_prompt,
-                max_tokens=500
-            )
+            # Generate summary with error handling
+            try:
+                summary_prompt = (
+                    f"Please summarize the following YouTube video transcript:\n\n"
+                    f"Title: {video_info.get('title', 'Unknown')}\n"
+                    f"Channel: {video_info.get('channel', 'Unknown')}\n"
+                    f"Transcript:\n{transcript[:10000]}..."
+                )
+                
+                summary, _ = await self.services.openai_service.get_completion_async(
+                    prompt=summary_prompt,
+                    max_tokens=500
+                )
+            except Exception as openai_error:
+                logger.error(f"OpenAI summarization error: {openai_error}")
+                return ActionResponse(
+                    success=False,
+                    error=f"Summarization error: {str(openai_error)}",
+                    message="I was able to fetch the transcript, but couldn't generate a summary due to an AI service issue.",
+                    thread_ts=request.thread_ts
+                )
             
             if not summary:
                 return ActionResponse(
@@ -542,39 +592,54 @@ class YoutubeSummarizeAction(Action):
                     thread_ts=request.thread_ts
                 )
             
-            # Create a Notion page with the summary and transcript
-            notion_page_id = await asyncio.to_thread(
-                self.services.notion_service.create_content_page,
-                f"Summary of YouTube: {video_info.get('title', youtube_url)}",
-                (
-                    f"# Summary of YouTube Video\n\n"
-                    f"**Title:** {video_info.get('title', 'Unknown')}\n"
-                    f"**Channel:** {video_info.get('channel', 'Unknown')}\n"
-                    f"**URL:** {youtube_url}\n\n"
-                    f"## Summary\n\n{summary}\n\n"
-                    f"## Full Transcript\n\n{transcript[:20000]}..."
+            # Create a Notion page with the summary and transcript (with error handling)
+            try:
+                notion_page_id = await asyncio.to_thread(
+                    self.services.notion_service.create_content_page,
+                    f"Summary of YouTube: {video_info.get('title', youtube_url)}",
+                    (
+                        f"# Summary of YouTube Video\n\n"
+                        f"**Title:** {video_info.get('title', 'Unknown')}\n"
+                        f"**Channel:** {video_info.get('channel', 'Unknown')}\n"
+                        f"**URL:** {youtube_url}\n\n"
+                        f"## Summary\n\n{summary}\n\n"
+                        f"## Full Transcript\n\n{transcript[:20000]}..."
+                    )
                 )
-            )
+            except Exception as notion_error:
+                logger.error(f"Notion page creation error: {notion_error}")
+                notion_page_id = None
             
             # Generate a shorter summary for Slack
-            mini_summary_prompt = (
-                f"Please create a very short summary (2-3 sentences) of this YouTube video:\n\n"
-                f"Title: {video_info.get('title', 'Unknown')}\n"
-                f"Summary: {summary}"
-            )
-            
-            mini_summary, _ = await self.services.openai_service.get_completion_async(
-                prompt=mini_summary_prompt,
-                max_tokens=100
-            )
+            try:
+                mini_summary_prompt = (
+                    f"Please create a very short summary (2-3 sentences) of this YouTube video:\n\n"
+                    f"Title: {video_info.get('title', 'Unknown')}\n"
+                    f"Summary: {summary}"
+                )
+                
+                mini_summary, _ = await self.services.openai_service.get_completion_async(
+                    prompt=mini_summary_prompt,
+                    max_tokens=100
+                )
+            except Exception as mini_summary_error:
+                logger.warning(f"Mini summary generation failed: {mini_summary_error}")
+                mini_summary = summary[:200] + "..." if len(summary) > 200 else summary
             
             # Construct response message
-            response_message = (
-                f"*Summary of YouTube Video: {video_info.get('title', 'Unknown')}*\n\n"
-                f"{mini_summary}\n\n"
-                f"I've saved the full transcript and a detailed summary in Notion: "
-                f"{self.services.notion_service.get_page_url(notion_page_id)}"
-            )
+            if notion_page_id:
+                response_message = (
+                    f"*Summary of YouTube Video: {video_info.get('title', 'Unknown')}*\n\n"
+                    f"{mini_summary}\n\n"
+                    f"I've saved the full transcript and a detailed summary in Notion: "
+                    f"{self.services.notion_service.get_page_url(notion_page_id)}"
+                )
+            else:
+                response_message = (
+                    f"*Summary of YouTube Video: {video_info.get('title', 'Unknown')}*\n\n"
+                    f"{mini_summary}\n\n"
+                    f"_Note: Unable to save to Notion at this time._"
+                )
             
             return ActionResponse(
                 success=True,
@@ -654,12 +719,21 @@ class TodoAction(Action):
                     thread_ts=request.thread_ts
                 )
             
-            # Add to user's TODO list in Notion
-            success = await asyncio.to_thread(
-                self.services.notion_service.add_todo_item,
-                request.user_id,
-                todo_text
-            )
+            # Add to user's TODO list in Notion with error handling
+            try:
+                success = await asyncio.to_thread(
+                    self.services.notion_service.add_todo_item,
+                    request.user_id,
+                    todo_text
+                )
+            except Exception as notion_error:
+                logger.error(f"Notion TODO error: {notion_error}")
+                return ActionResponse(
+                    success=False,
+                    error=f"Notion TODO error: {str(notion_error)}",
+                    message="I couldn't add that TODO item due to a Notion service issue. Please try again later.",
+                    thread_ts=request.thread_ts
+                )
             
             if not success:
                 return ActionResponse(
@@ -734,7 +808,10 @@ class ActionRouter:
     
     async def route_action(self, request: ActionRequest) -> ActionResponse:
         """
-        Route the request to the appropriate action handler with improved memory command handling.
+        Route the request to the appropriate action handler.
+        
+        FIXED: Memory commands are now handled in main.py before reaching this router,
+        so this method focuses on routing non-memory actions properly.
         
         Args:
             request: The action request
@@ -743,164 +820,52 @@ class ActionRouter:
             Response from the action handler
         """
         try:
-            # First, try to identify and directly handle any memory operations
-            if hasattr(self.services.notion_service, "memory_handler"):
-                # Use the memory handler's classify method to check if this is a memory command
-                memory_type, content = self.services.notion_service.memory_handler.classify_memory_instruction(request.prompt)
-                
-                if memory_type != "unknown":
-                    logger.info(f"Identified memory command of type '{memory_type}' with content: '{content}'")
-                    
-                    # Handle deletion commands directly (bypassing OpenAI)
-                    if memory_type == "delete_fact":
-                        # Direct deletion execution
-                        success = self.services.notion_service.memory_handler.delete_known_fact(request.user_id, content)
-                        
-                        # Get current facts to see what's still there
-                        remaining_facts = self.services.notion_service.memory_handler.get_known_facts(request.user_id)
-                        
-                        if success:
-                            # Check if any matching facts remain
-                            matching_remaining = [f for f in remaining_facts if content.lower() in f.lower()]
-                            
-                            if matching_remaining:
-                                # We thought we deleted it but matching facts still exist
-                                facts_list = "\n".join([f"• {f}" for f in matching_remaining])
-                                return ActionResponse(
-                                    success=True,
-                                    message=f"I deleted a fact containing '{content}', but I found these similar facts still remaining:\n\n{facts_list}\n\nWould you like me to delete these as well?",
-                                    thread_ts=request.thread_ts
-                                )
-                            else:
-                                # Success - no more matching facts
-                                return ActionResponse(
-                                    success=True,
-                                    message=f"✅ Successfully removed the fact containing '{content}' from your Known Facts.",
-                                    thread_ts=request.thread_ts
-                                )
-                        else:
-                            # Failed to delete
-                            if not remaining_facts:
-                                return ActionResponse(
-                                    success=False,
-                                    message=f"You don't have any facts stored yet. Add facts by saying \"Remember [your fact]\" or \"Fact: [your fact]\".",
-                                    thread_ts=request.thread_ts
-                                )
-                                
-                            # Check if any matching facts exist at all
-                            matching_facts = [f for f in remaining_facts if content.lower() in f.lower()]
-                            
-                            if matching_facts:
-                                # We have matching facts but couldn't delete them
-                                facts_list = "\n".join([f"• {f}" for f in matching_facts])
-                                return ActionResponse(
-                                    success=False,
-                                    message=f"I found facts containing '{content}' but couldn't delete them. Please try again with a more specific text:\n\n{facts_list}",
-                                    thread_ts=request.thread_ts
-                                )
-                            else:
-                                # No matching facts found
-                                return ActionResponse(
-                                    success=False,
-                                    message=f"I couldn't find any facts containing '{content}' to remove.",
-                                    thread_ts=request.thread_ts
-                                )
-                    
-                    # Handle other deletion commands similarly
-                    elif memory_type == "delete_preference":
-                        success = self.services.notion_service.memory_handler.delete_preference(request.user_id, content)
-                        return ActionResponse(
-                            success=success,
-                            message=f"✅ Removed preference about '{content}'." if success else f"I couldn't find a preference about '{content}' to remove.",
-                            thread_ts=request.thread_ts
-                        )
-                        
-                    elif memory_type == "delete_project":
-                        success = self.services.notion_service.memory_handler.delete_project(request.user_id, content)
-                        return ActionResponse(
-                            success=success,
-                            message=f"✅ Removed project '{content}'." if success else f"I couldn't find a project '{content}' to remove.",
-                            thread_ts=request.thread_ts
-                        )
-                    
-                    # For listing operations, bypass OpenAI as well
-                    elif memory_type in ["list_facts", "list_preferences", "list_projects"]:
-                        response = self.services.notion_service.memory_handler.handle_memory_instruction(
-                            request.user_id, request.prompt
-                        )
-                        if response:
-                            return ActionResponse(
-                                success=True,
-                                message=response,
-                                thread_ts=request.thread_ts
-                            )
-                    
-                    # For other memory instructions, we can use the regular handler
-                    else:
-                        response = self.services.notion_service.memory_handler.handle_memory_instruction(
-                            request.user_id, request.prompt
-                        )
-                        if response:
-                            return ActionResponse(
-                                success=True,
-                                message=response,
-                                thread_ts=request.thread_ts
-                            )
-            
-            # If not handled by direct memory operations, continue with regular flow...
-            
-            # Check for nickname command as a special case  
-            if hasattr(self.services.notion_service, "handle_nickname_command"):
-                nickname_response, nickname_success = await asyncio.to_thread(
-                    self.services.notion_service.handle_nickname_command,
-                    request.prompt,
-                    request.user_id,
-                    await asyncio.to_thread(
-                        self.services.slack_service.get_user_display_name,
-                        request.user_id
-                    )
-                )
-                
-                if nickname_response:
-                    return ActionResponse(
-                        success=nickname_success,
-                        message=nickname_response,
-                        thread_ts=request.thread_ts
-                    )
-            
-            # Check for memory commands
-            if hasattr(self.services.notion_service, "memory_handler"):
-                memory_response = await asyncio.to_thread(
-                    self.services.notion_service.handle_memory_instruction,
-                    request.user_id,
-                    request.prompt
-                )
-                
-                if memory_response:
-                    return ActionResponse(
-                        success=True,
-                        message=memory_response,
-                        thread_ts=request.thread_ts
-                    )
+            # FIXED: Memory command handling moved to main.py
+            # This router now focuses on non-memory actions
             
             # Determine the appropriate action and execute it
             action = self._get_action_for_text(request.text)
-            response = await action.execute(request)
             
-            # If there was an error and it seems to be a memory-related command,
+            # Execute the action with comprehensive error handling
+            try:
+                response = await action.execute(request)
+            except Exception as action_error:
+                logger.error(f"Action execution error in {action.name}: {action_error}", exc_info=True)
+                return ActionResponse(
+                    success=False,
+                    error=f"Action execution failed: {str(action_error)}",
+                    message="I encountered an error while processing your request. Please try again.",
+                    thread_ts=request.thread_ts
+                )
+            
+            # Validate response
+            if not isinstance(response, ActionResponse):
+                logger.error(f"Action {action.name} returned invalid response type")
+                return ActionResponse(
+                    success=False,
+                    error="Invalid action response",
+                    message="I encountered an internal error. Please try again.",
+                    thread_ts=request.thread_ts
+                )
+            
+            # If there was an error and it seems to be a command that might need help,
             # provide a helpful suggestion
             if not response.success and response.error:
-                # Check if this looks like an attempted memory command
-                memory_keywords = ["remember", "fact", "project", "preference", "todo", "delete", "remove", "list", "show"]
+                # Check if this looks like an attempted command
+                command_keywords = ["remember", "fact", "project", "preference", "todo", "delete", "remove", "list", "show"]
                 
-                if any(keyword in request.prompt.lower() for keyword in memory_keywords):
-                    examples = await asyncio.to_thread(
-                        self.services.notion_service.memory_handler.get_example_for_command,
-                        request.prompt
-                    )
-                    
-                    # Update the error message with the example
-                    response.message = f"{response.message}\n\n{examples}"
+                if any(keyword in request.prompt.lower() for keyword in command_keywords):
+                    try:
+                        if hasattr(self.services.notion_service, "memory_handler"):
+                            examples = await asyncio.to_thread(
+                                self.services.notion_service.memory_handler.get_example_for_command,
+                                request.prompt
+                            )
+                            
+                            # Update the error message with the example
+                            response.message = f"{response.message}\n\n{examples}"
+                    except Exception as help_error:
+                        logger.warning(f"Failed to get command help: {help_error}")
             
             return response
         
@@ -908,6 +873,7 @@ class ActionRouter:
             logger.error(f"Error in route_action: {e}", exc_info=True)
             return ActionResponse(
                 success=False,
+                error=f"Router error: {str(e)}",
                 message=f"I encountered an error while processing your request. Please try again.",
                 thread_ts=request.thread_ts
             )
@@ -1001,43 +967,66 @@ class HistoricalSearchAction(Action):
             from utils.history_manager import HistoryManager
             history_manager = HistoryManager()
             
-            # Perform the search
-            filtered_messages, query_params = await history_manager.retrieve_and_filter_history(
-                self.services.slack_service,
-                request.channel_id,
-                request.thread_ts,
-                request.prompt,
-                exclude_message_ts=request.message_ts 
-            )
+            # Perform the search with error handling
+            try:
+                filtered_messages, query_params = await history_manager.retrieve_and_filter_history(
+                    self.services.slack_service,
+                    request.channel_id,
+                    request.thread_ts,
+                    request.prompt,
+                    exclude_message_ts=request.message_ts 
+                )
+            except Exception as history_error:
+                logger.error(f"History retrieval error: {history_error}")
+                return ActionResponse(
+                    success=False,
+                    error=f"History retrieval error: {str(history_error)}",
+                    message="I encountered an error while searching through the message history.",
+                    thread_ts=request.thread_ts
+                )
             
-            # Build user display names dictionary
+            # Build user display names dictionary with error handling
             user_display_names = {}
             for msg in filtered_messages:
                 user_id = msg.get("user") or msg.get("bot_id")
                 if user_id and user_id not in user_display_names:
-                    user_display_names[user_id] = await asyncio.to_thread(
-                        self.services.slack_service.get_user_display_name,
-                        user_id
-                    )
+                    try:
+                        user_display_names[user_id] = await asyncio.to_thread(
+                            self.services.slack_service.get_user_display_name,
+                            user_id
+                        )
+                    except Exception as name_error:
+                        logger.warning(f"Failed to get display name for user {user_id}: {name_error}")
+                        user_display_names[user_id] = f"User {user_id}"
             
             # Format search results with thread information
-            search_results = history_manager.format_search_results_with_threads(
-                filtered_messages,
-                query_params,
-                user_display_names,
-                self.services.slack_service.bot_user_id,
-                request.channel_id,
-                self.services.slack_service
-            )
+            try:
+                search_results = history_manager.format_search_results_with_threads(
+                    filtered_messages,
+                    query_params,
+                    user_display_names,
+                    self.services.slack_service.bot_user_id,
+                    request.channel_id,
+                    self.services.slack_service
+                )
+            except Exception as format_error:
+                logger.error(f"Search results formatting error: {format_error}")
+                # Fallback to simple message
+                topic = query_params.get('search_topic', 'this topic')
+                return ActionResponse(
+                    success=True,
+                    message=f"I found {len(filtered_messages)} messages about '{topic}', but encountered an error formatting the results.",
+                    thread_ts=request.thread_ts
+                )
             
             # Check if we want to use rich blocks or simple text
             use_rich_blocks = True  # Set to False if you prefer simple text
             
-            if use_rich_blocks:
-                fallback_text, blocks = self.build_slack_blocks_response(search_results)
-                
-                # Send rich message if Slack service supports it
-                if hasattr(self.services.slack_service, 'send_rich_message'):
+            if use_rich_blocks and hasattr(self.services.slack_service, 'send_rich_message'):
+                try:
+                    fallback_text, blocks = self.build_slack_blocks_response(search_results)
+                    
+                    # Send rich message if Slack service supports it
                     response = await asyncio.to_thread(
                         self.services.slack_service.send_rich_message,
                         request.channel_id,
@@ -1051,6 +1040,9 @@ class HistoricalSearchAction(Action):
                         message=None,  # Message sent via rich blocks
                         thread_ts=request.thread_ts
                     )
+                except Exception as rich_message_error:
+                    logger.warning(f"Rich message failed, falling back to text: {rich_message_error}")
+                    # Fall through to regular text formatting
             
             # Fallback to regular text formatting
             response_message = self.build_rich_search_response(search_results)

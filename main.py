@@ -76,7 +76,30 @@ async def handle_mention(event, say, client):
         # Add "thinking" reaction to the original message
         slack_service.add_reaction(channel_id, message_ts, "thinking_face")
         
-        # Check for nickname command first
+        # FIXED: Process memory commands FIRST, before nickname commands
+        # This prevents "remember that I am X" from being treated as "call me X"
+        
+        # 1. Check for memory commands first (highest priority)
+        if hasattr(notion_service, "memory_handler"):
+            memory_response = await asyncio.to_thread(
+                notion_service.handle_memory_instruction,
+                user_id,
+                prompt
+            )
+            
+            if memory_response:
+                # Memory command was processed successfully
+                logger.info(f"Memory command processed for user {user_id}: {prompt[:50]}...")
+                response = slack_service.send_message(channel_id, memory_response, thread_ts)
+                
+                # Update reactions
+                slack_service.remove_reaction(channel_id, message_ts, "thinking_face")
+                slack_service.add_reaction(channel_id, message_ts, "white_check_mark")
+                slack_service.update_channel_stats(channel_id, user_id, message_ts)
+                return response
+        
+        # 2. Check for nickname command only if NOT a memory command
+        # Use more specific patterns to avoid conflicts
         nickname_response, nickname_success = await asyncio.to_thread(
             notion_service.handle_nickname_command,
             prompt, 
@@ -86,14 +109,16 @@ async def handle_mention(event, say, client):
         
         if nickname_response:
             # If this was a nickname command, send response and return
+            logger.info(f"Nickname command processed for user {user_id}: {prompt[:50]}...")
             response = slack_service.send_message(channel_id, nickname_response, thread_ts)
+            
             # Remove thinking reaction and add check mark
             slack_service.remove_reaction(channel_id, message_ts, "thinking_face")
             slack_service.add_reaction(channel_id, message_ts, "white_check_mark")
             slack_service.update_channel_stats(channel_id, user_id, message_ts)
             return response
         
-        # Create action request
+        # 3. Create action request for general processing
         request = ActionRequest(
             channel_id=channel_id,
             user_id=user_id,
@@ -278,7 +303,6 @@ async def diagnose_user_context(slack_user_id: str):
                 elif current_section in sections:
                     sections[current_section].append(line)
         
-        # Return diagnostic info
         return {
             "user_id": slack_user_id,
             "preferred_name": preferred_name,
