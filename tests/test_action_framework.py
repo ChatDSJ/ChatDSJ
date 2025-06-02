@@ -14,6 +14,7 @@ from actions.action_framework import (
     SearchFollowUpAction,
     ActionRouter
 )
+from utils.history_manager import HistoryManager
 
 class TestActionFramework(unittest.TestCase):
     def setUp(self):
@@ -122,7 +123,7 @@ class TestContextResponseAction(unittest.IsolatedAsyncioTestCase):
         self.assertIn("openai", required)
         self.assertIn("notion", required)
 
-    @patch('actions.action_framework.HistoryManager')
+    @patch('utils.history_manager.HistoryManager')
     @patch('utils.context_builder.get_enhanced_user_context')
     async def test_execute_normal_response(self, mock_context_builder, mock_history_manager):
         """Test normal execution path."""
@@ -179,7 +180,7 @@ class TestHistoricalSearchAction(unittest.IsolatedAsyncioTestCase):
         self.assertFalse(self.action.can_handle("How are you today?"))
         self.assertFalse(self.action.can_handle("What time is it?"))
 
-    @patch('actions.action_framework.HistoryManager')
+    @patch('utils.history_manager.HistoryManager')
     async def test_execute_search(self, mock_history_manager):
         """Test search execution."""
         # Mock service validation

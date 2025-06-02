@@ -1,6 +1,7 @@
 import unittest
 from unittest.mock import MagicMock, patch, AsyncMock
 from handler.openai_service import OpenAIService
+import asyncio
 
 
 class TestOpenAIService(unittest.TestCase):

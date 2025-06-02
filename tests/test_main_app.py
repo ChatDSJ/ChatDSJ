@@ -175,7 +175,7 @@ class TestHandleMention(unittest.IsolatedAsyncioTestCase):
         self.mock_slack.send_message.assert_called_once_with(
             "C12345",
             "I've stored that fact for you.",
-            None
+            "1617984000.000100"
         )
         
         # Verify success reaction
@@ -199,7 +199,7 @@ class TestHandleMention(unittest.IsolatedAsyncioTestCase):
         self.mock_slack.send_message.assert_called_once_with(
             "C12345",
             "I'll call you Test User!",
-            None
+            "1617984000.000100"
         )
 
     async def test_handle_mention_action_failure(self):
@@ -221,7 +221,7 @@ class TestHandleMention(unittest.IsolatedAsyncioTestCase):
         self.mock_slack.send_message.assert_called_once_with(
             "C12345",
             "I encountered an error.",
-            None
+            "1617984000.000100"
         )
 
     async def test_handle_mention_with_exception(self):

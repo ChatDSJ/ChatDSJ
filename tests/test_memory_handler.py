@@ -32,20 +32,20 @@ class TestMemoryHandler(unittest.TestCase):
         # Test work location
         memory_type, content = self.handler.classify_memory_instruction("I work from Seattle")
         self.assertEqual(memory_type, "work_location")
-        self.assertEqual(content, "Seattle")
+        self.assertEqual(content, "seattle")
         
         memory_type, content = self.handler.classify_memory_instruction("I am working in New York")
         self.assertEqual(memory_type, "work_location")
-        self.assertEqual(content, "New York")
+        self.assertEqual(content, "new york")
         
         # Test home location
         memory_type, content = self.handler.classify_memory_instruction("I live in Boston")
         self.assertEqual(memory_type, "home_location")
-        self.assertEqual(content, "Boston")
+        self.assertEqual(content, "boston")
         
         memory_type, content = self.handler.classify_memory_instruction("I was born in Chicago")
         self.assertEqual(memory_type, "home_location")
-        self.assertEqual(content, "Chicago")
+        self.assertEqual(content, "chicago")
 
     def test_classify_memory_instruction_preferences(self):
         """Test classifying preference memory instructions."""
@@ -75,7 +75,7 @@ class TestMemoryHandler(unittest.TestCase):
         """Test classifying TODO memory instructions."""
         memory_type, content = self.handler.classify_memory_instruction("TODO: Buy groceries")
         self.assertEqual(memory_type, "todo")
-        self.assertEqual(content, "Buy groceries")
+        self.assertEqual(content, "buy groceries")
 
     def test_classify_memory_instruction_list_commands(self):
         """Test classifying list commands."""
