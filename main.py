@@ -76,30 +76,47 @@ async def handle_mention(event, say, client):
         # Add "thinking" reaction to the original message
         slack_service.add_reaction(channel_id, message_ts, "thinking_face")
         
-        # FIXED: Process memory commands FIRST, before nickname commands
-        # This prevents "remember that I am X" from being treated as "call me X"
-        
-        # 1. Check for memory commands first (highest priority)
+        # 1. Check for memory commands first (highest priority) with enhanced logging
         if hasattr(notion_service, "memory_handler"):
-            memory_response = await asyncio.to_thread(
-                notion_service.handle_memory_instruction,
-                user_id,
-                prompt
-            )
+            logger.info(f"Checking for memory commands in prompt: '{prompt[:100]}...'")
             
-            if memory_response:
-                # Memory command was processed successfully
-                logger.info(f"Memory command processed for user {user_id}: {prompt[:50]}...")
-                response = slack_service.send_message(channel_id, memory_response, thread_ts)
+            try:
+                memory_response = await asyncio.to_thread(
+                    notion_service.handle_memory_instruction,
+                    user_id,
+                    prompt
+                )
                 
-                # Update reactions
-                slack_service.remove_reaction(channel_id, message_ts, "thinking_face")
-                slack_service.add_reaction(channel_id, message_ts, "white_check_mark")
+                if memory_response:
+                    # Memory command was processed successfully
+                    logger.info(f"✅ Memory command processed successfully for user {user_id}")
+                    logger.info(f"Memory response: {memory_response}")
+                    
+                    response = slack_service.send_message(channel_id, memory_response, thread_ts)
+                    
+                    # Update reactions
+                    slack_service.remove_reaction(channel_id, message_ts, "thinking_face")
+                    slack_service.add_reaction(channel_id, message_ts, "white_check_mark")
+                    slack_service.update_channel_stats(channel_id, user_id, message_ts)
+                    return response
+                else:
+                    logger.info(f"No memory command detected, continuing to general processing")
+                    
+            except Exception as memory_error:
+                logger.error(f"❌ Error in memory command processing: {memory_error}", exc_info=True)
+                
+                # Send error message but continue to general processing as fallback
+                error_response = f"❌ I encountered an error processing your memory command: {str(memory_error)}"
+                slack_service.send_message(channel_id, error_response, thread_ts)
+                
+                # Update reactions to show error
+                slack_service.remove_reaction(channel_id, message_ts, "thinking_face") 
+                slack_service.add_reaction(channel_id, message_ts, "warning")
                 slack_service.update_channel_stats(channel_id, user_id, message_ts)
-                return response
-        
+                return {"ok": True, "ts": "error_handled"}
+
+        # Continue with existing nickname command processing...
         # 2. Check for nickname command only if NOT a memory command
-        # Use more specific patterns to avoid conflicts
         nickname_response, nickname_success = await asyncio.to_thread(
             notion_service.handle_nickname_command,
             prompt, 
@@ -592,6 +609,215 @@ async def test_message_search(topic: str):
         
     except Exception as e:
         logger.error(f"Error testing message search: {e}", exc_info=True)
+        return {"error": str(e)}
+
+@app.get("/api/debug-notion-schema")
+async def debug_notion_schema():
+    """
+    Check the Notion database schema and show exact property name matching.
+    
+    Returns:
+        Detailed Notion database schema information with property name analysis
+    """
+    try:
+        if not notion_service.is_available():
+            return {"error": "Notion service not available"}
+        
+        # Get the database schema
+        database_info = notion_service.client.databases.retrieve(
+            database_id=notion_service.user_db_id
+        )
+        
+        properties = database_info.get("properties", {})
+        
+        # Format the properties for easy reading
+        formatted_properties = {}
+        for prop_name, prop_info in properties.items():
+            formatted_properties[prop_name] = {
+                "type": prop_info.get("type"),
+                "id": prop_info.get("id"),
+                "name": prop_info.get("name")
+            }
+            
+            # Add type-specific info
+            if prop_info.get("type") == "title":
+                formatted_properties[prop_name]["is_title"] = True
+            elif prop_info.get("type") == "rich_text":
+                formatted_properties[prop_name]["is_rich_text"] = True
+            elif prop_info.get("type") == "date":
+                formatted_properties[prop_name]["is_date"] = True
+            elif prop_info.get("type") == "url":
+                formatted_properties[prop_name]["is_url"] = True
+        
+        # Check what the code expects vs what exists
+        code_expected_properties = [
+            "UserID",
+            "PreferredName", 
+            "SlackUserID",
+            "SlackDisplayName",
+            "FavoriteEmoji",
+            "LanguagePreference",
+            "WorkLocation",
+            "HomeLocation",
+            "Role",
+            "Timezone",
+            "User Notes (Admin)",
+            "UserNotes(Admin)",
+            "User TODO Page Link",
+            "UserTODOPageLink",
+            "LastBotInteraction",
+            "Last Bot Interaction"
+        ]
+        
+        property_analysis = {}
+        for expected_prop in code_expected_properties:
+            if expected_prop in properties:
+                property_analysis[expected_prop] = {
+                    "status": "EXISTS",
+                    "type": properties[expected_prop].get("type"),
+                    "exact_match": True
+                }
+            else:
+                # Look for similar names (case insensitive, space variations)
+                similar_props = []
+                for actual_prop in properties.keys():
+                    if (expected_prop.lower().replace(" ", "") == actual_prop.lower().replace(" ", "") or
+                        expected_prop.lower() == actual_prop.lower() or
+                        expected_prop.replace(" ", "") == actual_prop.replace(" ", "")):
+                        similar_props.append(actual_prop)
+                
+                property_analysis[expected_prop] = {
+                    "status": "MISSING",
+                    "similar_found": similar_props,
+                    "exact_match": False
+                }
+        
+        return {
+            "database_id": notion_service.user_db_id,
+            "database_title": database_info.get("title", [{}])[0].get("plain_text", "Unknown"),
+            "property_count": len(properties),
+            "all_properties": formatted_properties,
+            "actual_property_names": sorted(list(properties.keys())),
+            "property_analysis": property_analysis,
+            "missing_properties": [
+                prop for prop, analysis in property_analysis.items() 
+                if analysis["status"] == "MISSING" and not analysis["similar_found"]
+            ],
+            "properties_with_name_mismatches": [
+                {
+                    "expected": prop,
+                    "actual_similar": analysis["similar_found"]
+                }
+                for prop, analysis in property_analysis.items() 
+                if analysis["status"] == "MISSING" and analysis["similar_found"]
+            ],
+            "recommendations": []
+        }
+        
+    except Exception as e:
+        logger.error(f"Error checking Notion schema: {e}", exc_info=True)
+        return {"error": str(e)}
+
+@app.post("/api/test-page-creation/{slack_user_id}")
+async def test_page_creation(slack_user_id: str):
+    """
+    Test creating a user page with detailed logging to see exactly what fails.
+    
+    Args:
+        slack_user_id: The Slack user ID to create a test page for
+        
+    Returns:
+        Detailed result of the creation attempt
+    """
+    try:
+        if not notion_service.is_available():
+            return {"error": "Notion service not available"}
+        
+        logger.info(f"Testing user page creation for {slack_user_id}")
+        
+        # Check if user already exists
+        existing_page_id = notion_service.get_user_page_id(slack_user_id)
+        if existing_page_id:
+            return {
+                "message": "User page already exists",
+                "page_id": existing_page_id,
+                "success": True
+            }
+        
+        # Get database schema first
+        database_info = notion_service.client.databases.retrieve(
+            database_id=notion_service.user_db_id
+        )
+        available_properties = database_info.get("properties", {})
+        
+        # Try creating with minimal properties first
+        minimal_properties = {
+            "UserID": {"title": [{"type": "text", "text": {"content": slack_user_id}}]},
+            "PreferredName": {"rich_text": [{"type": "text", "text": {"content": f"Test User {slack_user_id}"}}]}
+        }
+        
+        creation_attempts = []
+        
+        # Attempt 1: Minimal properties
+        try:
+            logger.info("Attempting page creation with minimal properties...")
+            result = notion_service.client.pages.create(
+                parent={"database_id": notion_service.user_db_id},
+                properties=minimal_properties,
+                children=[
+                    {
+                        "object": "block",
+                        "type": "heading_2",
+                        "heading_2": {"rich_text": [{"type": "text", "text": {"content": "Known Facts"}}]}
+                    }
+                ]
+            )
+            
+            if result and result.get("id"):
+                creation_attempts.append({
+                    "attempt": "minimal",
+                    "success": True,
+                    "page_id": result.get("id"),
+                    "properties_used": list(minimal_properties.keys())
+                })
+                
+                # Clear cache and verify
+                notion_service.invalidate_user_cache(slack_user_id)
+                new_page_id = notion_service.get_user_page_id(slack_user_id)
+                
+                return {
+                    "message": "Page created successfully with minimal properties",
+                    "page_id": new_page_id,
+                    "success": True,
+                    "creation_attempts": creation_attempts,
+                    "properties_used": list(minimal_properties.keys())
+                }
+            else:
+                creation_attempts.append({
+                    "attempt": "minimal",
+                    "success": False,
+                    "error": "No page ID returned",
+                    "result": str(result)
+                })
+                
+        except Exception as minimal_error:
+            creation_attempts.append({
+                "attempt": "minimal",
+                "success": False,
+                "error": str(minimal_error),
+                "properties_attempted": list(minimal_properties.keys())
+            })
+        
+        return {
+            "message": "All page creation attempts failed",
+            "success": False,
+            "creation_attempts": creation_attempts,
+            "available_properties": list(available_properties.keys()),
+            "database_id": notion_service.user_db_id
+        }
+        
+    except Exception as e:
+        logger.error(f"Error in test page creation: {e}", exc_info=True)
         return {"error": str(e)}
 
 # Main entry point

@@ -32,140 +32,193 @@ class MemoryHandler:
         self.notion_service = notion_service
     
     def handle_memory_instruction(self, slack_user_id: str, text: str) -> Optional[str]:
+            """
+            Process a memory instruction and store it appropriately with enhanced error handling.
+            
+            Args:
+                slack_user_id: The Slack user ID
+                text: The message content
+            
+            Returns:
+                A user-friendly message indicating success or failure, or None if not a memory instruction
+            """
+            try:
+                # Classify the memory instruction and get cleaned content
+                memory_type, cleaned_content = self.classify_memory_instruction(text)
+                
+                # If not a memory instruction, return None
+                if memory_type == "unknown" or (cleaned_content is None and not memory_type.startswith("list_")):
+                    logger.debug(f"Not a memory instruction: '{text}'")
+                    return None
+                
+                logger.info(f"Processing memory instruction - Type: {memory_type}, Content: '{cleaned_content}', User: {slack_user_id}")
+                
+                # Handle different types of memory instructions
+                if memory_type == "known_fact":
+                    logger.info(f"Processing known fact: '{cleaned_content}'")
+                    success = self.add_known_fact(slack_user_id, cleaned_content)
+                    
+                    if success:
+                        # ENHANCED: Double verification with retry
+                        verification_attempts = 3
+                        verification_success = False
+                        
+                        for attempt in range(verification_attempts):
+                            logger.info(f"Verification attempt {attempt + 1}/{verification_attempts}")
+                            
+                            if self.verify_fact_stored(slack_user_id, cleaned_content):
+                                verification_success = True
+                                break
+                            else:
+                                logger.warning(f"Verification attempt {attempt + 1} failed, waiting before retry...")
+                                import time
+                                time.sleep(2)  # Wait before retry
+                        
+                        if verification_success:
+                            logger.info(f"✅ Fact successfully stored and verified for user {slack_user_id}")
+                            return f"✅ Added to your Known Facts: \"{cleaned_content}\""
+                        else:
+                            logger.error(f"❌ Fact storage verification failed after {verification_attempts} attempts")
+                            
+                            # Try to diagnose the issue
+                            diagnostic_info = self._diagnose_storage_issue(slack_user_id, cleaned_content)
+                            logger.error(f"Storage diagnostic: {diagnostic_info}")
+                            
+                            return f"❌ I tried to store that fact, but couldn't verify it was saved properly. Please try again. (Debug: {diagnostic_info})"
+                    else:
+                        logger.error(f"❌ Failed to store fact for user {slack_user_id}")
+                        return "❌ Sorry, I couldn't store that fact right now. Please try again later."
+                
+                # List commands with enhanced error handling
+                elif memory_type == "list_facts":
+                    logger.info(f"Processing list facts request for user {slack_user_id}")
+                    
+                    try:
+                        facts = self.get_known_facts(slack_user_id)
+                        
+                        if not facts:
+                            # Try direct read as fallback
+                            facts = self._get_facts_direct_from_notion(slack_user_id)
+                            
+                        if facts:
+                            facts_list = "\n".join([f"{i+1}. {fact}" for i, fact in enumerate(facts)])
+                            return f"Here are your stored facts:\n\n{facts_list}\n\n📝 Retrieved from Notion database"
+                        else:
+                            return "You don't have any facts stored yet. You can add facts by saying \"known fact: [your fact]\" or \"remember [your fact]\"."
+                            
+                    except Exception as list_error:
+                        logger.error(f"Error listing facts: {list_error}", exc_info=True)
+                        return "❌ I had trouble retrieving your facts from Notion. Please try again later."
+                
+                elif memory_type == "list_preferences":
+                    logger.info(f"Processing list preferences request for user {slack_user_id}")
+                    
+                    try:
+                        preferences = self.get_preferences(slack_user_id)
+                        
+                        if preferences:
+                            preferences_list = "\n".join([f"{i+1}. {pref}" for i, pref in enumerate(preferences)])
+                            return f"Here are your stored preferences:\n\n{preferences_list}\n\n📝 Retrieved from Notion database"
+                        else:
+                            return "You don't have any preferences stored yet. You can add preferences by saying \"preference: [your preference]\" or \"I prefer [your preference]\"."
+                            
+                    except Exception as list_error:
+                        logger.error(f"Error listing preferences: {list_error}", exc_info=True)
+                        return "❌ I had trouble retrieving your preferences from Notion. Please try again later."
+                
+                elif memory_type == "list_projects":
+                    logger.info(f"Processing list projects request for user {slack_user_id}")
+                    
+                    try:
+                        projects = self.get_projects(slack_user_id)
+                        
+                        if projects:
+                            projects_list = "\n".join([f"{i+1}. {proj}" for i, proj in enumerate(projects)])
+                            return f"Here are your stored projects:\n\n{projects_list}\n\n📝 Retrieved from Notion database"
+                        else:
+                            return "You don't have any projects stored yet. You can add projects by saying \"project: [your project]\" or \"add project [your project]\"."
+                            
+                    except Exception as list_error:
+                        logger.error(f"Error listing projects: {list_error}", exc_info=True)
+                        return "❌ I had trouble retrieving your projects from Notion. Please try again later."
+                
+                # Handle other memory types (preferences, projects, etc.) - keeping existing logic
+                elif memory_type == "preference":
+                    success = self.add_preference(slack_user_id, cleaned_content)
+                    if success:
+                        if self.verify_preference_stored(slack_user_id, cleaned_content):
+                            return f"✅ Added to your Preferences: \"{cleaned_content}\""
+                        else:
+                            return f"❌ I tried to store that preference, but verification failed. Please try again."
+                    else:
+                        return "Sorry, I couldn't save that preference right now."
+                    
+                elif memory_type == "delete_fact":
+                    # Get current facts for better error reporting
+                    before_facts = self.get_known_facts(slack_user_id)
+                    success = self.delete_known_fact(slack_user_id, cleaned_content)
+                    
+                    if success:
+                        # Verify deletion worked
+                        after_facts = self.get_known_facts(slack_user_id)
+                        
+                        if len(after_facts) < len(before_facts):
+                            return f"✅ Successfully removed fact about \"{cleaned_content}\" from your Known Facts."
+                        else:
+                            return f"❌ Deletion verification failed. The fact may still exist."
+                    else:
+                        return f"❓ I couldn't find any facts containing \"{cleaned_content}\" to remove."
+                
+                logger.warning(f"Unhandled memory instruction type: {memory_type}")
+                return None
+                
+            except Exception as e:
+                logger.error(f"Error in handle_memory_instruction: {e}", exc_info=True)
+                return f"❌ I encountered an error while processing that instruction. Please try again. (Error: {str(e)})"
+
+    def _diagnose_storage_issue(self, slack_user_id: str, fact_text: str) -> str:
         """
-        Process a memory instruction and store it appropriately.
+        Diagnose why a fact storage might have failed.
         
         Args:
             slack_user_id: The Slack user ID
-            text: The message content
-        
-        Returns:
-            A user-friendly message indicating success or failure, or None if not a memory instruction
-        """
-        # Classify the memory instruction and get cleaned content
-        memory_type, cleaned_content = self.classify_memory_instruction(text)
-        
-        # If not a memory instruction, return None
-        if memory_type == "unknown" or (cleaned_content is None and not memory_type.startswith("list_")):
-            logger.debug(f"Not a memory instruction: '{text}'")
-            return None
-        
-        logger.info(f"Processing memory instruction type: {memory_type}, content: '{cleaned_content}'")
-        
-        # Handle different types of memory instructions
-        if memory_type == "nickname":
-            success = self.update_user_name(slack_user_id, cleaned_content)
-            return f"Got it! I'll call you {cleaned_content} from now on." if success else "Sorry, I couldn't update your name right now."
-        
-        elif memory_type == "work_location":
-            success = self.update_location(slack_user_id, "work", cleaned_content)
-            return f"Updated! I've noted that you work from {cleaned_content}." if success else "Sorry, I couldn't update your work location right now."
-        
-        elif memory_type == "home_location":
-            success = self.update_location(slack_user_id, "home", cleaned_content)
-            return f"Updated! I've noted that you're based in {cleaned_content}." if success else "Sorry, I couldn't update your home location right now."
-        
-        elif memory_type == "known_fact":
-            success = self.add_known_fact(slack_user_id, cleaned_content)
-            if success:
-                # FIXED: Verify the fact was actually stored
-                if self.verify_fact_stored(slack_user_id, cleaned_content):
-                    return "✅ Added to your Known Facts: \"" + cleaned_content + "\""
-                else:
-                    logger.error(f"Fact storage verification failed for user {slack_user_id}")
-                    return "❌ I tried to store that fact, but verification failed. Please try again."
-            else:
-                return "Sorry, I couldn't remember that right now."
-        
-        elif memory_type == "preference":
-            success = self.add_preference(slack_user_id, cleaned_content)
-            if success:
-                # FIXED: Verify the preference was actually stored
-                if self.verify_preference_stored(slack_user_id, cleaned_content):
-                    return "✅ Added to your Preferences: \"" + cleaned_content + "\""
-                else:
-                    logger.error(f"Preference storage verification failed for user {slack_user_id}")
-                    return "❌ I tried to store that preference, but verification failed. Please try again."
-            else:
-                return "Sorry, I couldn't save that preference right now."
-        
-        elif memory_type == "project_replace":
-            success = self.replace_projects(slack_user_id, cleaned_content)
-            return "✅ Updated your project list to: \"" + cleaned_content + "\"" if success else "Sorry, I couldn't update your projects right now."
-        
-        elif memory_type == "project_add":
-            success = self.add_project(slack_user_id, cleaned_content)
-            return "✅ Added to your Projects: \"" + cleaned_content + "\"" if success else "Sorry, I couldn't add that project right now."
-        
-        elif memory_type == "todo":
-            success = self.add_todo(slack_user_id, cleaned_content)
-            return "✅ Added to your TODO list: \"" + cleaned_content + "\"" if success else "Sorry, I couldn't add that to your TODO list right now."
-        
-        # Management commands
-        elif memory_type == "list_facts":
-            facts = self.get_known_facts(slack_user_id)
-            if not facts:
-                return "You don't have any facts stored yet. You can add facts by saying \"Remember [your fact]\" or \"Fact: [your fact]\"."
-            facts_list = "\n".join([f"{i+1}. {fact}" for i, fact in enumerate(facts)])
-            return f"Here are your stored facts:\n\n{facts_list}"
-        
-        elif memory_type == "list_preferences":
-            preferences = self.get_preferences(slack_user_id)
-            if not preferences:
-                return "You don't have any preferences stored yet. You can add preferences by saying \"I prefer [your preference]\" or \"Preference: [your preference]\"."
-            preferences_list = "\n".join([f"{i+1}. {pref}" for i, pref in enumerate(preferences)])
-            return f"Here are your stored preferences:\n\n{preferences_list}"
-        
-        elif memory_type == "list_projects":
-            projects = self.get_projects(slack_user_id)
-            if not projects:
-                return "You don't have any projects stored yet. You can add projects by saying \"Project: [your project]\" or \"Add project [your project]\"."
-            projects_list = "\n".join([f"{i+1}. {proj}" for i, proj in enumerate(projects)])
-            return f"Here are your stored projects:\n\n{projects_list}"
-        
-        elif memory_type == "delete_fact":
-            # Get current facts for better error reporting
-            before_facts = self.get_known_facts(slack_user_id)
-            success = self.delete_known_fact(slack_user_id, cleaned_content)
+            fact_text: The fact that failed to store
             
-            if success:
-                # Verify deletion worked
-                after_facts = self.get_known_facts(slack_user_id)
+        Returns:
+            Diagnostic information string
+        """
+        try:
+            page_id = self.notion_service.get_user_page_id(slack_user_id)
+            
+            if not page_id:
+                return "No Notion page found for user"
+            
+            # Check if page is accessible
+            try:
+                page_info = self.notion_service.client.pages.retrieve(page_id=page_id)
+                if not page_info:
+                    return "Page not accessible"
+            except Exception as e:
+                return f"Page access error: {str(e)}"
+            
+            # Check if Known Facts section exists
+            try:
+                blocks = self.notion_service.client.blocks.children.list(block_id=page_id)
+                has_known_facts = any(
+                    "Known Facts" in str(block) for block in blocks.get("results", [])
+                )
                 
-                # Find which fact was deleted by comparing before and after
-                deleted_fact = None
-                for fact in before_facts:
-                    if fact not in after_facts and cleaned_content.lower() in fact.lower():
-                        deleted_fact = fact
-                        break
-                
-                if deleted_fact:
-                    return f"✅ Successfully removed \"{deleted_fact}\" from your Known Facts."
-                elif len(after_facts) < len(before_facts):
-                    return f"✅ Removed fact about \"{cleaned_content}\" from your Known Facts."
+                if not has_known_facts:
+                    return "No Known Facts section found"
                 else:
-                    logger.warning(f"Delete operation claimed success but no facts were actually removed")
-                    return f"❌ Deletion verification failed. The fact may still exist."
-            else:
-                # Check if matching facts exist
-                matching_facts = [fact for fact in before_facts if cleaned_content.lower() in fact.lower()]
-                
-                if matching_facts:
-                    facts_list = "\n".join([f"• {fact}" for fact in matching_facts])
-                    return f"❌ I found facts matching \"{cleaned_content}\" but couldn't delete them:\n\n{facts_list}\n\nPlease try again with more specific text."
-                else:
-                    return f"❓ I couldn't find any facts containing \"{cleaned_content}\" to remove."
-        
-        elif memory_type == "delete_preference":
-            success = self.delete_preference(slack_user_id, cleaned_content)
-            return f"✅ Removed preference about \"{cleaned_content}\" from your Preferences." if success else f"Sorry, I couldn't find a preference about \"{cleaned_content}\" to remove."
-        
-        elif memory_type == "delete_project":
-            success = self.delete_project(slack_user_id, cleaned_content)
-            return f"✅ Removed project \"{cleaned_content}\" from your Projects." if success else f"Sorry, I couldn't find a project \"{cleaned_content}\" to remove."
-        
-        return None
-
+                    return "Known Facts section exists but fact not found"
+                    
+            except Exception as e:
+                return f"Block access error: {str(e)}"
+            
+        except Exception as e:
+            return f"Diagnostic error: {str(e)}"
+    
     def classify_memory_instruction(self, text: str) -> Tuple[str, Optional[str]]:
         """
         Classify a message as a memory instruction type and extract the clean content.
@@ -192,24 +245,27 @@ class MemoryHandler:
                 return "unknown", None  # This is a question, not a memory instruction
         
         # Direct command checking - these have priority over other patterns
-        if lowered.startswith("fact:") or lowered.startswith("fact "):
-            content = re.sub(r'^fact[:\s]\s*', '', text, flags=re.IGNORECASE).strip()
-            logger.debug(f"Detected fact command: '{content}'")
+        if (lowered.startswith("fact:") or lowered.startswith("fact ") or 
+            lowered.startswith("known fact:") or lowered.startswith("known fact ")):
+            # Handle both "fact:" and "known fact:" patterns
+            content = re.sub(r'^(?:known\s+)?fact[:\s]\s*', '', text, flags=re.IGNORECASE).strip()
+            logger.info(f"Detected fact command: '{content}'")
             return "known_fact", content
             
-        if lowered.startswith("project:") or lowered.startswith("project "):
-            content = re.sub(r'^project[:\s]\s*', '', text, flags=re.IGNORECASE).strip()
-            logger.debug(f"Detected project command: '{content}'")
+        if (lowered.startswith("project:") or lowered.startswith("project ") or
+            lowered.startswith("add project") or lowered.startswith("new project:")):
+            content = re.sub(r'^(?:add\s+|new\s+)?project[:\s]\s*', '', text, flags=re.IGNORECASE).strip()
+            logger.info(f"Detected project command: '{content}'")
             return "project_add", content
-            
-        if lowered.startswith("preference:") or lowered.startswith("preference "):
-            content = re.sub(r'^preference[:\s]\s*', '', text, flags=re.IGNORECASE).strip()
-            logger.debug(f"Detected preference command: '{content}'")
+
+        if (lowered.startswith("preference:") or lowered.startswith("preference ") or
+            lowered.startswith("my preference:") or lowered.startswith("my preference ")):
+            content = re.sub(r'^(?:my\s+)?preference[:\s]\s*', '', text, flags=re.IGNORECASE).strip()
+            logger.info(f"Detected preference command: '{content}'")
             return "preference", content
-            
-        # List/show commands
-        if re.match(r'^(?:list|show)\s+(?:my\s+)?facts', lowered):
-            logger.debug(f"Detected list facts command")
+
+        if re.match(r'^(?:list|show|display)\s+(?:my\s+)?(?:known\s+)?facts?$', lowered):
+            logger.info(f"Detected list facts command")
             return "list_facts", None
             
         if re.match(r'^(?:list|show)\s+(?:my\s+)?preferences', lowered):
@@ -322,7 +378,7 @@ class MemoryHandler:
 
     def verify_fact_stored(self, slack_user_id: str, fact_text: str) -> bool:
         """
-        Verify that a fact was actually stored in Notion.
+        Verify that a fact was actually stored in Notion with enhanced reliability.
         
         Args:
             slack_user_id: The Slack user ID
@@ -332,26 +388,150 @@ class MemoryHandler:
             True if the fact is found in Notion, False otherwise
         """
         try:
+            logger.info(f"Verifying fact storage for user {slack_user_id}: '{fact_text}'")
+            
             # Clear cache to force fresh read from Notion
             self.notion_service.invalidate_user_cache(slack_user_id)
             
-            # Get fresh facts from Notion
-            facts = self.get_known_facts(slack_user_id)
+            # Wait a moment for Notion's eventual consistency
+            import time
+            time.sleep(1)
             
-            # Check if our fact is in the list
-            fact_lower = fact_text.lower()
-            for stored_fact in facts:
-                if fact_lower in stored_fact.lower() or stored_fact.lower() in fact_lower:
-                    logger.info(f"Fact verification successful: '{fact_text}' found as '{stored_fact}'")
+            # Get fresh facts from Notion using multiple methods
+            facts_from_get_method = self.get_known_facts(slack_user_id)
+            facts_from_direct_read = self._get_facts_direct_from_notion(slack_user_id)
+            
+            logger.info(f"Facts from get_method ({len(facts_from_get_method)}): {facts_from_get_method}")
+            logger.info(f"Facts from direct_read ({len(facts_from_direct_read)}): {facts_from_direct_read}")
+            
+            # Check both methods for the fact
+            fact_lower = fact_text.lower().strip()
+            
+            all_facts = set(facts_from_get_method + facts_from_direct_read)
+            
+            for stored_fact in all_facts:
+                stored_fact_lower = stored_fact.lower().strip()
+                
+                # More flexible matching
+                if (fact_lower in stored_fact_lower or 
+                    stored_fact_lower in fact_lower or
+                    self._facts_are_similar(fact_lower, stored_fact_lower)):
+                    
+                    logger.info(f"✅ Fact verification successful: '{fact_text}' found as '{stored_fact}'")
                     return True
             
-            logger.warning(f"Fact verification failed: '{fact_text}' not found in stored facts")
-            logger.debug(f"Current facts: {facts}")
+            logger.warning(f"❌ Fact verification failed: '{fact_text}' not found")
+            logger.warning(f"Available facts: {list(all_facts)}")
             return False
             
         except Exception as e:
             logger.error(f"Error verifying fact storage: {e}", exc_info=True)
             return False
+
+    def _get_facts_direct_from_notion(self, slack_user_id: str) -> List[str]:
+        """
+        Get facts directly from Notion without using the cache, as a verification method.
+        
+        Args:
+            slack_user_id: The Slack user ID
+            
+        Returns:
+            List of facts found directly in Notion
+        """
+        try:
+            page_id = self.notion_service.get_user_page_id(slack_user_id)
+            if not page_id:
+                logger.warning(f"No page ID found for user {slack_user_id}")
+                return []
+            
+            # Get all blocks directly from Notion API
+            all_blocks = self.notion_service.client.blocks.children.list(
+                block_id=page_id,
+                page_size=100  # Get more blocks at once
+            )
+            blocks = all_blocks.get("results", [])
+            
+            logger.info(f"Direct API call returned {len(blocks)} blocks")
+            
+            facts = []
+            in_known_facts_section = False
+            
+            for i, block in enumerate(blocks):
+                block_type = block.get("type")
+                block_id = block.get("id")
+                
+                logger.debug(f"Block {i}: type={block_type}, id={block_id}")
+                
+                # Check for section headings
+                if block_type in ["heading_1", "heading_2", "heading_3"]:
+                    heading_text = ""
+                    rich_text = block.get(block_type, {}).get("rich_text", [])
+                    
+                    for text_item in rich_text:
+                        heading_text += text_item.get("plain_text", "")
+                    
+                    if heading_text == "Known Facts":
+                        in_known_facts_section = True
+                        logger.debug(f"Entered Known Facts section at block {i}")
+                        continue
+                    elif in_known_facts_section and heading_text:
+                        in_known_facts_section = False
+                        logger.debug(f"Exited Known Facts section at block {i}")
+                
+                # Collect facts from the Known Facts section
+                elif in_known_facts_section and block_type == "bulleted_list_item":
+                    text_content = ""
+                    rich_text = block.get("bulleted_list_item", {}).get("rich_text", [])
+                    
+                    for text_item in rich_text:
+                        text_content += text_item.get("plain_text", "")
+                    
+                    if text_content:
+                        facts.append(text_content)
+                        logger.debug(f"Found fact in direct read: '{text_content}'")
+            
+            logger.info(f"Direct read found {len(facts)} facts")
+            return facts
+            
+        except Exception as e:
+            logger.error(f"Error in direct facts read: {e}", exc_info=True)
+            return []
+
+    def _facts_are_similar(self, fact1: str, fact2: str) -> bool:
+        """
+        Check if two facts are similar enough to be considered the same.
+        
+        Args:
+            fact1: First fact (normalized)
+            fact2: Second fact (normalized)
+            
+        Returns:
+            True if facts are similar, False otherwise
+        """
+        # Remove common variations
+        def normalize_fact(fact: str) -> str:
+            fact = fact.lower().strip()
+            # Remove articles and common prefixes
+            fact = re.sub(r'^(?:the|a|an|my|your|his|her|their)\s+', '', fact)
+            # Remove punctuation
+            fact = re.sub(r'[.,!?;:]', '', fact)
+            return fact
+        
+        norm1 = normalize_fact(fact1)
+        norm2 = normalize_fact(fact2)
+        
+        # Check for substantial overlap
+        words1 = set(norm1.split())
+        words2 = set(norm2.split())
+        
+        if len(words1) > 0 and len(words2) > 0:
+            overlap = len(words1.intersection(words2))
+            min_length = min(len(words1), len(words2))
+            
+            # If more than 70% of words overlap, consider them similar
+            return overlap / min_length > 0.7
+        
+        return False
 
     def verify_preference_stored(self, slack_user_id: str, preference_text: str) -> bool:
         """
@@ -780,9 +960,9 @@ class MemoryHandler:
                     return False
             
             # Ensure the Known Facts section exists
-            known_facts_section = self.ensure_section_exists(page_id, SectionType.KNOWN_FACTS.value)
-            if not known_facts_section:
-                logger.error(f"Failed to create Known Facts section for user {slack_user_id}")
+            known_facts_section_id = self._ensure_known_facts_section_exists(page_id)
+            if not known_facts_section_id:
+                logger.error(f"Failed to create/find Known Facts section for user {slack_user_id}")
                 return False
                 
             # Create a new bullet for the fact
@@ -799,54 +979,141 @@ class MemoryHandler:
             
             # FIXED: More robust insertion logic
             try:
-                # Get the current page structure
-                page_blocks = self.notion_service.client.blocks.children.list(block_id=page_id)
+                # Strategy 1: Try to append directly after the Known Facts heading
+                logger.info(f"Attempting to append fact block after Known Facts section")
+                result = self.notion_service.client.blocks.children.append(
+                    block_id=page_id,
+                    children=[new_fact_block],
+                    after=known_facts_section_id
+                )
                 
-                # Find the Known Facts section index
-                known_facts_index = -1
-                for i, block in enumerate(page_blocks.get("results", [])):
-                    if block.get("id") == known_facts_section.get("id"):
-                        known_facts_index = i
-                        break
-                
-                if known_facts_index >= 0:
-                    # Insert after the heading using the page-level API
-                    self.notion_service.client.blocks.children.append(
-                        block_id=page_id,
-                        children=[new_fact_block],
-                        after=known_facts_section.get("id")
-                    )
-                    logger.info(f"Successfully inserted fact after Known Facts heading")
+                if result and result.get("results"):
+                    new_block_id = result["results"][0]["id"]
+                    logger.info(f"Successfully added fact block with ID: {new_block_id}")
+                    
+                    # FIXED: Verify the block was actually created
+                    verification_success = self._verify_block_exists(page_id, new_block_id)
+                    if verification_success:
+                        logger.info(f"Fact storage verified for user {slack_user_id}")
+                        return True
+                    else:
+                        logger.error(f"Block verification failed for user {slack_user_id}")
+                        return False
                 else:
-                    # Fallback: append to page
-                    self.notion_service.client.blocks.children.append(
-                        block_id=page_id,
-                        children=[new_fact_block]
-                    )
-                    logger.warning(f"Used fallback insertion method for fact")
-                
-                logger.info(f"Successfully added fact to Notion for user {slack_user_id}")
-                return True
-                
-            except Exception as insert_error:
-                logger.error(f"Error inserting fact block: {insert_error}")
-                
-                # Final fallback: try direct page append
-                try:
-                    self.notion_service.client.blocks.children.append(
-                        block_id=page_id,
-                        children=[new_fact_block]
-                    )
-                    logger.info(f"Used final fallback insertion for fact")
-                    return True
-                except Exception as final_error:
-                    logger.error(f"Final fallback insertion failed: {final_error}")
+                    logger.error(f"Notion API returned unexpected result: {result}")
                     return False
-            
+                    
+            except Exception as insert_error:
+                logger.error(f"Failed to insert after Known Facts section: {insert_error}")
+                
+                # Strategy 2: Fallback - append to end of page
+                try:
+                    logger.info(f"Trying fallback: append to end of page")
+                    result = self.notion_service.client.blocks.children.append(
+                        block_id=page_id,
+                        children=[new_fact_block]
+                    )
+                    
+                    if result and result.get("results"):
+                        new_block_id = result["results"][0]["id"]
+                        logger.info(f"Fallback successful: added fact block with ID: {new_block_id}")
+                        return True
+                    else:
+                        logger.error(f"Fallback also failed: {result}")
+                        return False
+                        
+                except Exception as fallback_error:
+                    logger.error(f"Fallback insertion also failed: {fallback_error}")
+                    return False
+                
         except Exception as e:
             logger.error(f"Error adding known fact for user {slack_user_id}: {e}", exc_info=True)
             return False
     
+    def _ensure_known_facts_section_exists(self, page_id: str) -> Optional[str]:
+        """
+        Ensure the Known Facts section exists and return its block ID.
+        
+        Args:
+            page_id: The Notion page ID
+            
+        Returns:
+            The Known Facts section block ID if successful, None otherwise
+        """
+        try:
+            # Get all blocks on the page
+            blocks_response = self.notion_service.client.blocks.children.list(block_id=page_id)
+            blocks = blocks_response.get("results", [])
+            
+            # Look for existing Known Facts section
+            for block in blocks:
+                block_type = block.get("type")
+                if block_type in ["heading_1", "heading_2", "heading_3"]:
+                    heading_text = ""
+                    rich_text = block.get(block_type, {}).get("rich_text", [])
+                    
+                    for text_item in rich_text:
+                        heading_text += text_item.get("plain_text", "")
+                    
+                    if heading_text == "Known Facts":
+                        logger.info(f"Found existing Known Facts section: {block.get('id')}")
+                        return block.get("id")
+            
+            # Section doesn't exist, create it
+            logger.info(f"Known Facts section not found, creating it")
+            new_section_block = {
+                "object": "block",
+                "type": "heading_2",
+                "heading_2": {
+                    "rich_text": [{
+                        "type": "text",
+                        "text": {"content": "Known Facts"}
+                    }]
+                }
+            }
+            
+            result = self.notion_service.client.blocks.children.append(
+                block_id=page_id,
+                children=[new_section_block]
+            )
+            
+            if result and result.get("results"):
+                section_id = result["results"][0]["id"]
+                logger.info(f"Created Known Facts section with ID: {section_id}")
+                return section_id
+            else:
+                logger.error(f"Failed to create Known Facts section: {result}")
+                return None
+                
+        except Exception as e:
+            logger.error(f"Error ensuring Known Facts section exists: {e}", exc_info=True)
+            return None
+
+    def _verify_block_exists(self, page_id: str, block_id: str) -> bool:
+        """
+        Verify that a block exists on the page.
+        
+        Args:
+            page_id: The Notion page ID
+            block_id: The block ID to verify
+            
+        Returns:
+            True if the block exists, False otherwise
+        """
+        try:
+            # Try to retrieve the specific block
+            block = self.notion_service.client.blocks.retrieve(block_id=block_id)
+            if block and block.get("id") == block_id:
+                logger.debug(f"Block verification successful: {block_id}")
+                return True
+            else:
+                logger.warning(f"Block verification failed: {block_id}")
+                return False
+                
+        except Exception as e:
+            logger.error(f"Error verifying block {block_id}: {e}")
+            return False
+
     def add_preference(self, slack_user_id: str, preference: str) -> bool:
         """
         Add a preference to the Preferences section with improved error handling.
@@ -1272,6 +1539,9 @@ class MemoryHandler:
     **Adding Information:**
     - "Remember I like coffee" - Add to Known Facts
     - "Fact: I prefer tea" - Add to Known Facts
+    - "fact: I prefer tea" - Add to Known Facts
+    - "Known Fact: I prefer tea" - Add to Known Facts
+    - "known fact: I prefer tea" - Add to Known Facts
     - "I work in New York" - Add location information
     - "My new project is Website Redesign" - Replace all projects
     - "Project: Mobile App Development" - Add a project
@@ -1281,11 +1551,13 @@ class MemoryHandler:
 
     **Viewing Information:**
     - "Show my facts" - List all Known Facts
+    - "Show my known facts" - List all Known Facts
     - "List my preferences" - List all Preferences
     - "Show my projects" - List all Projects
 
     **Deleting Information:**
     - "Delete fact about coffee" - Remove a fact
+    - "Delete known fact about coffee" - Remove a fact
     - "Remove preference about bullet points" - Remove a preference
     - "Delete project Website Redesign" - Remove a project
 
