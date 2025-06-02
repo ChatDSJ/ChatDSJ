@@ -7219,3 +7219,64 @@ I've deleted the fact that the Earth is round from your known facts. If you need
 2025-06-02 13:24:01.856 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 76 chars):
 ✅ Successfully removed fact about "the Earth is FLAT" from your Known Facts.
 2025-06-02 13:24:02.684 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1748885042.515779', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1748885042.515779', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': ':white_check_mark: Successfully removed fact about "the Earth is FLAT" from your Known Facts.', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1748885017.250729', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'mgJ', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'emoji', 'name': 'white_check_mark', 'unicode': '2705'}, {'type': 'text', 'text': ' Successfully removed fact about "the Earth is FLAT" from your Known Facts.'}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-06-02 13:54:12.942 | INFO     | main:handle_mention:81 - Checking for memory commands in prompt: 'suma...'
+2025-06-02 13:54:12.973 | INFO     | main:handle_mention:103 - No memory command detected, continuing to general processing
+2025-06-02 13:54:13.203 | INFO     | actions.action_framework:__init__:788 - ActionRouter initialized with 6 actions
+2025-06-02 13:54:13.211 | INFO     | actions.action_framework:_get_action_for_text:802 - Selected action ContextResponseAction for message: <@U08RG89NFK7> suma...
+2025-06-02 13:54:13.269 | INFO     | utils.history_manager:extract_search_topic:306 - Extracting search topic from prompt: suma
+2025-06-02 13:54:13.291 | INFO     | utils.history_manager:extract_search_topic:394 - No topic could be extracted from the prompt
+2025-06-02 13:54:13.291 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748886850.196439 (limit: 100)...
+2025-06-02 13:54:13.532 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 1 messages from thread 1748886850.196439.
+2025-06-02 13:54:13.533 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 50)...
+2025-06-02 13:54:13.916 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 50 messages from channel C08SJ5EUTPT.
+2025-06-02 13:54:13.917 | INFO     | utils.history_manager:retrieve_and_filter_history:300 - Retrieved 50 messages for Recent context
+2025-06-02 13:54:13.918 | INFO     | utils.history_manager:format_history_for_prompt:635 - Formatted message history: 5889 characters
+2025-06-02 13:54:13.918 | INFO     | actions.action_framework:execute:244 - Fetching Notion context for user U089YKL1T4H
+2025-06-02 13:54:15.078 | INFO     | services.cached_notion_service:get_user_page_content:374 - Retrieved Notion page content for user U089YKL1T4H (length: 1284)
+2025-06-02 13:54:15.610 | INFO     | services.cached_notion_service:get_user_page_content:310 - Cache hit for user page content: U089YKL1T4H
+2025-06-02 13:54:15.610 | INFO     | utils.context_builder:get_enhanced_user_context:21 - Building enhanced context for user U089YKL1T4H
+2025-06-02 13:54:15.610 | INFO     | utils.context_builder:get_enhanced_user_context:23 - Using preferred name: allergic to Elmo
+2025-06-02 13:54:15.610 | INFO     | utils.context_builder:get_enhanced_user_context:26 - Page content length: 1284 chars
+2025-06-02 13:54:15.611 | INFO     | utils.context_builder:get_enhanced_user_context:89 - Generated enhanced context length: 2392 chars
+2025-06-02 13:54:15.611 | INFO     | actions.action_framework:execute:284 - History retrieval mode: unknown
+2025-06-02 13:54:15.611 | INFO     | actions.action_framework:execute:285 - Retrieved 50 relevant messages
+2025-06-02 13:54:15.611 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-02 13:54:16.279 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-02 13:54:16.281 | INFO     | handler.openai_service:get_completion_async:157 - Sending 2087 tokens to OpenAI async. Model: gpt-4o
+2025-06-02 13:54:25.085 | INFO     | handler.openai_service:get_completion_async:177 - OpenAI response received successfully in 1 attempt(s)
+2025-06-02 13:54:25.724 | INFO     | main:handle_mention:164 - Sending action response message (length: 1559)
+2025-06-02 13:54:25.724 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 1559 chars):
+Aquí tienes un resumen del canal en diez puntos detallados, siguiendo tus instrucciones al respecto de la palabra "suma":
+
+1. **US Civil War**: Se solicitó una búsqueda en el canal para verificar si se había discutido alguna vez sobre la Guerra Civil estadounidense.
+
+2. **Aplicación AI para LinkedIn**: Se debatió si usar una app que analiza RSS, selecciona artículos relevantes y genera publicaciones para LinkedIn es considerado como hacer trampa.
+
+3. **Fantasía de ser el mejor malabarista**: Constantemente recuerda y reitera que es el mejor malabarista del mundo.
+
+4. **Fiestas y viajes**: Se compartió que hubo una visita agradable a Boquerón, Puerto Rico, y se solicitó información sobre ese lugar.
+
+5. **Leonardo DaVinci**: Pregunta sobre si DaVinci diseñó escaleras, mostrando interés por curiosidades históricas.
+
+6. **Infocom Discussion**: Se mostraron repetidos esfuerzos para verificar si se había discutido la compañía Infocom.
+
+7. **Herramientas de AI**: Se hizo una consulta sobre las diferencias entre usuarios de ChatGPT, Perplexity y Claude.
+
+8. **Tecnología y familia**: Se busca motivación para que sus hijos lean en español, mencionando la serie "Alfred Hitchcock y Los Tres Investigadores".
+
+9. **Personajes históricos y de ficción**: Hubo interés en saber si ciertos personajes o conceptos como Casablanca o Meatloaf fueron discutidos.
+
+10. **Preferencias personales**: Expresó que le gusta trabajar con herramientas de IA que se integran con Slack y Gmail.
+
+Por favor, si necesitas más detalles sobre algún punto específico, avísame.
+2025-06-02 13:54:26.184 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1748886866.146109', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1748886866.146109', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': 'Aquí tienes un resumen del canal en diez puntos detallados, siguiendo tus instrucciones al respecto de la palabra "suma":\n\n1. **US Civil War**: Se solicitó una búsqueda en el canal para verificar si se había discutido alguna vez sobre la Guerra Civil estadounidense.\n\n2. **Aplicación AI para LinkedIn**: Se debatió si usar una app que analiza RSS, selecciona artículos relevantes y genera publicaciones para LinkedIn es considerado como hacer trampa.\n\n3. **Fantasía de ser el mejor malabarista**: Constantemente recuerda y reitera que es el mejor malabarista del mundo.\n\n4. **Fiestas y viajes**: Se compartió que hubo una visita agradable a Boquerón, Puerto Rico, y se solicitó información sobre ese lugar.\n\n5. **Leonardo DaVinci**: Pregunta sobre si DaVinci diseñó escaleras, mostrando interés por curiosidades históricas.\n\n6. **Infocom Discussion**: Se mostraron repetidos esfuerzos para verificar si se había discutido la compañía Infocom.\n\n7. **Herramientas de AI**: Se hizo una consulta sobre las diferencias entre usuarios de ChatGPT, Perplexity y Claude.\n\n8. **Tecnología y familia**: Se busca motivación para que sus hijos lean en español, mencionando la serie "Alfred Hitchcock y Los Tres Investigadores".\n\n9. **Personajes históricos y de ficción**: Hubo interés en saber si ciertos personajes o conceptos como Casablanca o Meatloaf fueron discutidos.\n\n10. **Preferencias personales**: Expresó que le gusta trabajar con herramientas de IA que se integran con Slack y Gmail.\n\nPor favor, si necesitas más detalles sobre algún punto específico, avísame.', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1748886850.196439', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': '9d+', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': 'Aquí tienes un resumen del canal en diez puntos detallados, siguiendo tus instrucciones al respecto de la palabra "suma":\n\n1. **US Civil War**: Se solicitó una búsqueda en el canal para verificar si se había discutido alguna vez sobre la Guerra Civil estadounidense.\n\n2. **Aplicación AI para LinkedIn**: Se debatió si usar una app que analiza RSS, selecciona artículos relevantes y genera publicaciones para LinkedIn es considerado como hacer trampa.\n\n3. **Fantasía de ser el mejor malabarista**: Constantemente recuerda y reitera que es el mejor malabarista del mundo.\n\n4. **Fiestas y viajes**: Se compartió que hubo una visita agradable a Boquerón, Puerto Rico, y se solicitó información sobre ese lugar.\n\n5. **Leonardo DaVinci**: Pregunta sobre si DaVinci diseñó escaleras, mostrando interés por curiosidades históricas.\n\n6. **Infocom Discussion**: Se mostraron repetidos esfuerzos para verificar si se había discutido la compañía Infocom.\n\n7. **Herramientas de AI**: Se hizo una consulta sobre las diferencias entre usuarios de ChatGPT, Perplexity y Claude.\n\n8. **Tecnología y familia**: Se busca motivación para que sus hijos lean en español, mencionando la serie "Alfred Hitchcock y Los Tres Investigadores".\n\n9. **Personajes históricos y de ficción**: Hubo interés en saber si ciertos personajes o conceptos como Casablanca o Meatloaf fueron discutidos.\n\n10. **Preferencias personales**: Expresó que le gusta trabajar con herramientas de IA que se integran con Slack y Gmail.\n\nPor favor, si necesitas más detalles sobre algún punto específico, avísame.'}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-06-02 13:57:43.023 | INFO     | main:<module>:28 - Starting application in development mode
+2025-06-02 13:57:43.130 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-06-02 13:57:43.130 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-06-02 13:57:43.151 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-06-02 13:57:43.980 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-06-02 13:57:44.169 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-06-02 13:57:44.170 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-06-02 13:57:44.177 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-06-02 13:57:44.178 | INFO     | main:startup_event:228 - Slack bot started in socket mode.
+2025-06-02 13:57:44.200 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...

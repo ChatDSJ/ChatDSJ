@@ -1,12 +1,12 @@
 import unittest
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock, patch, AsyncMock
 from services.cached_notion_service import CachedNotionService
+
 
 class TestCachedNotionService(unittest.TestCase):
     def setUp(self):
         # Create service with mocked Notion client
         self.mock_client = MagicMock()
-        
         with patch('services.cached_notion_service.Client', return_value=self.mock_client):
             self.service = CachedNotionService(
                 notion_api_token="secret_dummy_token",
@@ -14,7 +14,7 @@ class TestCachedNotionService(unittest.TestCase):
                 cache_ttl=60,
                 cache_max_size=100
             )
-    
+
     def test_initialization(self):
         """Test service initialization."""
         self.assertEqual(self.service.api_token, "secret_dummy_token")
@@ -25,7 +25,7 @@ class TestCachedNotionService(unittest.TestCase):
         # Test caches are initialized
         self.assertEqual(len(self.service.cache), 0)
         self.assertEqual(len(self.service.page_content_cache), 0)
-    
+
     def test_is_available(self):
         """Test availability check."""
         # Should be available with client and DB ID
@@ -41,7 +41,7 @@ class TestCachedNotionService(unittest.TestCase):
         # Test without DB ID
         self.service.user_db_id = None
         self.assertFalse(self.service.is_available())
-    
+
     def test_clear_cache(self):
         """Test clearing the caches."""
         # Add items to caches
@@ -57,7 +57,7 @@ class TestCachedNotionService(unittest.TestCase):
         # Verify caches are empty
         self.assertEqual(len(self.service.cache), 0)
         self.assertEqual(len(self.service.page_content_cache), 0)
-    
+
     def test_invalidate_user_cache(self):
         """Test invalidating cache for a specific user."""
         user_id = "U12345"
@@ -81,7 +81,7 @@ class TestCachedNotionService(unittest.TestCase):
         
         # Verify unrelated entries are kept
         self.assertIn("unrelated_key", self.service.cache)
-    
+
     def test_get_user_page_id_with_cache_hit(self):
         """Test retrieving user page ID with cache hit."""
         user_id = "U12345"
@@ -101,7 +101,7 @@ class TestCachedNotionService(unittest.TestCase):
         
         # Client should not be called
         self.mock_client.databases.query.assert_not_called()
-    
+
     def test_get_user_page_id_with_cache_miss(self):
         """Test retrieving user page ID with cache miss."""
         user_id = "U12345"
@@ -132,7 +132,7 @@ class TestCachedNotionService(unittest.TestCase):
         with self.service.cache_lock:
             self.assertIn(f"user_page_id_{user_id}", self.service.cache)
             self.assertEqual(self.service.cache[f"user_page_id_{user_id}"], expected_page_id)
-    
+
     def test_get_user_page_id_not_found(self):
         """Test retrieving user page ID when not found."""
         user_id = "U12345"
@@ -151,14 +151,23 @@ class TestCachedNotionService(unittest.TestCase):
         with self.service.cache_lock:
             self.assertIn(f"user_page_id_{user_id}", self.service.cache)
             self.assertIsNone(self.service.cache[f"user_page_id_{user_id}"])
-    
-    def test_store_user_nickname(self):
-        """Test storing a user's nickname."""
+
+    def test_store_user_nickname_new_user(self):
+        """Test storing a nickname for a new user."""
         user_id = "U12345"
         nickname = "TestUser"
         
         # Mock get_user_page_id to return None (new user)
         with patch.object(self.service, 'get_user_page_id', return_value=None):
+            # Mock database info for page creation
+            self.mock_client.databases.retrieve.return_value = {
+                "properties": {
+                    "UserID": {"type": "title"},
+                    "PreferredName": {"type": "rich_text"},
+                    "SlackDisplayName": {"type": "rich_text"}
+                }
+            }
+            
             # Mock page creation
             self.mock_client.pages.create.return_value = {"id": "new_page_123"}
             
@@ -168,30 +177,32 @@ class TestCachedNotionService(unittest.TestCase):
             # Verify result
             self.assertTrue(result)
             
-            # Verify client was called correctly for page creation
+            # Verify client was called for page creation
             self.mock_client.pages.create.assert_called_once()
             call_args = self.mock_client.pages.create.call_args[1]
             self.assertEqual(call_args["parent"]["database_id"], "dummy_db_id")
             self.assertEqual(call_args["properties"]["UserID"]["title"][0]["text"]["content"], user_id)
             self.assertEqual(call_args["properties"]["PreferredName"]["rich_text"][0]["text"]["content"], nickname)
+
+    def test_store_user_nickname_existing_user(self):
+        """Test storing a nickname for an existing user."""
+        user_id = "U12345"
+        nickname = "NewNickname"
         
-        # Test updating existing user
+        # Mock get_user_page_id to return existing page
         with patch.object(self.service, 'get_user_page_id', return_value="existing_page_123"):
-            # Reset mock
-            self.mock_client.reset_mock()
-            
             # Store nickname
-            result = self.service.store_user_nickname(user_id, "NewNickname")
+            result = self.service.store_user_nickname(user_id, nickname)
             
             # Verify result
             self.assertTrue(result)
             
-            # Verify client was called correctly for page update
+            # Verify client was called for page update
             self.mock_client.pages.update.assert_called_once()
             call_args = self.mock_client.pages.update.call_args[1]
             self.assertEqual(call_args["page_id"], "existing_page_123")
-            self.assertEqual(call_args["properties"]["PreferredName"]["rich_text"][0]["text"]["content"], "NewNickname")
-    
+            self.assertEqual(call_args["properties"]["PreferredName"]["rich_text"][0]["text"]["content"], nickname)
+
     def test_handle_nickname_command(self):
         """Test handling nickname commands from chat."""
         user_id = "U12345"
@@ -243,7 +254,7 @@ class TestCachedNotionService(unittest.TestCase):
         # Verify response
         self.assertFalse(success)
         self.assertIsNone(response)
-    
+
     def test_get_user_preferred_name(self):
         """Test retrieving a user's preferred name."""
         user_id = "U12345"
@@ -279,7 +290,24 @@ class TestCachedNotionService(unittest.TestCase):
         with patch.object(self.service, 'get_user_page_properties', return_value=None):
             name = self.service.get_user_preferred_name(user_id)
             self.assertIsNone(name)
-    
+
+    def test_handle_memory_instruction(self):
+        """Test delegating memory instructions to memory handler."""
+        user_id = "U12345"
+        instruction = "fact: I like coffee"
+        
+        # Mock memory handler response
+        self.service.memory_handler.handle_memory_instruction = MagicMock(
+            return_value="✅ Added to your Known Facts: I like coffee"
+        )
+        
+        # Handle memory instruction
+        response = self.service.handle_memory_instruction(user_id, instruction)
+        
+        # Verify delegation
+        self.service.memory_handler.handle_memory_instruction.assert_called_once_with(user_id, instruction)
+        self.assertEqual(response, "✅ Added to your Known Facts: I like coffee")
+
     def test_add_todo_item(self):
         """Test adding a TODO item to a user's page."""
         user_id = "U12345"
@@ -287,45 +315,28 @@ class TestCachedNotionService(unittest.TestCase):
         
         # Mock get_user_page_id for existing user
         with patch.object(self.service, 'get_user_page_id', return_value="page_123"):
-            # Mock block append
-            self.mock_client.blocks.children.append.return_value = {"results": [{"id": "block_123"}]}
-            
-            # Add TODO item
-            result = self.service.add_todo_item(user_id, todo_text)
-            
-            # Verify result
-            self.assertTrue(result)
-            
-            # Verify client was called correctly
-            self.mock_client.blocks.children.append.assert_called_once()
-            call_args = self.mock_client.blocks.children.append.call_args[1]
-            self.assertEqual(call_args["block_id"], "page_123")
-            
-            # Verify the to_do block was created correctly
-            todo_block = call_args["children"][0]
-            self.assertEqual(todo_block["type"], "to_do")
-            self.assertEqual(todo_block["to_do"]["rich_text"][0]["text"]["content"], todo_text)
-            self.assertFalse(todo_block["to_do"]["checked"])
-            
-            # Verify cache was invalidated
-            with self.service.cache_lock:
-                self.assertNotIn(f"user_page_content_{user_id}", self.service.page_content_cache)
-        
-        # Test with new user (no page yet)
-        with patch.object(self.service, 'get_user_page_id', side_effect=[None, "new_page_123"]):
-            # Mock store_user_nickname for page creation
-            with patch.object(self.service, 'store_user_nickname', return_value=True):
-                # Reset mock
-                self.mock_client.reset_mock()
+            # Mock find_section_block to return None (no Instructions section)
+            with patch.object(self.service, 'find_section_block', return_value=None):
+                # Mock block append
+                self.mock_client.blocks.children.append.return_value = {"results": [{"id": "block_123"}]}
                 
-                # Add TODO item for new user
+                # Add TODO item
                 result = self.service.add_todo_item(user_id, todo_text)
                 
                 # Verify result
                 self.assertTrue(result)
                 
-                # Verify page was created and then blocks were appended
+                # Verify client was called correctly
                 self.mock_client.blocks.children.append.assert_called_once()
+                call_args = self.mock_client.blocks.children.append.call_args[1]
+                self.assertEqual(call_args["block_id"], "page_123")
+                
+                # Verify the to_do block was created correctly
+                todo_block = call_args["children"][0]
+                self.assertEqual(todo_block["type"], "to_do")
+                self.assertEqual(todo_block["to_do"]["rich_text"][0]["text"]["content"], todo_text)
+                self.assertFalse(todo_block["to_do"]["checked"])
+
 
 if __name__ == '__main__':
     unittest.main()

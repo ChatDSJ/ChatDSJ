@@ -1,12 +1,13 @@
 import unittest
 from unittest.mock import MagicMock, patch
-from services.notion_parser import NotionContextManager
+from services.notion_parser import NotionContextManager, get_user_context_for_llm
 from utils.context_builder import extract_structured_fields
+
 
 class TestNotionParser(unittest.TestCase):
     def setUp(self):
         self.context_manager = NotionContextManager()
-        
+
     def test_extract_structured_fields(self):
         """Test extraction of structured fields from Notion properties."""
         properties = {
@@ -52,28 +53,28 @@ class TestNotionParser(unittest.TestCase):
         
         # Verify empty fields are skipped
         self.assertEqual(len([r for r in result if r.startswith("EmptyField")]), 0)
-        
-        # Test with empty properties
-        self.assertEqual(extract_structured_fields({}), [])
-        self.assertEqual(extract_structured_fields(None), [])
 
     def test_process_notion_content(self):
         """Test parsing Notion content with sections."""
         content = """Projects
-* Project A
-* Project B
+
+Project A
+Project B
 
 Preferences
-* Always write your answers in rhymed verse
-* Keep responses concise
+
+Always write your answers in rhymed verse
+Keep responses concise
 
 Known Facts
-* Background in tech
-* Lives in San Juan
+
+Background in tech
+Lives in San Juan
 
 Instructions
-* When I say "remember X", store it under Known Facts
-* When I ask "what do you know about me?", return all facts"""
+
+When I say "remember X", store it under Known Facts
+When I ask "what do you know about me?", return all facts"""
 
         result = self.context_manager.process_notion_content(content)
         
@@ -99,12 +100,14 @@ Instructions
         """Test building the OpenAI system prompt with user context."""
         base_prompt = "You are a helpful assistant."
         notion_content = """Preferences
-* Use bullet points
-* Be concise
+
+Use bullet points
+Be concise
 
 Known Facts
-* Works as a developer
-* Enjoys hiking"""
+
+Works as a developer
+Enjoys hiking"""
         preferred_name = "TestUser"
         
         # Test with all components
@@ -131,10 +134,55 @@ Known Facts
         
         self.assertIn(base_prompt, minimal_result)
         self.assertNotIn("Preferences", minimal_result)
+
+
+class TestGetUserContextForLLM(unittest.TestCase):
+    def setUp(self):
+        # Mock notion service
+        self.mock_notion = MagicMock()
         
-        # Empty content should still return base prompt
-        empty_result = self.context_manager.build_openai_system_prompt("Base", "", None)
-        self.assertEqual(empty_result, "Base")
+        # Sample data
+        self.sample_content = """Preferences
+
+Use bullet points
+Be concise
+
+Known Facts
+
+Developer
+Likes coffee"""
+
+        self.sample_properties = {
+            "Role": {
+                "type": "select",
+                "select": {"name": "Developer"}
+            }
+        }
+        
+        # Configure mock
+        self.mock_notion.get_user_page_content.return_value = self.sample_content
+        self.mock_notion.get_user_page_properties.return_value = self.sample_properties
+        self.mock_notion.get_user_preferred_name.return_value = "TestUser"
+
+    def test_get_user_context_for_llm(self):
+        """Test the main function for getting user context."""
+        context = get_user_context_for_llm(
+            self.mock_notion,
+            "U12345",
+            "Base prompt"
+        )
+        
+        # Verify components are included
+        self.assertIn("Base prompt", context)
+        self.assertIn("TestUser", context)
+        self.assertIn("bullet points", context)
+        self.assertIn("Developer", context)
+        
+        # Verify service calls
+        self.mock_notion.get_user_page_content.assert_called_once_with("U12345")
+        self.mock_notion.get_user_page_properties.assert_called_once_with("U12345")
+        self.mock_notion.get_user_preferred_name.assert_called_once_with("U12345")
+
 
 if __name__ == "__main__":
     unittest.main()

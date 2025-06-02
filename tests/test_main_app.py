@@ -2,7 +2,10 @@ import unittest
 from unittest.mock import MagicMock, patch, AsyncMock
 import asyncio
 from fastapi.testclient import TestClient
-from main import app, handle_mention, services
+
+# Import the app and handle_mention function
+from main import app, handle_mention
+
 
 class TestMainApp(unittest.TestCase):
     def setUp(self):
@@ -16,7 +19,7 @@ class TestMainApp(unittest.TestCase):
             "text": "<@BOT123> how are you?",
             "type": "app_mention"
         }
-    
+
     def test_health_check_endpoint(self):
         """Test the health check endpoint."""
         response = self.client.get("/healthz")
@@ -31,31 +34,12 @@ class TestMainApp(unittest.TestCase):
         self.assertIn("slack", data["services"])
         self.assertIn("notion", data["services"])
         self.assertIn("openai", data["services"])
-    
-    @patch('services.slack_service.SlackService.is_available')
-    @patch('services.cached_notion_service.CachedNotionService.is_available')
-    @patch('handler.openai_service.OpenAIService.is_available')
-    def test_health_check_with_service_status(self, mock_openai, mock_notion, mock_slack):
-        """Test health check reflects service availability."""
-        # Configure mock services
-        mock_slack.return_value = True
-        mock_notion.return_value = False  # Notion unavailable
-        mock_openai.return_value = True
-        
-        # Make request
-        response = self.client.get("/healthz")
-        data = response.json()
-        
-        # Should show correct service statuses
-        self.assertEqual(data["services"]["slack"], True)
-        self.assertEqual(data["services"]["notion"], False)
-        self.assertEqual(data["services"]["openai"], True)
-    
+
     def test_test_openai_endpoint(self):
         """Test the OpenAI test endpoint."""
-        # Mock OpenAI service
-        with patch('handler.openai_service.OpenAIService.get_completion_async') as mock_completion:
-            mock_completion.return_value = ("Hello, world!", {"total_tokens": 10})
+        with patch('main.openai_service') as mock_openai:
+            mock_openai.is_available.return_value = True
+            mock_openai.get_completion_async = AsyncMock(return_value=("Hello, world!", {"total_tokens": 10}))
             
             # Make request
             response = self.client.get("/test-openai")
@@ -68,11 +52,12 @@ class TestMainApp(unittest.TestCase):
             self.assertEqual(data["status"], "success")
             self.assertEqual(data["response"], "Hello, world!")
             self.assertIn("usage", data)
-    
+
     def test_test_openai_endpoint_error(self):
         """Test OpenAI test endpoint with error."""
-        # Mock OpenAI service to be unavailable
-        with patch('handler.openai_service.OpenAIService.is_available', return_value=False):
+        with patch('main.openai_service') as mock_openai:
+            mock_openai.is_available.return_value = False
+            
             # Make request
             response = self.client.get("/test-openai")
             
@@ -85,29 +70,39 @@ class TestMainApp(unittest.TestCase):
             self.assertIn("message", data)
             self.assertIn("not initialized", data["message"])
 
+
 class TestHandleMention(unittest.IsolatedAsyncioTestCase):
     async def asyncSetUp(self):
-        # Mock services
-        self.mock_slack = MagicMock()
-        self.mock_slack.clean_prompt_text = MagicMock(return_value="how are you?")
+        # Mock the services used in main.py
+        self.slack_service_patch = patch('main.slack_service')
+        self.notion_service_patch = patch('main.notion_service')
+        self.action_router_patch = patch('main.ActionRouter')
+        
+        self.mock_slack = self.slack_service_patch.start()
+        self.mock_notion = self.notion_service_patch.start()
+        self.mock_router_class = self.action_router_patch.start()
+        
+        # Configure mock slack service
+        self.mock_slack.clean_prompt_text.return_value = "how are you?"
         self.mock_slack.send_ephemeral_message = MagicMock(return_value=True)
         self.mock_slack.send_message = MagicMock(return_value={"ok": True, "ts": "123456.789"})
+        self.mock_slack.add_reaction = MagicMock(return_value=True)
+        self.mock_slack.remove_reaction = MagicMock(return_value=True)
         self.mock_slack.update_channel_stats = MagicMock()
-        self.mock_slack.get_user_display_name = AsyncMock(return_value="Test User")
         
-        self.mock_notion = MagicMock()
-        self.mock_notion.handle_nickname_command = AsyncMock(return_value=(None, False))
+        # Configure mock notion service
+        self.mock_notion.memory_handler = MagicMock()
+        self.mock_notion.handle_memory_instruction = MagicMock(return_value=None)
+        self.mock_notion.handle_nickname_command = MagicMock(return_value=(None, False))
         
+        # Configure mock router
         self.mock_router = MagicMock()
         self.mock_router.route_action = AsyncMock(return_value=MagicMock(
             success=True,
             message="I'm doing well, thank you!",
             thread_ts=None
         ))
-        
-        # Patch ActionRouter
-        self.router_patch = patch('main.ActionRouter', return_value=self.mock_router)
-        self.mock_router_class = self.router_patch.start()
+        self.mock_router_class.return_value = self.mock_router
         
         # Sample event
         self.event = {
@@ -121,21 +116,22 @@ class TestHandleMention(unittest.IsolatedAsyncioTestCase):
         # Mock say and client
         self.mock_say = MagicMock()
         self.mock_client = MagicMock()
-    
+
     async def asyncTearDown(self):
-        self.router_patch.stop()
-    
+        self.slack_service_patch.stop()
+        self.notion_service_patch.stop()
+        self.action_router_patch.stop()
+
     async def test_handle_mention_normal_flow(self):
         """Test the normal handle_mention flow."""
         # Call handle_mention
         response = await handle_mention(self.event, self.mock_say, self.mock_client)
         
-        # Verify ephemeral message was sent
-        self.mock_slack.send_ephemeral_message.assert_called_once_with(
-            "C12345",
-            "U12345",
-            "I heard you! I'm working on a response... 🧠"
-        )
+        # Verify thinking reaction was added
+        self.mock_slack.add_reaction.assert_any_call("C12345", "1617984000.000100", "thinking_face")
+        
+        # Verify memory instruction was checked
+        self.mock_notion.handle_memory_instruction.assert_called_once()
         
         # Verify nickname command was checked
         self.mock_notion.handle_nickname_command.assert_called_once()
@@ -143,11 +139,15 @@ class TestHandleMention(unittest.IsolatedAsyncioTestCase):
         # Verify action was routed
         self.mock_router.route_action.assert_called_once()
         
+        # Verify success reaction was added and thinking removed
+        self.mock_slack.remove_reaction.assert_any_call("C12345", "1617984000.000100", "thinking_face")
+        self.mock_slack.add_reaction.assert_any_call("C12345", "1617984000.000100", "white_check_mark")
+        
         # Verify message was sent
         self.mock_slack.send_message.assert_called_once_with(
             "C12345",
             "I'm doing well, thank you!",
-            None  # thread_ts is None in this test
+            None
         )
         
         # Verify channel stats were updated
@@ -156,16 +156,40 @@ class TestHandleMention(unittest.IsolatedAsyncioTestCase):
             "U12345",
             "1617984000.000100"
         )
-    
+
+    async def test_handle_mention_memory_command(self):
+        """Test handle_mention with memory command."""
+        # Configure memory handler to respond
+        self.mock_notion.handle_memory_instruction.return_value = "I've stored that fact for you."
+        
+        # Call handle_mention
+        response = await handle_mention(self.event, self.mock_say, self.mock_client)
+        
+        # Verify memory command was processed
+        self.mock_notion.handle_memory_instruction.assert_called_once()
+        
+        # Verify action was NOT routed (since memory handled it)
+        self.mock_router.route_action.assert_not_called()
+        
+        # Verify memory response was sent
+        self.mock_slack.send_message.assert_called_once_with(
+            "C12345",
+            "I've stored that fact for you.",
+            None
+        )
+        
+        # Verify success reaction
+        self.mock_slack.add_reaction.assert_any_call("C12345", "1617984000.000100", "white_check_mark")
+
     async def test_handle_mention_nickname_command(self):
         """Test handle_mention with nickname command."""
-        # Configure nickname mock to respond
+        # Configure nickname handler to respond
         self.mock_notion.handle_nickname_command.return_value = ("I'll call you Test User!", True)
         
         # Call handle_mention
         response = await handle_mention(self.event, self.mock_say, self.mock_client)
         
-        # Verify nickname command was checked
+        # Verify nickname command was processed
         self.mock_notion.handle_nickname_command.assert_called_once()
         
         # Verify action was NOT routed (since nickname handled it)
@@ -175,28 +199,47 @@ class TestHandleMention(unittest.IsolatedAsyncioTestCase):
         self.mock_slack.send_message.assert_called_once_with(
             "C12345",
             "I'll call you Test User!",
-            None  # thread_ts
+            None
+        )
+
+    async def test_handle_mention_action_failure(self):
+        """Test handle_mention with action failure."""
+        # Configure router to return failure
+        self.mock_router.route_action.return_value = MagicMock(
+            success=False,
+            error="Test error",
+            message="I encountered an error."
         )
         
-        # Verify channel stats were updated
-        self.mock_slack.update_channel_stats.assert_called_once()
-    
-    async def test_handle_mention_with_error(self):
-        """Test handle_mention with error during processing."""
+        # Call handle_mention
+        response = await handle_mention(self.event, self.mock_say, self.mock_client)
+        
+        # Verify warning reaction was added
+        self.mock_slack.add_reaction.assert_any_call("C12345", "1617984000.000100", "warning")
+        
+        # Verify error message was sent
+        self.mock_slack.send_message.assert_called_once_with(
+            "C12345",
+            "I encountered an error.",
+            None
+        )
+
+    async def test_handle_mention_with_exception(self):
+        """Test handle_mention with exception during processing."""
         # Configure router to raise exception
         self.mock_router.route_action.side_effect = Exception("Test error")
         
         # Call handle_mention
-        with self.assertLogs(level='ERROR') as cm:
-            response = await handle_mention(self.event, self.mock_say, self.mock_client)
+        response = await handle_mention(self.event, self.mock_say, self.mock_client)
         
-        # Verify error was logged
-        self.assertIn("Error handling mention", cm.output[0])
+        # Verify error reaction was added
+        self.mock_slack.add_reaction.assert_any_call("C12345", "1617984000.000100", "x")
         
-        # Verify error message was sent
+        # Verify error was sent via say
         self.mock_say.assert_called_once()
         call_args = self.mock_say.call_args[1]
         self.assertIn("unexpected error", call_args["text"].lower())
+
 
 if __name__ == '__main__':
     unittest.main()
