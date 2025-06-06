@@ -78,13 +78,15 @@ async def handle_mention(event, say, client):
         
         # 1. Check for memory commands first (highest priority) with enhanced logging
         if hasattr(notion_service, "memory_handler"):
-            logger.info(f"Checking for memory commands in prompt: '{prompt[:100]}...'")
+            # Extract just the user command, ignore content after separators
+            user_command = prompt.split('===')[0].split('\n---')[0].strip()
+            logger.info(f"Checking for memory commands in user command: '{user_command[:100]}...'")
             
             try:
                 memory_response = await asyncio.to_thread(
                     notion_service.handle_memory_instruction,
                     user_id,
-                    prompt
+                    user_command  # ← FIX: Only pass user's actual command
                 )
                 
                 if memory_response:

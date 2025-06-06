@@ -10916,3 +10916,1089 @@ Hello world
 2025-06-02 15:15:27.730 | ERROR    | services.slack_service:send_message:188 - [Slack POST] Channel: C12345, Text Length: 11, Text Preview: Hello world
 2025-06-02 15:15:27.730 | ERROR    | services.slack_service:send_message:189 - Failed to send message: 'NoneType' object has no attribute 'client'
 2025-06-02 15:15:27.920 | ERROR    | services.slack_service:_initialize_app:62 - Failed to initialize Slack app: `token` is invalid (auth.test result: {'ok': False, 'error': 'invalid_auth'})
+2025-06-02 16:58:27.586 | INFO     | main:handle_mention:81 - Checking for memory commands in prompt: '<https://edition.cnn.com/2025/06/02/politics/sanctuary-jurisdictions-list-dhs>...'
+2025-06-02 16:58:27.610 | INFO     | main:handle_mention:103 - No memory command detected, continuing to general processing
+2025-06-02 16:58:27.617 | INFO     | actions.action_framework:__init__:788 - ActionRouter initialized with 6 actions
+2025-06-02 16:58:27.617 | INFO     | actions.action_framework:_get_action_for_text:802 - Selected action RetrieveSummarizeAction for message: <@U08RG89NFK7> <https://edition.cnn.com/2025/06/02...
+2025-06-02 16:58:27.619 | WARNING  | actions.action_framework:validate_required_services:71 - Required services not available: web
+2025-06-02 16:58:28.173 | ERROR    | main:handle_mention:185 - Action failed: Required services not available
+2025-06-02 16:58:28.175 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 92 chars):
+None
+
+Here are some examples:
+• "Show my facts"
+• "List my preferences"
+• "Show my projects"
+2025-06-02 16:58:28.618 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1748897908.629409', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1748897908.629409', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': 'None\n\nHere are some examples:\n• "Show my facts"\n• "List my preferences"\n• "Show my projects"', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1748897905.915269', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'Bo5H', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': 'None\n\nHere are some examples:\n• "Show my facts"\n• "List my preferences"\n• "Show my projects"'}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-06-02 16:58:28.848 | ERROR    | services.slack_service:add_reaction:118 - Failed to add reaction :warning: to message 1748897905.915269: The request to the Slack API failed. (url: https://slack.com/api/reactions.add)
+The server responded with: {'ok': False, 'error': 'already_reacted'}
+2025-06-02 16:58:29.070 | ERROR    | services.slack_service:remove_reaction:145 - Failed to remove reaction :thinking_face: from message 1748897905.915269: The request to the Slack API failed. (url: https://slack.com/api/reactions.remove)
+The server responded with: {'ok': False, 'error': 'no_reaction'}
+2025-06-02 17:03:14.476 | INFO     | main:handle_mention:81 - Checking for memory commands in prompt: 'TODO: Maim you after my meeting...'
+2025-06-02 17:03:14.482 | INFO     | handler.memory_handler:handle_memory_instruction:54 - Processing memory instruction - Type: todo, Content: 'maim you after my meeting', User: U089YKL1T4H
+2025-06-02 17:03:14.485 | WARNING  | handler.memory_handler:handle_memory_instruction:172 - Unhandled memory instruction type: todo
+2025-06-02 17:03:14.486 | INFO     | main:handle_mention:103 - No memory command detected, continuing to general processing
+2025-06-02 17:03:14.487 | INFO     | actions.action_framework:__init__:788 - ActionRouter initialized with 6 actions
+2025-06-02 17:03:14.488 | INFO     | actions.action_framework:_get_action_for_text:802 - Selected action TodoAction for message: <@U08RG89NFK7> TODO: Maim you after my meeting...
+2025-06-02 17:03:17.061 | ERROR    | services.cached_notion_service:add_todo_item:878 - Error adding TODO item for user U089YKL1T4H: Block does not support children.
+2025-06-02 17:03:17.579 | ERROR    | main:handle_mention:185 - Action failed: Failed to add TODO item
+2025-06-02 17:03:17.579 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 155 chars):
+I couldn't add that TODO item to your list. Please try again later.
+
+Here are some examples:
+• "TODO: Call John tomorrow"
+• "TODO: Finish report by Friday"
+2025-06-02 17:03:17.987 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1748898197.994499', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1748898197.994499', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': 'I couldn\'t add that TODO item to your list. Please try again later.\n\nHere are some examples:\n• "TODO: Call John tomorrow"\n• "TODO: Finish report by Friday"', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1748898192.361109', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'ngy9', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': 'I couldn\'t add that TODO item to your list. Please try again later.\n\nHere are some examples:\n• "TODO: Call John tomorrow"\n• "TODO: Finish report by Friday"'}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-06-02 17:03:18.190 | ERROR    | services.slack_service:add_reaction:118 - Failed to add reaction :warning: to message 1748898192.361109: The request to the Slack API failed. (url: https://slack.com/api/reactions.add)
+The server responded with: {'ok': False, 'error': 'already_reacted'}
+2025-06-02 17:03:18.402 | ERROR    | services.slack_service:remove_reaction:145 - Failed to remove reaction :thinking_face: from message 1748898192.361109: The request to the Slack API failed. (url: https://slack.com/api/reactions.remove)
+The server responded with: {'ok': False, 'error': 'no_reaction'}
+2025-06-02 17:03:35.337 | INFO     | main:handle_mention:81 - Checking for memory commands in prompt: 'TODO: Call John tomorrow...'
+2025-06-02 17:03:35.339 | INFO     | handler.memory_handler:handle_memory_instruction:54 - Processing memory instruction - Type: todo, Content: 'call john tomorrow', User: U089YKL1T4H
+2025-06-02 17:03:35.339 | WARNING  | handler.memory_handler:handle_memory_instruction:172 - Unhandled memory instruction type: todo
+2025-06-02 17:03:35.340 | INFO     | main:handle_mention:103 - No memory command detected, continuing to general processing
+2025-06-02 17:03:35.340 | INFO     | actions.action_framework:__init__:788 - ActionRouter initialized with 6 actions
+2025-06-02 17:03:35.340 | INFO     | actions.action_framework:_get_action_for_text:802 - Selected action TodoAction for message: <@U08RG89NFK7> TODO: Call John tomorrow...
+2025-06-02 17:03:36.174 | ERROR    | services.cached_notion_service:add_todo_item:878 - Error adding TODO item for user U089YKL1T4H: Block does not support children.
+2025-06-02 17:03:36.711 | ERROR    | main:handle_mention:185 - Action failed: Failed to add TODO item
+2025-06-02 17:03:36.712 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 155 chars):
+I couldn't add that TODO item to your list. Please try again later.
+
+Here are some examples:
+• "TODO: Call John tomorrow"
+• "TODO: Finish report by Friday"
+2025-06-02 17:03:37.115 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1748898217.144909', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1748898217.144909', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': 'I couldn\'t add that TODO item to your list. Please try again later.\n\nHere are some examples:\n• "TODO: Call John tomorrow"\n• "TODO: Finish report by Friday"', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1748898192.361109', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'iyES', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': 'I couldn\'t add that TODO item to your list. Please try again later.\n\nHere are some examples:\n• "TODO: Call John tomorrow"\n• "TODO: Finish report by Friday"'}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-06-02 17:03:37.323 | ERROR    | services.slack_service:add_reaction:118 - Failed to add reaction :warning: to message 1748898213.195239: The request to the Slack API failed. (url: https://slack.com/api/reactions.add)
+The server responded with: {'ok': False, 'error': 'already_reacted'}
+2025-06-02 17:03:37.533 | ERROR    | services.slack_service:remove_reaction:145 - Failed to remove reaction :thinking_face: from message 1748898213.195239: The request to the Slack API failed. (url: https://slack.com/api/reactions.remove)
+The server responded with: {'ok': False, 'error': 'no_reaction'}
+2025-06-03 10:57:26.942 | INFO     | main:<module>:28 - Starting application in development mode
+2025-06-03 10:57:27.039 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-06-03 10:57:27.040 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-06-03 10:57:27.062 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-06-03 10:57:27.642 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-06-03 10:57:27.834 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-06-03 10:57:27.834 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-06-03 10:57:27.842 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-06-03 10:57:27.842 | INFO     | main:startup_event:228 - Slack bot started in socket mode.
+2025-06-03 10:57:27.865 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-06-03 10:58:00.392 | INFO     | main:handle_mention:81 - Checking for memory commands in prompt: 'if Yuval Noah Harari has written at length about what we should be doing, why aren't we doing it???...'
+2025-06-03 10:58:00.407 | INFO     | main:handle_mention:103 - No memory command detected, continuing to general processing
+2025-06-03 10:58:00.617 | INFO     | actions.action_framework:__init__:788 - ActionRouter initialized with 6 actions
+2025-06-03 10:58:00.624 | INFO     | actions.action_framework:_get_action_for_text:802 - Selected action ContextResponseAction for message: <@U08RG89NFK7> if Yuval Noah Harari has written at...
+2025-06-03 10:58:00.627 | INFO     | utils.history_manager:extract_search_topic:306 - Extracting search topic from prompt: if Yuval Noah Harari has written at length about what we should be doing, why aren't we doing it???
+2025-06-03 10:58:00.634 | INFO     | utils.history_manager:extract_search_topic:362 - Extracted topic from direct pattern: 'what we should be doing'
+2025-06-03 10:58:00.634 | INFO     | utils.history_manager:retrieve_and_filter_history:58 - Performing deep historical search for topic: 'what we should be doing'
+2025-06-03 10:58:00.638 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 2000)...
+2025-06-03 10:58:01.434 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 148 messages from channel C08SJ5EUTPT.
+2025-06-03 10:58:01.435 | INFO     | utils.history_manager:retrieve_and_filter_history:67 - Retrieved 148 main channel messages
+2025-06-03 10:58:01.442 | INFO     | utils.history_manager:retrieve_and_filter_history:107 - Identified 10 thread parent messages to search
+2025-06-03 10:58:01.442 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748880636.264139 (limit: 100)...
+2025-06-03 10:58:01.734 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 30 messages from thread 1748880636.264139.
+2025-06-03 10:58:01.735 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747229885.082289 (limit: 100)...
+2025-06-03 10:58:02.044 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 16 messages from thread 1747229885.082289.
+2025-06-03 10:58:02.045 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748906225.557339 (limit: 100)...
+2025-06-03 10:58:02.267 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 13 messages from thread 1748906225.557339.
+2025-06-03 10:58:02.267 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748879439.071809 (limit: 100)...
+2025-06-03 10:58:02.495 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1748879439.071809.
+2025-06-03 10:58:02.495 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748627857.900709 (limit: 100)...
+2025-06-03 10:58:02.738 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1748627857.900709.
+2025-06-03 10:58:02.739 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747735398.888529 (limit: 100)...
+2025-06-03 10:58:02.963 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747735398.888529.
+2025-06-03 10:58:02.964 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747398469.291069 (limit: 100)...
+2025-06-03 10:58:03.198 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747398469.291069.
+2025-06-03 10:58:03.199 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747240286.113569 (limit: 100)...
+2025-06-03 10:58:03.429 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747240286.113569.
+2025-06-03 10:58:03.430 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747154183.175429 (limit: 100)...
+2025-06-03 10:58:03.720 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747154183.175429.
+2025-06-03 10:58:03.721 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748879616.754639 (limit: 100)...
+2025-06-03 10:58:03.944 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1748879616.754639.
+2025-06-03 10:58:03.944 | INFO     | utils.history_manager:retrieve_and_filter_history:128 - Retrieved 127 total messages from 10 threads
+2025-06-03 10:58:03.945 | INFO     | utils.history_manager:retrieve_and_filter_history:148 - Combined into 265 unique messages after deduplication
+2025-06-03 10:58:03.945 | INFO     | utils.history_manager:retrieve_and_filter_history:153 - Filtering messages containing topic: 'what we should be doing'
+2025-06-03 10:58:03.945 | INFO     | utils.history_manager:find_messages_containing_topic:419 - Searching for topic 'what we should be doing' in 265 messages
+2025-06-03 10:58:03.952 | INFO     | utils.history_manager:find_messages_containing_topic:476 - 📊 Search results for topic 'what we should be doing':
+2025-06-03 10:58:03.953 | INFO     | utils.history_manager:find_messages_containing_topic:477 -   - Total matches: 1
+2025-06-03 10:58:03.953 | INFO     | utils.history_manager:find_messages_containing_topic:478 -   - Skipped self-referential messages: 0
+2025-06-03 10:58:03.953 | INFO     | utils.history_manager:find_messages_containing_topic:479 -   - Matches in text field: 1
+2025-06-03 10:58:03.953 | INFO     | utils.history_manager:find_messages_containing_topic:480 -   - Matches only in blocks: 0
+2025-06-03 10:58:03.953 | INFO     | utils.history_manager:find_messages_containing_topic:481 -   - Matches only in attachments: 0
+2025-06-03 10:58:03.953 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - FOUND 1 MESSAGES CONTAINING TOPIC 'what we should be doing'
+2025-06-03 10:58:03.953 | INFO     | utils.history_manager:retrieve_and_filter_history:160 - Search ratio: 1/265 messages matched
+2025-06-03 10:58:03.954 | INFO     | utils.history_manager:retrieve_and_filter_history:164 - Sample matching message: <@U08RG89NFK7> if Yuval Noah Harari has written at length about what we should be doing, why aren't 
+2025-06-03 10:58:03.954 | INFO     | utils.history_manager:retrieve_and_filter_history:300 - Retrieved 1 messages for Deep search for: what we should be doing
+2025-06-03 10:58:03.954 | INFO     | utils.history_manager:format_history_for_prompt:635 - Formatted message history: 347 characters
+2025-06-03 10:58:03.955 | INFO     | actions.action_framework:execute:244 - Fetching Notion context for user U089YKL1T4H
+2025-06-03 10:58:05.950 | INFO     | services.cached_notion_service:get_user_page_content:374 - Retrieved Notion page content for user U089YKL1T4H (length: 1042)
+2025-06-03 10:58:06.199 | INFO     | services.cached_notion_service:get_user_page_content:310 - Cache hit for user page content: U089YKL1T4H
+2025-06-03 10:58:06.199 | INFO     | utils.context_builder:get_enhanced_user_context:21 - Building enhanced context for user U089YKL1T4H
+2025-06-03 10:58:06.200 | INFO     | utils.context_builder:get_enhanced_user_context:23 - Using preferred name: Cide Hamete Benengeli
+2025-06-03 10:58:06.200 | INFO     | utils.context_builder:get_enhanced_user_context:26 - Page content length: 1042 chars
+2025-06-03 10:58:06.201 | INFO     | utils.context_builder:get_enhanced_user_context:89 - Generated enhanced context length: 2224 chars
+2025-06-03 10:58:06.201 | INFO     | actions.action_framework:execute:284 - History retrieval mode: unknown
+2025-06-03 10:58:06.202 | INFO     | actions.action_framework:execute:285 - Retrieved 1 relevant messages
+2025-06-03 10:58:06.202 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-03 10:58:06.573 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-03 10:58:06.575 | INFO     | handler.openai_service:get_completion_async:157 - Sending 757 tokens to OpenAI async. Model: gpt-4o
+2025-06-03 10:58:09.834 | INFO     | handler.openai_service:get_completion_async:177 - OpenAI response received successfully in 1 attempt(s)
+2025-06-03 10:58:10.427 | INFO     | main:handle_mention:164 - Sending action response message (length: 374)
+2025-06-03 10:58:10.427 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 374 chars):
+La questione di perché non stiamo seguendo i consigli di Yuval Noah Harari è complessa. Le ragioni possono includere la resistenza al cambiamento, interessi economici e politici che ostacolano l'azione, e la difficoltà di coordinare uno sforzo globale. Inoltre, anche la mancanza di consapevolezza o comprensione profonda dei suoi scritti può giocare un ruolo significativo.
+2025-06-03 10:58:10.859 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1748962693.892629', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1748962693.892629', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': "La questione di perché non stiamo seguendo i consigli di Yuval Noah Harari è complessa. Le ragioni possono includere la resistenza al cambiamento, interessi economici e politici che ostacolano l'azione, e la difficoltà di coordinare uno sforzo globale. Inoltre, anche la mancanza di consapevolezza o comprensione profonda dei suoi scritti può giocare un ruolo significativo.", 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1748962680.989599', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'GG4d', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': "La questione di perché non stiamo seguendo i consigli di Yuval Noah Harari è complessa. Le ragioni possono includere la resistenza al cambiamento, interessi economici e politici che ostacolano l'azione, e la difficoltà di coordinare uno sforzo globale. Inoltre, anche la mancanza di consapevolezza o comprensione profonda dei suoi scritti può giocare un ruolo significativo."}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-06-03 10:59:39.995 | INFO     | main:handle_mention:81 - Checking for memory commands in prompt: 'remove Respond in Italian...'
+2025-06-03 10:59:40.010 | INFO     | main:handle_mention:103 - No memory command detected, continuing to general processing
+2025-06-03 10:59:40.011 | INFO     | actions.action_framework:__init__:788 - ActionRouter initialized with 6 actions
+2025-06-03 10:59:40.011 | INFO     | actions.action_framework:_get_action_for_text:802 - Selected action ContextResponseAction for message: <@U08RG89NFK7> remove Respond in Italian...
+2025-06-03 10:59:40.012 | INFO     | utils.history_manager:extract_search_topic:306 - Extracting search topic from prompt: remove Respond in Italian
+2025-06-03 10:59:40.012 | INFO     | utils.history_manager:extract_search_topic:391 - Extracted single capitalized topic: 'Italian'
+2025-06-03 10:59:40.012 | INFO     | utils.history_manager:retrieve_and_filter_history:58 - Performing deep historical search for topic: 'Italian'
+2025-06-03 10:59:40.013 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 2000)...
+2025-06-03 10:59:40.625 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 149 messages from channel C08SJ5EUTPT.
+2025-06-03 10:59:40.626 | INFO     | utils.history_manager:retrieve_and_filter_history:67 - Retrieved 149 main channel messages
+2025-06-03 10:59:40.626 | INFO     | utils.history_manager:retrieve_and_filter_history:107 - Identified 10 thread parent messages to search
+2025-06-03 10:59:40.627 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748880636.264139 (limit: 100)...
+2025-06-03 10:59:40.923 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 30 messages from thread 1748880636.264139.
+2025-06-03 10:59:40.924 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747229885.082289 (limit: 100)...
+2025-06-03 10:59:41.204 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 16 messages from thread 1747229885.082289.
+2025-06-03 10:59:41.205 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748906225.557339 (limit: 100)...
+2025-06-03 10:59:41.435 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 13 messages from thread 1748906225.557339.
+2025-06-03 10:59:41.436 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748879439.071809 (limit: 100)...
+2025-06-03 10:59:41.656 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1748879439.071809.
+2025-06-03 10:59:41.657 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748627857.900709 (limit: 100)...
+2025-06-03 10:59:41.881 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1748627857.900709.
+2025-06-03 10:59:41.881 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747735398.888529 (limit: 100)...
+2025-06-03 10:59:42.135 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747735398.888529.
+2025-06-03 10:59:42.136 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747398469.291069 (limit: 100)...
+2025-06-03 10:59:42.354 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747398469.291069.
+2025-06-03 10:59:42.354 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747240286.113569 (limit: 100)...
+2025-06-03 10:59:42.579 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747240286.113569.
+2025-06-03 10:59:42.580 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747154183.175429 (limit: 100)...
+2025-06-03 10:59:42.858 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747154183.175429.
+2025-06-03 10:59:42.859 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748879616.754639 (limit: 100)...
+2025-06-03 10:59:43.094 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1748879616.754639.
+2025-06-03 10:59:43.104 | INFO     | utils.history_manager:retrieve_and_filter_history:128 - Retrieved 127 total messages from 10 threads
+2025-06-03 10:59:43.104 | INFO     | utils.history_manager:retrieve_and_filter_history:148 - Combined into 266 unique messages after deduplication
+2025-06-03 10:59:43.104 | INFO     | utils.history_manager:retrieve_and_filter_history:153 - Filtering messages containing topic: 'Italian'
+2025-06-03 10:59:43.105 | INFO     | utils.history_manager:find_messages_containing_topic:419 - Searching for topic 'Italian' in 266 messages
+2025-06-03 10:59:43.106 | INFO     | utils.history_manager:find_messages_containing_topic:476 - 📊 Search results for topic 'Italian':
+2025-06-03 10:59:43.107 | INFO     | utils.history_manager:find_messages_containing_topic:477 -   - Total matches: 3
+2025-06-03 10:59:43.107 | INFO     | utils.history_manager:find_messages_containing_topic:478 -   - Skipped self-referential messages: 0
+2025-06-03 10:59:43.125 | INFO     | utils.history_manager:find_messages_containing_topic:479 -   - Matches in text field: 3
+2025-06-03 10:59:43.125 | INFO     | utils.history_manager:find_messages_containing_topic:480 -   - Matches only in blocks: 0
+2025-06-03 10:59:43.125 | INFO     | utils.history_manager:find_messages_containing_topic:481 -   - Matches only in attachments: 0
+2025-06-03 10:59:43.126 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - FOUND 3 MESSAGES CONTAINING TOPIC 'Italian'
+2025-06-03 10:59:43.126 | INFO     | utils.history_manager:retrieve_and_filter_history:160 - Search ratio: 3/266 messages matched
+2025-06-03 10:59:43.126 | INFO     | utils.history_manager:retrieve_and_filter_history:164 - Sample matching message: <@U08RG89NFK7> remove Respond in Italian
+2025-06-03 10:59:43.126 | INFO     | utils.history_manager:retrieve_and_filter_history:300 - Retrieved 3 messages for Deep search for: Italian
+2025-06-03 10:59:43.326 | INFO     | utils.history_manager:format_history_for_prompt:635 - Formatted message history: 413 characters
+2025-06-03 10:59:43.326 | INFO     | actions.action_framework:execute:244 - Fetching Notion context for user U089YKL1T4H
+2025-06-03 10:59:43.327 | INFO     | services.cached_notion_service:get_user_page_content:310 - Cache hit for user page content: U089YKL1T4H
+2025-06-03 10:59:43.328 | INFO     | services.cached_notion_service:get_user_page_content:310 - Cache hit for user page content: U089YKL1T4H
+2025-06-03 10:59:43.328 | INFO     | utils.context_builder:get_enhanced_user_context:21 - Building enhanced context for user U089YKL1T4H
+2025-06-03 10:59:43.328 | INFO     | utils.context_builder:get_enhanced_user_context:23 - Using preferred name: Cide Hamete Benengeli
+2025-06-03 10:59:43.329 | INFO     | utils.context_builder:get_enhanced_user_context:26 - Page content length: 1042 chars
+2025-06-03 10:59:43.329 | INFO     | utils.context_builder:get_enhanced_user_context:89 - Generated enhanced context length: 2224 chars
+2025-06-03 10:59:43.329 | INFO     | actions.action_framework:execute:284 - History retrieval mode: unknown
+2025-06-03 10:59:43.329 | INFO     | actions.action_framework:execute:285 - Retrieved 3 relevant messages
+2025-06-03 10:59:43.330 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-03 10:59:43.338 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-03 10:59:43.339 | INFO     | handler.openai_service:get_completion_async:157 - Sending 762 tokens to OpenAI async. Model: gpt-4o
+2025-06-03 10:59:45.571 | INFO     | handler.openai_service:get_completion_async:177 - OpenAI response received successfully in 1 attempt(s)
+2025-06-03 10:59:46.095 | INFO     | main:handle_mention:164 - Sending action response message (length: 75)
+2025-06-03 10:59:46.095 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 75 chars):
+:ballot_box_with_check: Removed from your Preferences: "Respond in Italian"
+2025-06-03 10:59:46.414 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1748962789.527169', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1748962789.527169', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': ':ballot_box_with_check: Removed from your Preferences: "Respond in Italian"', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1748962780.837119', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'mk2', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'emoji', 'name': 'ballot_box_with_check', 'unicode': '2611-fe0f'}, {'type': 'text', 'text': ' Removed from your Preferences: "Respond in Italian"'}]}]}]}}
+2025-06-03 11:00:20.026 | INFO     | main:handle_mention:81 - Checking for memory commands in prompt: 'remove preference: Respond in Italian...'
+2025-06-03 11:00:20.029 | INFO     | handler.memory_handler:handle_memory_instruction:54 - Processing memory instruction - Type: delete_preference, Content: 'remove preference: Respond in Italian', User: U089YKL1T4H
+2025-06-03 11:00:20.030 | WARNING  | handler.memory_handler:handle_memory_instruction:172 - Unhandled memory instruction type: delete_preference
+2025-06-03 11:00:20.030 | INFO     | main:handle_mention:103 - No memory command detected, continuing to general processing
+2025-06-03 11:00:20.030 | INFO     | actions.action_framework:__init__:788 - ActionRouter initialized with 6 actions
+2025-06-03 11:00:20.031 | INFO     | actions.action_framework:_get_action_for_text:802 - Selected action ContextResponseAction for message: <@U08RG89NFK7> remove preference: Respond in Itali...
+2025-06-03 11:00:20.031 | INFO     | utils.history_manager:extract_search_topic:306 - Extracting search topic from prompt: remove preference: Respond in Italian
+2025-06-03 11:00:20.032 | INFO     | utils.history_manager:extract_search_topic:391 - Extracted single capitalized topic: 'Italian'
+2025-06-03 11:00:20.032 | INFO     | utils.history_manager:retrieve_and_filter_history:58 - Performing deep historical search for topic: 'Italian'
+2025-06-03 11:00:20.032 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 2000)...
+2025-06-03 11:00:20.712 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 150 messages from channel C08SJ5EUTPT.
+2025-06-03 11:00:20.712 | INFO     | utils.history_manager:retrieve_and_filter_history:67 - Retrieved 150 main channel messages
+2025-06-03 11:00:20.713 | INFO     | utils.history_manager:retrieve_and_filter_history:107 - Identified 11 thread parent messages to search
+2025-06-03 11:00:20.713 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748962780.837119 (limit: 100)...
+2025-06-03 11:00:20.949 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1748962780.837119.
+2025-06-03 11:00:20.949 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748880636.264139 (limit: 100)...
+2025-06-03 11:00:21.230 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 30 messages from thread 1748880636.264139.
+2025-06-03 11:00:21.231 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747229885.082289 (limit: 100)...
+2025-06-03 11:00:21.514 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 16 messages from thread 1747229885.082289.
+2025-06-03 11:00:21.515 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748906225.557339 (limit: 100)...
+2025-06-03 11:00:21.737 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 13 messages from thread 1748906225.557339.
+2025-06-03 11:00:21.738 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748879439.071809 (limit: 100)...
+2025-06-03 11:00:21.970 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1748879439.071809.
+2025-06-03 11:00:21.970 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748627857.900709 (limit: 100)...
+2025-06-03 11:00:22.209 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1748627857.900709.
+2025-06-03 11:00:22.209 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747735398.888529 (limit: 100)...
+2025-06-03 11:00:22.957 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747735398.888529.
+2025-06-03 11:00:22.957 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747398469.291069 (limit: 100)...
+2025-06-03 11:00:23.319 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747398469.291069.
+2025-06-03 11:00:23.320 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747240286.113569 (limit: 100)...
+2025-06-03 11:00:23.877 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747240286.113569.
+2025-06-03 11:00:23.877 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747154183.175429 (limit: 100)...
+2025-06-03 11:00:24.159 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747154183.175429.
+2025-06-03 11:00:24.159 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748879616.754639 (limit: 100)...
+2025-06-03 11:00:24.433 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1748879616.754639.
+2025-06-03 11:00:24.433 | INFO     | utils.history_manager:retrieve_and_filter_history:128 - Retrieved 129 total messages from 11 threads
+2025-06-03 11:00:24.434 | INFO     | utils.history_manager:retrieve_and_filter_history:148 - Combined into 268 unique messages after deduplication
+2025-06-03 11:00:24.434 | INFO     | utils.history_manager:retrieve_and_filter_history:153 - Filtering messages containing topic: 'Italian'
+2025-06-03 11:00:24.435 | INFO     | utils.history_manager:find_messages_containing_topic:419 - Searching for topic 'Italian' in 268 messages
+2025-06-03 11:00:24.436 | INFO     | utils.history_manager:find_messages_containing_topic:476 - 📊 Search results for topic 'Italian':
+2025-06-03 11:00:24.437 | INFO     | utils.history_manager:find_messages_containing_topic:477 -   - Total matches: 5
+2025-06-03 11:00:24.437 | INFO     | utils.history_manager:find_messages_containing_topic:478 -   - Skipped self-referential messages: 0
+2025-06-03 11:00:24.437 | INFO     | utils.history_manager:find_messages_containing_topic:479 -   - Matches in text field: 5
+2025-06-03 11:00:24.437 | INFO     | utils.history_manager:find_messages_containing_topic:480 -   - Matches only in blocks: 0
+2025-06-03 11:00:24.437 | INFO     | utils.history_manager:find_messages_containing_topic:481 -   - Matches only in attachments: 0
+2025-06-03 11:00:24.437 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - FOUND 5 MESSAGES CONTAINING TOPIC 'Italian'
+2025-06-03 11:00:24.437 | INFO     | utils.history_manager:retrieve_and_filter_history:160 - Search ratio: 5/268 messages matched
+2025-06-03 11:00:24.438 | INFO     | utils.history_manager:retrieve_and_filter_history:164 - Sample matching message: <@U08RG89NFK7> remove preference: Respond in Italian
+2025-06-03 11:00:24.438 | INFO     | utils.history_manager:retrieve_and_filter_history:300 - Retrieved 5 messages for Deep search for: Italian
+2025-06-03 11:00:24.439 | INFO     | utils.history_manager:format_history_for_prompt:635 - Formatted message history: 666 characters
+2025-06-03 11:00:24.439 | INFO     | actions.action_framework:execute:244 - Fetching Notion context for user U089YKL1T4H
+2025-06-03 11:00:24.439 | INFO     | services.cached_notion_service:get_user_page_content:310 - Cache hit for user page content: U089YKL1T4H
+2025-06-03 11:00:24.440 | INFO     | services.cached_notion_service:get_user_page_content:310 - Cache hit for user page content: U089YKL1T4H
+2025-06-03 11:00:24.440 | INFO     | utils.context_builder:get_enhanced_user_context:21 - Building enhanced context for user U089YKL1T4H
+2025-06-03 11:00:24.440 | INFO     | utils.context_builder:get_enhanced_user_context:23 - Using preferred name: Cide Hamete Benengeli
+2025-06-03 11:00:24.440 | INFO     | utils.context_builder:get_enhanced_user_context:26 - Page content length: 1042 chars
+2025-06-03 11:00:24.441 | INFO     | utils.context_builder:get_enhanced_user_context:89 - Generated enhanced context length: 2224 chars
+2025-06-03 11:00:24.441 | INFO     | actions.action_framework:execute:284 - History retrieval mode: unknown
+2025-06-03 11:00:24.441 | INFO     | actions.action_framework:execute:285 - Retrieved 5 relevant messages
+2025-06-03 11:00:24.441 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-03 11:00:24.443 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-03 11:00:24.444 | INFO     | handler.openai_service:get_completion_async:157 - Sending 811 tokens to OpenAI async. Model: gpt-4o
+2025-06-03 11:00:26.030 | INFO     | handler.openai_service:get_completion_async:177 - OpenAI response received successfully in 1 attempt(s)
+2025-06-03 11:00:27.495 | INFO     | main:handle_mention:164 - Sending action response message (length: 50)
+2025-06-03 11:00:27.495 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 50 chars):
+:square: Preference removed: "Respond in Italian".
+2025-06-03 11:00:28.178 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1748962831.236599', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1748962831.236599', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': ':square: Preference removed: "Respond in Italian".', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1748962820.348889', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': '5Ddt', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'emoji', 'name': 'square'}, {'type': 'text', 'text': ' Preference removed: "Respond in Italian".'}]}]}]}}
+2025-06-03 11:10:40.236 | INFO     | main:<module>:28 - Starting application in development mode
+2025-06-03 11:10:40.412 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-06-03 11:10:40.413 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-06-03 11:10:40.436 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-06-03 11:10:41.172 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-06-03 11:10:41.371 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-06-03 11:10:41.371 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-06-03 11:10:41.381 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-06-03 11:10:41.381 | INFO     | main:startup_event:228 - Slack bot started in socket mode.
+2025-06-03 11:10:41.404 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-06-03 11:12:47.094 | INFO     | main:<module>:28 - Starting application in development mode
+2025-06-03 11:12:47.239 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-06-03 11:12:47.239 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-06-03 11:12:47.263 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-06-03 11:12:47.873 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-06-03 11:12:48.098 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-06-03 11:12:48.098 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-06-03 11:12:48.106 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-06-03 11:12:48.106 | INFO     | main:startup_event:228 - Slack bot started in socket mode.
+2025-06-03 11:12:48.133 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-06-03 11:13:04.904 | INFO     | main:<module>:28 - Starting application in development mode
+2025-06-03 11:13:04.988 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-06-03 11:13:04.988 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-06-03 11:13:05.009 | INFO     | services.cached_notion_service:__init__:71 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-06-03 11:13:05.425 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-06-03 11:13:05.615 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-06-03 11:13:05.616 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-06-03 11:13:05.623 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-06-03 11:13:05.623 | INFO     | main:startup_event:228 - Slack bot started in socket mode.
+2025-06-03 11:13:05.642 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-06-03 11:16:33.214 | INFO     | main:<module>:28 - Starting application in development mode
+2025-06-03 11:16:33.321 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-06-03 11:16:33.321 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-06-03 11:16:33.345 | INFO     | services.cached_notion_service:__init__:103 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-06-03 11:16:33.897 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-06-03 11:16:34.115 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-06-03 11:16:34.115 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-06-03 11:16:34.120 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-06-03 11:16:34.120 | INFO     | main:startup_event:228 - Slack bot started in socket mode.
+2025-06-03 11:16:34.152 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-06-03 11:24:38.719 | INFO     | main:<module>:28 - Starting application in development mode
+2025-06-03 11:24:38.815 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-06-03 11:24:38.815 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-06-03 11:24:38.839 | INFO     | services.cached_notion_service:__init__:73 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-06-03 11:24:39.382 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-06-03 11:24:39.596 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-06-03 11:24:39.596 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-06-03 11:24:39.603 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-06-03 11:24:39.603 | INFO     | main:startup_event:228 - Slack bot started in socket mode.
+2025-06-03 11:24:39.631 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-06-03 11:25:24.232 | INFO     | main:<module>:28 - Starting application in development mode
+2025-06-03 11:25:24.323 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-06-03 11:25:24.323 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-06-03 11:25:24.343 | INFO     | services.cached_notion_service:__init__:73 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-06-03 11:25:25.047 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-06-03 11:25:25.238 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-06-03 11:25:25.238 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-06-03 11:25:25.245 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-06-03 11:25:25.245 | INFO     | main:startup_event:228 - Slack bot started in socket mode.
+2025-06-03 11:25:25.273 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-06-03 11:25:43.913 | INFO     | main:<module>:28 - Starting application in development mode
+2025-06-03 11:25:44.005 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-06-03 11:25:44.005 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-06-03 11:25:44.028 | INFO     | services.cached_notion_service:__init__:73 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-06-03 11:25:44.496 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-06-03 11:25:44.687 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-06-03 11:25:44.687 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-06-03 11:25:44.694 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-06-03 11:25:44.694 | INFO     | main:startup_event:228 - Slack bot started in socket mode.
+2025-06-03 11:25:44.712 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-06-03 11:26:37.575 | INFO     | main:<module>:28 - Starting application in development mode
+2025-06-03 11:26:37.667 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-06-03 11:26:37.667 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-06-03 11:26:37.692 | INFO     | services.cached_notion_service:__init__:73 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-06-03 11:26:38.206 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-06-03 11:26:38.419 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-06-03 11:26:38.420 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-06-03 11:26:38.426 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-06-03 11:26:38.426 | INFO     | main:startup_event:228 - Slack bot started in socket mode.
+2025-06-03 11:26:38.448 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-06-03 11:27:48.746 | INFO     | main:<module>:28 - Starting application in development mode
+2025-06-03 11:27:48.886 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-06-03 11:27:48.886 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-06-03 11:27:48.926 | INFO     | services.cached_notion_service:__init__:73 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-06-03 11:27:49.362 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-06-03 11:27:49.554 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-06-03 11:27:49.555 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-06-03 11:27:49.641 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-06-03 11:27:49.641 | INFO     | main:startup_event:228 - Slack bot started in socket mode.
+2025-06-03 11:27:49.689 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-06-03 11:30:41.147 | INFO     | main:<module>:28 - Starting application in development mode
+2025-06-03 11:30:41.254 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-06-03 11:30:41.254 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-06-03 11:30:41.274 | INFO     | services.cached_notion_service:__init__:73 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-06-03 11:30:41.917 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-06-03 11:30:42.177 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-06-03 11:30:42.177 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-06-03 11:30:42.184 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-06-03 11:30:42.185 | INFO     | main:startup_event:228 - Slack bot started in socket mode.
+2025-06-03 11:30:42.210 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-06-03 11:31:02.685 | INFO     | main:<module>:28 - Starting application in development mode
+2025-06-03 11:31:02.858 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-06-03 11:31:02.859 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-06-03 11:31:02.925 | INFO     | services.cached_notion_service:__init__:73 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-06-03 11:31:03.458 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-06-03 11:31:03.650 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-06-03 11:31:03.650 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-06-03 11:31:03.657 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-06-03 11:31:03.658 | INFO     | main:startup_event:228 - Slack bot started in socket mode.
+2025-06-03 11:31:03.675 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-06-03 11:34:30.242 | INFO     | main:<module>:28 - Starting application in development mode
+2025-06-03 11:34:30.358 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-06-03 11:34:30.358 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-06-03 11:34:30.378 | INFO     | services.cached_notion_service:__init__:73 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-06-03 11:34:30.885 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-06-03 11:34:31.076 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-06-03 11:34:31.076 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-06-03 11:34:31.083 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-06-03 11:34:31.083 | INFO     | main:startup_event:228 - Slack bot started in socket mode.
+2025-06-03 11:34:31.107 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-06-03 11:34:39.162 | INFO     | main:<module>:28 - Starting application in development mode
+2025-06-03 11:34:39.266 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-06-03 11:34:39.266 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-06-03 11:34:39.360 | INFO     | services.cached_notion_service:__init__:73 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-06-03 11:34:39.841 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-06-03 11:34:40.032 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-06-03 11:34:40.032 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-06-03 11:34:40.039 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-06-03 11:34:40.039 | INFO     | main:startup_event:228 - Slack bot started in socket mode.
+2025-06-03 11:34:40.064 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-06-03 11:35:03.602 | INFO     | main:<module>:28 - Starting application in development mode
+2025-06-03 11:35:03.694 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-06-03 11:35:03.694 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-06-03 11:35:03.715 | INFO     | services.cached_notion_service:__init__:73 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-06-03 11:35:04.191 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-06-03 11:35:04.382 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-06-03 11:35:04.382 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-06-03 11:35:04.390 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-06-03 11:35:04.390 | INFO     | main:startup_event:228 - Slack bot started in socket mode.
+2025-06-03 11:35:04.410 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-06-03 11:36:08.121 | INFO     | main:handle_mention:81 - Checking for memory commands in prompt: 'Preference: always respond in Italian...'
+2025-06-03 11:36:08.124 | INFO     | handler.memory_handler:classify_memory_instruction:279 - Detected language preference command: 'Italian'
+2025-06-03 11:36:08.124 | INFO     | handler.memory_handler:handle_memory_instruction:54 - Processing memory instruction - Type: language_preference, Content: 'Italian', User: U089YKL1T4H
+2025-06-03 11:36:08.124 | INFO     | handler.memory_handler:handle_memory_instruction:58 - Processing language preference: 'Italian'
+2025-06-03 11:36:08.125 | INFO     | handler.memory_handler:set_language_preference:443 - Setting language preference for user U089YKL1T4H: Italian
+2025-06-03 11:36:12.479 | INFO     | services.cached_notion_service:invalidate_user_cache:118 - Cache invalidated for user U089YKL1T4H
+2025-06-03 11:36:12.481 | INFO     | handler.memory_handler:set_language_preference:476 - Successfully set language preference to Italian for user U089YKL1T4H
+2025-06-03 11:36:23.843 | INFO     | handler.memory_handler:handle_memory_instruction:65 - ✅ Language preference successfully stored for user U089YKL1T4H
+2025-06-03 11:36:23.845 | INFO     | main:handle_mention:92 - ✅ Memory command processed successfully for user U089YKL1T4H
+2025-06-03 11:36:23.846 | INFO     | main:handle_mention:93 - Memory response: ✅ I've set your language preference to Italian. I will now respond in Italian.
+2025-06-03 11:36:23.846 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 78 chars):
+✅ I've set your language preference to Italian. I will now respond in Italian.
+2025-06-03 11:36:24.303 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1748964987.392919', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1748964987.392919', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': ":white_check_mark: I've set your language preference to Italian. I will now respond in Italian.", 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1748964969.449699', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'TneL', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'emoji', 'name': 'white_check_mark', 'unicode': '2705'}, {'type': 'text', 'text': " I've set your language preference to Italian. I will now respond in Italian."}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-06-03 11:36:47.327 | INFO     | main:handle_mention:81 - Checking for memory commands in prompt: 'who is better: Dante or Boccaccio?...'
+2025-06-03 11:36:47.329 | INFO     | main:handle_mention:103 - No memory command detected, continuing to general processing
+2025-06-03 11:36:47.526 | INFO     | actions.action_framework:__init__:798 - ActionRouter initialized with 6 actions
+2025-06-03 11:36:47.530 | INFO     | actions.action_framework:_get_action_for_text:812 - Selected action ContextResponseAction for message: <@U08RG89NFK7> who is better: Dante or Boccaccio?...
+2025-06-03 11:36:47.544 | INFO     | utils.history_manager:extract_search_topic:306 - Extracting search topic from prompt: who is better: Dante or Boccaccio?
+2025-06-03 11:36:47.548 | INFO     | utils.history_manager:extract_search_topic:391 - Extracted single capitalized topic: 'Boccaccio'
+2025-06-03 11:36:47.548 | INFO     | utils.history_manager:retrieve_and_filter_history:58 - Performing deep historical search for topic: 'Boccaccio'
+2025-06-03 11:36:47.548 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 2000)...
+2025-06-03 11:36:48.149 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 151 messages from channel C08SJ5EUTPT.
+2025-06-03 11:36:48.149 | INFO     | utils.history_manager:retrieve_and_filter_history:67 - Retrieved 151 main channel messages
+2025-06-03 11:36:48.150 | INFO     | utils.history_manager:retrieve_and_filter_history:107 - Identified 10 thread parent messages to search
+2025-06-03 11:36:48.150 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748880636.264139 (limit: 100)...
+2025-06-03 11:36:48.429 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 30 messages from thread 1748880636.264139.
+2025-06-03 11:36:48.429 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747229885.082289 (limit: 100)...
+2025-06-03 11:36:48.765 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 16 messages from thread 1747229885.082289.
+2025-06-03 11:36:48.766 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748906225.557339 (limit: 100)...
+2025-06-03 11:36:48.990 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 13 messages from thread 1748906225.557339.
+2025-06-03 11:36:48.991 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748879439.071809 (limit: 100)...
+2025-06-03 11:36:49.208 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1748879439.071809.
+2025-06-03 11:36:49.209 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748627857.900709 (limit: 100)...
+2025-06-03 11:36:49.429 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1748627857.900709.
+2025-06-03 11:36:49.430 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747735398.888529 (limit: 100)...
+2025-06-03 11:36:49.655 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747735398.888529.
+2025-06-03 11:36:49.656 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747398469.291069 (limit: 100)...
+2025-06-03 11:36:49.880 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747398469.291069.
+2025-06-03 11:36:49.881 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747240286.113569 (limit: 100)...
+2025-06-03 11:36:50.119 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747240286.113569.
+2025-06-03 11:36:50.120 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747154183.175429 (limit: 100)...
+2025-06-03 11:36:50.396 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747154183.175429.
+2025-06-03 11:36:50.396 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748879616.754639 (limit: 100)...
+2025-06-03 11:36:50.612 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1748879616.754639.
+2025-06-03 11:36:50.613 | INFO     | utils.history_manager:retrieve_and_filter_history:128 - Retrieved 127 total messages from 10 threads
+2025-06-03 11:36:50.613 | INFO     | utils.history_manager:retrieve_and_filter_history:148 - Combined into 268 unique messages after deduplication
+2025-06-03 11:36:50.614 | INFO     | utils.history_manager:retrieve_and_filter_history:153 - Filtering messages containing topic: 'Boccaccio'
+2025-06-03 11:36:50.614 | INFO     | utils.history_manager:find_messages_containing_topic:419 - Searching for topic 'Boccaccio' in 268 messages
+2025-06-03 11:36:50.615 | INFO     | utils.history_manager:find_messages_containing_topic:476 - 📊 Search results for topic 'Boccaccio':
+2025-06-03 11:36:50.615 | INFO     | utils.history_manager:find_messages_containing_topic:477 -   - Total matches: 0
+2025-06-03 11:36:50.616 | INFO     | utils.history_manager:find_messages_containing_topic:478 -   - Skipped self-referential messages: 0
+2025-06-03 11:36:50.616 | INFO     | utils.history_manager:find_messages_containing_topic:479 -   - Matches in text field: 0
+2025-06-03 11:36:50.616 | INFO     | utils.history_manager:find_messages_containing_topic:480 -   - Matches only in blocks: 0
+2025-06-03 11:36:50.616 | INFO     | utils.history_manager:find_messages_containing_topic:481 -   - Matches only in attachments: 0
+2025-06-03 11:36:50.616 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - FOUND 0 MESSAGES CONTAINING TOPIC 'Boccaccio'
+2025-06-03 11:36:50.616 | INFO     | utils.history_manager:retrieve_and_filter_history:160 - Search ratio: 0/268 messages matched
+2025-06-03 11:36:50.616 | WARNING  | utils.history_manager:retrieve_and_filter_history:168 - No matches found for topic 'Boccaccio'. Trying looser matching...
+2025-06-03 11:36:50.617 | INFO     | utils.history_manager:retrieve_and_filter_history:177 - Trying variation: 'boccaccio'
+2025-06-03 11:36:50.617 | INFO     | utils.history_manager:retrieve_and_filter_history:177 - Trying variation: 'Boccaccio'
+2025-06-03 11:36:50.618 | INFO     | utils.history_manager:retrieve_and_filter_history:177 - Trying variation: 'BOCCACCIO'
+2025-06-03 11:36:50.619 | INFO     | utils.history_manager:retrieve_and_filter_history:300 - Retrieved 0 messages for Deep search for: Boccaccio
+2025-06-03 11:36:50.620 | INFO     | actions.action_framework:execute:244 - Fetching Notion context for user U089YKL1T4H
+2025-06-03 11:36:51.495 | INFO     | services.cached_notion_service:get_user_page_content:377 - Retrieved Notion page content for user U089YKL1T4H (length: 1023)
+2025-06-03 11:36:51.507 | INFO     | services.cached_notion_service:get_user_page_content:313 - Cache hit for user page content: U089YKL1T4H
+2025-06-03 11:36:51.507 | INFO     | utils.context_builder:get_enhanced_user_context:22 - Building enhanced context for user U089YKL1T4H
+2025-06-03 11:36:51.507 | INFO     | utils.context_builder:get_enhanced_user_context:24 - Using preferred name: Cide Hamete Benengeli
+2025-06-03 11:36:51.507 | INFO     | utils.context_builder:get_enhanced_user_context:27 - Page content length: 1023 chars
+2025-06-03 11:36:51.508 | INFO     | utils.context_builder:get_enhanced_user_context:33 - Language preference: Italian
+2025-06-03 11:36:51.508 | INFO     | utils.context_builder:get_enhanced_user_context:107 - Generated enhanced context length: 2106 chars
+2025-06-03 11:36:51.508 | INFO     | utils.context_builder:get_enhanced_user_context:108 - Language preference featured prominently: Italian
+2025-06-03 11:36:51.508 | INFO     | actions.action_framework:execute:284 - History retrieval mode: unknown
+2025-06-03 11:36:51.509 | INFO     | actions.action_framework:execute:285 - Retrieved 0 relevant messages
+2025-06-03 11:36:51.509 | INFO     | services.cached_notion_service:get_user_language_preference:1577 - Language preference for user U089YKL1T4H: Italian
+2025-06-03 11:36:51.509 | INFO     | handler.openai_service:_prepare_messages:233 - Retrieved language preference for user U089YKL1T4H: Italian
+2025-06-03 11:36:51.509 | INFO     | handler.openai_service:_prepare_messages:278 - Language preference prominently featured in prompt: Italian
+2025-06-03 11:36:51.510 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-03 11:36:51.818 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-03 11:36:51.820 | INFO     | handler.openai_service:get_completion_async:165 - Sending 723 tokens to OpenAI async. Model: gpt-4o
+2025-06-03 11:36:59.956 | INFO     | handler.openai_service:get_completion_async:185 - OpenAI response received successfully in 1 attempt(s)
+2025-06-03 11:37:00.643 | INFO     | main:handle_mention:164 - Sending action response message (length: 658)
+2025-06-03 11:37:00.644 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 658 chars):
+Valutare chi sia "migliore" tra Dante e Boccaccio è soggettivo e dipende dai gusti personali e dagli interessi letterari. Dante Alighieri è celebre per "La Divina Commedia", un capolavoro della letteratura mondiale che esplora temi profondi come il peccato, la redenzione e l'amore attraverso un viaggio immaginario nell'aldilà. Giovanni Boccaccio, invece, è noto per "Il Decameron", una raccolta di novelle che offre un ritratto vivace e realistico della società del XIV secolo attraverso storie che trattano vari aspetti della vita umana, dall'amore alla fortuna. Entrambi hanno avuto un'enorme influenza sulla letteratura e la cultura italiana e mondiale.
+2025-06-03 11:37:00.987 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1748965024.080799', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1748965024.080799', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': 'Valutare chi sia "migliore" tra Dante e Boccaccio è soggettivo e dipende dai gusti personali e dagli interessi letterari. Dante Alighieri è celebre per "La Divina Commedia", un capolavoro della letteratura mondiale che esplora temi profondi come il peccato, la redenzione e l\'amore attraverso un viaggio immaginario nell\'aldilà. Giovanni Boccaccio, invece, è noto per "Il Decameron", una raccolta di novelle che offre un ritratto vivace e realistico della società del XIV secolo attraverso storie che trattano vari aspetti della vita umana, dall\'amore alla fortuna. Entrambi hanno avuto un\'enorme influenza sulla letteratura e la cultura italiana e mondiale.', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1748964969.449699', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'vqf', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': 'Valutare chi sia "migliore" tra Dante e Boccaccio è soggettivo e dipende dai gusti personali e dagli interessi letterari. Dante Alighieri è celebre per "La Divina Commedia", un capolavoro della letteratura mondiale che esplora temi profondi come il peccato, la redenzione e l\'amore attraverso un viaggio immaginario nell\'aldilà. Giovanni Boccaccio, invece, è noto per "Il Decameron", una raccolta di novelle che offre un ritratto vivace e realistico della società del XIV secolo attraverso storie che trattano vari aspetti della vita umana, dall\'amore alla fortuna. Entrambi hanno avuto un\'enorme influenza sulla letteratura e la cultura italiana e mondiale.'}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-06-03 11:37:22.757 | INFO     | main:handle_mention:81 - Checking for memory commands in prompt: 'list 2 famous jugglers...'
+2025-06-03 11:37:22.777 | INFO     | main:handle_mention:103 - No memory command detected, continuing to general processing
+2025-06-03 11:37:22.777 | INFO     | actions.action_framework:__init__:798 - ActionRouter initialized with 6 actions
+2025-06-03 11:37:22.778 | INFO     | actions.action_framework:_get_action_for_text:812 - Selected action ContextResponseAction for message: <@U08RG89NFK7> list 2 famous jugglers...
+2025-06-03 11:37:22.778 | INFO     | utils.history_manager:extract_search_topic:306 - Extracting search topic from prompt: list 2 famous jugglers
+2025-06-03 11:37:22.778 | INFO     | utils.history_manager:extract_search_topic:394 - No topic could be extracted from the prompt
+2025-06-03 11:37:22.778 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748883150.307149 (limit: 100)...
+2025-06-03 11:37:23.028 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 3 messages from thread 1748883150.307149.
+2025-06-03 11:37:23.029 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 50)...
+2025-06-03 11:37:23.500 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 50 messages from channel C08SJ5EUTPT.
+2025-06-03 11:37:23.500 | INFO     | utils.history_manager:retrieve_and_filter_history:300 - Retrieved 52 messages for Recent context
+2025-06-03 11:37:23.690 | INFO     | utils.history_manager:format_history_for_prompt:635 - Formatted message history: 6759 characters
+2025-06-03 11:37:23.694 | INFO     | actions.action_framework:execute:244 - Fetching Notion context for user U089YKL1T4H
+2025-06-03 11:37:23.694 | INFO     | services.cached_notion_service:get_user_page_content:313 - Cache hit for user page content: U089YKL1T4H
+2025-06-03 11:37:23.696 | INFO     | services.cached_notion_service:get_user_page_content:313 - Cache hit for user page content: U089YKL1T4H
+2025-06-03 11:37:23.696 | INFO     | utils.context_builder:get_enhanced_user_context:22 - Building enhanced context for user U089YKL1T4H
+2025-06-03 11:37:23.696 | INFO     | utils.context_builder:get_enhanced_user_context:24 - Using preferred name: Cide Hamete Benengeli
+2025-06-03 11:37:23.696 | INFO     | utils.context_builder:get_enhanced_user_context:27 - Page content length: 1023 chars
+2025-06-03 11:37:23.697 | INFO     | utils.context_builder:get_enhanced_user_context:33 - Language preference: Italian
+2025-06-03 11:37:23.697 | INFO     | utils.context_builder:get_enhanced_user_context:107 - Generated enhanced context length: 2106 chars
+2025-06-03 11:37:23.697 | INFO     | utils.context_builder:get_enhanced_user_context:108 - Language preference featured prominently: Italian
+2025-06-03 11:37:23.697 | INFO     | actions.action_framework:execute:284 - History retrieval mode: unknown
+2025-06-03 11:37:23.698 | INFO     | actions.action_framework:execute:285 - Retrieved 52 relevant messages
+2025-06-03 11:37:23.698 | INFO     | handler.openai_service:_prepare_messages:233 - Retrieved language preference for user U089YKL1T4H: Italian
+2025-06-03 11:37:23.698 | INFO     | handler.openai_service:_prepare_messages:278 - Language preference prominently featured in prompt: Italian
+2025-06-03 11:37:23.698 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-03 11:37:23.705 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-03 11:37:23.707 | INFO     | handler.openai_service:get_completion_async:165 - Sending 2172 tokens to OpenAI async. Model: gpt-4o
+2025-06-03 11:37:25.286 | INFO     | handler.openai_service:get_completion_async:185 - OpenAI response received successfully in 1 attempt(s)
+2025-06-03 11:37:25.777 | INFO     | main:handle_mention:164 - Sending action response message (length: 72)
+2025-06-03 11:37:25.778 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 72 chars):
+OH YOU JEST! Due giocolieri famosi sono Anthony Gatto e Enrico Rastelli.
+2025-06-03 11:37:26.155 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1748965049.247629', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1748965049.247629', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': 'OH YOU JEST! Due giocolieri famosi sono Anthony Gatto e Enrico Rastelli.', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1748883150.307149', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'Ste', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': 'OH YOU JEST! Due giocolieri famosi sono Anthony Gatto e Enrico Rastelli.'}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-06-03 11:37:50.113 | INFO     | main:handle_mention:81 - Checking for memory commands in prompt: 'My preferred language is English...'
+2025-06-03 11:37:50.114 | INFO     | handler.memory_handler:classify_memory_instruction:279 - Detected language preference command: 'English'
+2025-06-03 11:37:50.114 | INFO     | handler.memory_handler:handle_memory_instruction:54 - Processing memory instruction - Type: language_preference, Content: 'English', User: U089YKL1T4H
+2025-06-03 11:37:50.114 | INFO     | handler.memory_handler:handle_memory_instruction:58 - Processing language preference: 'English'
+2025-06-03 11:37:50.114 | INFO     | handler.memory_handler:set_language_preference:443 - Setting language preference for user U089YKL1T4H: English
+2025-06-03 11:37:50.797 | INFO     | services.cached_notion_service:invalidate_user_cache:118 - Cache invalidated for user U089YKL1T4H
+2025-06-03 11:37:50.797 | INFO     | handler.memory_handler:set_language_preference:476 - Successfully set language preference to English for user U089YKL1T4H
+2025-06-03 11:37:51.533 | INFO     | handler.memory_handler:handle_memory_instruction:65 - ✅ Language preference successfully stored for user U089YKL1T4H
+2025-06-03 11:37:51.534 | INFO     | main:handle_mention:92 - ✅ Memory command processed successfully for user U089YKL1T4H
+2025-06-03 11:37:51.534 | INFO     | main:handle_mention:93 - Memory response: ✅ I've set your language preference to English. I will now respond in English.
+2025-06-03 11:37:51.534 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 78 chars):
+✅ I've set your language preference to English. I will now respond in English.
+2025-06-03 11:37:52.013 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1748965074.947659', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1748965074.947659', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': ":white_check_mark: I've set your language preference to English. I will now respond in English.", 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1748883150.307149', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'Ohg/h', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'emoji', 'name': 'white_check_mark', 'unicode': '2705'}, {'type': 'text', 'text': " I've set your language preference to English. I will now respond in English."}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-06-03 11:39:15.328 | INFO     | main:handle_mention:81 - Checking for memory commands in prompt: 'my preferred language is Italian...'
+2025-06-03 11:39:15.343 | INFO     | handler.memory_handler:classify_memory_instruction:279 - Detected language preference command: 'Italian'
+2025-06-03 11:39:15.344 | INFO     | handler.memory_handler:handle_memory_instruction:54 - Processing memory instruction - Type: language_preference, Content: 'Italian', User: U089YKL1T4H
+2025-06-03 11:39:15.345 | INFO     | handler.memory_handler:handle_memory_instruction:58 - Processing language preference: 'Italian'
+2025-06-03 11:39:15.345 | INFO     | handler.memory_handler:set_language_preference:443 - Setting language preference for user U089YKL1T4H: Italian
+2025-06-03 11:39:16.450 | INFO     | services.cached_notion_service:invalidate_user_cache:118 - Cache invalidated for user U089YKL1T4H
+2025-06-03 11:39:16.451 | INFO     | handler.memory_handler:set_language_preference:476 - Successfully set language preference to Italian for user U089YKL1T4H
+2025-06-03 11:39:17.283 | INFO     | handler.memory_handler:handle_memory_instruction:65 - ✅ Language preference successfully stored for user U089YKL1T4H
+2025-06-03 11:39:17.283 | INFO     | main:handle_mention:92 - ✅ Memory command processed successfully for user U089YKL1T4H
+2025-06-03 11:39:17.283 | INFO     | main:handle_mention:93 - Memory response: ✅ I've set your language preference to Italian. I will now respond in Italian.
+2025-06-03 11:39:17.284 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08N2FK0JQL (length: 78 chars):
+✅ I've set your language preference to Italian. I will now respond in Italian.
+2025-06-03 11:39:17.722 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08N2FK0JQL', 'ts': '1748965160.758689', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1748965160.758689', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': ":white_check_mark: I've set your language preference to Italian. I will now respond in Italian.", 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1748965156.069459', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'g5ec5', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'emoji', 'name': 'white_check_mark', 'unicode': '2705'}, {'type': 'text', 'text': " I've set your language preference to Italian. I will now respond in Italian."}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-06-03 11:39:35.185 | INFO     | main:handle_mention:81 - Checking for memory commands in prompt: 'should I read Dante or Boccaccio first?...'
+2025-06-03 11:39:35.187 | INFO     | main:handle_mention:103 - No memory command detected, continuing to general processing
+2025-06-03 11:39:35.188 | INFO     | actions.action_framework:__init__:798 - ActionRouter initialized with 6 actions
+2025-06-03 11:39:35.189 | INFO     | actions.action_framework:_get_action_for_text:812 - Selected action ContextResponseAction for message: <@U08RG89NFK7> should I read Dante or Boccaccio fi...
+2025-06-03 11:39:35.189 | INFO     | utils.history_manager:extract_search_topic:306 - Extracting search topic from prompt: should I read Dante or Boccaccio first?
+2025-06-03 11:39:35.189 | INFO     | utils.history_manager:extract_search_topic:391 - Extracted single capitalized topic: 'Boccaccio'
+2025-06-03 11:39:35.189 | INFO     | utils.history_manager:retrieve_and_filter_history:58 - Performing deep historical search for topic: 'Boccaccio'
+2025-06-03 11:39:35.190 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08N2FK0JQL (limit: 2000)...
+2025-06-03 11:39:36.101 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 220 messages from channel C08N2FK0JQL.
+2025-06-03 11:39:36.102 | INFO     | utils.history_manager:retrieve_and_filter_history:67 - Retrieved 220 main channel messages
+2025-06-03 11:39:36.103 | INFO     | utils.history_manager:retrieve_and_filter_history:107 - Identified 10 thread parent messages to search
+2025-06-03 11:39:36.103 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744577447.180649 (limit: 100)...
+2025-06-03 11:39:36.616 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 101 messages from thread 1744577447.180649.
+2025-06-03 11:39:36.617 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744554763.134959 (limit: 100)...
+2025-06-03 11:39:37.044 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 64 messages from thread 1744554763.134959.
+2025-06-03 11:39:37.045 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1747256752.470699 (limit: 100)...
+2025-06-03 11:39:37.348 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 20 messages from thread 1747256752.470699.
+2025-06-03 11:39:37.355 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1748791572.662779 (limit: 100)...
+2025-06-03 11:39:37.637 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 18 messages from thread 1748791572.662779.
+2025-06-03 11:39:37.637 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1748792990.923729 (limit: 100)...
+2025-06-03 11:39:37.855 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 15 messages from thread 1748792990.923729.
+2025-06-03 11:39:37.856 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1747134535.909869 (limit: 100)...
+2025-06-03 11:39:38.129 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 15 messages from thread 1747134535.909869.
+2025-06-03 11:39:38.130 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1747134423.889109 (limit: 100)...
+2025-06-03 11:39:38.358 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 15 messages from thread 1747134423.889109.
+2025-06-03 11:39:38.359 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1746840799.202239 (limit: 100)...
+2025-06-03 11:39:38.582 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 14 messages from thread 1746840799.202239.
+2025-06-03 11:39:38.582 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744576703.408639 (limit: 100)...
+2025-06-03 11:39:38.894 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 14 messages from thread 1744576703.408639.
+2025-06-03 11:39:38.894 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744576233.584619 (limit: 100)...
+2025-06-03 11:39:39.181 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 14 messages from thread 1744576233.584619.
+2025-06-03 11:39:39.182 | INFO     | utils.history_manager:retrieve_and_filter_history:128 - Retrieved 289 total messages from 10 threads
+2025-06-03 11:39:39.182 | INFO     | utils.history_manager:retrieve_and_filter_history:148 - Combined into 499 unique messages after deduplication
+2025-06-03 11:39:39.183 | INFO     | utils.history_manager:retrieve_and_filter_history:153 - Filtering messages containing topic: 'Boccaccio'
+2025-06-03 11:39:39.183 | INFO     | utils.history_manager:find_messages_containing_topic:419 - Searching for topic 'Boccaccio' in 499 messages
+2025-06-03 11:39:39.185 | INFO     | utils.history_manager:find_messages_containing_topic:476 - 📊 Search results for topic 'Boccaccio':
+2025-06-03 11:39:39.185 | INFO     | utils.history_manager:find_messages_containing_topic:477 -   - Total matches: 0
+2025-06-03 11:39:39.186 | INFO     | utils.history_manager:find_messages_containing_topic:478 -   - Skipped self-referential messages: 0
+2025-06-03 11:39:39.186 | INFO     | utils.history_manager:find_messages_containing_topic:479 -   - Matches in text field: 0
+2025-06-03 11:39:39.186 | INFO     | utils.history_manager:find_messages_containing_topic:480 -   - Matches only in blocks: 0
+2025-06-03 11:39:39.186 | INFO     | utils.history_manager:find_messages_containing_topic:481 -   - Matches only in attachments: 0
+2025-06-03 11:39:39.186 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - FOUND 0 MESSAGES CONTAINING TOPIC 'Boccaccio'
+2025-06-03 11:39:39.186 | INFO     | utils.history_manager:retrieve_and_filter_history:160 - Search ratio: 0/499 messages matched
+2025-06-03 11:39:39.187 | WARNING  | utils.history_manager:retrieve_and_filter_history:168 - No matches found for topic 'Boccaccio'. Trying looser matching...
+2025-06-03 11:39:39.187 | INFO     | utils.history_manager:retrieve_and_filter_history:177 - Trying variation: 'boccaccio'
+2025-06-03 11:39:39.188 | INFO     | utils.history_manager:retrieve_and_filter_history:177 - Trying variation: 'Boccaccio'
+2025-06-03 11:39:39.189 | INFO     | utils.history_manager:retrieve_and_filter_history:177 - Trying variation: 'BOCCACCIO'
+2025-06-03 11:39:39.190 | INFO     | utils.history_manager:retrieve_and_filter_history:300 - Retrieved 0 messages for Deep search for: Boccaccio
+2025-06-03 11:39:39.191 | INFO     | actions.action_framework:execute:244 - Fetching Notion context for user U089YKL1T4H
+2025-06-03 11:39:39.843 | INFO     | services.cached_notion_service:get_user_page_content:377 - Retrieved Notion page content for user U089YKL1T4H (length: 1023)
+2025-06-03 11:39:39.844 | INFO     | services.cached_notion_service:get_user_page_content:313 - Cache hit for user page content: U089YKL1T4H
+2025-06-03 11:39:39.844 | INFO     | utils.context_builder:get_enhanced_user_context:22 - Building enhanced context for user U089YKL1T4H
+2025-06-03 11:39:39.844 | INFO     | utils.context_builder:get_enhanced_user_context:24 - Using preferred name: Cide Hamete Benengeli
+2025-06-03 11:39:39.844 | INFO     | utils.context_builder:get_enhanced_user_context:27 - Page content length: 1023 chars
+2025-06-03 11:39:39.844 | INFO     | utils.context_builder:get_enhanced_user_context:33 - Language preference: Italian
+2025-06-03 11:39:39.845 | INFO     | utils.context_builder:get_enhanced_user_context:107 - Generated enhanced context length: 2106 chars
+2025-06-03 11:39:39.845 | INFO     | utils.context_builder:get_enhanced_user_context:108 - Language preference featured prominently: Italian
+2025-06-03 11:39:39.845 | INFO     | actions.action_framework:execute:284 - History retrieval mode: unknown
+2025-06-03 11:39:39.846 | INFO     | actions.action_framework:execute:285 - Retrieved 0 relevant messages
+2025-06-03 11:39:39.846 | INFO     | services.cached_notion_service:get_user_language_preference:1577 - Language preference for user U089YKL1T4H: Italian
+2025-06-03 11:39:39.847 | INFO     | handler.openai_service:_prepare_messages:233 - Retrieved language preference for user U089YKL1T4H: Italian
+2025-06-03 11:39:39.847 | INFO     | handler.openai_service:_prepare_messages:278 - Language preference prominently featured in prompt: Italian
+2025-06-03 11:39:39.847 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-03 11:39:39.854 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-03 11:39:39.855 | INFO     | handler.openai_service:get_completion_async:165 - Sending 723 tokens to OpenAI async. Model: gpt-4o
+2025-06-03 11:39:42.918 | INFO     | handler.openai_service:get_completion_async:185 - OpenAI response received successfully in 1 attempt(s)
+2025-06-03 11:39:43.732 | INFO     | main:handle_mention:164 - Sending action response message (length: 356)
+2025-06-03 11:39:43.732 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08N2FK0JQL (length: 356 chars):
+Ti consiglio di iniziare a leggere Dante, in particolare la "Divina Commedia". È un'opera fondamentale della letteratura italiana che offre una profondità poetica e filosofica unica. Una volta completato, puoi passare al "Decamerone" di Boccaccio per un cambio di tono, con le sue storie vivaci e spesso umoristiche. Buona lettura, Cide Hamete Benengeli! 📚
+2025-06-03 11:39:44.134 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08N2FK0JQL', 'ts': '1748965187.207059', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1748965187.207059', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': 'Ti consiglio di iniziare a leggere Dante, in particolare la "Divina Commedia". È un\'opera fondamentale della letteratura italiana che offre una profondità poetica e filosofica unica. Una volta completato, puoi passare al "Decamerone" di Boccaccio per un cambio di tono, con le sue storie vivaci e spesso umoristiche. Buona lettura, Cide Hamete Benengeli! :books:', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1748965156.069459', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'HFhd', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': 'Ti consiglio di iniziare a leggere Dante, in particolare la "Divina Commedia". È un\'opera fondamentale della letteratura italiana che offre una profondità poetica e filosofica unica. Una volta completato, puoi passare al "Decamerone" di Boccaccio per un cambio di tono, con le sue storie vivaci e spesso umoristiche. Buona lettura, Cide Hamete Benengeli! '}, {'type': 'emoji', 'name': 'books', 'unicode': '1f4da'}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-06-03 11:40:04.974 | INFO     | main:handle_mention:81 - Checking for memory commands in prompt: 'thank you. Did either writer write about pasta?...'
+2025-06-03 11:40:04.975 | INFO     | main:handle_mention:103 - No memory command detected, continuing to general processing
+2025-06-03 11:40:04.976 | INFO     | actions.action_framework:__init__:798 - ActionRouter initialized with 6 actions
+2025-06-03 11:40:04.976 | INFO     | actions.action_framework:_get_action_for_text:812 - Selected action ContextResponseAction for message: <@U08RG89NFK7> thank you. Did either writer write ...
+2025-06-03 11:40:04.976 | INFO     | utils.history_manager:extract_search_topic:306 - Extracting search topic from prompt: thank you. Did either writer write about pasta?
+2025-06-03 11:40:04.977 | INFO     | utils.history_manager:extract_search_topic:362 - Extracted topic from direct pattern: 'pasta'
+2025-06-03 11:40:04.977 | INFO     | utils.history_manager:retrieve_and_filter_history:58 - Performing deep historical search for topic: 'pasta'
+2025-06-03 11:40:04.977 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08N2FK0JQL (limit: 2000)...
+2025-06-03 11:40:05.990 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 220 messages from channel C08N2FK0JQL.
+2025-06-03 11:40:05.991 | INFO     | utils.history_manager:retrieve_and_filter_history:67 - Retrieved 220 main channel messages
+2025-06-03 11:40:05.992 | INFO     | utils.history_manager:retrieve_and_filter_history:107 - Identified 10 thread parent messages to search
+2025-06-03 11:40:05.992 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744577447.180649 (limit: 100)...
+2025-06-03 11:40:06.508 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 101 messages from thread 1744577447.180649.
+2025-06-03 11:40:06.509 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744554763.134959 (limit: 100)...
+2025-06-03 11:40:06.940 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 64 messages from thread 1744554763.134959.
+2025-06-03 11:40:06.940 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1747256752.470699 (limit: 100)...
+2025-06-03 11:40:07.224 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 20 messages from thread 1747256752.470699.
+2025-06-03 11:40:07.224 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1748791572.662779 (limit: 100)...
+2025-06-03 11:40:07.508 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 18 messages from thread 1748791572.662779.
+2025-06-03 11:40:07.509 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1748792990.923729 (limit: 100)...
+2025-06-03 11:40:07.734 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 15 messages from thread 1748792990.923729.
+2025-06-03 11:40:07.735 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1747134535.909869 (limit: 100)...
+2025-06-03 11:40:08.032 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 15 messages from thread 1747134535.909869.
+2025-06-03 11:40:08.033 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1747134423.889109 (limit: 100)...
+2025-06-03 11:40:08.257 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 15 messages from thread 1747134423.889109.
+2025-06-03 11:40:08.258 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1746840799.202239 (limit: 100)...
+2025-06-03 11:40:08.492 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 14 messages from thread 1746840799.202239.
+2025-06-03 11:40:08.492 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744576703.408639 (limit: 100)...
+2025-06-03 11:40:08.847 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 14 messages from thread 1744576703.408639.
+2025-06-03 11:40:08.847 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1744576233.584619 (limit: 100)...
+2025-06-03 11:40:09.150 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 14 messages from thread 1744576233.584619.
+2025-06-03 11:40:09.151 | INFO     | utils.history_manager:retrieve_and_filter_history:128 - Retrieved 289 total messages from 10 threads
+2025-06-03 11:40:09.151 | INFO     | utils.history_manager:retrieve_and_filter_history:148 - Combined into 499 unique messages after deduplication
+2025-06-03 11:40:09.151 | INFO     | utils.history_manager:retrieve_and_filter_history:153 - Filtering messages containing topic: 'pasta'
+2025-06-03 11:40:09.151 | INFO     | utils.history_manager:find_messages_containing_topic:419 - Searching for topic 'pasta' in 499 messages
+2025-06-03 11:40:09.156 | INFO     | utils.history_manager:find_messages_containing_topic:476 - 📊 Search results for topic 'pasta':
+2025-06-03 11:40:09.156 | INFO     | utils.history_manager:find_messages_containing_topic:477 -   - Total matches: 0
+2025-06-03 11:40:09.157 | INFO     | utils.history_manager:find_messages_containing_topic:478 -   - Skipped self-referential messages: 0
+2025-06-03 11:40:09.157 | INFO     | utils.history_manager:find_messages_containing_topic:479 -   - Matches in text field: 0
+2025-06-03 11:40:09.157 | INFO     | utils.history_manager:find_messages_containing_topic:480 -   - Matches only in blocks: 0
+2025-06-03 11:40:09.157 | INFO     | utils.history_manager:find_messages_containing_topic:481 -   - Matches only in attachments: 0
+2025-06-03 11:40:09.158 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - FOUND 0 MESSAGES CONTAINING TOPIC 'pasta'
+2025-06-03 11:40:09.158 | INFO     | utils.history_manager:retrieve_and_filter_history:160 - Search ratio: 0/499 messages matched
+2025-06-03 11:40:09.158 | WARNING  | utils.history_manager:retrieve_and_filter_history:168 - No matches found for topic 'pasta'. Trying looser matching...
+2025-06-03 11:40:09.158 | INFO     | utils.history_manager:retrieve_and_filter_history:177 - Trying variation: 'pasta'
+2025-06-03 11:40:09.159 | INFO     | utils.history_manager:retrieve_and_filter_history:177 - Trying variation: 'Pasta'
+2025-06-03 11:40:09.160 | INFO     | utils.history_manager:retrieve_and_filter_history:177 - Trying variation: 'PASTA'
+2025-06-03 11:40:09.162 | INFO     | utils.history_manager:retrieve_and_filter_history:300 - Retrieved 0 messages for Deep search for: pasta
+2025-06-03 11:40:09.164 | INFO     | actions.action_framework:execute:244 - Fetching Notion context for user U089YKL1T4H
+2025-06-03 11:40:09.165 | INFO     | services.cached_notion_service:get_user_page_content:313 - Cache hit for user page content: U089YKL1T4H
+2025-06-03 11:40:09.166 | INFO     | services.cached_notion_service:get_user_page_content:313 - Cache hit for user page content: U089YKL1T4H
+2025-06-03 11:40:09.166 | INFO     | utils.context_builder:get_enhanced_user_context:22 - Building enhanced context for user U089YKL1T4H
+2025-06-03 11:40:09.166 | INFO     | utils.context_builder:get_enhanced_user_context:24 - Using preferred name: Cide Hamete Benengeli
+2025-06-03 11:40:09.166 | INFO     | utils.context_builder:get_enhanced_user_context:27 - Page content length: 1023 chars
+2025-06-03 11:40:09.166 | INFO     | utils.context_builder:get_enhanced_user_context:33 - Language preference: Italian
+2025-06-03 11:40:09.166 | INFO     | utils.context_builder:get_enhanced_user_context:107 - Generated enhanced context length: 2106 chars
+2025-06-03 11:40:09.166 | INFO     | utils.context_builder:get_enhanced_user_context:108 - Language preference featured prominently: Italian
+2025-06-03 11:40:09.167 | INFO     | actions.action_framework:execute:284 - History retrieval mode: unknown
+2025-06-03 11:40:09.167 | INFO     | actions.action_framework:execute:285 - Retrieved 0 relevant messages
+2025-06-03 11:40:09.167 | INFO     | handler.openai_service:_prepare_messages:233 - Retrieved language preference for user U089YKL1T4H: Italian
+2025-06-03 11:40:09.167 | INFO     | handler.openai_service:_prepare_messages:278 - Language preference prominently featured in prompt: Italian
+2025-06-03 11:40:09.167 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-03 11:40:09.168 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-03 11:40:09.169 | INFO     | handler.openai_service:get_completion_async:165 - Sending 722 tokens to OpenAI async. Model: gpt-4o
+2025-06-03 11:40:11.443 | INFO     | handler.openai_service:get_completion_async:185 - OpenAI response received successfully in 1 attempt(s)
+2025-06-03 11:40:12.013 | INFO     | main:handle_mention:164 - Sending action response message (length: 266)
+2025-06-03 11:40:12.014 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08N2FK0JQL (length: 266 chars):
+Mi dispiace, non ho informazioni specifiche su quali scrittori siano stati discussi in precedenza o se abbiano scritto di pasta. Se hai bisogno di ulteriori dettagli o se è stata già discussa una conversazione specifica sul tema, fammi sapere e cercherò di aiutarti!
+2025-06-03 11:40:12.404 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08N2FK0JQL', 'ts': '1748965215.437189', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1748965215.437189', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': 'Mi dispiace, non ho informazioni specifiche su quali scrittori siano stati discussi in precedenza o se abbiano scritto di pasta. Se hai bisogno di ulteriori dettagli o se è stata già discussa una conversazione specifica sul tema, fammi sapere e cercherò di aiutarti!', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1748965156.069459', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': '5D0', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': 'Mi dispiace, non ho informazioni specifiche su quali scrittori siano stati discussi in precedenza o se abbiano scritto di pasta. Se hai bisogno di ulteriori dettagli o se è stata già discussa una conversazione specifica sul tema, fammi sapere e cercherò di aiutarti!'}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-06-03 11:41:00.184 | INFO     | main:handle_mention:81 - Checking for memory commands in prompt: 'Preference: always respond in English...'
+2025-06-03 11:41:00.192 | INFO     | handler.memory_handler:classify_memory_instruction:279 - Detected language preference command: 'English'
+2025-06-03 11:41:00.193 | INFO     | handler.memory_handler:handle_memory_instruction:54 - Processing memory instruction - Type: language_preference, Content: 'English', User: U089YKL1T4H
+2025-06-03 11:41:00.193 | INFO     | handler.memory_handler:handle_memory_instruction:58 - Processing language preference: 'English'
+2025-06-03 11:41:00.193 | INFO     | handler.memory_handler:set_language_preference:443 - Setting language preference for user U089YKL1T4H: English
+2025-06-03 11:41:01.553 | INFO     | services.cached_notion_service:invalidate_user_cache:118 - Cache invalidated for user U089YKL1T4H
+2025-06-03 11:41:01.553 | INFO     | handler.memory_handler:set_language_preference:476 - Successfully set language preference to English for user U089YKL1T4H
+2025-06-03 11:41:02.478 | INFO     | handler.memory_handler:handle_memory_instruction:65 - ✅ Language preference successfully stored for user U089YKL1T4H
+2025-06-03 11:41:02.479 | INFO     | main:handle_mention:92 - ✅ Memory command processed successfully for user U089YKL1T4H
+2025-06-03 11:41:02.479 | INFO     | main:handle_mention:93 - Memory response: ✅ I've set your language preference to English. I will now respond in English.
+2025-06-03 11:41:02.479 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08N2FK0JQL (length: 78 chars):
+✅ I've set your language preference to English. I will now respond in English.
+2025-06-03 11:41:02.809 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08N2FK0JQL', 'ts': '1748965265.896519', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1748965265.896519', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': ":white_check_mark: I've set your language preference to English. I will now respond in English.", 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1748965156.069459', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'Hj2S', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'emoji', 'name': 'white_check_mark', 'unicode': '2705'}, {'type': 'text', 'text': " I've set your language preference to English. I will now respond in English."}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-06-03 11:41:11.180 | INFO     | main:handle_mention:81 - Checking for memory commands in prompt: 'well done, thank you!...'
+2025-06-03 11:41:11.181 | INFO     | main:handle_mention:103 - No memory command detected, continuing to general processing
+2025-06-03 11:41:11.182 | INFO     | actions.action_framework:__init__:798 - ActionRouter initialized with 6 actions
+2025-06-03 11:41:11.182 | INFO     | actions.action_framework:_get_action_for_text:812 - Selected action ContextResponseAction for message: <@U08RG89NFK7> well done, thank you!...
+2025-06-03 11:41:11.182 | INFO     | utils.history_manager:extract_search_topic:306 - Extracting search topic from prompt: well done, thank you!
+2025-06-03 11:41:11.183 | INFO     | utils.history_manager:extract_search_topic:394 - No topic could be extracted from the prompt
+2025-06-03 11:41:11.183 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08N2FK0JQL, ts: 1748965156.069459 (limit: 100)...
+2025-06-03 11:41:11.464 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 9 messages from thread 1748965156.069459.
+2025-06-03 11:41:11.465 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08N2FK0JQL (limit: 50)...
+2025-06-03 11:41:11.795 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 50 messages from channel C08N2FK0JQL.
+2025-06-03 11:41:11.795 | INFO     | utils.history_manager:retrieve_and_filter_history:300 - Retrieved 58 messages for Recent context
+2025-06-03 11:41:12.199 | INFO     | utils.history_manager:format_history_for_prompt:635 - Formatted message history: 7955 characters
+2025-06-03 11:41:12.200 | INFO     | actions.action_framework:execute:244 - Fetching Notion context for user U089YKL1T4H
+2025-06-03 11:41:14.027 | INFO     | services.cached_notion_service:get_user_page_content:377 - Retrieved Notion page content for user U089YKL1T4H (length: 1023)
+2025-06-03 11:41:14.028 | INFO     | services.cached_notion_service:get_user_page_content:313 - Cache hit for user page content: U089YKL1T4H
+2025-06-03 11:41:14.028 | INFO     | utils.context_builder:get_enhanced_user_context:22 - Building enhanced context for user U089YKL1T4H
+2025-06-03 11:41:14.029 | INFO     | utils.context_builder:get_enhanced_user_context:24 - Using preferred name: Cide Hamete Benengeli
+2025-06-03 11:41:14.029 | INFO     | utils.context_builder:get_enhanced_user_context:27 - Page content length: 1023 chars
+2025-06-03 11:41:14.029 | INFO     | utils.context_builder:get_enhanced_user_context:33 - Language preference: English
+2025-06-03 11:41:14.029 | INFO     | utils.context_builder:get_enhanced_user_context:107 - Generated enhanced context length: 2106 chars
+2025-06-03 11:41:14.029 | INFO     | utils.context_builder:get_enhanced_user_context:108 - Language preference featured prominently: English
+2025-06-03 11:41:14.030 | INFO     | actions.action_framework:execute:284 - History retrieval mode: unknown
+2025-06-03 11:41:14.030 | INFO     | actions.action_framework:execute:285 - Retrieved 58 relevant messages
+2025-06-03 11:41:14.030 | INFO     | services.cached_notion_service:get_user_language_preference:1577 - Language preference for user U089YKL1T4H: English
+2025-06-03 11:41:14.030 | INFO     | handler.openai_service:_prepare_messages:233 - Retrieved language preference for user U089YKL1T4H: English
+2025-06-03 11:41:14.030 | INFO     | handler.openai_service:_prepare_messages:278 - Language preference prominently featured in prompt: English
+2025-06-03 11:41:14.030 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-03 11:41:14.036 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-03 11:41:14.039 | INFO     | handler.openai_service:get_completion_async:165 - Sending 2474 tokens to OpenAI async. Model: gpt-4o
+2025-06-03 11:41:16.223 | INFO     | handler.openai_service:get_completion_async:185 - OpenAI response received successfully in 1 attempt(s)
+2025-06-03 11:41:16.708 | INFO     | main:handle_mention:164 - Sending action response message (length: 115)
+2025-06-03 11:41:16.708 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08N2FK0JQL (length: 115 chars):
+You're welcome, Cide Hamete Benengeli! I'm glad to be of help. If there's anything else you need, feel free to ask.
+2025-06-03 11:41:17.006 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08N2FK0JQL', 'ts': '1748965280.104029', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1748965280.104029', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': "You're welcome, Cide Hamete Benengeli! I'm glad to be of help. If there's anything else you need, feel free to ask.", 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1748965156.069459', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'bDB0', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': "You're welcome, Cide Hamete Benengeli! I'm glad to be of help. If there's anything else you need, feel free to ask."}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-06-06 14:58:29.147 | INFO     | main:<module>:28 - Starting application in development mode
+2025-06-06 14:58:29.310 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-06-06 14:58:29.310 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-06-06 14:58:29.338 | INFO     | services.cached_notion_service:__init__:73 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-06-06 14:58:30.083 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-06-06 14:58:30.291 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-06-06 14:58:30.292 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-06-06 14:58:30.302 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-06-06 14:58:30.305 | INFO     | main:startup_event:228 - Slack bot started in socket mode.
+2025-06-06 14:58:30.334 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-06-06 14:59:22.433 | INFO     | main:handle_mention:81 - Checking for memory commands in prompt: 'Hey  are you there?...'
+2025-06-06 14:59:22.438 | INFO     | main:handle_mention:103 - No memory command detected, continuing to general processing
+2025-06-06 14:59:22.684 | INFO     | actions.action_framework:__init__:798 - ActionRouter initialized with 6 actions
+2025-06-06 14:59:22.688 | INFO     | actions.action_framework:_get_action_for_text:812 - Selected action ContextResponseAction for message: Hey <@U08RG89NFK7> are you there?...
+2025-06-06 14:59:22.712 | INFO     | utils.history_manager:extract_search_topic:306 - Extracting search topic from prompt: Hey  are you there?
+2025-06-06 14:59:22.718 | INFO     | utils.history_manager:extract_search_topic:391 - Extracted single capitalized topic: 'Hey'
+2025-06-06 14:59:22.718 | INFO     | utils.history_manager:retrieve_and_filter_history:58 - Performing deep historical search for topic: 'Hey'
+2025-06-06 14:59:22.718 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 2000)...
+2025-06-06 14:59:23.353 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 154 messages from channel C08SJ5EUTPT.
+2025-06-06 14:59:23.354 | INFO     | utils.history_manager:retrieve_and_filter_history:67 - Retrieved 154 main channel messages
+2025-06-06 14:59:23.356 | INFO     | utils.history_manager:retrieve_and_filter_history:107 - Identified 20 thread parent messages to search
+2025-06-06 14:59:23.356 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748878364.341799 (limit: 100)...
+2025-06-06 14:59:23.581 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 4 messages from thread 1748878364.341799.
+2025-06-06 14:59:23.581 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748627857.900709 (limit: 100)...
+2025-06-06 14:59:23.821 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1748627857.900709.
+2025-06-06 14:59:23.822 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747925876.940489 (limit: 100)...
+2025-06-06 14:59:24.045 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 4 messages from thread 1747925876.940489.
+2025-06-06 14:59:24.046 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747650576.571969 (limit: 100)...
+2025-06-06 14:59:24.282 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1747650576.571969.
+2025-06-06 14:59:24.283 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747577127.126919 (limit: 100)...
+2025-06-06 14:59:24.504 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1747577127.126919.
+2025-06-06 14:59:24.505 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747411505.868109 (limit: 100)...
+2025-06-06 14:59:24.742 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1747411505.868109.
+2025-06-06 14:59:24.907 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747340258.771419 (limit: 100)...
+2025-06-06 14:59:25.159 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1747340258.771419.
+2025-06-06 14:59:25.168 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747268813.069289 (limit: 100)...
+2025-06-06 14:59:25.418 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1747268813.069289.
+2025-06-06 14:59:25.422 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747256201.527389 (limit: 100)...
+2025-06-06 14:59:25.674 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 4 messages from thread 1747256201.527389.
+2025-06-06 14:59:25.675 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747255578.422699 (limit: 100)...
+2025-06-06 14:59:25.910 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 4 messages from thread 1747255578.422699.
+2025-06-06 14:59:25.910 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747254862.608349 (limit: 100)...
+2025-06-06 14:59:26.141 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1747254862.608349.
+2025-06-06 14:59:26.141 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747227679.809649 (limit: 100)...
+2025-06-06 14:59:26.375 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1747227679.809649.
+2025-06-06 14:59:26.375 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747225540.076449 (limit: 100)...
+2025-06-06 14:59:26.613 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1747225540.076449.
+2025-06-06 14:59:26.614 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747223824.962049 (limit: 100)...
+2025-06-06 14:59:26.885 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1747223824.962049.
+2025-06-06 14:59:26.885 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747223795.433339 (limit: 100)...
+2025-06-06 14:59:27.124 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1747223795.433339.
+2025-06-06 14:59:27.125 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747173156.252589 (limit: 100)...
+2025-06-06 14:59:27.351 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1747173156.252589.
+2025-06-06 14:59:27.352 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747146650.942649 (limit: 100)...
+2025-06-06 14:59:27.634 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 4 messages from thread 1747146650.942649.
+2025-06-06 14:59:27.636 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747146626.505279 (limit: 100)...
+2025-06-06 14:59:27.862 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1747146626.505279.
+2025-06-06 14:59:27.863 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748880636.264139 (limit: 100)...
+2025-06-06 14:59:28.350 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 30 messages from thread 1748880636.264139.
+2025-06-06 14:59:28.351 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747229885.082289 (limit: 100)...
+2025-06-06 14:59:28.646 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 16 messages from thread 1747229885.082289.
+2025-06-06 14:59:28.652 | INFO     | utils.history_manager:retrieve_and_filter_history:128 - Retrieved 100 total messages from 20 threads
+2025-06-06 14:59:28.652 | INFO     | utils.history_manager:retrieve_and_filter_history:148 - Combined into 234 unique messages after deduplication
+2025-06-06 14:59:28.653 | INFO     | utils.history_manager:retrieve_and_filter_history:153 - Filtering messages containing topic: 'Hey'
+2025-06-06 14:59:28.653 | INFO     | utils.history_manager:find_messages_containing_topic:419 - Searching for topic 'Hey' in 234 messages
+2025-06-06 14:59:28.655 | INFO     | utils.history_manager:find_messages_containing_topic:476 - 📊 Search results for topic 'Hey':
+2025-06-06 14:59:28.655 | INFO     | utils.history_manager:find_messages_containing_topic:477 -   - Total matches: 21
+2025-06-06 14:59:28.655 | INFO     | utils.history_manager:find_messages_containing_topic:478 -   - Skipped self-referential messages: 0
+2025-06-06 14:59:28.655 | INFO     | utils.history_manager:find_messages_containing_topic:479 -   - Matches in text field: 21
+2025-06-06 14:59:28.655 | INFO     | utils.history_manager:find_messages_containing_topic:480 -   - Matches only in blocks: 0
+2025-06-06 14:59:28.655 | INFO     | utils.history_manager:find_messages_containing_topic:481 -   - Matches only in attachments: 0
+2025-06-06 14:59:28.656 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - FOUND 21 MESSAGES CONTAINING TOPIC 'Hey'
+2025-06-06 14:59:28.656 | INFO     | utils.history_manager:retrieve_and_filter_history:160 - Search ratio: 21/234 messages matched
+2025-06-06 14:59:28.656 | INFO     | utils.history_manager:retrieve_and_filter_history:164 - Sample matching message: Hey <@U08RG89NFK7> are you there?
+2025-06-06 14:59:28.656 | INFO     | utils.history_manager:retrieve_and_filter_history:300 - Retrieved 21 messages for Deep search for: Hey
+2025-06-06 14:59:28.930 | INFO     | utils.history_manager:format_history_for_prompt:635 - Formatted message history: 3141 characters
+2025-06-06 14:59:28.931 | INFO     | actions.action_framework:execute:244 - Fetching Notion context for user U089YKL1T4H
+2025-06-06 14:59:30.120 | INFO     | services.cached_notion_service:get_user_page_content:377 - Retrieved Notion page content for user U089YKL1T4H (length: 1023)
+2025-06-06 14:59:30.424 | INFO     | services.cached_notion_service:get_user_page_content:313 - Cache hit for user page content: U089YKL1T4H
+2025-06-06 14:59:30.425 | INFO     | utils.context_builder:get_enhanced_user_context:22 - Building enhanced context for user U089YKL1T4H
+2025-06-06 14:59:30.425 | INFO     | utils.context_builder:get_enhanced_user_context:24 - Using preferred name: Cide Hamete Benengeli
+2025-06-06 14:59:30.427 | INFO     | utils.context_builder:get_enhanced_user_context:27 - Page content length: 1023 chars
+2025-06-06 14:59:30.427 | INFO     | utils.context_builder:get_enhanced_user_context:33 - Language preference: One
+2025-06-06 14:59:30.431 | INFO     | utils.context_builder:get_enhanced_user_context:107 - Generated enhanced context length: 2094 chars
+2025-06-06 14:59:30.431 | INFO     | utils.context_builder:get_enhanced_user_context:108 - Language preference featured prominently: One
+2025-06-06 14:59:30.433 | INFO     | actions.action_framework:execute:284 - History retrieval mode: unknown
+2025-06-06 14:59:30.433 | INFO     | actions.action_framework:execute:285 - Retrieved 21 relevant messages
+2025-06-06 14:59:30.434 | INFO     | services.cached_notion_service:get_user_language_preference:1577 - Language preference for user U089YKL1T4H: One
+2025-06-06 14:59:30.434 | INFO     | handler.openai_service:_prepare_messages:233 - Retrieved language preference for user U089YKL1T4H: One
+2025-06-06 14:59:30.435 | INFO     | handler.openai_service:_prepare_messages:278 - Language preference prominently featured in prompt: One
+2025-06-06 14:59:30.435 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-06 14:59:32.816 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-06 14:59:32.818 | INFO     | handler.openai_service:get_completion_async:165 - Sending 1357 tokens to OpenAI async. Model: gpt-4o
+2025-06-06 14:59:34.728 | INFO     | handler.openai_service:get_completion_async:185 - OpenAI response received successfully in 1 attempt(s)
+2025-06-06 14:59:35.340 | INFO     | main:handle_mention:164 - Sending action response message (length: 3)
+2025-06-06 14:59:35.341 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 3 chars):
+One
+2025-06-06 14:59:35.990 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1749236375.971719', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1749236375.971719', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': 'One', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1749236359.806049', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'eSi', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': 'One'}]}]}]}}
+2025-06-06 15:00:03.402 | INFO     | main:handle_mention:81 - Checking for memory commands in prompt: 'why did you say One?...'
+2025-06-06 15:00:03.410 | INFO     | main:handle_mention:103 - No memory command detected, continuing to general processing
+2025-06-06 15:00:03.413 | INFO     | actions.action_framework:__init__:798 - ActionRouter initialized with 6 actions
+2025-06-06 15:00:03.414 | INFO     | actions.action_framework:_get_action_for_text:812 - Selected action ContextResponseAction for message: <@U08RG89NFK7> why did you say One?...
+2025-06-06 15:00:03.415 | INFO     | utils.history_manager:extract_search_topic:306 - Extracting search topic from prompt: why did you say One?
+2025-06-06 15:00:03.415 | INFO     | utils.history_manager:extract_search_topic:391 - Extracted single capitalized topic: 'One'
+2025-06-06 15:00:03.415 | INFO     | utils.history_manager:retrieve_and_filter_history:58 - Performing deep historical search for topic: 'One'
+2025-06-06 15:00:03.416 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 2000)...
+2025-06-06 15:00:04.295 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 154 messages from channel C08SJ5EUTPT.
+2025-06-06 15:00:04.295 | INFO     | utils.history_manager:retrieve_and_filter_history:67 - Retrieved 154 main channel messages
+2025-06-06 15:00:04.296 | INFO     | utils.history_manager:retrieve_and_filter_history:107 - Identified 20 thread parent messages to search
+2025-06-06 15:00:04.296 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748891694.929799 (limit: 100)...
+2025-06-06 15:00:04.659 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1748891694.929799.
+2025-06-06 15:00:04.660 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748891250.285799 (limit: 100)...
+2025-06-06 15:00:04.912 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 4 messages from thread 1748891250.285799.
+2025-06-06 15:00:04.912 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748891179.330929 (limit: 100)...
+2025-06-06 15:00:05.169 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1748891179.330929.
+2025-06-06 15:00:05.170 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748890849.964439 (limit: 100)...
+2025-06-06 15:00:05.402 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1748890849.964439.
+2025-06-06 15:00:05.403 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748026813.270439 (limit: 100)...
+2025-06-06 15:00:05.646 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1748026813.270439.
+2025-06-06 15:00:05.647 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748026485.852119 (limit: 100)...
+2025-06-06 15:00:05.898 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1748026485.852119.
+2025-06-06 15:00:05.899 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748026196.674979 (limit: 100)...
+2025-06-06 15:00:06.144 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1748026196.674979.
+2025-06-06 15:00:06.144 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748025952.901879 (limit: 100)...
+2025-06-06 15:00:06.409 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 3 messages from thread 1748025952.901879.
+2025-06-06 15:00:06.417 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748025810.765549 (limit: 100)...
+2025-06-06 15:00:06.666 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 3 messages from thread 1748025810.765549.
+2025-06-06 15:00:06.667 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748025455.681389 (limit: 100)...
+2025-06-06 15:00:06.922 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 3 messages from thread 1748025455.681389.
+2025-06-06 15:00:07.022 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748025190.132799 (limit: 100)...
+2025-06-06 15:00:07.309 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 3 messages from thread 1748025190.132799.
+2025-06-06 15:00:07.310 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748024440.347959 (limit: 100)...
+2025-06-06 15:00:07.594 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1748024440.347959.
+2025-06-06 15:00:07.597 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748023289.042409 (limit: 100)...
+2025-06-06 15:00:07.829 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1748023289.042409.
+2025-06-06 15:00:07.829 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748023155.911099 (limit: 100)...
+2025-06-06 15:00:08.058 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1748023155.911099.
+2025-06-06 15:00:08.059 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747766560.451679 (limit: 100)...
+2025-06-06 15:00:08.293 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1747766560.451679.
+2025-06-06 15:00:08.296 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747735398.888529 (limit: 100)...
+2025-06-06 15:00:08.539 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747735398.888529.
+2025-06-06 15:00:08.545 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747256395.819809 (limit: 100)...
+2025-06-06 15:00:08.772 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 8 messages from thread 1747256395.819809.
+2025-06-06 15:00:08.772 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747182935.609979 (limit: 100)...
+2025-06-06 15:00:09.006 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1747182935.609979.
+2025-06-06 15:00:09.006 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748880636.264139 (limit: 100)...
+2025-06-06 15:00:09.305 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 30 messages from thread 1748880636.264139.
+2025-06-06 15:00:09.305 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747229885.082289 (limit: 100)...
+2025-06-06 15:00:09.608 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 16 messages from thread 1747229885.082289.
+2025-06-06 15:00:09.610 | INFO     | utils.history_manager:retrieve_and_filter_history:128 - Retrieved 102 total messages from 20 threads
+2025-06-06 15:00:09.612 | INFO     | utils.history_manager:retrieve_and_filter_history:148 - Combined into 236 unique messages after deduplication
+2025-06-06 15:00:09.612 | INFO     | utils.history_manager:retrieve_and_filter_history:153 - Filtering messages containing topic: 'One'
+2025-06-06 15:00:09.613 | INFO     | utils.history_manager:find_messages_containing_topic:419 - Searching for topic 'One' in 236 messages
+2025-06-06 15:00:09.614 | INFO     | utils.history_manager:find_messages_containing_topic:476 - 📊 Search results for topic 'One':
+2025-06-06 15:00:09.614 | INFO     | utils.history_manager:find_messages_containing_topic:477 -   - Total matches: 30
+2025-06-06 15:00:09.615 | INFO     | utils.history_manager:find_messages_containing_topic:478 -   - Skipped self-referential messages: 0
+2025-06-06 15:00:09.615 | INFO     | utils.history_manager:find_messages_containing_topic:479 -   - Matches in text field: 29
+2025-06-06 15:00:09.615 | INFO     | utils.history_manager:find_messages_containing_topic:480 -   - Matches only in blocks: 0
+2025-06-06 15:00:09.615 | INFO     | utils.history_manager:find_messages_containing_topic:481 -   - Matches only in attachments: 1
+2025-06-06 15:00:09.615 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - FOUND 30 MESSAGES CONTAINING TOPIC 'One'
+2025-06-06 15:00:09.615 | INFO     | utils.history_manager:retrieve_and_filter_history:160 - Search ratio: 30/236 messages matched
+2025-06-06 15:00:09.615 | INFO     | utils.history_manager:retrieve_and_filter_history:164 - Sample matching message: <@U08RG89NFK7> has anyone mentioned pirates?
+2025-06-06 15:00:09.615 | INFO     | utils.history_manager:retrieve_and_filter_history:300 - Retrieved 30 messages for Deep search for: One
+2025-06-06 15:00:09.616 | INFO     | utils.history_manager:format_history_for_prompt:635 - Formatted message history: 8986 characters
+2025-06-06 15:00:09.617 | INFO     | actions.action_framework:execute:244 - Fetching Notion context for user U089YKL1T4H
+2025-06-06 15:00:09.617 | INFO     | services.cached_notion_service:get_user_page_content:313 - Cache hit for user page content: U089YKL1T4H
+2025-06-06 15:00:09.618 | INFO     | services.cached_notion_service:get_user_page_content:313 - Cache hit for user page content: U089YKL1T4H
+2025-06-06 15:00:09.620 | INFO     | utils.context_builder:get_enhanced_user_context:22 - Building enhanced context for user U089YKL1T4H
+2025-06-06 15:00:09.620 | INFO     | utils.context_builder:get_enhanced_user_context:24 - Using preferred name: Cide Hamete Benengeli
+2025-06-06 15:00:09.620 | INFO     | utils.context_builder:get_enhanced_user_context:27 - Page content length: 1023 chars
+2025-06-06 15:00:09.620 | INFO     | utils.context_builder:get_enhanced_user_context:33 - Language preference: One
+2025-06-06 15:00:09.621 | INFO     | utils.context_builder:get_enhanced_user_context:107 - Generated enhanced context length: 2094 chars
+2025-06-06 15:00:09.621 | INFO     | utils.context_builder:get_enhanced_user_context:108 - Language preference featured prominently: One
+2025-06-06 15:00:09.621 | INFO     | actions.action_framework:execute:284 - History retrieval mode: unknown
+2025-06-06 15:00:09.621 | INFO     | actions.action_framework:execute:285 - Retrieved 30 relevant messages
+2025-06-06 15:00:09.622 | INFO     | handler.openai_service:_prepare_messages:233 - Retrieved language preference for user U089YKL1T4H: One
+2025-06-06 15:00:09.622 | INFO     | handler.openai_service:_prepare_messages:278 - Language preference prominently featured in prompt: One
+2025-06-06 15:00:09.622 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-06 15:00:09.631 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-06 15:00:09.634 | INFO     | handler.openai_service:get_completion_async:165 - Sending 2141 tokens to OpenAI async. Model: gpt-4o
+2025-06-06 15:00:10.773 | INFO     | handler.openai_service:get_completion_async:185 - OpenAI response received successfully in 1 attempt(s)
+2025-06-06 15:00:11.291 | INFO     | main:handle_mention:164 - Sending action response message (length: 3)
+2025-06-06 15:00:11.292 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 3 chars):
+One
+2025-06-06 15:00:11.709 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1749236411.693969', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1749236411.693969', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': 'One', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1749236359.806049', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': '/h6G', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': 'One'}]}]}]}}
+2025-06-06 15:01:00.811 | INFO     | main:handle_mention:81 - Checking for memory commands in prompt: 'answer to me in English...'
+2025-06-06 15:01:00.819 | INFO     | handler.memory_handler:classify_memory_instruction:279 - Detected language preference command: 'English'
+2025-06-06 15:01:00.819 | INFO     | handler.memory_handler:handle_memory_instruction:54 - Processing memory instruction - Type: language_preference, Content: 'English', User: U089YKL1T4H
+2025-06-06 15:01:00.819 | INFO     | handler.memory_handler:handle_memory_instruction:58 - Processing language preference: 'English'
+2025-06-06 15:01:00.819 | INFO     | handler.memory_handler:set_language_preference:443 - Setting language preference for user U089YKL1T4H: English
+2025-06-06 15:01:01.524 | INFO     | services.cached_notion_service:invalidate_user_cache:118 - Cache invalidated for user U089YKL1T4H
+2025-06-06 15:01:01.525 | INFO     | handler.memory_handler:set_language_preference:476 - Successfully set language preference to English for user U089YKL1T4H
+2025-06-06 15:01:01.968 | INFO     | handler.memory_handler:handle_memory_instruction:65 - ✅ Language preference successfully stored for user U089YKL1T4H
+2025-06-06 15:01:01.969 | INFO     | main:handle_mention:92 - ✅ Memory command processed successfully for user U089YKL1T4H
+2025-06-06 15:01:01.969 | INFO     | main:handle_mention:93 - Memory response: ✅ I've set your language preference to English. I will now respond in English.
+2025-06-06 15:01:01.969 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 78 chars):
+✅ I've set your language preference to English. I will now respond in English.
+2025-06-06 15:01:02.330 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1749236462.331659', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1749236462.331659', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': ":white_check_mark: I've set your language preference to English. I will now respond in English.", 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1749236359.806049', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'V+j+D', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'emoji', 'name': 'white_check_mark', 'unicode': '2705'}, {'type': 'text', 'text': " I've set your language preference to English. I will now respond in English."}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-06-06 15:01:11.854 | INFO     | main:handle_mention:81 - Checking for memory commands in prompt: 'are you there?...'
+2025-06-06 15:01:11.858 | INFO     | main:handle_mention:103 - No memory command detected, continuing to general processing
+2025-06-06 15:01:11.859 | INFO     | actions.action_framework:__init__:798 - ActionRouter initialized with 6 actions
+2025-06-06 15:01:11.860 | INFO     | actions.action_framework:_get_action_for_text:812 - Selected action ContextResponseAction for message: <@U08RG89NFK7> are you there?...
+2025-06-06 15:01:11.860 | INFO     | utils.history_manager:extract_search_topic:306 - Extracting search topic from prompt: are you there?
+2025-06-06 15:01:11.861 | INFO     | utils.history_manager:extract_search_topic:394 - No topic could be extracted from the prompt
+2025-06-06 15:01:11.861 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1749236359.806049 (limit: 100)...
+2025-06-06 15:01:12.209 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 7 messages from thread 1749236359.806049.
+2025-06-06 15:01:12.210 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 50)...
+2025-06-06 15:01:12.566 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 50 messages from channel C08SJ5EUTPT.
+2025-06-06 15:01:12.567 | INFO     | utils.history_manager:retrieve_and_filter_history:300 - Retrieved 56 messages for Recent context
+2025-06-06 15:01:12.568 | INFO     | utils.history_manager:format_history_for_prompt:635 - Formatted message history: 6942 characters
+2025-06-06 15:01:12.569 | INFO     | actions.action_framework:execute:244 - Fetching Notion context for user U089YKL1T4H
+2025-06-06 15:01:13.029 | INFO     | services.cached_notion_service:get_user_page_content:377 - Retrieved Notion page content for user U089YKL1T4H (length: 1023)
+2025-06-06 15:01:13.030 | INFO     | services.cached_notion_service:get_user_page_content:313 - Cache hit for user page content: U089YKL1T4H
+2025-06-06 15:01:13.031 | INFO     | utils.context_builder:get_enhanced_user_context:22 - Building enhanced context for user U089YKL1T4H
+2025-06-06 15:01:13.031 | INFO     | utils.context_builder:get_enhanced_user_context:24 - Using preferred name: Cide Hamete Benengeli
+2025-06-06 15:01:13.034 | INFO     | utils.context_builder:get_enhanced_user_context:27 - Page content length: 1023 chars
+2025-06-06 15:01:13.034 | INFO     | utils.context_builder:get_enhanced_user_context:33 - Language preference: English
+2025-06-06 15:01:13.034 | INFO     | utils.context_builder:get_enhanced_user_context:107 - Generated enhanced context length: 2106 chars
+2025-06-06 15:01:13.034 | INFO     | utils.context_builder:get_enhanced_user_context:108 - Language preference featured prominently: English
+2025-06-06 15:01:13.035 | INFO     | actions.action_framework:execute:284 - History retrieval mode: unknown
+2025-06-06 15:01:13.035 | INFO     | actions.action_framework:execute:285 - Retrieved 56 relevant messages
+2025-06-06 15:01:13.035 | INFO     | services.cached_notion_service:get_user_language_preference:1577 - Language preference for user U089YKL1T4H: English
+2025-06-06 15:01:13.036 | INFO     | handler.openai_service:_prepare_messages:233 - Retrieved language preference for user U089YKL1T4H: English
+2025-06-06 15:01:13.036 | INFO     | handler.openai_service:_prepare_messages:278 - Language preference prominently featured in prompt: English
+2025-06-06 15:01:13.036 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-06 15:01:13.046 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-06 15:01:13.050 | INFO     | handler.openai_service:get_completion_async:165 - Sending 2227 tokens to OpenAI async. Model: gpt-4o
+2025-06-06 15:01:14.964 | INFO     | handler.openai_service:get_completion_async:185 - OpenAI response received successfully in 1 attempt(s)
+2025-06-06 15:01:15.511 | INFO     | main:handle_mention:164 - Sending action response message (length: 59)
+2025-06-06 15:01:15.511 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 59 chars):
+Yes, I'm here. How can I assist you, Cide Hamete Benengeli?
+2025-06-06 15:01:15.938 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1749236475.937029', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1749236475.937029', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': "Yes, I'm here. How can I assist you, Cide Hamete Benengeli?", 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1749236359.806049', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'cLcjk', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': "Yes, I'm here. How can I assist you, Cide Hamete Benengeli?"}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-06-06 15:02:10.251 | INFO     | main:<module>:28 - Starting application in development mode
+2025-06-06 15:02:10.353 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-06-06 15:02:10.353 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-06-06 15:02:10.378 | INFO     | services.cached_notion_service:__init__:73 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-06-06 15:02:11.490 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-06-06 15:02:11.758 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-06-06 15:02:11.758 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-06-06 15:02:11.876 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-06-06 15:02:11.878 | INFO     | main:startup_event:230 - Slack bot started in socket mode.
+2025-06-06 15:02:11.924 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-06-06 15:06:19.929 | INFO     | main:<module>:28 - Starting application in development mode
+2025-06-06 15:06:20.346 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-06-06 15:06:20.347 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-06-06 15:06:20.380 | INFO     | services.cached_notion_service:__init__:73 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-06-06 15:06:21.471 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-06-06 15:06:21.683 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-06-06 15:06:21.683 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-06-06 15:06:21.692 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-06-06 15:06:21.692 | INFO     | main:startup_event:230 - Slack bot started in socket mode.
+2025-06-06 15:06:21.713 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-06-06 15:06:54.864 | INFO     | main:<module>:28 - Starting application in development mode
+2025-06-06 15:06:54.962 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-06-06 15:06:54.962 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-06-06 15:06:54.987 | INFO     | services.cached_notion_service:__init__:73 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-06-06 15:06:55.496 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-06-06 15:06:55.694 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-06-06 15:06:55.694 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-06-06 15:06:55.701 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-06-06 15:06:55.701 | INFO     | main:startup_event:230 - Slack bot started in socket mode.
+2025-06-06 15:06:55.716 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-06-06 15:07:52.770 | INFO     | main:handle_mention:83 - Checking for memory commands in user command: 'here's the latest from Matt Levine.  Can you summarize this VERY briefly?...'
+2025-06-06 15:07:52.789 | INFO     | main:handle_mention:105 - No memory command detected, continuing to general processing
+2025-06-06 15:07:52.997 | INFO     | actions.action_framework:__init__:798 - ActionRouter initialized with 6 actions
+2025-06-06 15:07:52.998 | INFO     | actions.action_framework:_get_action_for_text:812 - Selected action RetrieveSummarizeAction for message: <@U08RG89NFK7> here's the latest from Matt Levine....
+2025-06-06 15:07:52.999 | WARNING  | actions.action_framework:validate_required_services:71 - Required services not available: web
+2025-06-06 15:07:53.495 | ERROR    | main:handle_mention:187 - Action failed: Required services not available
+2025-06-06 15:07:53.495 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 113 chars):
+None
+
+Here are some examples:
+• "Remember I drink coffee"
+• "Fact: I have a cat named Max"
+• "I live in New York"
+2025-06-06 15:07:53.934 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1749236873.856209', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1749236873.856209', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': 'None\n\nHere are some examples:\n• "Remember I drink coffee"\n• "Fact: I have a cat named Max"\n• "I live in New York"', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1749236869.602759', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': '4o39', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': 'None\n\nHere are some examples:\n• "Remember I drink coffee"\n• "Fact: I have a cat named Max"\n• "I live in New York"'}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-06-06 15:07:54.154 | ERROR    | services.slack_service:add_reaction:118 - Failed to add reaction :warning: to message 1749236869.602759: The request to the Slack API failed. (url: https://slack.com/api/reactions.add)
+The server responded with: {'ok': False, 'error': 'already_reacted'}
+2025-06-06 15:07:54.375 | ERROR    | services.slack_service:remove_reaction:145 - Failed to remove reaction :thinking_face: from message 1749236869.602759: The request to the Slack API failed. (url: https://slack.com/api/reactions.remove)
+The server responded with: {'ok': False, 'error': 'no_reaction'}
+2025-06-06 15:12:29.731 | INFO     | main:<module>:28 - Starting application in development mode
+2025-06-06 15:12:29.911 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-06-06 15:12:29.911 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-06-06 15:12:29.934 | INFO     | services.cached_notion_service:__init__:73 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-06-06 15:12:30.567 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-06-06 15:12:30.767 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-06-06 15:12:30.767 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-06-06 15:12:30.774 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-06-06 15:12:30.774 | INFO     | main:startup_event:230 - Slack bot started in socket mode.
+2025-06-06 15:12:30.796 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-06-06 15:13:15.225 | INFO     | main:<module>:28 - Starting application in development mode
+2025-06-06 15:13:15.334 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-06-06 15:13:15.334 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-06-06 15:13:15.362 | INFO     | services.cached_notion_service:__init__:73 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-06-06 15:13:15.931 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-06-06 15:13:16.154 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-06-06 15:13:16.154 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-06-06 15:13:16.162 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-06-06 15:13:16.163 | INFO     | main:startup_event:230 - Slack bot started in socket mode.
+2025-06-06 15:13:16.191 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-06-06 15:13:48.374 | INFO     | main:handle_mention:83 - Checking for memory commands in user command: 'here's the latest from Matt Levine.  Can you summarize this VERY briefly?...'
+2025-06-06 15:13:48.375 | INFO     | main:handle_mention:105 - No memory command detected, continuing to general processing
+2025-06-06 15:13:48.583 | INFO     | actions.action_framework:__init__:834 - ActionRouter initialized with 7 actions
+2025-06-06 15:13:48.585 | INFO     | actions.action_framework:_get_action_for_text:848 - Selected action SimpleSummarizeAction for message: <@U08RG89NFK7> here's the latest from Matt Levine....
+2025-06-06 15:13:48.585 | INFO     | handler.openai_service:_prepare_messages:278 - Language preference prominently featured in prompt: English
+2025-06-06 15:13:48.586 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-06 15:13:48.931 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-06 15:13:48.934 | INFO     | handler.openai_service:get_completion_async:165 - Sending 2629 tokens to OpenAI async. Model: gpt-4o
+2025-06-06 15:13:54.422 | INFO     | handler.openai_service:get_completion_async:185 - OpenAI response received successfully in 1 attempt(s)
+2025-06-06 15:13:55.030 | INFO     | main:handle_mention:166 - Sending action response message (length: 931)
+2025-06-06 15:13:55.031 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 931 chars):
+Matt Levine's article discusses financial complexities surrounding the company 23andMe and its founder Anne Wojcicki's attempts to privatize it. Wojcicki, as a controlling shareholder, proposed to buy out other shareholders but faced challenges from the board, which eventually resigned. The company filed for bankruptcy, allowing for a courts-supervised sale. Contrary to expectations, 23andMe received a higher offer from Regeneron, followed by an even larger bid from Wojcicki’s new nonprofit, leading to a beneficial outcome for shareholders. The second part discusses Builder.ai, a startup involved in allegedly inflating its sales figures, highlighting risks in tech bubbles where revenue is prioritized over profitability. Lastly, Levine touches on strange valuation dynamics in Bitcoin treasury companies, particularly MicroStrategy, and how this arbitrage has been exploited by investors like Jim Chanos despite its risks.
+2025-06-06 15:13:55.399 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1749237235.466779', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1749237235.466779', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': "Matt Levine's article discusses financial complexities surrounding the company 23andMe and its founder Anne Wojcicki's attempts to privatize it. Wojcicki, as a controlling shareholder, proposed to buy out other shareholders but faced challenges from the board, which eventually resigned. The company filed for bankruptcy, allowing for a courts-supervised sale. Contrary to expectations, 23andMe received a higher offer from Regeneron, followed by an even larger bid from Wojcicki’s new nonprofit, leading to a beneficial outcome for shareholders. The second part discusses <http://Builder.ai|Builder.ai>, a startup involved in allegedly inflating its sales figures, highlighting risks in tech bubbles where revenue is prioritized over profitability. Lastly, Levine touches on strange valuation dynamics in Bitcoin treasury companies, particularly MicroStrategy, and how this arbitrage has been exploited by investors like Jim Chanos despite its risks.", 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1749237225.936959', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'bheJ', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': "Matt Levine's article discusses financial complexities surrounding the company 23andMe and its founder Anne Wojcicki's attempts to privatize it. Wojcicki, as a controlling shareholder, proposed to buy out other shareholders but faced challenges from the board, which eventually resigned. The company filed for bankruptcy, allowing for a courts-supervised sale. Contrary to expectations, 23andMe received a higher offer from Regeneron, followed by an even larger bid from Wojcicki’s new nonprofit, leading to a beneficial outcome for shareholders. The second part discusses "}, {'type': 'link', 'url': 'http://Builder.ai', 'text': 'Builder.ai'}, {'type': 'text', 'text': ', a startup involved in allegedly inflating its sales figures, highlighting risks in tech bubbles where revenue is prioritized over profitability. Lastly, Levine touches on strange valuation dynamics in Bitcoin treasury companies, particularly MicroStrategy, and how this arbitrage has been exploited by investors like Jim Chanos despite its risks.'}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-06-06 15:14:17.554 | INFO     | main:handle_mention:83 - Checking for memory commands in user command: 'here's the latest from Matt Levine.  Can you summarize this VERY briefly?...'
+2025-06-06 15:14:17.555 | INFO     | main:handle_mention:105 - No memory command detected, continuing to general processing
+2025-06-06 15:14:17.555 | INFO     | actions.action_framework:__init__:834 - ActionRouter initialized with 7 actions
+2025-06-06 15:14:17.556 | INFO     | actions.action_framework:_get_action_for_text:848 - Selected action SimpleSummarizeAction for message: <@U08RG89NFK7> here's the latest from Matt Levine....
+2025-06-06 15:14:17.557 | INFO     | handler.openai_service:_prepare_messages:278 - Language preference prominently featured in prompt: English
+2025-06-06 15:14:17.557 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-06 15:14:17.564 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-06 15:14:17.567 | INFO     | handler.openai_service:get_completion_async:165 - Sending 2629 tokens to OpenAI async. Model: gpt-4o
+2025-06-06 15:14:24.328 | INFO     | handler.openai_service:get_completion_async:185 - OpenAI response received successfully in 1 attempt(s)
+2025-06-06 15:14:24.844 | INFO     | main:handle_mention:166 - Sending action response message (length: 1106)
+2025-06-06 15:14:24.854 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08N2FK0JQL (length: 1106 chars):
+The content discusses various issues surrounding corporate control and financial strategies. It focuses on three main topics:
+
+1. **23andMe**: Anne Wojcicki, the controlling shareholder, faced opposition from the board when attempting to take the company private at a low offer. After a complex series of events, including the company's bankruptcy, a higher bid emerged from Wojcicki's nonprofit, benefiting equity holders unexpectedly.
+
+2. **Builder.ai**: The company allegedly inflated revenues through dubious methods, such as improperly booked discounts and circular transactions. This manipulation was uncovered after an internal investigation, demonstrating issues common in tech startup bubbles.
+
+3. **Bitcoin Arbitrage**: There's an anomaly where companies holding Bitcoin trade at a premium compared to their Bitcoin holdings' actual value. Jim Chanos highlights this as an arbitrage opportunity, suggesting it could eventually correct itself, despite being persistently overlooked.
+
+Overall, the article underscores challenges in corporate governance, financial reporting, and market perceptions.
+2025-06-06 15:14:25.259 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08N2FK0JQL', 'ts': '1749237265.328229', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1749237265.328229', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': "The content discusses various issues surrounding corporate control and financial strategies. It focuses on three main topics:\n\n1. **23andMe**: Anne Wojcicki, the controlling shareholder, faced opposition from the board when attempting to take the company private at a low offer. After a complex series of events, including the company's bankruptcy, a higher bid emerged from Wojcicki's nonprofit, benefiting equity holders unexpectedly.\n\n2. **<http://Builder.ai|Builder.ai>**: The company allegedly inflated revenues through dubious methods, such as improperly booked discounts and circular transactions. This manipulation was uncovered after an internal investigation, demonstrating issues common in tech startup bubbles.\n\n3. **Bitcoin Arbitrage**: There's an anomaly where companies holding Bitcoin trade at a premium compared to their Bitcoin holdings' actual value. Jim Chanos highlights this as an arbitrage opportunity, suggesting it could eventually correct itself, despite being persistently overlooked.\n\nOverall, the article underscores challenges in corporate governance, financial reporting, and market perceptions.", 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1749237255.242999', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'YyH4', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': "The content discusses various issues surrounding corporate control and financial strategies. It focuses on three main topics:\n\n1. **23andMe**: Anne Wojcicki, the controlling shareholder, faced opposition from the board when attempting to take the company private at a low offer. After a complex series of events, including the company's bankruptcy, a higher bid emerged from Wojcicki's nonprofit, benefiting equity holders unexpectedly.\n\n2. **"}, {'type': 'link', 'url': 'http://Builder.ai', 'text': 'Builder.ai'}, {'type': 'text', 'text': "**: The company allegedly inflated revenues through dubious methods, such as improperly booked discounts and circular transactions. This manipulation was uncovered after an internal investigation, demonstrating issues common in tech startup bubbles.\n\n3. **Bitcoin Arbitrage**: There's an anomaly where companies holding Bitcoin trade at a premium compared to their Bitcoin holdings' actual value. Jim Chanos highlights this as an arbitrage opportunity, suggesting it could eventually correct itself, despite being persistently overlooked.\n\nOverall, the article underscores challenges in corporate governance, financial reporting, and market perceptions."}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-06-06 15:32:18.069 | INFO     | main:handle_mention:83 - Checking for memory commands in user command: 'summarize this VERY briefly:
+Dog bites man, law firm uses hallucinated cases. Is this even news anym...'
+2025-06-06 15:32:18.079 | INFO     | main:handle_mention:105 - No memory command detected, continuing to general processing
+2025-06-06 15:32:18.088 | INFO     | actions.action_framework:__init__:834 - ActionRouter initialized with 7 actions
+2025-06-06 15:32:18.089 | INFO     | actions.action_framework:_get_action_for_text:848 - Selected action SimpleSummarizeAction for message: <@U08RG89NFK7> summarize this VERY briefly:
+Dog bi...
+2025-06-06 15:32:18.090 | INFO     | handler.openai_service:_prepare_messages:278 - Language preference prominently featured in prompt: English
+2025-06-06 15:32:18.090 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-06 15:32:18.110 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-06 15:32:18.111 | INFO     | handler.openai_service:get_completion_async:165 - Sending 855 tokens to OpenAI async. Model: gpt-4o
+2025-06-06 15:32:22.613 | INFO     | handler.openai_service:get_completion_async:185 - OpenAI response received successfully in 1 attempt(s)
+2025-06-06 15:32:23.125 | INFO     | main:handle_mention:166 - Sending action response message (length: 628)
+2025-06-06 15:32:23.125 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 628 chars):
+The article criticizes the ongoing issue of large language models (LLMs), like ChatGPT, fabricating information, a problem known as "hallucinations." Despite warnings and the use of such tools by educated professionals like lawyers, many remain unaware or unconcerned about these hallucinations. The media and industry hype about AI advancements contribute to misinformation and underplay this problem. A database shows numerous instances of fabricated cases, highlighting that the issue is worsening, not resolving. The piece urges the media to better educate the public on the limitations and risks of current AI technologies.
+2025-06-06 15:32:23.514 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1749238343.541249', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1749238343.541249', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': 'The article criticizes the ongoing issue of large language models (LLMs), like ChatGPT, fabricating information, a problem known as "hallucinations." Despite warnings and the use of such tools by educated professionals like lawyers, many remain unaware or unconcerned about these hallucinations. The media and industry hype about AI advancements contribute to misinformation and underplay this problem. A database shows numerous instances of fabricated cases, highlighting that the issue is worsening, not resolving. The piece urges the media to better educate the public on the limitations and risks of current AI technologies.', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1748960168.268409', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'cE+M3', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': 'The article criticizes the ongoing issue of large language models (LLMs), like ChatGPT, fabricating information, a problem known as "hallucinations." Despite warnings and the use of such tools by educated professionals like lawyers, many remain unaware or unconcerned about these hallucinations. The media and industry hype about AI advancements contribute to misinformation and underplay this problem. A database shows numerous instances of fabricated cases, highlighting that the issue is worsening, not resolving. The piece urges the media to better educate the public on the limitations and risks of current AI technologies.'}]}]}], 'language': {'locale': 'en', 'is_reliable': True}}}
+2025-06-06 15:35:02.174 | INFO     | main:<module>:28 - Starting application in development mode
+2025-06-06 15:35:02.265 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-06-06 15:35:02.265 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-06-06 15:35:02.287 | INFO     | services.cached_notion_service:__init__:73 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-06-06 15:35:03.242 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-06-06 15:35:03.438 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-06-06 15:35:03.438 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-06-06 15:35:03.448 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-06-06 15:35:03.448 | INFO     | main:startup_event:230 - Slack bot started in socket mode.
+2025-06-06 15:35:03.473 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...

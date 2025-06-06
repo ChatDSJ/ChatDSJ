@@ -7,11 +7,11 @@ from openai import OpenAI, AsyncOpenAI
 from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
 
 from config.settings import get_settings
-from utils.token_management import ensure_messages_within_limit, count_messages_tokens  # Fixed import
+from utils.token_management import ensure_messages_within_limit, count_messages_tokens
 
 class OpenAIService:
     """
-    Service for handling all OpenAI API interactions with proper error handling and retries.
+    Service for handling all OpenAI API interactions with language preference support and proper error handling.
     """
     
     def __init__(self):
@@ -75,22 +75,26 @@ class OpenAIService:
         linked_notion_content: Optional[str] = None,
         system_prompt: Optional[str] = None,
         max_tokens: Optional[int] = None,
+        slack_user_id: Optional[str] = None,  # NEW: For language preference lookup
+        notion_service=None  # NEW: For language preference lookup
     ) -> Tuple[Optional[str], Optional[Dict[str, Any]]]:
         """
-        Get a completion from OpenAI with retry logic.
+        Get a completion from OpenAI with retry logic and language preference support.
         """
         if not self.is_available():
             logger.error("OpenAI client not initialized")
             return None, None
         
         try:
-            # Prepare messages for OpenAI
+            # Prepare messages for OpenAI with language preference
             messages = self._prepare_messages(
                 prompt, 
                 conversation_history, 
                 user_specific_context, 
                 linked_notion_content,
-                system_prompt
+                system_prompt,
+                slack_user_id,
+                notion_service
             )
             
             # Track request count
@@ -129,23 +133,27 @@ class OpenAIService:
         linked_notion_content: Optional[str] = None,
         system_prompt: Optional[str] = None,
         max_tokens: Optional[int] = None,
-        timeout: float = 30.0  # Add timeout parameter with 30 second default
+        timeout: float = 30.0, 
+        slack_user_id: Optional[str] = None,
+        notion_service=None
     ) -> Tuple[Optional[str], Optional[Dict[str, Any]]]:
         """
-        Asynchronously get a completion from OpenAI with full context injection.
+        Asynchronously get a completion from OpenAI with full context injection and language preference support.
         """
         if not self.is_available():
             logger.error("OpenAI async client not initialized")
             return None, None
 
         try:
-            # Construct full message list using the context-aware helper
+            # Construct full message list using the context-aware helper with language preference
             messages = self._prepare_messages(
                 prompt=prompt,
                 conversation_history=conversation_history,
                 user_specific_context=user_specific_context,
                 linked_notion_content=linked_notion_content,
-                system_prompt=system_prompt
+                system_prompt=system_prompt,
+                slack_user_id=slack_user_id,
+                notion_service=notion_service
             )
 
             # Log payload being sent to OpenAI (for debugging only)
@@ -206,22 +214,41 @@ class OpenAIService:
         user_specific_context: Optional[str] = None,
         linked_notion_content: Optional[str] = None,
         system_prompt: Optional[str] = None,
+        slack_user_id: Optional[str] = None,  # NEW
+        notion_service=None  # NEW
     ) -> List[Dict[str, str]]:
         """
-        Prepares a SINGLE STRING prompt with all components combined.
+        Prepares a SINGLE STRING prompt with all components combined, including language preference.
         """
         settings = get_settings()
 
         # Load the SYSTEM INSTRUCTIONS
         system_prompt_content = system_prompt if system_prompt else settings.openai_system_prompt if settings.openai_system_prompt else ""
 
-        # 1. Start building the prompt string
-        full_prompt = "=== SYSTEM INSTRUCTIONS ===\n" + system_prompt_content + "\n\n"
+        # NEW: Get user's language preference and inject it at the very beginning
+        language_preference = "English"  # Default
+        if slack_user_id and notion_service and hasattr(notion_service, 'get_user_language_preference'):
+            try:
+                language_preference = notion_service.get_user_language_preference(slack_user_id)
+                logger.info(f"Retrieved language preference for user {slack_user_id}: {language_preference}")
+            except Exception as e:
+                logger.warning(f"Could not get language preference for user {slack_user_id}: {e}")
 
-        # 2. Add the USER PROMPT
+        # 1. Start building the prompt string with CRITICAL language instruction
+        full_prompt = "=" * 80 + "\n"
+        full_prompt += "🌍 CRITICAL LANGUAGE INSTRUCTION 🌍\n"
+        full_prompt += f"ALWAYS RESPOND IN: {language_preference.upper()}\n"
+        full_prompt += f"USER'S LANGUAGE PREFERENCE: {language_preference}\n"
+        full_prompt += "This is MANDATORY - all responses must be in this language.\n"
+        full_prompt += "=" * 80 + "\n\n"
+
+        # 2. Add the SYSTEM INSTRUCTIONS
+        full_prompt += "=== SYSTEM INSTRUCTIONS ===\n" + system_prompt_content + "\n\n"
+
+        # 3. Add the USER PROMPT
         full_prompt += "===USER PROMPT ===\n" + prompt + "\n\n"
 
-        # 3. Format CHANNEL HISTORY, extract data and combine as a string
+        # 4. Format CHANNEL HISTORY, extract data and combine as a string
         history_string = ""
         if conversation_history:
             history_string += "===CHANNEL HISTORY===\n"
@@ -231,18 +258,24 @@ class OpenAIService:
                 history_string += f"[[{role.upper()}]]: {content}\n"
             full_prompt += history_string + "\n\n"
 
-        # 4.  Add the USER INSTRUCTIONS and PREFERENCES
+        # 5. Add the USER INSTRUCTIONS and PREFERENCES
         if user_specific_context:
             full_prompt += "===USER INSTRUCTIONS & PREFERENCES===\n" + user_specific_context + "\n\n"
 
-        # 5. Add Linked Notion Content
+        # 6. Add Linked Notion Content
         if linked_notion_content:
             full_prompt += "===LINKED NOTION CONTENT===\n" + linked_notion_content + "\n\n"
+
+        # 7. Add final language reminder
+        full_prompt += "FINAL REMINDERS:\n"
+        full_prompt += f"1. 🌍 ALWAYS respond in {language_preference} - this is MANDATORY\n"
+        full_prompt += "2. Always respect this user's stated preferences in your responses.\n\n"
 
         # Create a SINGLE MESSAGE with role "user" containing the FULL PROMPT
         messages = [{"role": "user", "content": full_prompt}]
 
         logger.debug(f"FULL OpenAI prompt (first 500 chars): {full_prompt[:500]}...")
+        logger.info(f"Language preference prominently featured in prompt: {language_preference}")
 
         # Truncate if necessary
         max_context_tokens = 8000 - (self.max_tokens or 1500)
@@ -258,9 +291,11 @@ class OpenAIService:
         linked_notion_content: Optional[str] = None,
         system_prompt: Optional[str] = None,
         preferred_name: Optional[str] = None,
+        slack_user_id: Optional[str] = None,  # NEW
+        notion_service=None  # NEW
     ) -> List[Dict[str, str]]:
         """
-        Prepare messages for the OpenAI API with structured Notion context.
+        Prepare messages for the OpenAI API with structured Notion context and language preference.
         """
         # Get settings for default system prompt
         settings = get_settings()
@@ -268,17 +303,33 @@ class OpenAIService:
         # Use provided system prompt or default
         base_system_prompt = system_prompt if system_prompt else settings.openai_system_prompt
         
+        # NEW: Get user's language preference
+        language_preference = "English"  # Default
+        if slack_user_id and notion_service and hasattr(notion_service, 'get_user_language_preference'):
+            try:
+                language_preference = notion_service.get_user_language_preference(slack_user_id)
+                logger.info(f"Retrieved language preference for user {slack_user_id}: {language_preference}")
+            except Exception as e:
+                logger.warning(f"Could not get language preference for user {slack_user_id}: {e}")
+
         # Process Notion content if available
         if user_specific_context:
-            # Build a structured system prompt with the Notion context
+            # Build a structured system prompt with the Notion context and language preference
             system_prompt_content = self.notion_context_manager.build_openai_system_prompt(
                 base_prompt=base_system_prompt,
                 notion_content=user_specific_context,
                 preferred_name=preferred_name
             )
-            logger.info("Built structured system prompt with Notion context")
+            logger.info("Built structured system prompt with Notion context and language preference")
         else:
-            system_prompt_content = base_system_prompt
+            # Even without user context, include language preference
+            system_prompt_content = "=" * 80 + "\n"
+            system_prompt_content += "🌍 CRITICAL LANGUAGE INSTRUCTION 🌍\n"
+            system_prompt_content += f"ALWAYS RESPOND IN: {language_preference.upper()}\n"
+            system_prompt_content += f"USER'S LANGUAGE PREFERENCE: {language_preference}\n"
+            system_prompt_content += "This is MANDATORY - all responses must be in this language.\n"
+            system_prompt_content += "=" * 80 + "\n\n"
+            system_prompt_content += base_system_prompt
         
         # Add linked Notion content if available
         if linked_notion_content:
@@ -294,7 +345,9 @@ class OpenAIService:
             conversation_history=conversation_history,
             user_specific_context=user_specific_context,
             linked_notion_content=linked_notion_content,
-            system_prompt=system_prompt
+            system_prompt=system_prompt,
+            slack_user_id=slack_user_id,
+            notion_service=notion_service
         )
         
         # Add conversation history if available
@@ -304,12 +357,14 @@ class OpenAIService:
         # Add the user's prompt
         user_instruction = (
             f"Use the context above to respond to the user's message: \"{prompt}\".\n"
-            f"Provide a concise, helpful response as if participating in the same Slack conversation."
+            f"Provide a concise, helpful response as if participating in the same Slack conversation.\n"
+            f"IMPORTANT: Respond in {language_preference}."
         )
         messages.append({"role": "user", "content": user_instruction})
         
         # Log the system prompt (first 500 chars) to help with debugging
         logger.debug(f"System prompt (first 500 chars): {system_prompt_content[:500]}...")
+        logger.info(f"Language preference prominently featured: {language_preference}")
         
         # Ensure we don't exceed token limits (leave room for completion)
         max_context_tokens = 8000 - (self.max_tokens or 1500)

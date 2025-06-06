@@ -25,156 +25,203 @@ class PropertyType(Enum):
     SLACK_USER_ID = "SlackUserID"
 
 class MemoryHandler:
-    """Enhanced memory handler for structured user profiles with improved persistence."""
+    """Enhanced memory handler for structured user profiles with language preference support."""
     
     def __init__(self, notion_service):
         """Initialize with a reference to the Notion service."""
         self.notion_service = notion_service
     
     def handle_memory_instruction(self, slack_user_id: str, text: str) -> Optional[str]:
-            """
-            Process a memory instruction and store it appropriately with enhanced error handling.
-            
-            Args:
-                slack_user_id: The Slack user ID
-                text: The message content
-            
-            Returns:
-                A user-friendly message indicating success or failure, or None if not a memory instruction
-            """
-            try:
-                # Classify the memory instruction and get cleaned content
-                memory_type, cleaned_content = self.classify_memory_instruction(text)
-                
-                # If not a memory instruction, return None
-                if memory_type == "unknown" or (cleaned_content is None and not memory_type.startswith("list_")):
-                    logger.debug(f"Not a memory instruction: '{text}'")
-                    return None
-                
-                logger.info(f"Processing memory instruction - Type: {memory_type}, Content: '{cleaned_content}', User: {slack_user_id}")
-                
-                # Handle different types of memory instructions
-                if memory_type == "known_fact":
-                    logger.info(f"Processing known fact: '{cleaned_content}'")
-                    success = self.add_known_fact(slack_user_id, cleaned_content)
-                    
-                    if success:
-                        # ENHANCED: Double verification with retry
-                        verification_attempts = 3
-                        verification_success = False
-                        
-                        for attempt in range(verification_attempts):
-                            logger.info(f"Verification attempt {attempt + 1}/{verification_attempts}")
-                            
-                            if self.verify_fact_stored(slack_user_id, cleaned_content):
-                                verification_success = True
-                                break
-                            else:
-                                logger.warning(f"Verification attempt {attempt + 1} failed, waiting before retry...")
-                                import time
-                                time.sleep(2)  # Wait before retry
-                        
-                        if verification_success:
-                            logger.info(f"✅ Fact successfully stored and verified for user {slack_user_id}")
-                            return f"✅ Added to your Known Facts: \"{cleaned_content}\""
-                        else:
-                            logger.error(f"❌ Fact storage verification failed after {verification_attempts} attempts")
-                            
-                            # Try to diagnose the issue
-                            diagnostic_info = self._diagnose_storage_issue(slack_user_id, cleaned_content)
-                            logger.error(f"Storage diagnostic: {diagnostic_info}")
-                            
-                            return f"❌ I tried to store that fact, but couldn't verify it was saved properly. Please try again. (Debug: {diagnostic_info})"
-                    else:
-                        logger.error(f"❌ Failed to store fact for user {slack_user_id}")
-                        return "❌ Sorry, I couldn't store that fact right now. Please try again later."
-                
-                # List commands with enhanced error handling
-                elif memory_type == "list_facts":
-                    logger.info(f"Processing list facts request for user {slack_user_id}")
-                    
-                    try:
-                        facts = self.get_known_facts(slack_user_id)
-                        
-                        if not facts:
-                            # Try direct read as fallback
-                            facts = self._get_facts_direct_from_notion(slack_user_id)
-                            
-                        if facts:
-                            facts_list = "\n".join([f"{i+1}. {fact}" for i, fact in enumerate(facts)])
-                            return f"Here are your stored facts:\n\n{facts_list}\n\n📝 Retrieved from Notion database"
-                        else:
-                            return "You don't have any facts stored yet. You can add facts by saying \"known fact: [your fact]\" or \"remember [your fact]\"."
-                            
-                    except Exception as list_error:
-                        logger.error(f"Error listing facts: {list_error}", exc_info=True)
-                        return "❌ I had trouble retrieving your facts from Notion. Please try again later."
-                
-                elif memory_type == "list_preferences":
-                    logger.info(f"Processing list preferences request for user {slack_user_id}")
-                    
-                    try:
-                        preferences = self.get_preferences(slack_user_id)
-                        
-                        if preferences:
-                            preferences_list = "\n".join([f"{i+1}. {pref}" for i, pref in enumerate(preferences)])
-                            return f"Here are your stored preferences:\n\n{preferences_list}\n\n📝 Retrieved from Notion database"
-                        else:
-                            return "You don't have any preferences stored yet. You can add preferences by saying \"preference: [your preference]\" or \"I prefer [your preference]\"."
-                            
-                    except Exception as list_error:
-                        logger.error(f"Error listing preferences: {list_error}", exc_info=True)
-                        return "❌ I had trouble retrieving your preferences from Notion. Please try again later."
-                
-                elif memory_type == "list_projects":
-                    logger.info(f"Processing list projects request for user {slack_user_id}")
-                    
-                    try:
-                        projects = self.get_projects(slack_user_id)
-                        
-                        if projects:
-                            projects_list = "\n".join([f"{i+1}. {proj}" for i, proj in enumerate(projects)])
-                            return f"Here are your stored projects:\n\n{projects_list}\n\n📝 Retrieved from Notion database"
-                        else:
-                            return "You don't have any projects stored yet. You can add projects by saying \"project: [your project]\" or \"add project [your project]\"."
-                            
-                    except Exception as list_error:
-                        logger.error(f"Error listing projects: {list_error}", exc_info=True)
-                        return "❌ I had trouble retrieving your projects from Notion. Please try again later."
-                
-                # Handle other memory types (preferences, projects, etc.) - keeping existing logic
-                elif memory_type == "preference":
-                    success = self.add_preference(slack_user_id, cleaned_content)
-                    if success:
-                        if self.verify_preference_stored(slack_user_id, cleaned_content):
-                            return f"✅ Added to your Preferences: \"{cleaned_content}\""
-                        else:
-                            return f"❌ I tried to store that preference, but verification failed. Please try again."
-                    else:
-                        return "Sorry, I couldn't save that preference right now."
-                    
-                elif memory_type == "delete_fact":
-                    # Get current facts for better error reporting
-                    before_facts = self.get_known_facts(slack_user_id)
-                    success = self.delete_known_fact(slack_user_id, cleaned_content)
-                    
-                    if success:
-                        # Verify deletion worked
-                        after_facts = self.get_known_facts(slack_user_id)
-                        
-                        if len(after_facts) < len(before_facts):
-                            return f"✅ Successfully removed fact about \"{cleaned_content}\" from your Known Facts."
-                        else:
-                            return f"❌ Deletion verification failed. The fact may still exist."
-                    else:
-                        return f"❓ I couldn't find any facts containing \"{cleaned_content}\" to remove."
-                
-                logger.warning(f"Unhandled memory instruction type: {memory_type}")
+        """
+        Process a memory instruction and store it appropriately with enhanced error handling.
+        
+        Args:
+            slack_user_id: The Slack user ID
+            text: The message content
+        
+        Returns:
+            A user-friendly message indicating success or failure, or None if not a memory instruction
+        """
+        try:
+            if not self._is_likely_memory_command(text):
+                logger.debug(f"Text doesn't appear to be a memory command: '{text}'")
                 return None
+            
+            # Classify the memory instruction and get cleaned content
+            memory_type, cleaned_content = self.classify_memory_instruction(text)
+            
+            # If not a memory instruction, return None
+            if memory_type == "unknown" or (cleaned_content is None and not memory_type.startswith("list_")):
+                logger.debug(f"Not a memory instruction: '{text}'")
+                return None
+            
+            logger.info(f"Processing memory instruction - Type: {memory_type}, Content: '{cleaned_content}', User: {slack_user_id}")
+            
+            # Handle language preference instructions
+            if memory_type == "language_preference":
+                logger.info(f"Processing language preference: '{cleaned_content}'")
+                success = self.set_language_preference(slack_user_id, cleaned_content)
                 
-            except Exception as e:
-                logger.error(f"Error in handle_memory_instruction: {e}", exc_info=True)
-                return f"❌ I encountered an error while processing that instruction. Please try again. (Error: {str(e)})"
+                if success:
+                    # Verify the language was stored
+                    stored_language = self.get_language_preference(slack_user_id)
+                    if stored_language and stored_language.lower() == cleaned_content.lower():
+                        logger.info(f"✅ Language preference successfully stored for user {slack_user_id}")
+                        return f"✅ I've set your language preference to {cleaned_content}. I will now respond in {cleaned_content}."
+                    else:
+                        logger.error(f"❌ Language preference verification failed for user {slack_user_id}")
+                        return f"❌ I tried to set your language preference, but verification failed. Please try again."
+                else:
+                    logger.error(f"❌ Failed to store language preference for user {slack_user_id}")
+                    return "❌ Sorry, I couldn't store your language preference right now. Please try again later."
+            
+            # Handle different types of memory instructions (existing code)
+            elif memory_type == "known_fact":
+                logger.info(f"Processing known fact: '{cleaned_content}'")
+                success = self.add_known_fact(slack_user_id, cleaned_content)
+                
+                if success:
+                    # ENHANCED: Double verification with retry
+                    verification_attempts = 3
+                    verification_success = False
+                    
+                    for attempt in range(verification_attempts):
+                        logger.info(f"Verification attempt {attempt + 1}/{verification_attempts}")
+                        
+                        if self.verify_fact_stored(slack_user_id, cleaned_content):
+                            verification_success = True
+                            break
+                        else:
+                            logger.warning(f"Verification attempt {attempt + 1} failed, waiting before retry...")
+                            import time
+                            time.sleep(2)  # Wait before retry
+                    
+                    if verification_success:
+                        logger.info(f"✅ Fact successfully stored and verified for user {slack_user_id}")
+                        return f"✅ Added to your Known Facts: \"{cleaned_content}\""
+                    else:
+                        logger.error(f"❌ Fact storage verification failed after {verification_attempts} attempts")
+                        
+                        # Try to diagnose the issue
+                        diagnostic_info = self._diagnose_storage_issue(slack_user_id, cleaned_content)
+                        logger.error(f"Storage diagnostic: {diagnostic_info}")
+                        
+                        return f"❌ I tried to store that fact, but couldn't verify it was saved properly. Please try again. (Debug: {diagnostic_info})"
+                else:
+                    logger.error(f"❌ Failed to store fact for user {slack_user_id}")
+                    return "❌ Sorry, I couldn't store that fact right now. Please try again later."
+            
+            # List commands with enhanced error handling
+            elif memory_type == "list_facts":
+                logger.info(f"Processing list facts request for user {slack_user_id}")
+                
+                try:
+                    facts = self.get_known_facts(slack_user_id)
+                    
+                    if not facts:
+                        # Try direct read as fallback
+                        facts = self._get_facts_direct_from_notion(slack_user_id)
+                        
+                    if facts:
+                        facts_list = "\n".join([f"{i+1}. {fact}" for i, fact in enumerate(facts)])
+                        return f"Here are your stored facts:\n\n{facts_list}\n\n📝 Retrieved from Notion database"
+                    else:
+                        return "You don't have any facts stored yet. You can add facts by saying \"known fact: [your fact]\" or \"remember [your fact]\"."
+                        
+                except Exception as list_error:
+                    logger.error(f"Error listing facts: {list_error}", exc_info=True)
+                    return "❌ I had trouble retrieving your facts from Notion. Please try again later."
+            
+            elif memory_type == "list_preferences":
+                logger.info(f"Processing list preferences request for user {slack_user_id}")
+                
+                try:
+                    preferences = self.get_preferences(slack_user_id)
+                    
+                    if preferences:
+                        preferences_list = "\n".join([f"{i+1}. {pref}" for i, pref in enumerate(preferences)])
+                        return f"Here are your stored preferences:\n\n{preferences_list}\n\n📝 Retrieved from Notion database"
+                    else:
+                        return "You don't have any preferences stored yet. You can add preferences by saying \"preference: [your preference]\" or \"I prefer [your preference]\"."
+                        
+                except Exception as list_error:
+                    logger.error(f"Error listing preferences: {list_error}", exc_info=True)
+                    return "❌ I had trouble retrieving your preferences from Notion. Please try again later."
+            
+            elif memory_type == "list_projects":
+                logger.info(f"Processing list projects request for user {slack_user_id}")
+                
+                try:
+                    projects = self.get_projects(slack_user_id)
+                    
+                    if projects:
+                        projects_list = "\n".join([f"{i+1}. {proj}" for i, proj in enumerate(projects)])
+                        return f"Here are your stored projects:\n\n{projects_list}\n\n📝 Retrieved from Notion database"
+                    else:
+                        return "You don't have any projects stored yet. You can add projects by saying \"project: [your project]\" or \"add project [your project]\"."
+                        
+                except Exception as list_error:
+                    logger.error(f"Error listing projects: {list_error}", exc_info=True)
+                    return "❌ I had trouble retrieving your projects from Notion. Please try again later."
+            
+            # Handle other memory types (preferences, projects, etc.) - keeping existing logic
+            elif memory_type == "preference":
+                success = self.add_preference(slack_user_id, cleaned_content)
+                if success:
+                    if self.verify_preference_stored(slack_user_id, cleaned_content):
+                        return f"✅ Added to your Preferences: \"{cleaned_content}\""
+                    else:
+                        return f"❌ I tried to store that preference, but verification failed. Please try again."
+                else:
+                    return "Sorry, I couldn't save that preference right now."
+                    
+            elif memory_type == "delete_fact":
+                # Get current facts for better error reporting
+                before_facts = self.get_known_facts(slack_user_id)
+                success = self.delete_known_fact(slack_user_id, cleaned_content)
+                
+                if success:
+                    # Verify deletion worked
+                    after_facts = self.get_known_facts(slack_user_id)
+                    
+                    if len(after_facts) < len(before_facts):
+                        return f"✅ Successfully removed fact about \"{cleaned_content}\" from your Known Facts."
+                    else:
+                        return f"❌ Deletion verification failed. The fact may still exist."
+                else:
+                    return f"❓ I couldn't find any facts containing \"{cleaned_content}\" to remove."
+            
+            logger.warning(f"Unhandled memory instruction type: {memory_type}")
+            return None
+            
+        except Exception as e:
+            logger.error(f"Error in handle_memory_instruction: {e}", exc_info=True)
+            return f"❌ I encountered an error while processing that instruction. Please try again. (Error: {str(e)})"
+
+    def _is_likely_memory_command(self, text: str) -> bool:
+        """Quick check if text is likely a memory command before full processing."""
+        text_lower = text.lower()
+        
+        # Explicit memory keywords
+        explicit_keywords = [
+            "remember", "fact:", "preference:", "project:", "todo:", 
+            "my preference is", "i prefer", "store that", "note that"
+        ]
+        
+        # If it contains explicit memory keywords, it's likely a memory command
+        if any(keyword in text_lower for keyword in explicit_keywords):
+            return True
+        
+        # If it looks like a summarization request, it's NOT a memory command
+        summarization_indicators = [
+            "summarize", "summary", "tldr", "brief", "recap", "overview"
+        ]
+        
+        if any(indicator in text_lower for indicator in summarization_indicators):
+            return False
+        
+        # Default to not a memory command for ambiguous cases
+        return False
 
     def _diagnose_storage_issue(self, slack_user_id: str, fact_text: str) -> str:
         """
@@ -244,6 +291,23 @@ class MemoryHandler:
                 logger.debug(f"Detected question pattern in: '{text}'")
                 return "unknown", None  # This is a question, not a memory instruction
         
+        # ENHANCED: Check for language preference commands first (highest priority)
+        language_patterns = [
+            r"(?:preference:|my preference is|preference is|i prefer|prefer)\s+(?:to\s+)?(?:always\s+)?(?:respond|answer|communicate|talk|speak|reply)\s+(?:in\s+|to me in\s+)(\w+)",
+            r"(?:always\s+)?(?:respond|answer|communicate|talk|speak|reply)\s+(?:to me\s+)?(?:in\s+)(\w+)",
+            r"(?:my\s+)?(?:preferred\s+)?language\s+(?:is\s+|preference\s+is\s+)(\w+)",
+            r"(?:set\s+)?(?:my\s+)?language\s+(?:preference\s+)?(?:to\s+)(\w+)",
+            r"(?:use\s+|switch\s+to\s+)(\w+)(?:\s+language)?",
+            r"(?:i\s+)?(?:want|need|would like)\s+(?:you\s+to\s+)?(?:respond|answer|communicate|talk|speak|reply)\s+(?:to me\s+)?(?:in\s+)(\w+)"
+        ]
+        
+        for pattern in language_patterns:
+            match = re.search(pattern, lowered)
+            if match:
+                language = match.group(1).strip().title()  # Capitalize first letter
+                logger.info(f"Detected language preference command: '{language}'")
+                return "language_preference", language
+        
         # Direct command checking - these have priority over other patterns
         if (lowered.startswith("fact:") or lowered.startswith("fact ") or 
             lowered.startswith("known fact:") or lowered.startswith("known fact ")):
@@ -258,9 +322,19 @@ class MemoryHandler:
             logger.info(f"Detected project command: '{content}'")
             return "project_add", content
 
+        # MODIFIED: Exclude language preferences from regular preferences
         if (lowered.startswith("preference:") or lowered.startswith("preference ") or
             lowered.startswith("my preference:") or lowered.startswith("my preference ")):
             content = re.sub(r'^(?:my\s+)?preference[:\s]\s*', '', text, flags=re.IGNORECASE).strip()
+            
+            # Check if this is actually a language preference that we missed
+            if any(word in content.lower() for word in ["respond", "answer", "communicate", "talk", "speak", "reply", "language"]):
+                logger.info(f"Detected language preference in preference command: '{content}'")
+                # Try to extract the language
+                for word in content.split():
+                    if word.lower() not in ["respond", "answer", "communicate", "talk", "speak", "reply", "in", "to", "me", "always", "language"]:
+                        return "language_preference", word.title()
+            
             logger.info(f"Detected preference command: '{content}'")
             return "preference", content
 
@@ -347,7 +421,7 @@ class MemoryHandler:
             if re.search(pattern, text, re.IGNORECASE):
                 return "known_fact", core_content
         
-        # Enhanced preference patterns
+        # Enhanced preference patterns (but exclude language preferences)
         preference_patterns = [
             r"\bi prefer\b",
             r"\bi (?:like|love|enjoy|hate|dislike)\b",
@@ -356,6 +430,13 @@ class MemoryHandler:
         
         for pattern in preference_patterns:
             if re.search(pattern, lowered):
+                # Check if this is actually a language preference
+                if any(word in lowered for word in ["respond", "answer", "communicate", "talk", "speak", "reply", "language"]):
+                    # This is likely a language preference, try to extract it
+                    language_match = re.search(r"(?:respond|answer|communicate|talk|speak|reply).*?(?:in\s+)(\w+)", lowered)
+                    if language_match:
+                        return "language_preference", language_match.group(1).title()
+                
                 # Extract the preference content
                 match = re.search(r"(?:prefer|like|love|enjoy|hate|dislike|preference is)\s+(.+)", lowered)
                 if match:
@@ -376,6 +457,95 @@ class MemoryHandler:
         logger.debug(f"No memory instruction pattern matched for: {text}")
         return "unknown", None
 
+    def set_language_preference(self, slack_user_id: str, language: str) -> bool:
+        """
+        Set the user's language preference in the Notion database.
+        
+        Args:
+            slack_user_id: The Slack user ID
+            language: The preferred language (e.g., "Italian", "Spanish")
+            
+        Returns:
+            True if successful, False otherwise
+        """
+        try:
+            logger.info(f"Setting language preference for user {slack_user_id}: {language}")
+            
+            # Get or create user page
+            page_id = self.notion_service.get_user_page_id(slack_user_id)
+            if not page_id:
+                # Create a new user page if it doesn't exist
+                success = self.notion_service.store_user_nickname(slack_user_id, slack_user_id, None)
+                if not success:
+                    logger.error(f"Failed to create user page for {slack_user_id}")
+                    return False
+                
+                # Get the new page ID
+                page_id = self.notion_service.get_user_page_id(slack_user_id)
+                if not page_id:
+                    logger.error(f"Failed to get page ID after creation for {slack_user_id}")
+                    return False
+            
+            # Update the LanguagePreference property
+            properties_to_update = {
+                PropertyType.LANGUAGE_PREFERENCE.value: {
+                    "rich_text": [{"type": "text", "text": {"content": language}}]
+                }
+            }
+            
+            # Update the page properties
+            result = self.notion_service.client.pages.update(
+                page_id=page_id,
+                properties=properties_to_update
+            )
+            
+            if result:
+                # Clear cache to ensure fresh reads
+                self.notion_service.invalidate_user_cache(slack_user_id)
+                logger.info(f"Successfully set language preference to {language} for user {slack_user_id}")
+                return True
+            else:
+                logger.error(f"Failed to update language preference for user {slack_user_id}")
+                return False
+                
+        except Exception as e:
+            logger.error(f"Error setting language preference for user {slack_user_id}: {e}", exc_info=True)
+            return False
+
+    def get_language_preference(self, slack_user_id: str) -> Optional[str]:
+        """
+        Get the user's language preference from the Notion database.
+        
+        Args:
+            slack_user_id: The Slack user ID
+            
+        Returns:
+            The language preference if found, None otherwise
+        """
+        try:
+            # Get user properties (this is cached)
+            properties = self.notion_service.get_user_page_properties(slack_user_id)
+            if not properties:
+                return None
+            
+            # Extract language preference from properties
+            language_pref_prop = properties.get(PropertyType.LANGUAGE_PREFERENCE.value)
+            
+            if language_pref_prop and language_pref_prop.get("type") == "rich_text":
+                rich_text_array = language_pref_prop.get("rich_text", [])
+                if rich_text_array and len(rich_text_array) > 0:
+                    language = rich_text_array[0].get("plain_text", "").strip()
+                    if language:
+                        logger.debug(f"Retrieved language preference for user {slack_user_id}: {language}")
+                        return language
+            
+            logger.debug(f"No language preference found for user {slack_user_id}")
+            return None
+            
+        except Exception as e:
+            logger.error(f"Error getting language preference for user {slack_user_id}: {e}", exc_info=True)
+            return None
+        
     def verify_fact_stored(self, slack_user_id: str, fact_text: str) -> bool:
         """
         Verify that a fact was actually stored in Notion with enhanced reliability.

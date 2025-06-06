@@ -7,7 +7,9 @@ from loguru import logger
 from notion_client import Client, AsyncClient, APIResponseError
 from cachetools import TTLCache, cached
 import re
-from typing import Dict, Any, List, Optional, Tuple, Union
+from enum import Enum
+from typing import Dict, Any, List, Optional, Tuple, Union, Set
+from dataclasses import dataclass
 from handler.memory_handler import MemoryHandler
 
 class CachedNotionService:
@@ -99,7 +101,8 @@ class CachedNotionService:
             f"user_page_id_{slack_user_id}",
             f"user_properties_{slack_user_id}",
             f"user_name_{slack_user_id}",
-            f"user_page_content_{slack_user_id}"
+            f"user_page_content_{slack_user_id}",
+            f"user_language_{slack_user_id}"  # ADD THIS LINE
         ]
         
         with self.cache_lock:
@@ -434,7 +437,7 @@ class CachedNotionService:
                     "SlackUserID": slack_user_id,
                     "SlackDisplayName": slack_display_name or "",
                     "FavoriteEmoji": "",
-                    "LanguagePreference": "",
+                    "LanguagePreference": "English",  # ADD THIS LINE
                     "WorkLocation": "",
                     "HomeLocation": "",
                     "Role": "",
@@ -621,8 +624,10 @@ class CachedNotionService:
         # If it starts with memory keywords, don't treat as nickname
         memory_indicators = [
             "remember that", "remember:", "fact:", "fact that", 
-            "store that", "note that", "keep in mind that"
+            "store that", "note that", "keep in mind that",
+            "preference:", "language", "respond", "answer", "communicate"  # ADD THESE
         ]
+
         
         prompt_lower = prompt_text.lower()
         for indicator in memory_indicators:
@@ -1411,7 +1416,8 @@ class CachedNotionService:
             "errors": [],
             "page_exists": False,
             "sections": {},
-            "cache_status": {}
+            "cache_status": {},
+            "language_preference": None  # ADD THIS LINE
         }
         
         try:
@@ -1427,11 +1433,22 @@ class CachedNotionService:
             # Check cache status
             cache_key_page = f"user_page_id_{slack_user_id}"
             cache_key_content = f"user_page_content_{slack_user_id}"
-            
+            cache_key_language = f"user_language_{slack_user_id}"  # ADD THIS
+
             with self.cache_lock:
                 diagnostics["cache_status"]["page_id_in_cache"] = cache_key_page in self.cache
+                diagnostics["cache_status"]["language_in_cache"] = cache_key_language in self.cache  # ADD THIS
                 if cache_key_page in self.cache:
                     diagnostics["cache_status"]["cached_page_id"] = self.cache[cache_key_page]
+                if cache_key_language in self.cache:  # ADD THESE 3 LINES
+                    diagnostics["cache_status"]["cached_language"] = self.cache[cache_key_language]
+
+            try:
+                language_pref = self.get_user_language_preference(slack_user_id)
+                diagnostics["language_preference"] = language_pref
+                logger.info(f"Language preference for user {slack_user_id}: {language_pref}")
+            except Exception as lang_error:
+                diagnostics["errors"].append(f"Error getting language preference: {str(lang_error)}")
             
             with self.page_content_lock:
                 diagnostics["cache_status"]["content_in_cache"] = cache_key_content in self.page_content_cache
@@ -1506,3 +1523,56 @@ class CachedNotionService:
             diagnostics["errors"].append(f"Unexpected error: {str(e)}")
             return diagnostics
     
+    def get_user_language_preference(self, slack_user_id: str) -> str:
+        """
+        Get a user's language preference from their Notion page with caching and English as default.
+        
+        Args:
+            slack_user_id: The Slack user ID to look up
+            
+        Returns:
+            The user's language preference (default: "English")
+        """
+        cache_key = f"user_language_{slack_user_id}"
+        
+        # Check cache first
+        with self.cache_lock:
+            if cache_key in self.cache:
+                self.cache_stats["hits"] += 1
+                cached_language = self.cache[cache_key]
+                logger.debug(f"Retrieved cached language preference for user {slack_user_id}: {cached_language}")
+                return cached_language
+        
+        # Get page properties (this is also cached)
+        properties = self.get_user_page_properties(slack_user_id)
+        
+        # Default to English
+        language_preference = "English"
+        
+        if properties:
+            # Extract language preference from properties
+            language_pref_prop = properties.get("LanguagePreference")
+            
+            if language_pref_prop and language_pref_prop.get("type") == "rich_text":
+                rich_text_array = language_pref_prop.get("rich_text", [])
+                if rich_text_array and len(rich_text_array) > 0:
+                    stored_language = rich_text_array[0].get("plain_text", "").strip()
+                    if stored_language:
+                        language_preference = stored_language
+                        logger.debug(f"Found language preference for user {slack_user_id}: {language_preference}")
+                    else:
+                        logger.debug(f"Empty language preference for user {slack_user_id}, using default: English")
+                else:
+                    logger.debug(f"No language preference rich text for user {slack_user_id}, using default: English")
+            else:
+                logger.debug(f"No LanguagePreference property for user {slack_user_id}, using default: English")
+        else:
+            logger.debug(f"No properties found for user {slack_user_id}, using default: English")
+        
+        # Cache the result
+        with self.cache_lock:
+            self.cache[cache_key] = language_preference
+            self.cache_stats["misses"] += 1
+            
+        logger.info(f"Language preference for user {slack_user_id}: {language_preference}")
+        return language_preference

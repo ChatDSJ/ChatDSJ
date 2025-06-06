@@ -153,6 +153,41 @@ class Action(ABC):
         """
         return ["slack"]  # By default, all actions need the slack service
 
+class SimpleSummarizeAction(Action):
+    """Simple text summarization - just pass everything to OpenAI."""
+    
+    def get_required_services(self) -> List[str]:
+        return ["slack", "openai"]
+    
+    def can_handle(self, text: str) -> bool:
+        """Handle summarization requests for any content."""
+        summarize_keywords = ["summarize", "summary", "tldr", "briefly", "recap"]
+        return any(keyword in text.lower() for keyword in summarize_keywords)
+    
+    async def execute(self, request: ActionRequest) -> ActionResponse:
+        try:
+            # Simple: send everything to OpenAI with summarization prompt
+            summary_prompt = f"Please summarize this content:\n\n{request.text}"
+            
+            summary, _ = await self.services.openai_service.get_completion_async(
+                prompt=summary_prompt,
+                max_tokens=500
+            )
+            
+            return ActionResponse(
+                success=True,
+                message=summary,
+                thread_ts=request.thread_ts
+            )
+            
+        except Exception as e:
+            logger.error(f"Error in SimpleSummarizeAction: {e}")
+            return ActionResponse(
+                success=False,
+                message="I encountered an error while summarizing that content.",
+                thread_ts=request.thread_ts
+            )
+
 class ContextResponseAction(Action):
     """
     Action for generating a contextual response to a user message.
@@ -289,7 +324,9 @@ class ContextResponseAction(Action):
                 response_text, usage = await self.services.openai_service.get_completion_async(
                     prompt=request.prompt,
                     conversation_history=formatted_history,
-                    user_specific_context=user_specific_context
+                    user_specific_context=user_specific_context,
+                    slack_user_id=request.user_id,
+                    notion_service=self.services.notion_service
                 )
             except Exception as openai_error:
                 logger.error(f"OpenAI API error: {openai_error}")
@@ -407,7 +444,9 @@ class RetrieveSummarizeAction(Action):
                 summary_prompt = f"Please summarize the following web content from {url}:\n\n{content[:10000]}..."
                 summary, _ = await self.services.openai_service.get_completion_async(
                     prompt=summary_prompt,
-                    max_tokens=500
+                    max_tokens=500,
+                    slack_user_id=request.user_id,
+                    notion_service=self.services.notion_service
                 )
             except Exception as openai_error:
                 logger.error(f"OpenAI summarization error: {openai_error}")
@@ -443,7 +482,9 @@ class RetrieveSummarizeAction(Action):
                 mini_summary_prompt = f"Please create a very short summary (2-3 sentences) of this content from {url}:\n\n{summary}"
                 mini_summary, _ = await self.services.openai_service.get_completion_async(
                     prompt=mini_summary_prompt,
-                    max_tokens=100
+                    max_tokens=100,
+                    slack_user_id=request.user_id,
+                    notion_service=self.services.notion_service
                 )
             except Exception as mini_summary_error:
                 logger.warning(f"Mini summary generation failed: {mini_summary_error}")
@@ -573,7 +614,9 @@ class YoutubeSummarizeAction(Action):
                 
                 summary, _ = await self.services.openai_service.get_completion_async(
                     prompt=summary_prompt,
-                    max_tokens=500
+                    max_tokens=500,
+                    slack_user_id=request.user_id,
+                    notion_service=self.services.notion_service
                 )
             except Exception as openai_error:
                 logger.error(f"OpenAI summarization error: {openai_error}")
@@ -620,7 +663,9 @@ class YoutubeSummarizeAction(Action):
                 
                 mini_summary, _ = await self.services.openai_service.get_completion_async(
                     prompt=mini_summary_prompt,
-                    max_tokens=100
+                    max_tokens=100,
+                    slack_user_id=request.user_id,
+                    notion_service=self.services.notion_service
                 )
             except Exception as mini_summary_error:
                 logger.warning(f"Mini summary generation failed: {mini_summary_error}")
@@ -779,6 +824,7 @@ class ActionRouter:
         self.actions = [
             TodoAction(services),
             YoutubeSummarizeAction(services),
+            SimpleSummarizeAction(services),
             RetrieveSummarizeAction(services),
             HistoricalSearchAction(services),
             SearchFollowUpAction(services),    
