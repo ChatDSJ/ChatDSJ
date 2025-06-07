@@ -86,7 +86,7 @@ async def handle_mention(event, say, client):
                 memory_response = await asyncio.to_thread(
                     notion_service.handle_memory_instruction,
                     user_id,
-                    user_command  # ← FIX: Only pass user's actual command
+                    user_command
                 )
                 
                 if memory_response:
@@ -107,7 +107,7 @@ async def handle_mention(event, say, client):
             except Exception as memory_error:
                 logger.error(f"❌ Error in memory command processing: {memory_error}", exc_info=True)
                 
-                # Send error message but continue to general processing as fallback
+                # Send error message and STOP - don't continue to general processing
                 error_response = f"❌ I encountered an error processing your memory command: {str(memory_error)}"
                 slack_service.send_message(channel_id, error_response, thread_ts)
                 

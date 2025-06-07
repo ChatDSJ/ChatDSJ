@@ -78,6 +78,28 @@ class MemoryHandler:
             # Handle different types of memory instructions (existing code)
             elif memory_type == "known_fact":
                 logger.info(f"Processing known fact: '{cleaned_content}'")
+
+                # Check for and remove similar existing facts before adding new one
+                try:
+                    existing_facts = self.get_known_facts(slack_user_id)
+                    for existing_fact in existing_facts:
+                        if self._facts_are_similar(cleaned_content, existing_fact):
+                            logger.info(f"Found similar fact to replace: '{existing_fact}' → '{cleaned_content}'")
+                            # Extract a key word to use for deletion (first non-common word)
+                            words = existing_fact.lower().split()
+                            key_word = next((word for word in words if word not in ['my', 'i', 'am', 'is', 'the', 'a', 'an']), words[0] if words else "fact")
+                            
+                            delete_success = self.delete_known_fact(slack_user_id, key_word)
+                            if delete_success:
+                                logger.info(f"Successfully removed similar fact: '{existing_fact}'")
+                            else:
+                                logger.warning(f"Failed to remove similar fact: '{existing_fact}'")
+                            break  # Only replace one similar fact
+                            
+                except Exception as e:
+                    logger.warning(f"Error checking for similar facts: {e}")
+                    # Continue anyway - we'll just add the new fact
+                    
                 success = self.add_known_fact(slack_user_id, cleaned_content)
                 
                 if success:
@@ -191,6 +213,77 @@ class MemoryHandler:
                 else:
                     return f"❓ I couldn't find any facts containing \"{cleaned_content}\" to remove."
             
+            elif memory_type == "project_add":
+                logger.info(f"Processing project add command: '{cleaned_content}'")
+                success = self.add_project(slack_user_id, cleaned_content)
+                
+                if success:
+                    return f"✅ Added to your Projects: \"{cleaned_content}\""
+                else:
+                    return "❌ Sorry, I couldn't save that project right now. Please try again later."
+
+            elif memory_type == "project_replace":
+                logger.info(f"Processing project replace command: '{cleaned_content}'")
+                success = self.replace_projects(slack_user_id, cleaned_content)
+                
+                if success:
+                    return f"✅ Replaced your projects with: \"{cleaned_content}\""
+                else:
+                    return "❌ Sorry, I couldn't update your projects right now. Please try again later."
+
+            elif memory_type == "delete_preference":
+                logger.info(f"Processing delete preference command: '{cleaned_content}'")
+                success = self.delete_preference(slack_user_id, cleaned_content)
+                
+                if success:
+                    return f"✅ Successfully removed preference about \"{cleaned_content}\" from your preferences."
+                else:
+                    return f"❓ I couldn't find any preferences containing \"{cleaned_content}\" to remove."
+
+            elif memory_type == "delete_project":
+                logger.info(f"Processing delete project command: '{cleaned_content}'")
+                success = self.delete_project(slack_user_id, cleaned_content)
+                
+                if success:
+                    return f"✅ Successfully removed project about \"{cleaned_content}\" from your projects."
+                else:
+                    return f"❓ I couldn't find any projects containing \"{cleaned_content}\" to remove."
+
+            elif memory_type == "todo":
+                logger.info(f"Processing TODO command: '{cleaned_content}'")
+                success = self.add_todo(slack_user_id, cleaned_content)
+                
+                if success:
+                    return f"✅ Added to your TODO list: \"{cleaned_content}\""
+                else:
+                    return "❌ Sorry, I couldn't add that TODO item right now. Please try again later."
+
+            elif memory_type == "work_location":
+                # Clean up prepositions from the location
+                clean_location = re.sub(r'^(?:in|at|from)\s+', '', cleaned_content.strip())
+                logger.info(f"Processing work location command: '{clean_location}'")
+                
+                # Update ONLY the database property, not Known Facts
+                success = self._update_location_property(slack_user_id, "WorkLocation", clean_location)
+                
+                if success:
+                    return f"✅ Updated your work location to: {clean_location}"
+                else:
+                    return "❌ Sorry, I couldn't update your work location right now. Please try again later."
+
+            elif memory_type == "home_location":
+                # Clean up prepositions from the location  
+                clean_location = re.sub(r'^(?:in|at|from)\s+', '', cleaned_content.strip())
+                logger.info(f"Processing home location command: '{clean_location}'")
+                
+                # Update ONLY the database property, not Known Facts
+                success = self._update_location_property(slack_user_id, "HomeLocation", clean_location)
+                
+                if success:
+                    return f"✅ Updated your home location to: {clean_location}"
+                else:
+                    return "❌ Sorry, I couldn't update your home location right now. Please try again later."
+            
             logger.warning(f"Unhandled memory instruction type: {memory_type}")
             return None
             
@@ -204,13 +297,24 @@ class MemoryHandler:
         
         # Explicit memory keywords
         explicit_keywords = [
-            "remember", "fact:", "preference:", "project:", "todo:", 
-            "my preference is", "i prefer", "store that", "note that"
+            "remember", "something to remember", "fact:", "preference:", "project:", "todo:", 
+            "my preference is", "i prefer", "store that", "note that",
+            "remove", "delete", "add project", "new project", "delete project"
         ]
         
         # If it contains explicit memory keywords, it's likely a memory command
         if any(keyword in text_lower for keyword in explicit_keywords):
             return True
+
+        location_patterns = [
+            r"\bi (?:work|am working)(?:\s+in|\s+at|\s+from|\s+remotely\s+from|\s+remotely\s+in)\s+",
+            r"\bi (?:live|reside|am living|am from|was born in|moved to)\s+"
+        ]
+        
+        for pattern in location_patterns:
+            if re.search(pattern, text_lower):
+                logger.debug(f"Detected location pattern in: '{text}'")
+                return True
         
         # If it looks like a summarization request, it's NOT a memory command
         summarization_indicators = [
@@ -1515,32 +1619,53 @@ class MemoryHandler:
                 if not page_id:
                     return False
             
-            # Find the Projects section
-            projects_section_block = self._find_section_block(page_id, SectionType.PROJECTS.value)
+            # Ensure the Projects section exists
+            projects_section_block = self.ensure_section_exists(page_id, SectionType.PROJECTS.value)
             if not projects_section_block:
-                # Create the Projects section if it doesn't exist
-                projects_section_block = self._create_section(page_id, SectionType.PROJECTS.value)
+                logger.error(f"Failed to create Projects section for user {slack_user_id}")
+                return False
             
-            # Add the new project as a bullet point
-            self.notion_service.client.blocks.children.append(
-                block_id=projects_section_block.get("id"),
-                children=[{
-                    "object": "block",
-                    "type": "bulleted_list_item",
-                    "bulleted_list_item": {
-                        "rich_text": [{
-                            "type": "text",
-                            "text": {"content": project}
-                        }]
-                    }
-                }]
-            )
+            # Create the new project bullet point
+            new_project_block = {
+                "object": "block",
+                "type": "bulleted_list_item",
+                "bulleted_list_item": {
+                    "rich_text": [{
+                        "type": "text",
+                        "text": {"content": project}
+                    }]
+                }
+            }
             
-            # Only invalidate cache after successful operation
-            self.notion_service.invalidate_user_cache(slack_user_id)
+            # FIXED: Append to the page after the section heading, not to the heading itself
+            try:
+                self.notion_service.client.blocks.children.append(
+                    block_id=page_id,  # Append to PAGE, not to the heading block
+                    children=[new_project_block],
+                    after=projects_section_block.get("id")  # Position after the heading
+                )
+                logger.info(f"Successfully added project to Notion for user {slack_user_id}")
+                
+                # Invalidate cache after successful operation
+                self.notion_service.invalidate_user_cache(slack_user_id)
+                return True
+                
+            except Exception as insert_error:
+                logger.error(f"Error inserting project block: {insert_error}")
+                
+                # Fallback: append to end of page if positioning fails
+                try:
+                    self.notion_service.client.blocks.children.append(
+                        block_id=page_id,
+                        children=[new_project_block]
+                    )
+                    logger.info(f"Used fallback insertion for project")
+                    self.notion_service.invalidate_user_cache(slack_user_id)
+                    return True
+                except Exception as fallback_error:
+                    logger.error(f"Fallback insertion failed: {fallback_error}")
+                    return False
             
-            return True
-        
         except Exception as e:
             logger.error(f"Error adding project for {slack_user_id}: {e}", exc_info=True)
             return False
@@ -1564,6 +1689,47 @@ class MemoryHandler:
             logger.error(f"Error adding TODO item for {slack_user_id}: {e}", exc_info=True)
             return False
     
+    def _update_location_property(self, slack_user_id: str, property_name: str, location: str) -> bool:
+        """
+        Update only the database property for location, not Known Facts.
+        
+        Args:
+            slack_user_id: The Slack user ID
+            property_name: "WorkLocation" or "HomeLocation" 
+            location: The clean location name
+            
+        Returns:
+            True if successful, False otherwise
+        """
+        try:
+            # Get or create user page
+            page_id = self.notion_service.get_user_page_id(slack_user_id)
+            if not page_id:
+                success = self.notion_service.store_user_nickname(slack_user_id, slack_user_id, None)
+                if not success:
+                    return False
+                page_id = self.notion_service.get_user_page_id(slack_user_id)
+                if not page_id:
+                    return False
+            
+            # Update only the database property
+            properties_update = {
+                property_name: {"rich_text": [{"type": "text", "text": {"content": location}}]}
+            }
+            
+            result = self.notion_service.client.pages.update(page_id=page_id, properties=properties_update)
+            
+            if result:
+                # Invalidate cache
+                self.notion_service.invalidate_user_cache(slack_user_id)
+                return True
+            
+            return False
+            
+        except Exception as e:
+            logger.error(f"Error updating {property_name} for user {slack_user_id}: {e}", exc_info=True)
+            return False
+
     def _find_section_block(self, page_id: str, section_name: str) -> Optional[Dict[str, Any]]:
         """
         Find a section block by name.
