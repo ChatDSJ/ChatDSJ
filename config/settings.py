@@ -51,14 +51,7 @@ class Settings(BaseSettings):
     
     # ENHANCED: Task-specific token limits
     max_tokens_response: int = Field(1500, description="Maximum tokens for response generation")
-    max_tokens_channel_summary: int = Field(3000, description="Max tokens for channel summary responses")
-    max_tokens_thread_summary: int = Field(2000, description="Max tokens for thread summary responses")
-    
-    # ENHANCED: Context limits for different tasks  
-    max_context_tokens_general: int = Field(50000, description="Max context tokens for general tasks")
-    max_context_tokens_channel_summary: int = Field(100000, description="Max context tokens for channel summaries")
-    max_context_tokens_thread_summary: int = Field(50000, description="Max context tokens for thread summaries")
-    max_context_tokens_content_summary: int = Field(50000, description="Max context tokens for content summaries")
+    max_context_tokens_general: int = Field(100000, description="Max context tokens for general tasks")
     
     max_message_history: int = Field(1000, description="Maximum number of messages to fetch from history")
     

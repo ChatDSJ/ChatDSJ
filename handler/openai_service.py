@@ -67,64 +67,6 @@ class OpenAIService:
         wait=wait_exponential(multiplier=1, min=2, max=10),
         reraise=True
     )
-    def get_completion(
-        self,
-        prompt: str,
-        conversation_history: Optional[List[Dict[str, str]]] = None,
-        user_specific_context: Optional[str] = None,
-        linked_notion_content: Optional[str] = None,
-        system_prompt: Optional[str] = None,
-        max_tokens: Optional[int] = None,
-        slack_user_id: Optional[str] = None,  # NEW: For language preference lookup
-        notion_service=None  # NEW: For language preference lookup
-    ) -> Tuple[Optional[str], Optional[Dict[str, Any]]]:
-        """
-        Get a completion from OpenAI with retry logic and language preference support.
-        """
-        if not self.is_available():
-            logger.error("OpenAI client not initialized")
-            return None, None
-        
-        try:
-            # Prepare messages for OpenAI with language preference
-            messages = self._prepare_messages(
-                prompt, 
-                conversation_history, 
-                user_specific_context, 
-                linked_notion_content,
-                system_prompt,
-                slack_user_id,
-                notion_service
-            )
-            
-            # Track request count
-            self.usage_stats["request_count"] += 1
-            
-            # Log token usage before API call
-            token_count = count_messages_tokens(messages, self.model)
-            logger.info(f"Sending {token_count} tokens to OpenAI. Model: {self.model}")
-            
-            # Send the request
-            response = self.client.chat.completions.create(
-                model=self.model,
-                messages=messages,
-                max_tokens=max_tokens or self.max_tokens,
-            )
-            
-            content = response.choices[0].message.content
-            usage = response.usage.model_dump() if hasattr(response, "usage") else None
-            
-            # Track usage statistics
-            if usage:
-                self._update_usage_tracking(usage)
-            
-            return content, usage
-            
-        except Exception as e:
-            self.usage_stats["error_count"] += 1
-            logger.error(f"Error getting OpenAI response: {e}", exc_info=True)
-            raise
-
     async def get_completion_async(
         self,
         prompt: str,
@@ -135,8 +77,8 @@ class OpenAIService:
         max_tokens: Optional[int] = None,
         timeout: float = 30.0, 
         slack_user_id: Optional[str] = None,
-        notion_service=None,
-        task_type: str = "general"  # NEW PARAMETER
+        notion_service=None
+        # REMOVE: task_type: str = "general"  # DELETE THIS PARAMETER
     ) -> Tuple[Optional[str], Optional[Dict[str, Any]]]:
         """
         Asynchronously get a completion from OpenAI with full context injection and language preference support.
@@ -154,8 +96,92 @@ class OpenAIService:
                 linked_notion_content=linked_notion_content,
                 system_prompt=system_prompt,
                 slack_user_id=slack_user_id,
-                notion_service=notion_service,
-                task_type=task_type  # NEW
+                notion_service=notion_service
+                # REMOVE: task_type=task_type  # DELETE THIS LINE
+            )
+
+            # Log payload being sent to OpenAI (for debugging only)
+            logger.debug("Full OpenAI prompt:\n" + "\n".join(f"{m['role'].upper()}: {m['content']}" for m in messages))
+
+            # Track usage stats
+            self.usage_stats["request_count"] += 1
+            token_count = count_messages_tokens(messages, self.model)
+            logger.info(f"Sending {token_count} tokens to OpenAI async. Model: {self.model}")
+
+            for attempt in range(3):
+                try:
+                    # Use asyncio.wait_for to implement timeout
+                    response = await asyncio.wait_for(
+                        self.async_client.chat.completions.create(
+                            model=self.model,
+                            messages=messages,
+                            max_tokens=max_tokens or self.max_tokens,
+                        ),
+                        timeout=timeout
+                    )
+                    
+                    content = response.choices[0].message.content
+                    usage = response.usage.model_dump() if hasattr(response, "usage") else None
+
+                    if usage:
+                        self._update_usage_tracking(usage)
+
+                    logger.info(f"OpenAI response received successfully in {attempt+1} attempt(s)")
+                    return content, usage
+
+                except asyncio.TimeoutError:
+                    logger.error(f"OpenAI request timed out after {timeout} seconds (attempt {attempt+1}/3)")
+                    if attempt == 2:  # Last attempt
+                        return "I'm sorry, but I timed out while processing your request. Please try again.", None
+                    # Otherwise retry with longer timeout
+                    timeout *= 1.5  # Increase timeout for next attempt
+                    continue
+                    
+                except (TimeoutError, ConnectionError) as e:
+                    if attempt < 2:
+                        wait_time = 2 ** attempt
+                        logger.warning(f"Retrying after error: {e}. Attempt {attempt+1}/3. Waiting {wait_time}s")
+                        await asyncio.sleep(wait_time)
+                    else:
+                        logger.error(f"Failed after 3 attempts: {e}")
+                        raise
+
+        except Exception as e:
+            self.usage_stats["error_count"] += 1
+            logger.error(f"Error getting async OpenAI response: {e}", exc_info=True)
+            return "I'm sorry, I encountered an error when processing your request. Please try again.", None
+        
+    async def get_completion_async(
+        self,
+        prompt: str,
+        conversation_history: Optional[List[Dict[str, str]]] = None,
+        user_specific_context: Optional[str] = None,
+        linked_notion_content: Optional[str] = None,
+        system_prompt: Optional[str] = None,
+        max_tokens: Optional[int] = None,
+        timeout: float = 30.0, 
+        slack_user_id: Optional[str] = None,
+        notion_service=None
+        # REMOVE: task_type: str = "general"  # DELETE THIS PARAMETER
+    ) -> Tuple[Optional[str], Optional[Dict[str, Any]]]:
+        """
+        Asynchronously get a completion from OpenAI with full context injection and language preference support.
+        """
+        if not self.is_available():
+            logger.error("OpenAI async client not initialized")
+            return None, None
+
+        try:
+            # Construct full message list using the context-aware helper with language preference
+            messages = self._prepare_messages(
+                prompt=prompt,
+                conversation_history=conversation_history,
+                user_specific_context=user_specific_context,
+                linked_notion_content=linked_notion_content,
+                system_prompt=system_prompt,
+                slack_user_id=slack_user_id,
+                notion_service=notion_service
+                # REMOVE: task_type=task_type  # DELETE THIS LINE
             )
 
             # Log payload being sent to OpenAI (for debugging only)
@@ -217,40 +243,20 @@ class OpenAIService:
         linked_notion_content: Optional[str] = None,
         system_prompt: Optional[str] = None,
         slack_user_id: Optional[str] = None,
-        notion_service=None,
-        task_type: str = "general"  # NEW PARAMETER
+        notion_service=None
+        # REMOVE: task_type: str = "general"  # DELETE THIS PARAMETER
     ) -> List[Dict[str, str]]:
         
         settings = get_settings()
         
-        # NEW: Get task-specific limits
-        task_limits = {
-            "channel_summary": {
-                "max_context": settings.max_context_tokens_channel_summary,
-                "max_response": settings.max_tokens_channel_summary
-            },
-            "thread_summary": {
-                "max_context": settings.max_context_tokens_thread_summary,
-                "max_response": settings.max_tokens_thread_summary
-            },
-            "content_summary": {
-                "max_context": settings.max_context_tokens_content_summary,
-                "max_response": settings.max_tokens_response
-            },
-            "general": {
-                "max_context": settings.max_context_tokens_general,
-                "max_response": settings.max_tokens_response
-            }
-        }
-        
-        limits = task_limits.get(task_type, task_limits["general"])
-        max_context_tokens = limits["max_context"] - limits["max_response"]
-        
+        # REMOVE: All the task_limits dictionary and task-specific logic
+        # REPLACE WITH: Simple default limits
+        max_context_tokens = settings.max_context_tokens_general - settings.max_tokens_response
 
         # Load the SYSTEM INSTRUCTIONS
         system_prompt_content = system_prompt if system_prompt else settings.openai_system_prompt if settings.openai_system_prompt else ""
 
-        # NEW: Get user's language preference and inject it at the very beginning
+        # KEEP: Get user's language preference and inject it at the very beginning
         language_preference = "English"  # Default
         if slack_user_id and notion_service and hasattr(notion_service, 'get_user_language_preference'):
             try:
@@ -315,11 +321,14 @@ class OpenAIService:
         linked_notion_content: Optional[str] = None,
         system_prompt: Optional[str] = None,
         preferred_name: Optional[str] = None,
-        slack_user_id: Optional[str] = None,  # NEW
-        notion_service=None  # NEW
+        slack_user_id: Optional[str] = None,
+        notion_service=None
     ) -> List[Dict[str, str]]:
         """
         Prepare messages for the OpenAI API with structured Notion context and language preference.
+        
+        NOTE: This method is now simplified. Consider using _prepare_messages directly 
+        for most use cases as it handles everything in a single user message.
         """
         # Get settings for default system prompt
         settings = get_settings()
@@ -327,7 +336,7 @@ class OpenAIService:
         # Use provided system prompt or default
         base_system_prompt = system_prompt if system_prompt else settings.openai_system_prompt
         
-        # NEW: Get user's language preference
+        # Get user's language preference
         language_preference = "English"  # Default
         if slack_user_id and notion_service and hasattr(notion_service, 'get_user_language_preference'):
             try:
@@ -363,16 +372,10 @@ class OpenAIService:
                 f"--- END REFERENCED NOTION PAGES CONTENT ---"
             )
         
-        # Create the messages array
-        messages = self._prepare_messages(
-            prompt=prompt,
-            conversation_history=conversation_history,
-            user_specific_context=user_specific_context,
-            linked_notion_content=linked_notion_content,
-            system_prompt=system_prompt,
-            slack_user_id=slack_user_id,
-            notion_service=notion_service
-        )
+        # SIMPLIFIED: Just create a system message and user message
+        messages = [
+            {"role": "system", "content": system_prompt_content}
+        ]
         
         # Add conversation history if available
         if conversation_history:
@@ -390,9 +393,8 @@ class OpenAIService:
         logger.debug(f"System prompt (first 500 chars): {system_prompt_content[:500]}...")
         logger.info(f"Language preference prominently featured: {language_preference}")
         
-        # Ensure we don't exceed token limits (leave room for completion) 
-        # Use default limit since this method doesn't have task_type parameter
-        max_context_tokens = settings.max_context_tokens_general - (self.max_tokens or settings.max_tokens_response)
+        # SIMPLIFIED: Use default token limits
+        max_context_tokens = settings.max_context_tokens_general - settings.max_tokens_response
         messages = ensure_messages_within_limit(messages, self.model, max_context_tokens)
         
         return messages

@@ -577,7 +577,7 @@ if __name__ == '__main__':
 import unittest
 from unittest.mock import MagicMock, patch, AsyncMock
 import asyncio
-from utils.history_manager import HistoryManager
+from utils.simple_history_manager import SimpleHistoryManager
 
 
 class TestHistoryManager(unittest.IsolatedAsyncioTestCase):

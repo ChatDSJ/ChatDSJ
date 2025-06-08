@@ -4,7 +4,7 @@ from unittest.mock import MagicMock, patch
 # If other parts of your tests (not shown) mock truly async methods, you might need it.
 import asyncio # Keep for unittest.IsolatedAsyncioTestCase
 
-from utils.history_manager import HistoryManager # Assuming this is the correct path
+from utils.simple_history_manager import HistoryManager # Assuming this is the correct path
 
 class TestHistoryManager(unittest.IsolatedAsyncioTestCase):
     async def asyncSetUp(self):

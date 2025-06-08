@@ -14,7 +14,7 @@ from actions.action_framework import (
     SearchFollowUpAction,
     ActionRouter
 )
-from utils.history_manager import HistoryManager
+from utils.simple_history_manager import SimpleHistoryManager
 
 class TestActionFramework(unittest.TestCase):
     def setUp(self):
