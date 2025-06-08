@@ -160,9 +160,30 @@ class SimpleSummarizeAction(Action):
         return ["slack", "openai"]
     
     def can_handle(self, text: str) -> bool:
-        """Handle summarization requests for any content."""
+        """Handle summarization requests for external content only."""
         summarize_keywords = ["summarize", "summary", "tldr", "briefly", "recap"]
-        return any(keyword in text.lower() for keyword in summarize_keywords)
+        
+        # Only handle if there are summarization keywords
+        if not any(keyword in text.lower() for keyword in summarize_keywords):
+            return False
+        
+        # Skip if this is asking to summarize current context (thread, channel, conversation)
+        context_indicators = [
+            "this thread", "the thread", "thread",
+            "this conversation", "the conversation", "conversation", 
+            "this channel", "the channel", "channel",
+            "our discussion", "the discussion", "discussion",
+            "what we", "what happened", "the messages", "this chat"
+        ]
+        
+        text_lower = text.lower()
+        if any(indicator in text_lower for indicator in context_indicators):
+            logger.debug(f"Skipping SimpleSummarizeAction - this appears to be a context summarization request")
+            return False
+        
+        # Only handle if there appears to be external content to summarize
+        # This could be improved later to detect URLs, long pasted text, etc.
+        return True
     
     async def execute(self, request: ActionRequest) -> ActionResponse:
         try:
