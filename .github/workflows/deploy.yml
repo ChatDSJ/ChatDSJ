@@ -51,7 +51,7 @@ jobs:
             APP_NAME="chatdsj"
             echo "Deploying to production app: $APP_NAME"
           else
-            APP_NAME="testchatdsj"
+            APP_NAME="testchatdsj-bot"
             echo "Deploying to test app: $APP_NAME"
           fi
           
