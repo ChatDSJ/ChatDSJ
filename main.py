@@ -60,6 +60,115 @@ services = ServiceContainer(
     openai_service=openai_service
 )
 
+@slack_service.app.command("/name")
+def handle_name_command(ack, respond, command):
+    """Handle /name slash command."""
+    ack()  # Acknowledge the command immediately
+    
+    try:
+        user_id = command["user_id"]
+        name = command["text"].strip()
+        
+        # Call the handler synchronously 
+        if not name:
+            respond("❌ Please provide a name. Usage: `/name John`")
+            return
+            
+        if len(name) > 50:
+            respond("❌ Name is too long. Please use a shorter name.")
+            return
+        
+        logger.info(f"Processing /name command for user {user_id}: '{name}'")
+        
+        # Store the nickname synchronously
+        success = notion_service.store_user_nickname(user_id, name, None)
+        
+        if success:
+            respond(f"✅ Got it! I'll call you **{name}** from now on.")
+        else:
+            respond("❌ Sorry, I had trouble saving that name. Please try again.")
+        
+    except Exception as e:
+        logger.error(f"Error handling /name command: {e}")
+        respond("❌ I encountered an error. Please try again.")
+
+@slack_service.app.command("/fact")
+def handle_fact_command(ack, respond, command):
+    """Handle /fact slash command."""
+    ack()  # Acknowledge the command immediately
+    
+    try:
+        user_id = command["user_id"]
+        fact = command["text"].strip()
+        
+        # Validate fact
+        if not fact:
+            respond("❌ Please provide a fact. Usage: `/fact I like coffee`")
+            return
+            
+        if len(fact) > 500:
+            respond("❌ Fact is too long. Please use a shorter fact.")
+            return
+        
+        logger.info(f"Processing /fact command for user {user_id}: '{fact}'")
+        
+        # Add fact to Notion synchronously
+        success = add_fact_to_notion(user_id, fact)
+        
+        if success:
+            respond(f"✅ Remembered: **{fact}**")
+        else:
+            respond("❌ Sorry, I couldn't save that fact. Please try again.")
+        
+    except Exception as e:
+        logger.error(f"Error handling /fact command: {e}")
+        respond("❌ I encountered an error. Please try again.")
+
+def add_fact_to_notion(slack_user_id: str, fact_text: str) -> bool:
+    """Add a fact to the user's Notion page."""
+    try:
+        # Get or create user page
+        page_id = notion_service.get_user_page_id(slack_user_id)
+        if not page_id:
+            # Create a new user page if it doesn't exist
+            success = notion_service.store_user_nickname(slack_user_id, slack_user_id, None)
+            if not success:
+                return False
+            
+            page_id = notion_service.get_user_page_id(slack_user_id)
+            if not page_id:
+                return False
+        
+        # Create a new fact bullet point
+        new_fact_block = {
+            "object": "block",
+            "type": "bulleted_list_item",
+            "bulleted_list_item": {
+                "rich_text": [{
+                    "type": "text",
+                    "text": {"content": fact_text}
+                }]
+            }
+        }
+        
+        # Append to the page
+        result = notion_service.client.blocks.children.append(
+            block_id=page_id,
+            children=[new_fact_block]
+        )
+        
+        if result and result.get("results"):
+            # Invalidate cache
+            notion_service.invalidate_user_cache(slack_user_id)
+            logger.info(f"Successfully added fact for user {slack_user_id}")
+            return True
+        
+        return False
+        
+    except Exception as e:
+        logger.error(f"Error adding fact for user {slack_user_id}: {e}", exc_info=True)
+        return False
+    
 # Slack event handler function
 async def handle_mention(event, say, client):
     """Handle app_mention events."""
@@ -75,67 +184,6 @@ async def handle_mention(event, say, client):
         
         # Add "thinking" reaction to the original message
         slack_service.add_reaction(channel_id, message_ts, "thinking_face")
-        
-        # 1. Check for memory commands first (highest priority) with enhanced logging
-        if hasattr(notion_service, "memory_handler"):
-            # Extract just the user command, ignore content after separators
-            user_command = prompt.split('===')[0].split('\n---')[0].strip()
-            logger.info(f"Checking for memory commands in user command: '{user_command[:100]}...'")
-            
-            try:
-                memory_response = await asyncio.to_thread(
-                    notion_service.handle_memory_instruction,
-                    user_id,
-                    user_command
-                )
-                
-                if memory_response:
-                    # Memory command was processed successfully
-                    logger.info(f"✅ Memory command processed successfully for user {user_id}")
-                    logger.info(f"Memory response: {memory_response}")
-                    
-                    response = slack_service.send_message(channel_id, memory_response, thread_ts)
-                    
-                    # Update reactions
-                    slack_service.remove_reaction(channel_id, message_ts, "thinking_face")
-                    slack_service.add_reaction(channel_id, message_ts, "white_check_mark")
-                    slack_service.update_channel_stats(channel_id, user_id, message_ts)
-                    return response
-                else:
-                    logger.info(f"No memory command detected, continuing to general processing")
-                    
-            except Exception as memory_error:
-                logger.error(f"❌ Error in memory command processing: {memory_error}", exc_info=True)
-                
-                # Send error message and STOP - don't continue to general processing
-                error_response = f"❌ I encountered an error processing your memory command: {str(memory_error)}"
-                slack_service.send_message(channel_id, error_response, thread_ts)
-                
-                # Update reactions to show error
-                slack_service.remove_reaction(channel_id, message_ts, "thinking_face") 
-                slack_service.add_reaction(channel_id, message_ts, "warning")
-                slack_service.update_channel_stats(channel_id, user_id, message_ts)
-                return {"ok": True, "ts": "error_handled"}
-
-        # Continue with existing nickname command processing...
-        # 2. Check for nickname command only if NOT a memory command
-        nickname_response, nickname_success = await asyncio.to_thread(
-            notion_service.handle_nickname_command,
-            prompt, 
-            user_id,
-            slack_service.get_user_display_name(user_id)
-        )
-        
-        if nickname_response:
-            # If this was a nickname command, send response and return
-            logger.info(f"Nickname command processed for user {user_id}: {prompt[:50]}...")
-            response = slack_service.send_message(channel_id, nickname_response, thread_ts)
-            
-            # Remove thinking reaction and add check mark
-            slack_service.remove_reaction(channel_id, message_ts, "thinking_face")
-            slack_service.add_reaction(channel_id, message_ts, "white_check_mark")
-            slack_service.update_channel_stats(channel_id, user_id, message_ts)
-            return response
         
         # 3. Create action request for general processing
         request = ActionRequest(
