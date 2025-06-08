@@ -48,10 +48,10 @@ jobs:
           
           # Set app name based on environment
           if [[ "$TARGET_ENV" == "production" ]]; then
-            APP_NAME="chatdsj-bot"
+            APP_NAME="chatdsj"
             echo "Deploying to production app: $APP_NAME"
           else
-            APP_NAME="testchatdsj-bot"
+            APP_NAME="testchatdsj"
             echo "Deploying to test app: $APP_NAME"
           fi
           
@@ -60,7 +60,7 @@ jobs:
       
       - name: Safety check for production
         run: |
-          if [[ "${{ github.ref }}" != "refs/heads/main" && "${{ steps.set-target.outputs.app_name }}" == "chatdsj-bot" ]]; then
+          if [[ "${{ github.ref }}" != "refs/heads/main" && "${{ steps.set-target.outputs.app_name }}" == "chatdsj" ]]; then
             echo "ERROR: Attempting to deploy non-main branch to production!"
             exit 1
           fi
