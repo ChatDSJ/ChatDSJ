@@ -135,7 +135,8 @@ class OpenAIService:
         max_tokens: Optional[int] = None,
         timeout: float = 30.0, 
         slack_user_id: Optional[str] = None,
-        notion_service=None
+        notion_service=None,
+        task_type: str = "general"  # NEW PARAMETER
     ) -> Tuple[Optional[str], Optional[Dict[str, Any]]]:
         """
         Asynchronously get a completion from OpenAI with full context injection and language preference support.
@@ -153,7 +154,8 @@ class OpenAIService:
                 linked_notion_content=linked_notion_content,
                 system_prompt=system_prompt,
                 slack_user_id=slack_user_id,
-                notion_service=notion_service
+                notion_service=notion_service,
+                task_type=task_type  # NEW
             )
 
             # Log payload being sent to OpenAI (for debugging only)
@@ -214,13 +216,36 @@ class OpenAIService:
         user_specific_context: Optional[str] = None,
         linked_notion_content: Optional[str] = None,
         system_prompt: Optional[str] = None,
-        slack_user_id: Optional[str] = None,  # NEW
-        notion_service=None  # NEW
+        slack_user_id: Optional[str] = None,
+        notion_service=None,
+        task_type: str = "general"  # NEW PARAMETER
     ) -> List[Dict[str, str]]:
-        """
-        Prepares a SINGLE STRING prompt with all components combined, including language preference.
-        """
+        
         settings = get_settings()
+        
+        # NEW: Get task-specific limits
+        task_limits = {
+            "channel_summary": {
+                "max_context": settings.max_context_tokens_channel_summary,
+                "max_response": settings.max_tokens_channel_summary
+            },
+            "thread_summary": {
+                "max_context": settings.max_context_tokens_thread_summary,
+                "max_response": settings.max_tokens_thread_summary
+            },
+            "content_summary": {
+                "max_context": settings.max_context_tokens_content_summary,
+                "max_response": settings.max_tokens_response
+            },
+            "general": {
+                "max_context": settings.max_context_tokens_general,
+                "max_response": settings.max_tokens_response
+            }
+        }
+        
+        limits = task_limits.get(task_type, task_limits["general"])
+        max_context_tokens = limits["max_context"] - limits["max_response"]
+        
 
         # Load the SYSTEM INSTRUCTIONS
         system_prompt_content = system_prompt if system_prompt else settings.openai_system_prompt if settings.openai_system_prompt else ""
@@ -278,7 +303,6 @@ class OpenAIService:
         logger.info(f"Language preference prominently featured in prompt: {language_preference}")
 
         # Truncate if necessary
-        max_context_tokens = 8000 - (self.max_tokens or 1500)
         messages = ensure_messages_within_limit(messages, self.model, max_context_tokens)
 
         return messages
@@ -366,8 +390,9 @@ class OpenAIService:
         logger.debug(f"System prompt (first 500 chars): {system_prompt_content[:500]}...")
         logger.info(f"Language preference prominently featured: {language_preference}")
         
-        # Ensure we don't exceed token limits (leave room for completion)
-        max_context_tokens = 8000 - (self.max_tokens or 1500)
+        # Ensure we don't exceed token limits (leave room for completion) 
+        # Use default limit since this method doesn't have task_type parameter
+        max_context_tokens = settings.max_context_tokens_general - (self.max_tokens or settings.max_tokens_response)
         messages = ensure_messages_within_limit(messages, self.model, max_context_tokens)
         
         return messages

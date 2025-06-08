@@ -105,7 +105,7 @@ def truncate_text_to_token_limit(text: str, max_tokens: int, model: str = "gpt-4
 def ensure_messages_within_limit(
     messages: List[Dict[str, Any]], 
     model: str = "gpt-4o", 
-    max_tokens: int = 8000,
+    max_tokens: int = 100000,
     preserve_system_message: bool = True,
     preserve_latest_messages: int = 4
 ) -> List[Dict[str, Any]]:

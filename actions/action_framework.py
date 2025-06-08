@@ -340,14 +340,18 @@ class ContextResponseAction(Action):
             logger.info(f"History retrieval mode: {query_params.get('mode', 'unknown')}")
             logger.info(f"Retrieved {len(filtered_messages)} relevant messages")
             
-            # Generate response using direct approach with enhanced error handling
+            # NEW: Determine task type
+            task_type = self._determine_task_type(request.prompt)
+            
+            # Generate response using direct approach with task type
             try:
                 response_text, usage = await self.services.openai_service.get_completion_async(
                     prompt=request.prompt,
                     conversation_history=formatted_history,
                     user_specific_context=user_specific_context,
                     slack_user_id=request.user_id,
-                    notion_service=self.services.notion_service
+                    notion_service=self.services.notion_service,
+                    task_type=task_type  # NEW
                 )
             except Exception as openai_error:
                 logger.error(f"OpenAI API error: {openai_error}")
@@ -379,7 +383,20 @@ class ContextResponseAction(Action):
                 message="I encountered an error while processing your request. Please try again.",
                 thread_ts=request.thread_ts
             )
-    
+
+    def _determine_task_type(self, prompt: str) -> str:
+            """Determine task type from prompt."""
+            prompt_lower = prompt.lower()
+            
+            if "summarize channel" in prompt_lower or "channel summary" in prompt_lower:
+                return "channel_summary"
+            elif "summarize thread" in prompt_lower or "thread summary" in prompt_lower:
+                return "thread_summary"
+            elif "summarize" in prompt_lower or "summary" in prompt_lower:
+                return "content_summary"
+            else:
+                return "general"
+
 class RetrieveSummarizeAction(Action):
     """
     Action for retrieving and summarizing web content.

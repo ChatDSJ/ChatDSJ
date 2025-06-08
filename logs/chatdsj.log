@@ -16161,3 +16161,265 @@ The server responded with: {'ok': False, 'error': 'no_reaction'}
 2025-06-08 06:58:37.370 | ERROR    | services.slack_service:add_reaction:118 - Failed to add reaction :white_check_mark: to message 1749380282.113609: The request to the Slack API failed. (url: https://slack.com/api/reactions.add)
 The server responded with: {'ok': False, 'error': 'already_reacted'}
 2025-06-08 06:58:37.370 | INFO     | main:handle_mention:173 - Action handled message sending directly (e.g., rich blocks)
+2025-06-08 07:41:03.272 | INFO     | main:<module>:28 - Starting application in development mode
+2025-06-08 07:41:03.370 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-06-08 07:41:03.370 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-06-08 07:41:03.390 | INFO     | services.cached_notion_service:__init__:73 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-06-08 07:41:03.915 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-06-08 07:41:04.118 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-06-08 07:41:04.119 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-06-08 07:41:04.127 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-06-08 07:41:04.127 | INFO     | main:startup_event:230 - Slack bot started in socket mode.
+2025-06-08 07:41:04.148 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-06-08 08:07:52.855 | INFO     | main:<module>:28 - Starting application in development mode
+2025-06-08 08:07:53.021 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-06-08 08:07:53.021 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-06-08 08:07:53.047 | INFO     | services.cached_notion_service:__init__:73 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-06-08 08:07:55.851 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-06-08 08:07:56.093 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-06-08 08:07:56.094 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-06-08 08:07:56.101 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-06-08 08:07:56.101 | INFO     | main:startup_event:230 - Slack bot started in socket mode.
+2025-06-08 08:07:56.129 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-06-08 08:08:27.152 | INFO     | main:handle_mention:83 - Checking for memory commands in user command: 'summarize channel...'
+2025-06-08 08:08:27.187 | INFO     | main:handle_mention:105 - No memory command detected, continuing to general processing
+2025-06-08 08:08:27.401 | INFO     | actions.action_framework:__init__:872 - ActionRouter initialized with 7 actions
+2025-06-08 08:08:27.406 | INFO     | actions.action_framework:_get_action_for_text:886 - Selected action ContextResponseAction for message: <@U08RG89NFK7> summarize channel...
+2025-06-08 08:08:27.411 | INFO     | utils.history_manager:extract_search_topic:306 - Extracting search topic from prompt: summarize channel
+2025-06-08 08:08:27.416 | INFO     | utils.history_manager:extract_search_topic:394 - No topic could be extracted from the prompt
+2025-06-08 08:08:27.416 | INFO     | utils.history_manager:retrieve_and_filter_history:52 - Summary request detected - thread: False, channel: True
+2025-06-08 08:08:27.416 | INFO     | utils.history_manager:retrieve_and_filter_history:207 - Channel summary requested - fetching channel history
+2025-06-08 08:08:27.416 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 100)...
+2025-06-08 08:08:28.400 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 100 messages from channel C08SJ5EUTPT.
+2025-06-08 08:08:28.400 | INFO     | utils.history_manager:retrieve_and_filter_history:300 - Retrieved 100 messages for Channel summary
+2025-06-08 08:08:28.402 | INFO     | utils.history_manager:format_history_for_prompt:635 - Formatted message history: 66452 characters
+2025-06-08 08:08:28.402 | INFO     | actions.action_framework:execute:300 - Fetching Notion context for user U089YKL1T4H
+2025-06-08 08:08:29.954 | INFO     | services.cached_notion_service:get_user_page_content:377 - Retrieved Notion page content for user U089YKL1T4H (length: 1210)
+2025-06-08 08:08:30.161 | INFO     | services.cached_notion_service:get_user_page_content:313 - Cache hit for user page content: U089YKL1T4H
+2025-06-08 08:08:30.161 | INFO     | utils.context_builder:get_enhanced_user_context:22 - Building enhanced context for user U089YKL1T4H
+2025-06-08 08:08:30.161 | INFO     | utils.context_builder:get_enhanced_user_context:24 - Using preferred name: NewNameForTest
+2025-06-08 08:08:30.162 | INFO     | utils.context_builder:get_enhanced_user_context:27 - Page content length: 1210 chars
+2025-06-08 08:08:30.162 | INFO     | utils.context_builder:get_enhanced_user_context:33 - Language preference: English
+2025-06-08 08:08:30.162 | INFO     | utils.context_builder:get_enhanced_user_context:107 - Generated enhanced context length: 2269 chars
+2025-06-08 08:08:30.162 | INFO     | utils.context_builder:get_enhanced_user_context:108 - Language preference featured prominently: English
+2025-06-08 08:08:30.163 | INFO     | actions.action_framework:execute:340 - History retrieval mode: unknown
+2025-06-08 08:08:30.163 | INFO     | actions.action_framework:execute:341 - Retrieved 100 relevant messages
+2025-06-08 08:08:30.163 | INFO     | services.cached_notion_service:get_user_language_preference:1577 - Language preference for user U089YKL1T4H: English
+2025-06-08 08:08:30.163 | INFO     | handler.openai_service:_prepare_messages:258 - Retrieved language preference for user U089YKL1T4H: English
+2025-06-08 08:08:30.165 | INFO     | handler.openai_service:_prepare_messages:303 - Language preference prominently featured in prompt: English
+2025-06-08 08:08:30.165 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-08 08:08:30.548 | WARNING  | utils.token_management:ensure_messages_within_limit:138 - Messages exceed token limit: 9854/6500. Trimming older messages.
+2025-06-08 08:08:30.548 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-08 08:08:30.560 | WARNING  | utils.token_management:ensure_messages_within_limit:189 - Recent messages exceed available tokens: 9854/6500. Dropping oldest recent messages.
+2025-06-08 08:08:30.560 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-08 08:08:30.571 | INFO     | handler.openai_service:get_completion_async:167 - Sending 0 tokens to OpenAI async. Model: gpt-4o
+2025-06-08 08:08:32.128 | ERROR    | actions.action_framework:execute:357 - OpenAI API error: "'error'"
+2025-06-08 08:08:34.757 | ERROR    | main:handle_mention:187 - Action failed: OpenAI API error: "'error'"
+2025-06-08 08:08:34.758 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 98 chars):
+I'm sorry, I'm having trouble connecting to my AI service right now. Please try again in a moment.
+2025-06-08 08:08:35.388 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1749384517.348909', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1749384517.348909', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': "I'm sorry, I'm having trouble connecting to my AI service right now. Please try again in a moment.", 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1749384507.535479', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'W6RWD', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': "I'm sorry, I'm having trouble connecting to my AI service right now. Please try again in a moment."}]}]}]}}
+2025-06-08 08:08:35.624 | ERROR    | services.slack_service:add_reaction:118 - Failed to add reaction :warning: to message 1749384507.535479: The request to the Slack API failed. (url: https://slack.com/api/reactions.add)
+The server responded with: {'ok': False, 'error': 'already_reacted'}
+2025-06-08 08:08:35.837 | ERROR    | services.slack_service:remove_reaction:145 - Failed to remove reaction :thinking_face: from message 1749384507.535479: The request to the Slack API failed. (url: https://slack.com/api/reactions.remove)
+The server responded with: {'ok': False, 'error': 'no_reaction'}
+2025-06-08 08:13:11.145 | INFO     | main:<module>:28 - Starting application in development mode
+2025-06-08 08:13:11.248 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-06-08 08:13:11.248 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-06-08 08:13:11.273 | INFO     | services.cached_notion_service:__init__:73 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-06-08 08:13:11.787 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-06-08 08:13:11.990 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-06-08 08:13:11.990 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-06-08 08:13:11.995 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-06-08 08:13:11.996 | INFO     | main:startup_event:230 - Slack bot started in socket mode.
+2025-06-08 08:13:12.026 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-06-08 08:13:57.542 | INFO     | main:<module>:28 - Starting application in development mode
+2025-06-08 08:13:57.704 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-06-08 08:13:57.705 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-06-08 08:13:57.728 | INFO     | services.cached_notion_service:__init__:73 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-06-08 08:13:58.316 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-06-08 08:13:58.529 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-06-08 08:13:58.530 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-06-08 08:13:58.537 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-06-08 08:13:58.537 | INFO     | main:startup_event:230 - Slack bot started in socket mode.
+2025-06-08 08:13:58.559 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-06-08 08:14:39.562 | INFO     | main:handle_mention:83 - Checking for memory commands in user command: 'summarize channel...'
+2025-06-08 08:14:39.565 | INFO     | main:handle_mention:105 - No memory command detected, continuing to general processing
+2025-06-08 08:14:39.780 | INFO     | actions.action_framework:__init__:872 - ActionRouter initialized with 7 actions
+2025-06-08 08:14:39.784 | INFO     | actions.action_framework:_get_action_for_text:886 - Selected action ContextResponseAction for message: <@U08RG89NFK7> summarize channel...
+2025-06-08 08:14:39.787 | INFO     | utils.history_manager:extract_search_topic:306 - Extracting search topic from prompt: summarize channel
+2025-06-08 08:14:39.792 | INFO     | utils.history_manager:extract_search_topic:394 - No topic could be extracted from the prompt
+2025-06-08 08:14:39.792 | INFO     | utils.history_manager:retrieve_and_filter_history:52 - Summary request detected - thread: False, channel: True
+2025-06-08 08:14:39.792 | INFO     | utils.history_manager:retrieve_and_filter_history:207 - Channel summary requested - fetching channel history
+2025-06-08 08:14:39.793 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 100)...
+2025-06-08 08:14:40.473 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 100 messages from channel C08SJ5EUTPT.
+2025-06-08 08:14:40.473 | INFO     | utils.history_manager:retrieve_and_filter_history:300 - Retrieved 100 messages for Channel summary
+2025-06-08 08:14:40.475 | INFO     | utils.history_manager:format_history_for_prompt:635 - Formatted message history: 66452 characters
+2025-06-08 08:14:40.475 | INFO     | actions.action_framework:execute:300 - Fetching Notion context for user U089YKL1T4H
+2025-06-08 08:14:41.163 | INFO     | services.cached_notion_service:get_user_page_content:377 - Retrieved Notion page content for user U089YKL1T4H (length: 1210)
+2025-06-08 08:14:43.209 | INFO     | services.cached_notion_service:get_user_page_content:313 - Cache hit for user page content: U089YKL1T4H
+2025-06-08 08:14:43.210 | INFO     | utils.context_builder:get_enhanced_user_context:22 - Building enhanced context for user U089YKL1T4H
+2025-06-08 08:14:43.210 | INFO     | utils.context_builder:get_enhanced_user_context:24 - Using preferred name: NewNameForTest
+2025-06-08 08:14:43.210 | INFO     | utils.context_builder:get_enhanced_user_context:27 - Page content length: 1210 chars
+2025-06-08 08:14:43.210 | INFO     | utils.context_builder:get_enhanced_user_context:33 - Language preference: English
+2025-06-08 08:14:43.211 | INFO     | utils.context_builder:get_enhanced_user_context:107 - Generated enhanced context length: 2269 chars
+2025-06-08 08:14:43.211 | INFO     | utils.context_builder:get_enhanced_user_context:108 - Language preference featured prominently: English
+2025-06-08 08:14:43.211 | INFO     | actions.action_framework:execute:340 - History retrieval mode: unknown
+2025-06-08 08:14:43.211 | INFO     | actions.action_framework:execute:341 - Retrieved 100 relevant messages
+2025-06-08 08:14:43.212 | INFO     | services.cached_notion_service:get_user_language_preference:1577 - Language preference for user U089YKL1T4H: English
+2025-06-08 08:14:43.212 | INFO     | handler.openai_service:_prepare_messages:258 - Retrieved language preference for user U089YKL1T4H: English
+2025-06-08 08:14:43.213 | INFO     | handler.openai_service:_prepare_messages:303 - Language preference prominently featured in prompt: English
+2025-06-08 08:14:43.213 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-08 08:14:43.577 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-08 08:14:43.588 | INFO     | handler.openai_service:get_completion_async:167 - Sending 9854 tokens to OpenAI async. Model: gpt-4o
+2025-06-08 08:14:47.067 | INFO     | handler.openai_service:get_completion_async:187 - OpenAI response received successfully in 1 attempt(s)
+2025-06-08 08:14:47.567 | INFO     | main:handle_mention:166 - Sending action response message (length: 649)
+2025-06-08 08:14:47.583 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 649 chars):
+The channel has a mix of personal facts and preferences shared by NewNameForTest, questions about past discussions, and external content summaries. Known facts include having a child named Roberto Dante, being the world's best juggler, having a cat named Yo Yo Ma, and a favorite color of green. Preferences indicate a fondness for emojis, a respect for Meatloaf, Juan Luis Guerra y 440, and enjoying Piña Coladas with ketchup. Notable discussions involve historical queries, book recommendations, and mentions of AI tools and projects. There are also specific stylistic preferences for how responses should be crafted under different circumstances.
+2025-06-08 08:14:47.917 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1749384889.914429', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1749384889.914429', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': "The channel has a mix of personal facts and preferences shared by NewNameForTest, questions about past discussions, and external content summaries. Known facts include having a child named Roberto Dante, being the world's best juggler, having a cat named Yo Yo Ma, and a favorite color of green. Preferences indicate a fondness for emojis, a respect for Meatloaf, Juan Luis Guerra y 440, and enjoying Piña Coladas with ketchup. Notable discussions involve historical queries, book recommendations, and mentions of AI tools and projects. There are also specific stylistic preferences for how responses should be crafted under different circumstances.", 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1749384878.831219', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'KMzxf', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': "The channel has a mix of personal facts and preferences shared by NewNameForTest, questions about past discussions, and external content summaries. Known facts include having a child named Roberto Dante, being the world's best juggler, having a cat named Yo Yo Ma, and a favorite color of green. Preferences indicate a fondness for emojis, a respect for Meatloaf, Juan Luis Guerra y 440, and enjoying Piña Coladas with ketchup. Notable discussions involve historical queries, book recommendations, and mentions of AI tools and projects. There are also specific stylistic preferences for how responses should be crafted under different circumstances."}]}]}]}}
+2025-06-08 08:15:43.484 | INFO     | main:handle_mention:83 - Checking for memory commands in user command: 'are you there?...'
+2025-06-08 08:15:43.485 | INFO     | main:handle_mention:105 - No memory command detected, continuing to general processing
+2025-06-08 08:15:43.485 | INFO     | actions.action_framework:__init__:872 - ActionRouter initialized with 7 actions
+2025-06-08 08:15:43.486 | INFO     | actions.action_framework:_get_action_for_text:886 - Selected action ContextResponseAction for message: <@U08RG89NFK7> are you there?...
+2025-06-08 08:15:43.486 | INFO     | utils.history_manager:extract_search_topic:306 - Extracting search topic from prompt: are you there?
+2025-06-08 08:15:43.486 | INFO     | utils.history_manager:extract_search_topic:394 - No topic could be extracted from the prompt
+2025-06-08 08:15:43.486 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08A8P4V5EU, ts: 1749384943.670809 (limit: 100)...
+2025-06-08 08:15:43.719 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 1 messages from thread 1749384943.670809.
+2025-06-08 08:15:43.720 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08A8P4V5EU (limit: 50)...
+2025-06-08 08:15:44.214 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 50 messages from channel C08A8P4V5EU.
+2025-06-08 08:15:44.215 | INFO     | utils.history_manager:retrieve_and_filter_history:300 - Retrieved 50 messages for Recent context
+2025-06-08 08:15:45.227 | INFO     | utils.history_manager:format_history_for_prompt:635 - Formatted message history: 51304 characters
+2025-06-08 08:15:45.228 | INFO     | actions.action_framework:execute:300 - Fetching Notion context for user U089YKL1T4H
+2025-06-08 08:15:45.228 | INFO     | services.cached_notion_service:get_user_page_content:313 - Cache hit for user page content: U089YKL1T4H
+2025-06-08 08:15:45.230 | INFO     | services.cached_notion_service:get_user_page_content:313 - Cache hit for user page content: U089YKL1T4H
+2025-06-08 08:15:45.230 | INFO     | utils.context_builder:get_enhanced_user_context:22 - Building enhanced context for user U089YKL1T4H
+2025-06-08 08:15:45.230 | INFO     | utils.context_builder:get_enhanced_user_context:24 - Using preferred name: NewNameForTest
+2025-06-08 08:15:45.230 | INFO     | utils.context_builder:get_enhanced_user_context:27 - Page content length: 1210 chars
+2025-06-08 08:15:45.230 | INFO     | utils.context_builder:get_enhanced_user_context:33 - Language preference: English
+2025-06-08 08:15:45.230 | INFO     | utils.context_builder:get_enhanced_user_context:107 - Generated enhanced context length: 2269 chars
+2025-06-08 08:15:45.231 | INFO     | utils.context_builder:get_enhanced_user_context:108 - Language preference featured prominently: English
+2025-06-08 08:15:45.231 | INFO     | actions.action_framework:execute:340 - History retrieval mode: unknown
+2025-06-08 08:15:45.231 | INFO     | actions.action_framework:execute:341 - Retrieved 50 relevant messages
+2025-06-08 08:15:45.231 | INFO     | handler.openai_service:_prepare_messages:258 - Retrieved language preference for user U089YKL1T4H: English
+2025-06-08 08:15:45.232 | INFO     | handler.openai_service:_prepare_messages:303 - Language preference prominently featured in prompt: English
+2025-06-08 08:15:45.232 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-08 08:15:45.245 | WARNING  | utils.token_management:ensure_messages_within_limit:138 - Messages exceed token limit: 8337/6500. Trimming older messages.
+2025-06-08 08:15:45.245 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-08 08:15:45.254 | WARNING  | utils.token_management:ensure_messages_within_limit:189 - Recent messages exceed available tokens: 8337/6500. Dropping oldest recent messages.
+2025-06-08 08:15:45.254 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-08 08:15:45.263 | INFO     | handler.openai_service:get_completion_async:167 - Sending 0 tokens to OpenAI async. Model: gpt-4o
+2025-06-08 08:15:46.085 | ERROR    | actions.action_framework:execute:357 - OpenAI API error: "'error'"
+2025-06-08 08:15:46.594 | ERROR    | main:handle_mention:187 - Action failed: OpenAI API error: "'error'"
+2025-06-08 08:15:46.594 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08A8P4V5EU (length: 98 chars):
+I'm sorry, I'm having trouble connecting to my AI service right now. Please try again in a moment.
+2025-06-08 08:15:46.886 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08A8P4V5EU', 'ts': '1749384948.892099', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1749384948.892099', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': "I'm sorry, I'm having trouble connecting to my AI service right now. Please try again in a moment.", 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1749384943.670809', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': '=8W4', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': "I'm sorry, I'm having trouble connecting to my AI service right now. Please try again in a moment."}]}]}]}}
+2025-06-08 08:15:47.107 | ERROR    | services.slack_service:add_reaction:118 - Failed to add reaction :warning: to message 1749384943.670809: The request to the Slack API failed. (url: https://slack.com/api/reactions.add)
+The server responded with: {'ok': False, 'error': 'already_reacted'}
+2025-06-08 08:15:47.322 | ERROR    | services.slack_service:remove_reaction:145 - Failed to remove reaction :thinking_face: from message 1749384943.670809: The request to the Slack API failed. (url: https://slack.com/api/reactions.remove)
+The server responded with: {'ok': False, 'error': 'no_reaction'}
+2025-06-08 08:17:51.500 | INFO     | main:<module>:28 - Starting application in development mode
+2025-06-08 08:17:51.613 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-06-08 08:17:51.613 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-06-08 08:17:51.636 | INFO     | services.cached_notion_service:__init__:73 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-06-08 08:17:52.212 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-06-08 08:17:52.415 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-06-08 08:17:52.415 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-06-08 08:17:52.423 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-06-08 08:17:52.423 | INFO     | main:startup_event:230 - Slack bot started in socket mode.
+2025-06-08 08:17:52.446 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-06-08 08:18:19.744 | INFO     | main:handle_mention:83 - Checking for memory commands in user command: 'are you there?...'
+2025-06-08 08:18:19.754 | INFO     | main:handle_mention:105 - No memory command detected, continuing to general processing
+2025-06-08 08:18:20.019 | INFO     | actions.action_framework:__init__:872 - ActionRouter initialized with 7 actions
+2025-06-08 08:18:20.024 | INFO     | actions.action_framework:_get_action_for_text:886 - Selected action ContextResponseAction for message: <@U08RG89NFK7> are you there?...
+2025-06-08 08:18:20.027 | INFO     | utils.history_manager:extract_search_topic:306 - Extracting search topic from prompt: are you there?
+2025-06-08 08:18:20.031 | INFO     | utils.history_manager:extract_search_topic:394 - No topic could be extracted from the prompt
+2025-06-08 08:18:20.031 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08A8P4V5EU, ts: 1749385099.531799 (limit: 100)...
+2025-06-08 08:18:20.248 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 1 messages from thread 1749385099.531799.
+2025-06-08 08:18:20.249 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08A8P4V5EU (limit: 50)...
+2025-06-08 08:18:20.839 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 50 messages from channel C08A8P4V5EU.
+2025-06-08 08:18:20.840 | INFO     | utils.history_manager:retrieve_and_filter_history:300 - Retrieved 50 messages for Recent context
+2025-06-08 08:18:21.863 | INFO     | utils.history_manager:format_history_for_prompt:635 - Formatted message history: 51304 characters
+2025-06-08 08:18:21.863 | INFO     | actions.action_framework:execute:300 - Fetching Notion context for user U089YKL1T4H
+2025-06-08 08:18:22.658 | INFO     | services.cached_notion_service:get_user_page_content:377 - Retrieved Notion page content for user U089YKL1T4H (length: 1210)
+2025-06-08 08:18:22.864 | INFO     | services.cached_notion_service:get_user_page_content:313 - Cache hit for user page content: U089YKL1T4H
+2025-06-08 08:18:22.864 | INFO     | utils.context_builder:get_enhanced_user_context:22 - Building enhanced context for user U089YKL1T4H
+2025-06-08 08:18:22.864 | INFO     | utils.context_builder:get_enhanced_user_context:24 - Using preferred name: NewNameForTest
+2025-06-08 08:18:22.865 | INFO     | utils.context_builder:get_enhanced_user_context:27 - Page content length: 1210 chars
+2025-06-08 08:18:22.865 | INFO     | utils.context_builder:get_enhanced_user_context:33 - Language preference: English
+2025-06-08 08:18:22.865 | INFO     | utils.context_builder:get_enhanced_user_context:107 - Generated enhanced context length: 2269 chars
+2025-06-08 08:18:22.865 | INFO     | utils.context_builder:get_enhanced_user_context:108 - Language preference featured prominently: English
+2025-06-08 08:18:22.865 | INFO     | actions.action_framework:execute:340 - History retrieval mode: unknown
+2025-06-08 08:18:22.866 | INFO     | actions.action_framework:execute:341 - Retrieved 50 relevant messages
+2025-06-08 08:18:22.866 | INFO     | services.cached_notion_service:get_user_language_preference:1577 - Language preference for user U089YKL1T4H: English
+2025-06-08 08:18:22.866 | INFO     | handler.openai_service:_prepare_messages:258 - Retrieved language preference for user U089YKL1T4H: English
+2025-06-08 08:18:22.867 | INFO     | handler.openai_service:_prepare_messages:303 - Language preference prominently featured in prompt: English
+2025-06-08 08:18:22.867 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-08 08:18:23.192 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-08 08:18:23.202 | INFO     | handler.openai_service:get_completion_async:167 - Sending 8337 tokens to OpenAI async. Model: gpt-4o
+2025-06-08 08:18:25.209 | INFO     | handler.openai_service:get_completion_async:187 - OpenAI response received successfully in 1 attempt(s)
+2025-06-08 08:18:25.783 | INFO     | main:handle_mention:166 - Sending action response message (length: 42)
+2025-06-08 08:18:25.783 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08A8P4V5EU (length: 42 chars):
+Yes, I'm here! How can I assist you today?
+2025-06-08 08:18:26.120 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08A8P4V5EU', 'ts': '1749385108.086329', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1749385108.086329', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': "Yes, I'm here! How can I assist you today?", 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1749385099.531799', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'Otd8J', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': "Yes, I'm here! How can I assist you today?"}]}]}]}}
+2025-06-08 08:18:50.965 | INFO     | main:handle_mention:83 - Checking for memory commands in user command: 'suma...'
+2025-06-08 08:18:51.042 | INFO     | main:handle_mention:105 - No memory command detected, continuing to general processing
+2025-06-08 08:18:51.046 | INFO     | actions.action_framework:__init__:872 - ActionRouter initialized with 7 actions
+2025-06-08 08:18:51.046 | INFO     | actions.action_framework:_get_action_for_text:886 - Selected action ContextResponseAction for message: <@U08RG89NFK7> suma...
+2025-06-08 08:18:51.046 | INFO     | utils.history_manager:extract_search_topic:306 - Extracting search topic from prompt: suma
+2025-06-08 08:18:51.047 | INFO     | utils.history_manager:extract_search_topic:394 - No topic could be extracted from the prompt
+2025-06-08 08:18:51.047 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08A8P4V5EU, ts: 1749385130.582439 (limit: 100)...
+2025-06-08 08:18:51.284 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 1 messages from thread 1749385130.582439.
+2025-06-08 08:18:51.285 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08A8P4V5EU (limit: 50)...
+2025-06-08 08:18:51.940 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 50 messages from channel C08A8P4V5EU.
+2025-06-08 08:18:51.944 | INFO     | utils.history_manager:retrieve_and_filter_history:300 - Retrieved 50 messages for Recent context
+2025-06-08 08:18:51.946 | INFO     | utils.history_manager:format_history_for_prompt:635 - Formatted message history: 51134 characters
+2025-06-08 08:18:51.946 | INFO     | actions.action_framework:execute:300 - Fetching Notion context for user U089YKL1T4H
+2025-06-08 08:18:51.946 | INFO     | services.cached_notion_service:get_user_page_content:313 - Cache hit for user page content: U089YKL1T4H
+2025-06-08 08:18:51.947 | INFO     | services.cached_notion_service:get_user_page_content:313 - Cache hit for user page content: U089YKL1T4H
+2025-06-08 08:18:51.947 | INFO     | utils.context_builder:get_enhanced_user_context:22 - Building enhanced context for user U089YKL1T4H
+2025-06-08 08:18:51.947 | INFO     | utils.context_builder:get_enhanced_user_context:24 - Using preferred name: NewNameForTest
+2025-06-08 08:18:51.947 | INFO     | utils.context_builder:get_enhanced_user_context:27 - Page content length: 1210 chars
+2025-06-08 08:18:51.947 | INFO     | utils.context_builder:get_enhanced_user_context:33 - Language preference: English
+2025-06-08 08:18:51.948 | INFO     | utils.context_builder:get_enhanced_user_context:107 - Generated enhanced context length: 2269 chars
+2025-06-08 08:18:51.948 | INFO     | utils.context_builder:get_enhanced_user_context:108 - Language preference featured prominently: English
+2025-06-08 08:18:51.948 | INFO     | actions.action_framework:execute:340 - History retrieval mode: unknown
+2025-06-08 08:18:51.948 | INFO     | actions.action_framework:execute:341 - Retrieved 50 relevant messages
+2025-06-08 08:18:51.949 | INFO     | handler.openai_service:_prepare_messages:258 - Retrieved language preference for user U089YKL1T4H: English
+2025-06-08 08:18:51.949 | INFO     | handler.openai_service:_prepare_messages:303 - Language preference prominently featured in prompt: English
+2025-06-08 08:18:51.949 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-08 08:18:51.960 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-08 08:18:51.971 | INFO     | handler.openai_service:get_completion_async:167 - Sending 8328 tokens to OpenAI async. Model: gpt-4o
+2025-06-08 08:18:58.602 | INFO     | handler.openai_service:get_completion_async:187 - OpenAI response received successfully in 1 attempt(s)
+2025-06-08 08:18:59.183 | INFO     | main:handle_mention:166 - Sending action response message (length: 2075)
+2025-06-08 08:18:59.183 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08A8P4V5EU (length: 2075 chars):
+Here is a detailed summary of the channel based on the recent discussions:
+
+1. **Gmail RAG System Setup**:
+   - The team focused on integrating Thunderbird as an alternate email ingestion approach, offering local storage and improved synchronization.
+   
+2. **Technical Architecture**:
+   - The Gmail RAG system connects through OAuth2, processes emails into vector embeddings via Pinecone, and allows natural language querying, enhancing email management with AI.
+
+3. **Deployment Status**:
+   - The application has been successfully deployed and is available at staceyhub.app, focusing on debugging, observability, and production readiness.
+
+4. **User Guidance**:
+   - Initial seeding of emails is recommended for meaningful search results, with specified access instructions and known issues addressed in the release notes.
+
+5. **MVP Delivery**:
+   - Core MVP 1 requirements have been met, including Gmail ingestion, natural language queries, debugging capabilities, and secure access via OAuth.
+
+6. **Debugging and Error Resolution**:
+   - Challenges with the `alembic upgrade head` and database migration were resolved with suggested edits to configuration files and successful test runs following changes.
+
+7. **User Interaction with the System**:
+   - Users experienced issues with token refresh errors and syncing, which led to sessions getting stuck; fixes included an updated token handling mechanism and enhancement in system robustness.
+
+8. **Overnight Syncing Issues**:
+   - The system encountered stalled processes after running for about two hours, suggesting an authorization expiry issue that was identified and addressed.
+
+9. **Server-Side Adjustments**:
+   - A backend patch for token refresh logic and status checking has been implemented for improved operational reliability during long processes.
+
+10. **General Enhancements**:
+    - Improvements include a more resilient status check endpoint, an increased seeding timeout, a robust recovery mechanism on server startup, and an emergency reset button for operations stuck due to long-running processes.
+2025-06-08 08:18:59.747 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08A8P4V5EU', 'ts': '1749385141.534049', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1749385141.534049', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': 'Here is a detailed summary of the channel based on the recent discussions:\n\n1. **Gmail RAG System Setup**:\n   - The team focused on integrating Thunderbird as an alternate email ingestion approach, offering local storage and improved synchronization.\n   \n2. **Technical Architecture**:\n   - The Gmail RAG system connects through OAuth2, processes emails into vector embeddings via Pinecone, and allows natural language querying, enhancing email management with AI.\n\n3. **Deployment Status**:\n   - The application has been successfully deployed and is available at <http://staceyhub.app|staceyhub.app>, focusing on debugging, observability, and production readiness.\n\n4. **User Guidance**:\n   - Initial seeding of emails is recommended for meaningful search results, with specified access instructions and known issues addressed in the release notes.\n\n5. **MVP Delivery**:\n   - Core MVP 1 requirements have been met, including Gmail ingestion, natural language queries, debugging capabilities, and secure access via OAuth.\n\n6. **Debugging and Error Resolution**:\n   - Challenges with the `alembic upgrade head` and database migration were resolved with suggested edits to configuration files and successful test runs following changes.\n\n7. **User Interaction with the System**:\n   - Users experienced issues with token refresh errors and syncing, which led to sessions getting stuck; fixes included an updated token handling mechanism and enhancement in system robustness.\n\n8. **Overnight Syncing Issues**:\n   - The system encountered stalled processes after running for about two hours, suggesting an authorization expiry issue that was identified and addressed.\n\n9. **Server-Side Adjustments**:\n   - A backend patch for token refresh logic and status checking has been implemented for improved operational reliability during long processes.\n\n10. **General Enhancements**:\n    - Improvements include a more resilient status check endpoint, an increased seeding timeout, a robust recovery mechanism on server startup, and an emergency reset button for operations stuck due to long-running processes.', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1749385130.582439', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'xeFRk', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': 'Here is a detailed summary of the channel based on the recent discussions:\n\n1. **Gmail RAG System Setup**:\n   - The team focused on integrating Thunderbird as an alternate email ingestion approach, offering local storage and improved synchronization.\n   \n2. **Technical Architecture**:\n   - The Gmail RAG system connects through OAuth2, processes emails into vector embeddings via Pinecone, and allows natural language querying, enhancing email management with AI.\n\n3. **Deployment Status**:\n   - The application has been successfully deployed and is available at '}, {'type': 'link', 'url': 'http://staceyhub.app', 'text': 'staceyhub.app'}, {'type': 'text', 'text': ', focusing on debugging, observability, and production readiness.\n\n4. **User Guidance**:\n   - Initial seeding of emails is recommended for meaningful search results, with specified access instructions and known issues addressed in the release notes.\n\n5. **MVP Delivery**:\n   - Core MVP 1 requirements have been met, including Gmail ingestion, natural language queries, debugging capabilities, and secure access via OAuth.\n\n6. **Debugging and Error Resolution**:\n   - Challenges with the '}, {'type': 'text', 'text': 'alembic upgrade head', 'style': {'code': True}}, {'type': 'text', 'text': ' and database migration were resolved with suggested edits to configuration files and successful test runs following changes.\n\n7. **User Interaction with the System**:\n   - Users experienced issues with token refresh errors and syncing, which led to sessions getting stuck; fixes included an updated token handling mechanism and enhancement in system robustness.\n\n8. **Overnight Syncing Issues**:\n   - The system encountered stalled processes after running for about two hours, suggesting an authorization expiry issue that was identified and addressed.\n\n9. **Server-Side Adjustments**:\n   - A backend patch for token refresh logic and status checking has been implemented for improved operational reliability during long processes.\n\n10. **General Enhancements**:\n    - Improvements include a more resilient status check endpoint, an increased seeding timeout, a robust recovery mechanism on server startup, and an emergency reset button for operations stuck due to long-running processes.'}]}]}]}}
