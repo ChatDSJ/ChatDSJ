@@ -584,6 +584,7 @@ class MemoryHandler:
         # Remove "remember that" or similar prefixes to get the core content for pattern matching
         core_content = text
         remember_prefixes = [
+            r"^remember\s+(?:this|something|that)\s+about\s+me:\s*",  # NEW: Handle "remember this about me:"
             r"^remember\s+that\s+",
             r"^remember\s+",
             r"^note\s+that\s+",
