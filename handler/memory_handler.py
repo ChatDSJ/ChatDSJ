@@ -51,7 +51,7 @@ class MemoryHandler:
             memory_type, cleaned_content = self.classify_memory_instruction(text)
             
             # If not a memory instruction, return None
-            if memory_type == "unknown" or (cleaned_content is None and not memory_type.startswith("list_")):
+            if memory_type == "unknown" or (cleaned_content is None and not memory_type.startswith("list_") and memory_type != "help"):
                 logger.debug(f"Not a memory instruction: '{text}'")
                 return None
             
@@ -75,6 +75,11 @@ class MemoryHandler:
                     logger.error(f"❌ Failed to store language preference for user {slack_user_id}")
                     return "❌ Sorry, I couldn't store your language preference right now. Please try again later."
             
+            elif memory_type == "help":
+                logger.info(f"Processing help command for user {slack_user_id}")
+                help_text = self.get_help_text()
+                return help_text
+
             # Handle different types of memory instructions (existing code)
             elif memory_type == "known_fact":
                 logger.info(f"Processing known fact: '{cleaned_content}'")
@@ -336,9 +341,9 @@ class MemoryHandler:
         
         # Explicit memory keywords
         explicit_keywords = [
-            "remember", "something to remember", "fact:", "preference:", "project:", "todo:", 
+            "remember", "something to remember about", "fact:", "preference:", "project:", "todo:", 
             "my preference is", "i prefer", "store that", "note that",
-            "remove", "delete", "add project", "new project", "delete project"
+            "remove", "delete", "add project", "new project", "delete project", "help"
         ]
         
         # If it contains explicit memory keywords, it's likely a memory command
@@ -446,37 +451,41 @@ class MemoryHandler:
                 logger.debug(f"Detected question pattern in: '{text}'")
                 return "unknown", None  # This is a question, not a memory instruction
         
+        if lowered.strip() in ["help", "help me", "how do i", "what can you do", "commands"]:
+            logger.info(f"Detected help command")
+            return "help", None
+
         # ENHANCED: Check for language preference commands first (highest priority) - RESTRICTIVE
-            language_patterns = [
-                r"(?:preference:|my preference is|preference is|i prefer|prefer)\s+(?:to\s+)?(?:always\s+)?(?:respond|answer|communicate|talk|speak|reply)\s+(?:in\s+|to me in\s+)(\w+)",
-                r"(?:always\s+)?(?:respond|answer|communicate|talk|speak|reply)\s+(?:to me\s+)?(?:in\s+)(\w+)",
-                r"(?:my\s+)?(?:preferred\s+)?language\s+(?:is\s+|preference\s+is\s+)(\w+)",
-                r"(?:set\s+)?(?:my\s+)?language\s+(?:preference\s+)?(?:to\s+)(\w+)",
-                r"(?:use\s+|switch\s+to\s+)(\w+)\s+language",  # Only if explicitly followed by "language"
-                r"(?:use\s+|switch\s+to\s+)(\w+)\s+(?:when\s+)?(?:responding|answering)",  # Only if followed by responding/answering
-                r"(?:i\s+)?(?:want|need|would like)\s+(?:you\s+to\s+)?(?:respond|answer|communicate|talk|speak|reply)\s+(?:to me\s+)?(?:in\s+)(\w+)"
-            ]
+        language_patterns = [
+            r"(?:preference:|my preference is|preference is|i prefer|prefer)\s+(?:to\s+)?(?:always\s+)?(?:respond|answer|communicate|talk|speak|reply)\s+(?:in\s+|to me in\s+)(\w+)",
+            r"(?:always\s+)?(?:respond|answer|communicate|talk|speak|reply)\s+(?:to me\s+)?(?:in\s+)(\w+)",
+            r"(?:my\s+)?(?:preferred\s+)?language\s+(?:is\s+|preference\s+is\s+)(\w+)",
+            r"(?:set\s+)?(?:my\s+)?language\s+(?:preference\s+)?(?:to\s+)(\w+)",
+            r"(?:use\s+|switch\s+to\s+)(\w+)\s+language",  # Only if explicitly followed by "language"
+            r"(?:use\s+|switch\s+to\s+)(\w+)\s+(?:when\s+)?(?:responding|answering)",  # Only if followed by responding/answering
+            r"(?:i\s+)?(?:want|need|would like)\s+(?:you\s+to\s+)?(?:respond|answer|communicate|talk|speak|reply)\s+(?:to me\s+)?(?:in\s+)(\w+)"
+        ]
 
-            # Known languages list
-            known_languages = ["english", "spanish", "french", "german", "italian", "portuguese", "chinese", "japanese", "korean", "russian", "arabic", "hindi", "dutch", "swedish", "norwegian", "finnish"]
+        # Known languages list
+        known_languages = ["english", "spanish", "french", "german", "italian", "portuguese", "chinese", "japanese", "korean", "russian", "arabic", "hindi", "dutch", "swedish", "norwegian", "finnish"]
 
-            # Additional validation: reject common non-language words
-            non_language_words = ["bullet", "points", "format", "style", "verse", "rhyme", "short", "long", "brief", "detailed"]
+        # Additional validation: reject common non-language words
+        non_language_words = ["bullet", "points", "format", "style", "verse", "rhyme", "short", "long", "brief", "detailed"]
 
-            for pattern in language_patterns:
-                match = re.search(pattern, lowered)
-                if match:
-                    potential_language = match.group(1).strip().title()  # Capitalize first letter
-                    
-                    # Only consider it a language if it's a known language name AND not a style word
-                    if (potential_language.lower() in known_languages and 
-                        potential_language.lower() not in non_language_words):
-                        logger.info(f"Detected language preference command: '{potential_language}'")
-                        return "language_preference", potential_language
-                    else:
-                        logger.debug(f"Rejected potential language '{potential_language}' - not a valid language or is a style word")
-                        # Continue to check other patterns instead of returning
-                        continue
+        for pattern in language_patterns:
+            match = re.search(pattern, lowered)
+            if match:
+                potential_language = match.group(1).strip().title()  # Capitalize first letter
+                
+                # Only consider it a language if it's a known language name AND not a style word
+                if (potential_language.lower() in known_languages and 
+                    potential_language.lower() not in non_language_words):
+                    logger.info(f"Detected language preference command: '{potential_language}'")
+                    return "language_preference", potential_language
+                else:
+                    logger.debug(f"Rejected potential language '{potential_language}' - not a valid language or is a style word")
+                    # Continue to check other patterns instead of returning
+                    continue
 
             # If we get here, no valid language preference was detected in the early patterns
         

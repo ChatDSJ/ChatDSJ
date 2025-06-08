@@ -308,8 +308,10 @@ class HistoryManager:
         
         # Enhanced pattern-based extraction for new question types
         enhanced_patterns = [
+            # FIXED: More flexible "anyone" pattern that handles location modifiers
+            r'(?:has|have|did)\s+anyone\s+(?:(?:in\s+)?(?:this\s+)?(?:thread\s+|channel\s+|here\s+)?)?(?:talk|discuss|mention)(?:ed)?\s+(?:about\s+)?([^?\.]+)',
+            
             # Original patterns (keep these)
-            r'(?:has|have|did)\s+anyone\s+(?:talk|discuss|mention)(?:ed)?\s+(?:about\s+)?([^?\.]+)',
             r'(?:was|were)\s+([^?\.]+)\s+(?:discussed|mentioned|talked about)',
             r'(?:any|are there)\s+discussions?\s+(?:about|on|regarding)\s+([^?\.]+)',
             
@@ -318,8 +320,8 @@ class HistoryManager:
             r'(?:was|were)\s+(.*?)\s+(?:discussed|mentioned|talked\s+about)',           # "was Miami discussed?"
             r'(?:did|does)\s+(.*?)\s+get\s+(?:discussed|mentioned)',                    # "did Miami get discussed?"
             
-            # NEW: Simple topic extraction
-            r'(?:has|have|did|was|were)\s+(\w+(?:\s+\w+)*?)\s+(?:discussed|mentioned)', # "has Miami discussed" -> "Miami"
+            # FIXED: More specific pattern that excludes "anyone" queries
+            r'(?:has|have|did|was|were)\s+(?!anyone\s)(\w+(?:\s+\w+){0,2}?)\s+(?:discussed|mentioned)', # "has Miami discussed" -> "Miami"
             
             # NEW: What/who about topic
             r'(?:what|who).*?(?:discussed|mentioned|talked about)\s+(.*?)(?:\?|$)',     # "what was discussed about Miami?"

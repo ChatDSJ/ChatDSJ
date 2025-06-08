@@ -16423,3 +16423,816 @@ Here is a detailed summary of the channel based on the recent discussions:
 10. **General Enhancements**:
     - Improvements include a more resilient status check endpoint, an increased seeding timeout, a robust recovery mechanism on server startup, and an emergency reset button for operations stuck due to long-running processes.
 2025-06-08 08:18:59.747 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08A8P4V5EU', 'ts': '1749385141.534049', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1749385141.534049', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': 'Here is a detailed summary of the channel based on the recent discussions:\n\n1. **Gmail RAG System Setup**:\n   - The team focused on integrating Thunderbird as an alternate email ingestion approach, offering local storage and improved synchronization.\n   \n2. **Technical Architecture**:\n   - The Gmail RAG system connects through OAuth2, processes emails into vector embeddings via Pinecone, and allows natural language querying, enhancing email management with AI.\n\n3. **Deployment Status**:\n   - The application has been successfully deployed and is available at <http://staceyhub.app|staceyhub.app>, focusing on debugging, observability, and production readiness.\n\n4. **User Guidance**:\n   - Initial seeding of emails is recommended for meaningful search results, with specified access instructions and known issues addressed in the release notes.\n\n5. **MVP Delivery**:\n   - Core MVP 1 requirements have been met, including Gmail ingestion, natural language queries, debugging capabilities, and secure access via OAuth.\n\n6. **Debugging and Error Resolution**:\n   - Challenges with the `alembic upgrade head` and database migration were resolved with suggested edits to configuration files and successful test runs following changes.\n\n7. **User Interaction with the System**:\n   - Users experienced issues with token refresh errors and syncing, which led to sessions getting stuck; fixes included an updated token handling mechanism and enhancement in system robustness.\n\n8. **Overnight Syncing Issues**:\n   - The system encountered stalled processes after running for about two hours, suggesting an authorization expiry issue that was identified and addressed.\n\n9. **Server-Side Adjustments**:\n   - A backend patch for token refresh logic and status checking has been implemented for improved operational reliability during long processes.\n\n10. **General Enhancements**:\n    - Improvements include a more resilient status check endpoint, an increased seeding timeout, a robust recovery mechanism on server startup, and an emergency reset button for operations stuck due to long-running processes.', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1749385130.582439', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'xeFRk', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': 'Here is a detailed summary of the channel based on the recent discussions:\n\n1. **Gmail RAG System Setup**:\n   - The team focused on integrating Thunderbird as an alternate email ingestion approach, offering local storage and improved synchronization.\n   \n2. **Technical Architecture**:\n   - The Gmail RAG system connects through OAuth2, processes emails into vector embeddings via Pinecone, and allows natural language querying, enhancing email management with AI.\n\n3. **Deployment Status**:\n   - The application has been successfully deployed and is available at '}, {'type': 'link', 'url': 'http://staceyhub.app', 'text': 'staceyhub.app'}, {'type': 'text', 'text': ', focusing on debugging, observability, and production readiness.\n\n4. **User Guidance**:\n   - Initial seeding of emails is recommended for meaningful search results, with specified access instructions and known issues addressed in the release notes.\n\n5. **MVP Delivery**:\n   - Core MVP 1 requirements have been met, including Gmail ingestion, natural language queries, debugging capabilities, and secure access via OAuth.\n\n6. **Debugging and Error Resolution**:\n   - Challenges with the '}, {'type': 'text', 'text': 'alembic upgrade head', 'style': {'code': True}}, {'type': 'text', 'text': ' and database migration were resolved with suggested edits to configuration files and successful test runs following changes.\n\n7. **User Interaction with the System**:\n   - Users experienced issues with token refresh errors and syncing, which led to sessions getting stuck; fixes included an updated token handling mechanism and enhancement in system robustness.\n\n8. **Overnight Syncing Issues**:\n   - The system encountered stalled processes after running for about two hours, suggesting an authorization expiry issue that was identified and addressed.\n\n9. **Server-Side Adjustments**:\n   - A backend patch for token refresh logic and status checking has been implemented for improved operational reliability during long processes.\n\n10. **General Enhancements**:\n    - Improvements include a more resilient status check endpoint, an increased seeding timeout, a robust recovery mechanism on server startup, and an emergency reset button for operations stuck due to long-running processes.'}]}]}]}}
+2025-06-08 08:24:59.846 | INFO     | main:handle_mention:83 - Checking for memory commands in user command: 'Find messages containing "Meatloaf"...'
+2025-06-08 08:24:59.868 | INFO     | main:handle_mention:105 - No memory command detected, continuing to general processing
+2025-06-08 08:24:59.877 | INFO     | actions.action_framework:__init__:872 - ActionRouter initialized with 7 actions
+2025-06-08 08:24:59.877 | INFO     | actions.action_framework:can_handle:1025 - HistoricalSearchAction matched pattern 3: (?:find|search|show).*?(?:discussions?|conversatio...
+2025-06-08 08:24:59.877 | INFO     | actions.action_framework:_get_action_for_text:886 - Selected action HistoricalSearchAction for message: <@U08RG89NFK7> Find messages containing "Meatloaf"...
+2025-06-08 08:24:59.878 | INFO     | utils.history_manager:extract_search_topic:306 - Extracting search topic from prompt: Find messages containing "Meatloaf"
+2025-06-08 08:24:59.878 | INFO     | utils.history_manager:extract_search_topic:371 - Extracted quoted topic: 'Meatloaf'
+2025-06-08 08:24:59.878 | INFO     | utils.history_manager:retrieve_and_filter_history:58 - Performing deep historical search for topic: 'Meatloaf'
+2025-06-08 08:24:59.878 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 2000)...
+2025-06-08 08:25:01.014 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 219 messages from channel C08SJ5EUTPT.
+2025-06-08 08:25:01.015 | INFO     | utils.history_manager:retrieve_and_filter_history:67 - Retrieved 219 main channel messages
+2025-06-08 08:25:01.017 | INFO     | utils.history_manager:retrieve_and_filter_history:107 - Identified 20 thread parent messages to search
+2025-06-08 08:25:01.018 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748028684.669279 (limit: 100)...
+2025-06-08 08:25:01.247 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1748028684.669279.
+2025-06-08 08:25:01.248 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748028581.481779 (limit: 100)...
+2025-06-08 08:25:01.483 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1748028581.481779.
+2025-06-08 08:25:01.484 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748023289.042409 (limit: 100)...
+2025-06-08 08:25:01.711 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1748023289.042409.
+2025-06-08 08:25:01.712 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747256201.527389 (limit: 100)...
+2025-06-08 08:25:01.942 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 4 messages from thread 1747256201.527389.
+2025-06-08 08:25:01.943 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747255578.422699 (limit: 100)...
+2025-06-08 08:25:02.169 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 4 messages from thread 1747255578.422699.
+2025-06-08 08:25:02.169 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747254862.608349 (limit: 100)...
+2025-06-08 08:25:02.414 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1747254862.608349.
+2025-06-08 08:25:02.416 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747240286.113569 (limit: 100)...
+2025-06-08 08:25:02.662 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747240286.113569.
+2025-06-08 08:25:02.663 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747240261.873949 (limit: 100)...
+2025-06-08 08:25:02.879 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1747240261.873949.
+2025-06-08 08:25:02.880 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747225824.843159 (limit: 100)...
+2025-06-08 08:25:03.109 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1747225824.843159.
+2025-06-08 08:25:03.109 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747225602.156339 (limit: 100)...
+2025-06-08 08:25:03.334 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1747225602.156339.
+2025-06-08 08:25:03.334 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1749331627.439429 (limit: 100)...
+2025-06-08 08:25:03.738 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 71 messages from thread 1749331627.439429.
+2025-06-08 08:25:03.739 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748880636.264139 (limit: 100)...
+2025-06-08 08:25:04.068 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 30 messages from thread 1748880636.264139.
+2025-06-08 08:25:04.068 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747229885.082289 (limit: 100)...
+2025-06-08 08:25:04.787 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 16 messages from thread 1747229885.082289.
+2025-06-08 08:25:04.788 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748906225.557339 (limit: 100)...
+2025-06-08 08:25:05.468 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 15 messages from thread 1748906225.557339.
+2025-06-08 08:25:05.479 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1749321381.451899 (limit: 100)...
+2025-06-08 08:25:06.144 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 14 messages from thread 1749321381.451899.
+2025-06-08 08:25:06.145 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1749240990.409219 (limit: 100)...
+2025-06-08 08:25:06.817 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1749240990.409219.
+2025-06-08 08:25:06.817 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748879439.071809 (limit: 100)...
+2025-06-08 08:25:07.334 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1748879439.071809.
+2025-06-08 08:25:07.335 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748627857.900709 (limit: 100)...
+2025-06-08 08:25:07.845 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1748627857.900709.
+2025-06-08 08:25:07.852 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747735398.888529 (limit: 100)...
+2025-06-08 08:25:08.182 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747735398.888529.
+2025-06-08 08:25:08.184 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747398469.291069 (limit: 100)...
+2025-06-08 08:25:08.434 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747398469.291069.
+2025-06-08 08:25:08.435 | INFO     | utils.history_manager:retrieve_and_filter_history:128 - Retrieved 228 total messages from 20 threads
+2025-06-08 08:25:08.435 | INFO     | utils.history_manager:retrieve_and_filter_history:148 - Combined into 427 unique messages after deduplication
+2025-06-08 08:25:08.436 | INFO     | utils.history_manager:retrieve_and_filter_history:153 - Filtering messages containing topic: 'Meatloaf'
+2025-06-08 08:25:08.446 | INFO     | utils.history_manager:find_messages_containing_topic:419 - Searching for topic 'Meatloaf' in 427 messages
+2025-06-08 08:25:08.458 | INFO     | utils.history_manager:find_messages_containing_topic:476 - 📊 Search results for topic 'Meatloaf':
+2025-06-08 08:25:08.458 | INFO     | utils.history_manager:find_messages_containing_topic:477 -   - Total matches: 34
+2025-06-08 08:25:08.458 | INFO     | utils.history_manager:find_messages_containing_topic:478 -   - Skipped self-referential messages: 0
+2025-06-08 08:25:08.459 | INFO     | utils.history_manager:find_messages_containing_topic:479 -   - Matches in text field: 34
+2025-06-08 08:25:08.460 | INFO     | utils.history_manager:find_messages_containing_topic:480 -   - Matches only in blocks: 0
+2025-06-08 08:25:08.460 | INFO     | utils.history_manager:find_messages_containing_topic:481 -   - Matches only in attachments: 0
+2025-06-08 08:25:08.460 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - FOUND 34 MESSAGES CONTAINING TOPIC 'Meatloaf'
+2025-06-08 08:25:08.460 | INFO     | utils.history_manager:retrieve_and_filter_history:160 - Search ratio: 34/427 messages matched
+2025-06-08 08:25:08.460 | INFO     | utils.history_manager:retrieve_and_filter_history:164 - Sample matching message: <@U08RG89NFK7> Find messages containing "Meatloaf"
+2025-06-08 08:25:08.461 | INFO     | utils.history_manager:retrieve_and_filter_history:295 - Excluded current question, 34 -> 33 messages
+2025-06-08 08:25:08.461 | INFO     | utils.history_manager:retrieve_and_filter_history:300 - Retrieved 33 messages for Deep search for: Meatloaf
+2025-06-08 08:25:12.379 | INFO     | main:handle_mention:173 - Action handled message sending directly (e.g., rich blocks)
+2025-06-08 08:25:51.475 | INFO     | main:handle_mention:83 - Checking for memory commands in user command: 'Has anyone discussed XyzAbc123Qwerty?...'
+2025-06-08 08:25:51.493 | INFO     | main:handle_mention:105 - No memory command detected, continuing to general processing
+2025-06-08 08:25:51.500 | INFO     | actions.action_framework:__init__:872 - ActionRouter initialized with 7 actions
+2025-06-08 08:25:51.501 | INFO     | actions.action_framework:can_handle:1025 - HistoricalSearchAction matched pattern 1: (?:has|have|did)\s+anyone\s+(?:talk|discuss|mentio...
+2025-06-08 08:25:51.501 | INFO     | actions.action_framework:_get_action_for_text:886 - Selected action HistoricalSearchAction for message: <@U08RG89NFK7> Has anyone discussed XyzAbc123Qwert...
+2025-06-08 08:25:51.502 | INFO     | utils.history_manager:extract_search_topic:306 - Extracting search topic from prompt: Has anyone discussed XyzAbc123Qwerty?
+2025-06-08 08:25:51.512 | INFO     | utils.history_manager:extract_search_topic:346 - Extracted topic from enhanced pattern: 'xyzabc123qwerty'
+2025-06-08 08:25:51.729 | INFO     | utils.history_manager:retrieve_and_filter_history:58 - Performing deep historical search for topic: 'xyzabc123qwerty'
+2025-06-08 08:25:51.730 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 2000)...
+2025-06-08 08:25:52.905 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 220 messages from channel C08SJ5EUTPT.
+2025-06-08 08:25:52.905 | INFO     | utils.history_manager:retrieve_and_filter_history:67 - Retrieved 220 main channel messages
+2025-06-08 08:25:52.907 | INFO     | utils.history_manager:retrieve_and_filter_history:107 - Identified 10 thread parent messages to search
+2025-06-08 08:25:52.908 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1749331627.439429 (limit: 100)...
+2025-06-08 08:25:53.283 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 71 messages from thread 1749331627.439429.
+2025-06-08 08:25:53.284 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748880636.264139 (limit: 100)...
+2025-06-08 08:25:53.583 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 30 messages from thread 1748880636.264139.
+2025-06-08 08:25:53.583 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747229885.082289 (limit: 100)...
+2025-06-08 08:25:53.867 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 16 messages from thread 1747229885.082289.
+2025-06-08 08:25:53.867 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748906225.557339 (limit: 100)...
+2025-06-08 08:25:54.145 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 15 messages from thread 1748906225.557339.
+2025-06-08 08:25:54.148 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1749321381.451899 (limit: 100)...
+2025-06-08 08:25:54.440 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 14 messages from thread 1749321381.451899.
+2025-06-08 08:25:54.441 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1749240990.409219 (limit: 100)...
+2025-06-08 08:25:54.786 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1749240990.409219.
+2025-06-08 08:25:54.786 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748879439.071809 (limit: 100)...
+2025-06-08 08:25:55.027 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1748879439.071809.
+2025-06-08 08:25:55.027 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748627857.900709 (limit: 100)...
+2025-06-08 08:25:55.262 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1748627857.900709.
+2025-06-08 08:25:55.264 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747735398.888529 (limit: 100)...
+2025-06-08 08:25:55.495 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747735398.888529.
+2025-06-08 08:25:55.495 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747398469.291069 (limit: 100)...
+2025-06-08 08:25:55.755 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747398469.291069.
+2025-06-08 08:25:55.756 | INFO     | utils.history_manager:retrieve_and_filter_history:128 - Retrieved 196 total messages from 10 threads
+2025-06-08 08:25:55.756 | INFO     | utils.history_manager:retrieve_and_filter_history:148 - Combined into 406 unique messages after deduplication
+2025-06-08 08:25:55.757 | INFO     | utils.history_manager:retrieve_and_filter_history:153 - Filtering messages containing topic: 'xyzabc123qwerty'
+2025-06-08 08:25:55.758 | INFO     | utils.history_manager:find_messages_containing_topic:419 - Searching for topic 'xyzabc123qwerty' in 406 messages
+2025-06-08 08:25:55.761 | INFO     | utils.history_manager:find_messages_containing_topic:476 - 📊 Search results for topic 'xyzabc123qwerty':
+2025-06-08 08:25:55.761 | INFO     | utils.history_manager:find_messages_containing_topic:477 -   - Total matches: 1
+2025-06-08 08:25:55.762 | INFO     | utils.history_manager:find_messages_containing_topic:478 -   - Skipped self-referential messages: 0
+2025-06-08 08:25:55.779 | INFO     | utils.history_manager:find_messages_containing_topic:479 -   - Matches in text field: 1
+2025-06-08 08:25:55.780 | INFO     | utils.history_manager:find_messages_containing_topic:480 -   - Matches only in blocks: 0
+2025-06-08 08:25:55.780 | INFO     | utils.history_manager:find_messages_containing_topic:481 -   - Matches only in attachments: 0
+2025-06-08 08:25:55.780 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - FOUND 1 MESSAGES CONTAINING TOPIC 'xyzabc123qwerty'
+2025-06-08 08:25:55.781 | INFO     | utils.history_manager:retrieve_and_filter_history:160 - Search ratio: 1/406 messages matched
+2025-06-08 08:25:55.781 | INFO     | utils.history_manager:retrieve_and_filter_history:164 - Sample matching message: <@U08RG89NFK7> Has anyone discussed XyzAbc123Qwerty?
+2025-06-08 08:25:55.782 | INFO     | utils.history_manager:retrieve_and_filter_history:295 - Excluded current question, 1 -> 0 messages
+2025-06-08 08:25:55.782 | INFO     | utils.history_manager:retrieve_and_filter_history:300 - Retrieved 0 messages for Deep search for: xyzabc123qwerty
+2025-06-08 08:25:56.722 | INFO     | main:handle_mention:173 - Action handled message sending directly (e.g., rich blocks)
+2025-06-08 08:26:47.696 | INFO     | main:handle_mention:83 - Checking for memory commands in user command: 'has anyone in this thread mentioned rhymed verse...'
+2025-06-08 08:26:47.703 | INFO     | main:handle_mention:105 - No memory command detected, continuing to general processing
+2025-06-08 08:26:47.711 | INFO     | actions.action_framework:__init__:872 - ActionRouter initialized with 7 actions
+2025-06-08 08:26:47.711 | INFO     | actions.action_framework:can_handle:1025 - HistoricalSearchAction matched pattern 8: (?:has|have|did|was|were)\s+\w+.*?(?:discussed|men...
+2025-06-08 08:26:47.712 | INFO     | actions.action_framework:_get_action_for_text:886 - Selected action HistoricalSearchAction for message: <@U08RG89NFK7> has anyone in this thread mentioned...
+2025-06-08 08:26:47.712 | INFO     | utils.history_manager:extract_search_topic:306 - Extracting search topic from prompt: has anyone in this thread mentioned rhymed verse
+2025-06-08 08:26:47.713 | INFO     | utils.history_manager:extract_search_topic:346 - Extracted topic from enhanced pattern: 'anyone in this thread'
+2025-06-08 08:26:47.730 | INFO     | utils.history_manager:retrieve_and_filter_history:58 - Performing deep historical search for topic: 'anyone in this thread'
+2025-06-08 08:26:47.731 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 2000)...
+2025-06-08 08:26:48.845 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 220 messages from channel C08SJ5EUTPT.
+2025-06-08 08:26:48.846 | INFO     | utils.history_manager:retrieve_and_filter_history:67 - Retrieved 220 main channel messages
+2025-06-08 08:26:48.848 | INFO     | utils.history_manager:retrieve_and_filter_history:107 - Identified 10 thread parent messages to search
+2025-06-08 08:26:48.848 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1749331627.439429 (limit: 100)...
+2025-06-08 08:26:49.239 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 72 messages from thread 1749331627.439429.
+2025-06-08 08:26:49.239 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748880636.264139 (limit: 100)...
+2025-06-08 08:26:49.791 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 30 messages from thread 1748880636.264139.
+2025-06-08 08:26:49.792 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747229885.082289 (limit: 100)...
+2025-06-08 08:26:50.086 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 16 messages from thread 1747229885.082289.
+2025-06-08 08:26:50.086 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748906225.557339 (limit: 100)...
+2025-06-08 08:26:50.385 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 15 messages from thread 1748906225.557339.
+2025-06-08 08:26:50.385 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1749321381.451899 (limit: 100)...
+2025-06-08 08:26:50.668 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 14 messages from thread 1749321381.451899.
+2025-06-08 08:26:50.668 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1749240990.409219 (limit: 100)...
+2025-06-08 08:26:50.952 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1749240990.409219.
+2025-06-08 08:26:50.952 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748879439.071809 (limit: 100)...
+2025-06-08 08:26:51.178 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1748879439.071809.
+2025-06-08 08:26:51.179 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748627857.900709 (limit: 100)...
+2025-06-08 08:26:51.410 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1748627857.900709.
+2025-06-08 08:26:51.410 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747735398.888529 (limit: 100)...
+2025-06-08 08:26:51.645 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747735398.888529.
+2025-06-08 08:26:51.645 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747398469.291069 (limit: 100)...
+2025-06-08 08:26:51.884 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747398469.291069.
+2025-06-08 08:26:51.884 | INFO     | utils.history_manager:retrieve_and_filter_history:128 - Retrieved 197 total messages from 10 threads
+2025-06-08 08:26:51.884 | INFO     | utils.history_manager:retrieve_and_filter_history:148 - Combined into 407 unique messages after deduplication
+2025-06-08 08:26:51.885 | INFO     | utils.history_manager:retrieve_and_filter_history:153 - Filtering messages containing topic: 'anyone in this thread'
+2025-06-08 08:26:51.885 | INFO     | utils.history_manager:find_messages_containing_topic:419 - Searching for topic 'anyone in this thread' in 407 messages
+2025-06-08 08:26:51.888 | INFO     | utils.history_manager:find_messages_containing_topic:476 - 📊 Search results for topic 'anyone in this thread':
+2025-06-08 08:26:51.888 | INFO     | utils.history_manager:find_messages_containing_topic:477 -   - Total matches: 1
+2025-06-08 08:26:51.888 | INFO     | utils.history_manager:find_messages_containing_topic:478 -   - Skipped self-referential messages: 0
+2025-06-08 08:26:51.888 | INFO     | utils.history_manager:find_messages_containing_topic:479 -   - Matches in text field: 1
+2025-06-08 08:26:51.888 | INFO     | utils.history_manager:find_messages_containing_topic:480 -   - Matches only in blocks: 0
+2025-06-08 08:26:51.889 | INFO     | utils.history_manager:find_messages_containing_topic:481 -   - Matches only in attachments: 0
+2025-06-08 08:26:51.889 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - FOUND 1 MESSAGES CONTAINING TOPIC 'anyone in this thread'
+2025-06-08 08:26:51.889 | INFO     | utils.history_manager:retrieve_and_filter_history:160 - Search ratio: 1/407 messages matched
+2025-06-08 08:26:51.889 | INFO     | utils.history_manager:retrieve_and_filter_history:164 - Sample matching message: <@U08RG89NFK7> has anyone in this thread mentioned rhymed verse
+2025-06-08 08:26:51.889 | INFO     | utils.history_manager:retrieve_and_filter_history:295 - Excluded current question, 1 -> 0 messages
+2025-06-08 08:26:51.889 | INFO     | utils.history_manager:retrieve_and_filter_history:300 - Retrieved 0 messages for Deep search for: anyone in this thread
+2025-06-08 08:26:52.671 | INFO     | main:handle_mention:173 - Action handled message sending directly (e.g., rich blocks)
+2025-06-08 08:28:23.394 | INFO     | main:handle_mention:83 - Checking for memory commands in user command: 'has anyone in this thread mentioned rhymed verse...'
+2025-06-08 08:28:23.395 | INFO     | main:handle_mention:105 - No memory command detected, continuing to general processing
+2025-06-08 08:28:23.396 | INFO     | actions.action_framework:__init__:872 - ActionRouter initialized with 7 actions
+2025-06-08 08:28:23.397 | INFO     | actions.action_framework:can_handle:1025 - HistoricalSearchAction matched pattern 8: (?:has|have|did|was|were)\s+\w+.*?(?:discussed|men...
+2025-06-08 08:28:23.397 | INFO     | actions.action_framework:_get_action_for_text:886 - Selected action HistoricalSearchAction for message: <@U08RG89NFK7> has anyone in this thread mentioned...
+2025-06-08 08:28:23.398 | INFO     | utils.history_manager:extract_search_topic:306 - Extracting search topic from prompt: has anyone in this thread mentioned rhymed verse
+2025-06-08 08:28:23.398 | INFO     | utils.history_manager:extract_search_topic:346 - Extracted topic from enhanced pattern: 'anyone in this thread'
+2025-06-08 08:28:23.399 | INFO     | utils.history_manager:retrieve_and_filter_history:58 - Performing deep historical search for topic: 'anyone in this thread'
+2025-06-08 08:28:23.399 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 2000)...
+2025-06-08 08:28:25.441 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 220 messages from channel C08SJ5EUTPT.
+2025-06-08 08:28:25.441 | INFO     | utils.history_manager:retrieve_and_filter_history:67 - Retrieved 220 main channel messages
+2025-06-08 08:28:25.443 | INFO     | utils.history_manager:retrieve_and_filter_history:107 - Identified 10 thread parent messages to search
+2025-06-08 08:28:25.443 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1749331627.439429 (limit: 100)...
+2025-06-08 08:28:26.194 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 72 messages from thread 1749331627.439429.
+2025-06-08 08:28:26.195 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748880636.264139 (limit: 100)...
+2025-06-08 08:28:26.481 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 30 messages from thread 1748880636.264139.
+2025-06-08 08:28:26.482 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747229885.082289 (limit: 100)...
+2025-06-08 08:28:26.760 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 16 messages from thread 1747229885.082289.
+2025-06-08 08:28:26.764 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748906225.557339 (limit: 100)...
+2025-06-08 08:28:27.118 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 15 messages from thread 1748906225.557339.
+2025-06-08 08:28:27.119 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1749321381.451899 (limit: 100)...
+2025-06-08 08:28:27.413 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 14 messages from thread 1749321381.451899.
+2025-06-08 08:28:27.414 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1749240990.409219 (limit: 100)...
+2025-06-08 08:28:27.706 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1749240990.409219.
+2025-06-08 08:28:27.708 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748879439.071809 (limit: 100)...
+2025-06-08 08:28:27.942 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1748879439.071809.
+2025-06-08 08:28:27.943 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748627857.900709 (limit: 100)...
+2025-06-08 08:28:28.176 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1748627857.900709.
+2025-06-08 08:28:28.176 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747735398.888529 (limit: 100)...
+2025-06-08 08:28:28.405 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747735398.888529.
+2025-06-08 08:28:28.412 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747398469.291069 (limit: 100)...
+2025-06-08 08:28:28.640 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747398469.291069.
+2025-06-08 08:28:28.640 | INFO     | utils.history_manager:retrieve_and_filter_history:128 - Retrieved 197 total messages from 10 threads
+2025-06-08 08:28:28.641 | INFO     | utils.history_manager:retrieve_and_filter_history:148 - Combined into 407 unique messages after deduplication
+2025-06-08 08:28:28.641 | INFO     | utils.history_manager:retrieve_and_filter_history:153 - Filtering messages containing topic: 'anyone in this thread'
+2025-06-08 08:28:28.642 | INFO     | utils.history_manager:find_messages_containing_topic:419 - Searching for topic 'anyone in this thread' in 407 messages
+2025-06-08 08:28:28.645 | INFO     | utils.history_manager:find_messages_containing_topic:476 - 📊 Search results for topic 'anyone in this thread':
+2025-06-08 08:28:28.645 | INFO     | utils.history_manager:find_messages_containing_topic:477 -   - Total matches: 1
+2025-06-08 08:28:28.645 | INFO     | utils.history_manager:find_messages_containing_topic:478 -   - Skipped self-referential messages: 0
+2025-06-08 08:28:28.645 | INFO     | utils.history_manager:find_messages_containing_topic:479 -   - Matches in text field: 1
+2025-06-08 08:28:28.646 | INFO     | utils.history_manager:find_messages_containing_topic:480 -   - Matches only in blocks: 0
+2025-06-08 08:28:28.646 | INFO     | utils.history_manager:find_messages_containing_topic:481 -   - Matches only in attachments: 0
+2025-06-08 08:28:28.646 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - FOUND 1 MESSAGES CONTAINING TOPIC 'anyone in this thread'
+2025-06-08 08:28:28.646 | INFO     | utils.history_manager:retrieve_and_filter_history:160 - Search ratio: 1/407 messages matched
+2025-06-08 08:28:28.646 | INFO     | utils.history_manager:retrieve_and_filter_history:164 - Sample matching message: <@U08RG89NFK7> has anyone in this thread mentioned rhymed verse
+2025-06-08 08:28:28.646 | INFO     | utils.history_manager:retrieve_and_filter_history:295 - Excluded current question, 1 -> 0 messages
+2025-06-08 08:28:28.646 | INFO     | utils.history_manager:retrieve_and_filter_history:300 - Retrieved 0 messages for Deep search for: anyone in this thread
+2025-06-08 08:28:29.433 | INFO     | main:handle_mention:173 - Action handled message sending directly (e.g., rich blocks)
+2025-06-08 08:34:24.414 | INFO     | main:<module>:28 - Starting application in development mode
+2025-06-08 08:34:24.835 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-06-08 08:34:24.835 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-06-08 08:34:24.898 | INFO     | services.cached_notion_service:__init__:73 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-06-08 08:34:25.601 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-06-08 08:34:25.805 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-06-08 08:34:25.805 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-06-08 08:34:25.813 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-06-08 08:34:25.814 | INFO     | main:startup_event:230 - Slack bot started in socket mode.
+2025-06-08 08:34:25.838 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-06-08 08:34:46.893 | INFO     | main:handle_mention:83 - Checking for memory commands in user command: 'has anyone in this thread mentioned rhymed verse...'
+2025-06-08 08:34:46.928 | INFO     | main:handle_mention:105 - No memory command detected, continuing to general processing
+2025-06-08 08:34:47.143 | INFO     | actions.action_framework:__init__:872 - ActionRouter initialized with 7 actions
+2025-06-08 08:34:47.146 | INFO     | actions.action_framework:can_handle:1025 - HistoricalSearchAction matched pattern 8: (?:has|have|did|was|were)\s+\w+.*?(?:discussed|men...
+2025-06-08 08:34:47.146 | INFO     | actions.action_framework:_get_action_for_text:886 - Selected action HistoricalSearchAction for message: <@U08RG89NFK7> has anyone in this thread mentioned...
+2025-06-08 08:34:47.172 | INFO     | utils.history_manager:extract_search_topic:306 - Extracting search topic from prompt: has anyone in this thread mentioned rhymed verse
+2025-06-08 08:34:47.173 | INFO     | utils.history_manager:extract_search_topic:348 - Extracted topic from enhanced pattern: 'rhymed verse'
+2025-06-08 08:34:47.173 | INFO     | utils.history_manager:retrieve_and_filter_history:58 - Performing deep historical search for topic: 'rhymed verse'
+2025-06-08 08:34:47.174 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 2000)...
+2025-06-08 08:34:48.484 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 220 messages from channel C08SJ5EUTPT.
+2025-06-08 08:34:48.485 | INFO     | utils.history_manager:retrieve_and_filter_history:67 - Retrieved 220 main channel messages
+2025-06-08 08:34:48.486 | INFO     | utils.history_manager:retrieve_and_filter_history:107 - Identified 11 thread parent messages to search
+2025-06-08 08:34:48.487 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747173156.252589 (limit: 100)...
+2025-06-08 08:34:48.699 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 2 messages from thread 1747173156.252589.
+2025-06-08 08:34:48.700 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1749331627.439429 (limit: 100)...
+2025-06-08 08:34:49.063 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 72 messages from thread 1749331627.439429.
+2025-06-08 08:34:49.064 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748880636.264139 (limit: 100)...
+2025-06-08 08:34:49.361 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 30 messages from thread 1748880636.264139.
+2025-06-08 08:34:49.362 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747229885.082289 (limit: 100)...
+2025-06-08 08:34:49.641 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 16 messages from thread 1747229885.082289.
+2025-06-08 08:34:49.642 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748906225.557339 (limit: 100)...
+2025-06-08 08:34:49.931 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 15 messages from thread 1748906225.557339.
+2025-06-08 08:34:49.932 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1749321381.451899 (limit: 100)...
+2025-06-08 08:34:50.217 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 14 messages from thread 1749321381.451899.
+2025-06-08 08:34:50.218 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1749240990.409219 (limit: 100)...
+2025-06-08 08:34:50.518 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1749240990.409219.
+2025-06-08 08:34:50.518 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748879439.071809 (limit: 100)...
+2025-06-08 08:34:50.744 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1748879439.071809.
+2025-06-08 08:34:50.744 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748627857.900709 (limit: 100)...
+2025-06-08 08:34:50.968 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1748627857.900709.
+2025-06-08 08:34:50.968 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747735398.888529 (limit: 100)...
+2025-06-08 08:34:51.260 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747735398.888529.
+2025-06-08 08:34:51.261 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747398469.291069 (limit: 100)...
+2025-06-08 08:34:51.490 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747398469.291069.
+2025-06-08 08:34:51.491 | INFO     | utils.history_manager:retrieve_and_filter_history:128 - Retrieved 199 total messages from 11 threads
+2025-06-08 08:34:51.491 | INFO     | utils.history_manager:retrieve_and_filter_history:148 - Combined into 408 unique messages after deduplication
+2025-06-08 08:34:51.492 | INFO     | utils.history_manager:retrieve_and_filter_history:153 - Filtering messages containing topic: 'rhymed verse'
+2025-06-08 08:34:51.492 | INFO     | utils.history_manager:find_messages_containing_topic:421 - Searching for topic 'rhymed verse' in 408 messages
+2025-06-08 08:34:51.495 | INFO     | utils.history_manager:find_messages_containing_topic:478 - 📊 Search results for topic 'rhymed verse':
+2025-06-08 08:34:51.495 | INFO     | utils.history_manager:find_messages_containing_topic:479 -   - Total matches: 8
+2025-06-08 08:34:51.495 | INFO     | utils.history_manager:find_messages_containing_topic:480 -   - Skipped self-referential messages: 0
+2025-06-08 08:34:51.495 | INFO     | utils.history_manager:find_messages_containing_topic:481 -   - Matches in text field: 8
+2025-06-08 08:34:51.495 | INFO     | utils.history_manager:find_messages_containing_topic:482 -   - Matches only in blocks: 0
+2025-06-08 08:34:51.496 | INFO     | utils.history_manager:find_messages_containing_topic:483 -   - Matches only in attachments: 0
+2025-06-08 08:34:51.496 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - FOUND 8 MESSAGES CONTAINING TOPIC 'rhymed verse'
+2025-06-08 08:34:51.496 | INFO     | utils.history_manager:retrieve_and_filter_history:160 - Search ratio: 8/408 messages matched
+2025-06-08 08:34:51.496 | INFO     | utils.history_manager:retrieve_and_filter_history:164 - Sample matching message: Hey <@U08RG89NFK7> can you summarize the channel in rhymed verse?
+2025-06-08 08:34:51.496 | INFO     | utils.history_manager:retrieve_and_filter_history:295 - Excluded current question, 8 -> 7 messages
+2025-06-08 08:34:51.496 | INFO     | utils.history_manager:retrieve_and_filter_history:300 - Retrieved 7 messages for Deep search for: rhymed verse
+2025-06-08 08:34:53.106 | INFO     | main:handle_mention:173 - Action handled message sending directly (e.g., rich blocks)
+2025-06-08 08:36:02.951 | INFO     | main:handle_mention:83 - Checking for memory commands in user command: 'Find Mario mention (specific search)...'
+2025-06-08 08:36:02.955 | INFO     | main:handle_mention:105 - No memory command detected, continuing to general processing
+2025-06-08 08:36:02.957 | INFO     | actions.action_framework:__init__:872 - ActionRouter initialized with 7 actions
+2025-06-08 08:36:02.965 | INFO     | actions.action_framework:can_handle:1025 - HistoricalSearchAction matched pattern 13: (?:list|find)\s+.*?(?:discussions?|conversations?|...
+2025-06-08 08:36:02.965 | INFO     | actions.action_framework:_get_action_for_text:886 - Selected action HistoricalSearchAction for message: <@U08RG89NFK7> Find Mario mention (specific search...
+2025-06-08 08:36:02.965 | INFO     | utils.history_manager:extract_search_topic:306 - Extracting search topic from prompt: Find Mario mention (specific search)
+2025-06-08 08:36:02.968 | INFO     | utils.history_manager:extract_search_topic:348 - Extracted topic from enhanced pattern: 'mario'
+2025-06-08 08:36:02.968 | INFO     | utils.history_manager:retrieve_and_filter_history:58 - Performing deep historical search for topic: 'mario'
+2025-06-08 08:36:02.968 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 2000)...
+2025-06-08 08:36:04.244 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 220 messages from channel C08SJ5EUTPT.
+2025-06-08 08:36:04.245 | INFO     | utils.history_manager:retrieve_and_filter_history:67 - Retrieved 220 main channel messages
+2025-06-08 08:36:04.247 | INFO     | utils.history_manager:retrieve_and_filter_history:107 - Identified 10 thread parent messages to search
+2025-06-08 08:36:04.247 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1749331627.439429 (limit: 100)...
+2025-06-08 08:36:05.051 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 74 messages from thread 1749331627.439429.
+2025-06-08 08:36:05.052 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748880636.264139 (limit: 100)...
+2025-06-08 08:36:05.623 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 30 messages from thread 1748880636.264139.
+2025-06-08 08:36:05.624 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747229885.082289 (limit: 100)...
+2025-06-08 08:36:06.736 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 16 messages from thread 1747229885.082289.
+2025-06-08 08:36:06.736 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748906225.557339 (limit: 100)...
+2025-06-08 08:36:07.841 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 15 messages from thread 1748906225.557339.
+2025-06-08 08:36:07.842 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1749321381.451899 (limit: 100)...
+2025-06-08 08:36:08.892 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 14 messages from thread 1749321381.451899.
+2025-06-08 08:36:08.892 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1749240990.409219 (limit: 100)...
+2025-06-08 08:36:09.415 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1749240990.409219.
+2025-06-08 08:36:09.416 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748879439.071809 (limit: 100)...
+2025-06-08 08:36:09.883 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1748879439.071809.
+2025-06-08 08:36:09.883 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748627857.900709 (limit: 100)...
+2025-06-08 08:36:10.128 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1748627857.900709.
+2025-06-08 08:36:10.128 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747735398.888529 (limit: 100)...
+2025-06-08 08:36:10.361 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747735398.888529.
+2025-06-08 08:36:10.362 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747398469.291069 (limit: 100)...
+2025-06-08 08:36:10.602 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747398469.291069.
+2025-06-08 08:36:10.603 | INFO     | utils.history_manager:retrieve_and_filter_history:128 - Retrieved 199 total messages from 10 threads
+2025-06-08 08:36:10.603 | INFO     | utils.history_manager:retrieve_and_filter_history:148 - Combined into 409 unique messages after deduplication
+2025-06-08 08:36:10.603 | INFO     | utils.history_manager:retrieve_and_filter_history:153 - Filtering messages containing topic: 'mario'
+2025-06-08 08:36:10.604 | INFO     | utils.history_manager:find_messages_containing_topic:421 - Searching for topic 'mario' in 409 messages
+2025-06-08 08:36:10.607 | INFO     | utils.history_manager:find_messages_containing_topic:478 - 📊 Search results for topic 'mario':
+2025-06-08 08:36:10.607 | INFO     | utils.history_manager:find_messages_containing_topic:479 -   - Total matches: 5
+2025-06-08 08:36:10.607 | INFO     | utils.history_manager:find_messages_containing_topic:480 -   - Skipped self-referential messages: 0
+2025-06-08 08:36:10.607 | INFO     | utils.history_manager:find_messages_containing_topic:481 -   - Matches in text field: 5
+2025-06-08 08:36:10.607 | INFO     | utils.history_manager:find_messages_containing_topic:482 -   - Matches only in blocks: 0
+2025-06-08 08:36:10.607 | INFO     | utils.history_manager:find_messages_containing_topic:483 -   - Matches only in attachments: 0
+2025-06-08 08:36:10.607 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - FOUND 5 MESSAGES CONTAINING TOPIC 'mario'
+2025-06-08 08:36:10.608 | INFO     | utils.history_manager:retrieve_and_filter_history:160 - Search ratio: 5/409 messages matched
+2025-06-08 08:36:10.608 | INFO     | utils.history_manager:retrieve_and_filter_history:164 - Sample matching message: <@U08RG89NFK7> Fact: Mario is not Luigi
+2025-06-08 08:36:10.608 | INFO     | utils.history_manager:retrieve_and_filter_history:295 - Excluded current question, 5 -> 4 messages
+2025-06-08 08:36:10.608 | INFO     | utils.history_manager:retrieve_and_filter_history:300 - Retrieved 4 messages for Deep search for: mario
+2025-06-08 08:36:11.796 | INFO     | main:handle_mention:173 - Action handled message sending directly (e.g., rich blocks)
+2025-06-08 08:36:35.161 | INFO     | main:handle_mention:83 - Checking for memory commands in user command: 'help...'
+2025-06-08 08:36:35.165 | INFO     | main:handle_mention:105 - No memory command detected, continuing to general processing
+2025-06-08 08:36:35.168 | INFO     | actions.action_framework:__init__:872 - ActionRouter initialized with 7 actions
+2025-06-08 08:36:35.169 | INFO     | actions.action_framework:_get_action_for_text:886 - Selected action ContextResponseAction for message: <@U08RG89NFK7> help...
+2025-06-08 08:36:35.169 | INFO     | utils.history_manager:extract_search_topic:306 - Extracting search topic from prompt: help
+2025-06-08 08:36:35.171 | INFO     | utils.history_manager:extract_search_topic:396 - No topic could be extracted from the prompt
+2025-06-08 08:36:35.172 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1749331627.439429 (limit: 100)...
+2025-06-08 08:36:35.627 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 76 messages from thread 1749331627.439429.
+2025-06-08 08:36:35.627 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 50)...
+2025-06-08 08:36:36.070 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 50 messages from channel C08SJ5EUTPT.
+2025-06-08 08:36:36.070 | INFO     | utils.history_manager:retrieve_and_filter_history:300 - Retrieved 125 messages for Recent context
+2025-06-08 08:36:36.071 | INFO     | utils.history_manager:format_history_for_prompt:637 - Formatted message history: 52093 characters
+2025-06-08 08:36:36.072 | INFO     | actions.action_framework:execute:300 - Fetching Notion context for user U089YKL1T4H
+2025-06-08 08:36:37.296 | INFO     | services.cached_notion_service:get_user_page_content:377 - Retrieved Notion page content for user U089YKL1T4H (length: 1210)
+2025-06-08 08:36:37.479 | INFO     | services.cached_notion_service:get_user_page_content:313 - Cache hit for user page content: U089YKL1T4H
+2025-06-08 08:36:37.479 | INFO     | utils.context_builder:get_enhanced_user_context:22 - Building enhanced context for user U089YKL1T4H
+2025-06-08 08:36:37.479 | INFO     | utils.context_builder:get_enhanced_user_context:24 - Using preferred name: NewNameForTest
+2025-06-08 08:36:37.479 | INFO     | utils.context_builder:get_enhanced_user_context:27 - Page content length: 1210 chars
+2025-06-08 08:36:37.480 | INFO     | utils.context_builder:get_enhanced_user_context:33 - Language preference: English
+2025-06-08 08:36:37.480 | INFO     | utils.context_builder:get_enhanced_user_context:107 - Generated enhanced context length: 2269 chars
+2025-06-08 08:36:37.480 | INFO     | utils.context_builder:get_enhanced_user_context:108 - Language preference featured prominently: English
+2025-06-08 08:36:37.480 | INFO     | actions.action_framework:execute:340 - History retrieval mode: unknown
+2025-06-08 08:36:37.498 | INFO     | actions.action_framework:execute:341 - Retrieved 125 relevant messages
+2025-06-08 08:36:37.499 | INFO     | services.cached_notion_service:get_user_language_preference:1577 - Language preference for user U089YKL1T4H: English
+2025-06-08 08:36:37.500 | INFO     | handler.openai_service:_prepare_messages:258 - Retrieved language preference for user U089YKL1T4H: English
+2025-06-08 08:36:37.500 | INFO     | handler.openai_service:_prepare_messages:303 - Language preference prominently featured in prompt: English
+2025-06-08 08:36:37.501 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-08 08:36:38.041 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-08 08:36:38.052 | INFO     | handler.openai_service:get_completion_async:167 - Sending 8488 tokens to OpenAI async. Model: gpt-4o
+2025-06-08 08:36:39.824 | INFO     | handler.openai_service:get_completion_async:187 - OpenAI response received successfully in 1 attempt(s)
+2025-06-08 08:36:40.335 | INFO     | main:handle_mention:166 - Sending action response message (length: 130)
+2025-06-08 08:36:40.336 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 130 chars):
+How can I assist you today, NewNameForTest? If you have a specific question or need help with something, feel free to let me know!
+2025-06-08 08:36:40.667 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1749386200.935809', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1749386200.935809', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': 'How can I assist you today, NewNameForTest? If you have a specific question or need help with something, feel free to let me know!', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1749331627.439429', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'n4u', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': 'How can I assist you today, NewNameForTest? If you have a specific question or need help with something, feel free to let me know!'}]}]}]}}
+2025-06-08 08:37:00.804 | INFO     | main:handle_mention:83 - Checking for memory commands in user command: 'help...'
+2025-06-08 08:37:00.805 | INFO     | main:handle_mention:105 - No memory command detected, continuing to general processing
+2025-06-08 08:37:00.806 | INFO     | actions.action_framework:__init__:872 - ActionRouter initialized with 7 actions
+2025-06-08 08:37:00.806 | INFO     | actions.action_framework:_get_action_for_text:886 - Selected action ContextResponseAction for message: <@U08RG89NFK7> help...
+2025-06-08 08:37:00.806 | INFO     | utils.history_manager:extract_search_topic:306 - Extracting search topic from prompt: help
+2025-06-08 08:37:00.806 | INFO     | utils.history_manager:extract_search_topic:396 - No topic could be extracted from the prompt
+2025-06-08 08:37:00.807 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1749386219.151819 (limit: 100)...
+2025-06-08 08:37:01.040 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 1 messages from thread 1749386219.151819.
+2025-06-08 08:37:01.041 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 50)...
+2025-06-08 08:37:01.530 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 50 messages from channel C08SJ5EUTPT.
+2025-06-08 08:37:01.531 | INFO     | utils.history_manager:retrieve_and_filter_history:300 - Retrieved 50 messages for Recent context
+2025-06-08 08:37:01.531 | INFO     | utils.history_manager:format_history_for_prompt:637 - Formatted message history: 37912 characters
+2025-06-08 08:37:01.532 | INFO     | actions.action_framework:execute:300 - Fetching Notion context for user U089YKL1T4H
+2025-06-08 08:37:01.532 | INFO     | services.cached_notion_service:get_user_page_content:313 - Cache hit for user page content: U089YKL1T4H
+2025-06-08 08:37:01.532 | INFO     | services.cached_notion_service:get_user_page_content:313 - Cache hit for user page content: U089YKL1T4H
+2025-06-08 08:37:01.533 | INFO     | utils.context_builder:get_enhanced_user_context:22 - Building enhanced context for user U089YKL1T4H
+2025-06-08 08:37:01.533 | INFO     | utils.context_builder:get_enhanced_user_context:24 - Using preferred name: NewNameForTest
+2025-06-08 08:37:01.549 | INFO     | utils.context_builder:get_enhanced_user_context:27 - Page content length: 1210 chars
+2025-06-08 08:37:01.550 | INFO     | utils.context_builder:get_enhanced_user_context:33 - Language preference: English
+2025-06-08 08:37:01.550 | INFO     | utils.context_builder:get_enhanced_user_context:107 - Generated enhanced context length: 2269 chars
+2025-06-08 08:37:01.550 | INFO     | utils.context_builder:get_enhanced_user_context:108 - Language preference featured prominently: English
+2025-06-08 08:37:01.551 | INFO     | actions.action_framework:execute:340 - History retrieval mode: unknown
+2025-06-08 08:37:01.551 | INFO     | actions.action_framework:execute:341 - Retrieved 50 relevant messages
+2025-06-08 08:37:01.551 | INFO     | handler.openai_service:_prepare_messages:258 - Retrieved language preference for user U089YKL1T4H: English
+2025-06-08 08:37:01.552 | INFO     | handler.openai_service:_prepare_messages:303 - Language preference prominently featured in prompt: English
+2025-06-08 08:37:01.552 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-08 08:37:01.564 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-08 08:37:01.571 | INFO     | handler.openai_service:get_completion_async:167 - Sending 6112 tokens to OpenAI async. Model: gpt-4o
+2025-06-08 08:37:03.117 | INFO     | handler.openai_service:get_completion_async:187 - OpenAI response received successfully in 1 attempt(s)
+2025-06-08 08:37:03.625 | INFO     | main:handle_mention:166 - Sending action response message (length: 27)
+2025-06-08 08:37:03.626 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 27 chars):
+How can I assist you today?
+2025-06-08 08:37:03.936 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1749386224.209719', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1749386224.209719', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': 'How can I assist you today?', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1749386219.151819', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': '5S9l', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': 'How can I assist you today?'}]}]}]}}
+2025-06-08 08:46:11.902 | INFO     | main:<module>:28 - Starting application in development mode
+2025-06-08 08:46:12.047 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-06-08 08:46:12.047 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-06-08 08:46:12.087 | INFO     | services.cached_notion_service:__init__:73 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-06-08 08:46:12.698 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-06-08 08:46:13.008 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-06-08 08:46:13.009 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-06-08 08:46:13.016 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-06-08 08:46:13.016 | INFO     | main:startup_event:230 - Slack bot started in socket mode.
+2025-06-08 08:46:13.040 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-06-08 08:47:18.894 | INFO     | main:<module>:28 - Starting application in development mode
+2025-06-08 08:47:18.985 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-06-08 08:47:18.985 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-06-08 08:47:19.006 | INFO     | services.cached_notion_service:__init__:73 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-06-08 08:47:19.478 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-06-08 08:47:19.679 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-06-08 08:47:19.679 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-06-08 08:47:19.687 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-06-08 08:47:19.688 | INFO     | main:startup_event:230 - Slack bot started in socket mode.
+2025-06-08 08:47:19.708 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-06-08 08:48:13.045 | INFO     | main:<module>:28 - Starting application in development mode
+2025-06-08 08:48:13.144 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-06-08 08:48:13.145 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-06-08 08:48:13.165 | INFO     | services.cached_notion_service:__init__:73 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-06-08 08:48:13.705 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-06-08 08:48:13.914 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-06-08 08:48:13.915 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-06-08 08:48:13.921 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-06-08 08:48:13.922 | INFO     | main:startup_event:230 - Slack bot started in socket mode.
+2025-06-08 08:48:13.936 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-06-08 08:48:48.398 | INFO     | main:handle_mention:83 - Checking for memory commands in user command: 'help...'
+2025-06-08 08:48:48.400 | INFO     | handler.memory_handler:classify_memory_instruction:455 - Detected help command
+2025-06-08 08:48:48.401 | INFO     | main:handle_mention:105 - No memory command detected, continuing to general processing
+2025-06-08 08:48:48.668 | INFO     | actions.action_framework:__init__:872 - ActionRouter initialized with 7 actions
+2025-06-08 08:48:48.673 | INFO     | actions.action_framework:_get_action_for_text:886 - Selected action ContextResponseAction for message: <@U08RG89NFK7> help...
+2025-06-08 08:48:48.677 | INFO     | utils.history_manager:extract_search_topic:306 - Extracting search topic from prompt: help
+2025-06-08 08:48:48.681 | INFO     | utils.history_manager:extract_search_topic:396 - No topic could be extracted from the prompt
+2025-06-08 08:48:48.681 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1749386926.819289 (limit: 100)...
+2025-06-08 08:48:48.904 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 1 messages from thread 1749386926.819289.
+2025-06-08 08:48:48.907 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 50)...
+2025-06-08 08:48:49.442 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 50 messages from channel C08SJ5EUTPT.
+2025-06-08 08:48:49.443 | INFO     | utils.history_manager:retrieve_and_filter_history:300 - Retrieved 50 messages for Recent context
+2025-06-08 08:48:49.444 | INFO     | utils.history_manager:format_history_for_prompt:637 - Formatted message history: 37840 characters
+2025-06-08 08:48:49.444 | INFO     | actions.action_framework:execute:300 - Fetching Notion context for user U089YKL1T4H
+2025-06-08 08:48:50.206 | INFO     | services.cached_notion_service:get_user_page_content:377 - Retrieved Notion page content for user U089YKL1T4H (length: 1210)
+2025-06-08 08:48:50.525 | INFO     | services.cached_notion_service:get_user_page_content:313 - Cache hit for user page content: U089YKL1T4H
+2025-06-08 08:48:50.528 | INFO     | utils.context_builder:get_enhanced_user_context:22 - Building enhanced context for user U089YKL1T4H
+2025-06-08 08:48:50.529 | INFO     | utils.context_builder:get_enhanced_user_context:24 - Using preferred name: NewNameForTest
+2025-06-08 08:48:50.529 | INFO     | utils.context_builder:get_enhanced_user_context:27 - Page content length: 1210 chars
+2025-06-08 08:48:50.529 | INFO     | utils.context_builder:get_enhanced_user_context:33 - Language preference: English
+2025-06-08 08:48:50.530 | INFO     | utils.context_builder:get_enhanced_user_context:107 - Generated enhanced context length: 2269 chars
+2025-06-08 08:48:50.530 | INFO     | utils.context_builder:get_enhanced_user_context:108 - Language preference featured prominently: English
+2025-06-08 08:48:50.530 | INFO     | actions.action_framework:execute:340 - History retrieval mode: unknown
+2025-06-08 08:48:50.530 | INFO     | actions.action_framework:execute:341 - Retrieved 50 relevant messages
+2025-06-08 08:48:50.531 | INFO     | services.cached_notion_service:get_user_language_preference:1577 - Language preference for user U089YKL1T4H: English
+2025-06-08 08:48:50.531 | INFO     | handler.openai_service:_prepare_messages:258 - Retrieved language preference for user U089YKL1T4H: English
+2025-06-08 08:48:50.531 | INFO     | handler.openai_service:_prepare_messages:303 - Language preference prominently featured in prompt: English
+2025-06-08 08:48:50.532 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-08 08:48:50.965 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-08 08:48:50.971 | INFO     | handler.openai_service:get_completion_async:167 - Sending 6102 tokens to OpenAI async. Model: gpt-4o
+2025-06-08 08:48:52.573 | INFO     | handler.openai_service:get_completion_async:187 - OpenAI response received successfully in 1 attempt(s)
+2025-06-08 08:48:53.098 | INFO     | main:handle_mention:166 - Sending action response message (length: 43)
+2025-06-08 08:48:53.098 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 43 chars):
+How can I assist you today, NewNameForTest?
+2025-06-08 08:48:53.403 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1749386933.675799', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1749386933.675799', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': 'How can I assist you today, NewNameForTest?', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1749386926.819289', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': '4+Y', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': 'How can I assist you today, NewNameForTest?'}]}]}]}}
+2025-06-08 08:51:46.355 | INFO     | main:<module>:28 - Starting application in development mode
+2025-06-08 08:51:46.467 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-06-08 08:51:46.467 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-06-08 08:51:46.490 | INFO     | services.cached_notion_service:__init__:73 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-06-08 08:51:47.021 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-06-08 08:51:47.211 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-06-08 08:51:47.211 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-06-08 08:51:47.217 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-06-08 08:51:47.217 | INFO     | main:startup_event:230 - Slack bot started in socket mode.
+2025-06-08 08:51:47.271 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-06-08 08:52:14.481 | INFO     | main:handle_mention:83 - Checking for memory commands in user command: 'help...'
+2025-06-08 08:52:14.485 | INFO     | handler.memory_handler:classify_memory_instruction:455 - Detected help command
+2025-06-08 08:52:14.486 | INFO     | main:handle_mention:105 - No memory command detected, continuing to general processing
+2025-06-08 08:52:14.736 | INFO     | actions.action_framework:__init__:872 - ActionRouter initialized with 7 actions
+2025-06-08 08:52:14.741 | INFO     | actions.action_framework:_get_action_for_text:886 - Selected action ContextResponseAction for message: <@U08RG89NFK7> help...
+2025-06-08 08:52:14.742 | INFO     | utils.history_manager:extract_search_topic:306 - Extracting search topic from prompt: help
+2025-06-08 08:52:14.746 | INFO     | utils.history_manager:extract_search_topic:396 - No topic could be extracted from the prompt
+2025-06-08 08:52:14.746 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1749387132.007229 (limit: 100)...
+2025-06-08 08:52:14.973 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 1 messages from thread 1749387132.007229.
+2025-06-08 08:52:14.974 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 50)...
+2025-06-08 08:52:15.563 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 50 messages from channel C08SJ5EUTPT.
+2025-06-08 08:52:15.564 | INFO     | utils.history_manager:retrieve_and_filter_history:300 - Retrieved 50 messages for Recent context
+2025-06-08 08:52:15.565 | INFO     | utils.history_manager:format_history_for_prompt:637 - Formatted message history: 37840 characters
+2025-06-08 08:52:15.565 | INFO     | actions.action_framework:execute:300 - Fetching Notion context for user U089YKL1T4H
+2025-06-08 08:52:17.670 | INFO     | services.cached_notion_service:get_user_page_content:377 - Retrieved Notion page content for user U089YKL1T4H (length: 1210)
+2025-06-08 08:52:17.908 | INFO     | services.cached_notion_service:get_user_page_content:313 - Cache hit for user page content: U089YKL1T4H
+2025-06-08 08:52:17.909 | INFO     | utils.context_builder:get_enhanced_user_context:22 - Building enhanced context for user U089YKL1T4H
+2025-06-08 08:52:17.909 | INFO     | utils.context_builder:get_enhanced_user_context:24 - Using preferred name: NewNameForTest
+2025-06-08 08:52:17.909 | INFO     | utils.context_builder:get_enhanced_user_context:27 - Page content length: 1210 chars
+2025-06-08 08:52:17.909 | INFO     | utils.context_builder:get_enhanced_user_context:33 - Language preference: English
+2025-06-08 08:52:17.910 | INFO     | utils.context_builder:get_enhanced_user_context:107 - Generated enhanced context length: 2269 chars
+2025-06-08 08:52:17.910 | INFO     | utils.context_builder:get_enhanced_user_context:108 - Language preference featured prominently: English
+2025-06-08 08:52:17.910 | INFO     | actions.action_framework:execute:340 - History retrieval mode: unknown
+2025-06-08 08:52:17.910 | INFO     | actions.action_framework:execute:341 - Retrieved 50 relevant messages
+2025-06-08 08:52:17.910 | INFO     | services.cached_notion_service:get_user_language_preference:1577 - Language preference for user U089YKL1T4H: English
+2025-06-08 08:52:17.911 | INFO     | handler.openai_service:_prepare_messages:258 - Retrieved language preference for user U089YKL1T4H: English
+2025-06-08 08:52:17.911 | INFO     | handler.openai_service:_prepare_messages:303 - Language preference prominently featured in prompt: English
+2025-06-08 08:52:17.911 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-08 08:52:18.269 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-08 08:52:18.275 | INFO     | handler.openai_service:get_completion_async:167 - Sending 6102 tokens to OpenAI async. Model: gpt-4o
+2025-06-08 08:52:19.363 | INFO     | handler.openai_service:get_completion_async:187 - OpenAI response received successfully in 1 attempt(s)
+2025-06-08 08:52:19.905 | INFO     | main:handle_mention:166 - Sending action response message (length: 64)
+2025-06-08 08:52:19.906 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 64 chars):
+How can I assist you today? Let me know what you need help with!
+2025-06-08 08:52:20.210 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1749387140.482729', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1749387140.482729', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': 'How can I assist you today? Let me know what you need help with!', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1749387132.007229', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'xMwR', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': 'How can I assist you today? Let me know what you need help with!'}]}]}]}}
+2025-06-08 08:54:44.354 | INFO     | main:<module>:28 - Starting application in development mode
+2025-06-08 08:54:44.448 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-06-08 08:54:44.448 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-06-08 08:54:44.472 | INFO     | services.cached_notion_service:__init__:73 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-06-08 08:54:45.125 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-06-08 08:54:45.318 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-06-08 08:54:45.347 | INFO     | actions.action_framework:__init__:45 - ServiceContainer initialized with available services
+2025-06-08 08:54:45.352 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-06-08 08:54:45.352 | INFO     | main:startup_event:230 - Slack bot started in socket mode.
+2025-06-08 08:54:45.445 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-06-08 08:55:23.181 | INFO     | main:handle_mention:83 - Checking for memory commands in user command: 'help...'
+2025-06-08 08:55:23.203 | INFO     | handler.memory_handler:classify_memory_instruction:455 - Detected help command
+2025-06-08 08:55:23.204 | INFO     | handler.memory_handler:handle_memory_instruction:58 - Processing memory instruction - Type: help, Content: 'None', User: U089YKL1T4H
+2025-06-08 08:55:23.204 | INFO     | handler.memory_handler:handle_memory_instruction:79 - Processing help command for user U089YKL1T4H
+2025-06-08 08:55:23.209 | INFO     | main:handle_mention:94 - ✅ Memory command processed successfully for user U089YKL1T4H
+2025-06-08 08:55:23.210 | INFO     | main:handle_mention:95 - Memory response: 
+    Here's how you can manage your information with me:
+
+    **Adding Information:**
+    - "Remember I like coffee" - Add to Known Facts
+    - "Fact: I prefer tea" - Add to Known Facts
+    - "fact: I prefer tea" - Add to Known Facts
+    - "Known Fact: I prefer tea" - Add to Known Facts
+    - "known fact: I prefer tea" - Add to Known Facts
+    - "I work in New York" - Add location information
+    - "My new project is Website Redesign" - Replace all projects
+    - "Project: Mobile App Development" - Add a project
+    - "I prefer short answers" - Add to Preferences
+    - "Preference: Use bullet points" - Add to Preferences
+    - "TODO: Call John tomorrow" - Add a TODO item
+
+    **Viewing Information:**
+    - "Show my facts" - List all Known Facts
+    - "Show my known facts" - List all Known Facts
+    - "List my preferences" - List all Preferences
+    - "Show my projects" - List all Projects
+
+    **Deleting Information:**
+    - "Delete fact about coffee" - Remove a fact
+    - "Delete known fact about coffee" - Remove a fact
+    - "Remove preference about bullet points" - Remove a preference
+    - "Delete project Website Redesign" - Remove a project
+
+    I'll remember this information and use it to personalize our conversations.
+    
+2025-06-08 08:55:23.210 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 1249 chars):
+
+    Here's how you can manage your information with me:
+
+    **Adding Information:**
+    - "Remember I like coffee" - Add to Known Facts
+    - "Fact: I prefer tea" - Add to Known Facts
+    - "fact: I prefer tea" - Add to Known Facts
+    - "Known Fact: I prefer tea" - Add to Known Facts
+    - "known fact: I prefer tea" - Add to Known Facts
+    - "I work in New York" - Add location information
+    - "My new project is Website Redesign" - Replace all projects
+    - "Project: Mobile App Development" - Add a project
+    - "I prefer short answers" - Add to Preferences
+    - "Preference: Use bullet points" - Add to Preferences
+    - "TODO: Call John tomorrow" - Add a TODO item
+
+    **Viewing Information:**
+    - "Show my facts" - List all Known Facts
+    - "Show my known facts" - List all Known Facts
+    - "List my preferences" - List all Preferences
+    - "Show my projects" - List all Projects
+
+    **Deleting Information:**
+    - "Delete fact about coffee" - Remove a fact
+    - "Delete known fact about coffee" - Remove a fact
+    - "Remove preference about bullet points" - Remove a preference
+    - "Delete project Website Redesign" - Remove a project
+
+    I'll remember this information and use it to personalize our conversations.
+    
+2025-06-08 08:55:23.547 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1749387323.806849', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1749387323.806849', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': '\n    Here\'s how you can manage your information with me:\n\n    **Adding Information:**\n    - "Remember I like coffee" - Add to Known Facts\n    - "Fact: I prefer tea" - Add to Known Facts\n    - "fact: I prefer tea" - Add to Known Facts\n    - "Known Fact: I prefer tea" - Add to Known Facts\n    - "known fact: I prefer tea" - Add to Known Facts\n    - "I work in New York" - Add location information\n    - "My new project is Website Redesign" - Replace all projects\n    - "Project: Mobile App Development" - Add a project\n    - "I prefer short answers" - Add to Preferences\n    - "Preference: Use bullet points" - Add to Preferences\n    - "TODO: Call John tomorrow" - Add a TODO item\n\n    **Viewing Information:**\n    - "Show my facts" - List all Known Facts\n    - "Show my known facts" - List all Known Facts\n    - "List my preferences" - List all Preferences\n    - "Show my projects" - List all Projects\n\n    **Deleting Information:**\n    - "Delete fact about coffee" - Remove a fact\n    - "Delete known fact about coffee" - Remove a fact\n    - "Remove preference about bullet points" - Remove a preference\n    - "Delete project Website Redesign" - Remove a project\n\n    I\'ll remember this information and use it to personalize our conversations.\n    ', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1749387322.164169', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'HRKD', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': 'Here\'s how you can manage your information with me:\n\n    **Adding Information:**\n    - "Remember I like coffee" - Add to Known Facts\n    - "Fact: I prefer tea" - Add to Known Facts\n    - "fact: I prefer tea" - Add to Known Facts\n    - "Known Fact: I prefer tea" - Add to Known Facts\n    - "known fact: I prefer tea" - Add to Known Facts\n    - "I work in New York" - Add location information\n    - "My new project is Website Redesign" - Replace all projects\n    - "Project: Mobile App Development" - Add a project\n    - "I prefer short answers" - Add to Preferences\n    - "Preference: Use bullet points" - Add to Preferences\n    - "TODO: Call John tomorrow" - Add a TODO item\n\n    **Viewing Information:**\n    - "Show my facts" - List all Known Facts\n    - "Show my known facts" - List all Known Facts\n    - "List my preferences" - List all Preferences\n    - "Show my projects" - List all Projects\n\n    **Deleting Information:**\n    - "Delete fact about coffee" - Remove a fact\n    - "Delete known fact about coffee" - Remove a fact\n    - "Remove preference about bullet points" - Remove a preference\n    - "Delete project Website Redesign" - Remove a project\n\n    I\'ll remember this information and use it to personalize our conversations.'}]}]}]}}
+2025-06-08 08:55:39.771 | INFO     | main:handle_mention:83 - Checking for memory commands in user command: 'list...'
+2025-06-08 08:55:39.774 | INFO     | main:handle_mention:105 - No memory command detected, continuing to general processing
+2025-06-08 08:55:40.060 | INFO     | actions.action_framework:__init__:872 - ActionRouter initialized with 7 actions
+2025-06-08 08:55:40.067 | INFO     | actions.action_framework:_get_action_for_text:886 - Selected action ContextResponseAction for message: <@U08RG89NFK7> list...
+2025-06-08 08:55:40.073 | INFO     | utils.history_manager:extract_search_topic:306 - Extracting search topic from prompt: list
+2025-06-08 08:55:40.076 | INFO     | utils.history_manager:extract_search_topic:396 - No topic could be extracted from the prompt
+2025-06-08 08:55:40.076 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1749387322.164169 (limit: 100)...
+2025-06-08 08:55:40.322 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 3 messages from thread 1749387322.164169.
+2025-06-08 08:55:40.323 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 50)...
+2025-06-08 08:55:40.881 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 50 messages from channel C08SJ5EUTPT.
+2025-06-08 08:55:40.882 | INFO     | utils.history_manager:retrieve_and_filter_history:300 - Retrieved 52 messages for Recent context
+2025-06-08 08:55:41.086 | INFO     | utils.history_manager:format_history_for_prompt:637 - Formatted message history: 40451 characters
+2025-06-08 08:55:41.087 | INFO     | actions.action_framework:execute:300 - Fetching Notion context for user U089YKL1T4H
+2025-06-08 08:55:42.278 | INFO     | services.cached_notion_service:get_user_page_content:377 - Retrieved Notion page content for user U089YKL1T4H (length: 1210)
+2025-06-08 08:55:42.580 | INFO     | services.cached_notion_service:get_user_page_content:313 - Cache hit for user page content: U089YKL1T4H
+2025-06-08 08:55:42.581 | INFO     | utils.context_builder:get_enhanced_user_context:22 - Building enhanced context for user U089YKL1T4H
+2025-06-08 08:55:42.581 | INFO     | utils.context_builder:get_enhanced_user_context:24 - Using preferred name: NewNameForTest
+2025-06-08 08:55:42.581 | INFO     | utils.context_builder:get_enhanced_user_context:27 - Page content length: 1210 chars
+2025-06-08 08:55:42.581 | INFO     | utils.context_builder:get_enhanced_user_context:33 - Language preference: English
+2025-06-08 08:55:42.582 | INFO     | utils.context_builder:get_enhanced_user_context:107 - Generated enhanced context length: 2269 chars
+2025-06-08 08:55:42.582 | INFO     | utils.context_builder:get_enhanced_user_context:108 - Language preference featured prominently: English
+2025-06-08 08:55:42.582 | INFO     | actions.action_framework:execute:340 - History retrieval mode: unknown
+2025-06-08 08:55:42.582 | INFO     | actions.action_framework:execute:341 - Retrieved 52 relevant messages
+2025-06-08 08:55:42.583 | INFO     | services.cached_notion_service:get_user_language_preference:1577 - Language preference for user U089YKL1T4H: English
+2025-06-08 08:55:42.583 | INFO     | handler.openai_service:_prepare_messages:258 - Retrieved language preference for user U089YKL1T4H: English
+2025-06-08 08:55:42.583 | INFO     | handler.openai_service:_prepare_messages:303 - Language preference prominently featured in prompt: English
+2025-06-08 08:55:42.583 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-08 08:55:42.938 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-08 08:55:42.944 | INFO     | handler.openai_service:get_completion_async:167 - Sending 6452 tokens to OpenAI async. Model: gpt-4o
+2025-06-08 08:55:44.385 | INFO     | handler.openai_service:get_completion_async:187 - OpenAI response received successfully in 1 attempt(s)
+2025-06-08 08:55:44.887 | INFO     | main:handle_mention:166 - Sending action response message (length: 90)
+2025-06-08 08:55:44.888 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 90 chars):
+Here is a list of your projects:
+
+1. 测试中文项目名称
+2. Project Gamma
+3. Mobile App Development X
+2025-06-08 08:55:45.201 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1749387345.460779', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1749387345.460779', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': 'Here is a list of your projects:\n\n1. 测试中文项目名称\n2. Project Gamma\n3. Mobile App Development X', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1749387322.164169', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'BUU0d', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': 'Here is a list of your projects:\n\n1. 测试中文项目名称\n2. Project Gamma\n3. Mobile App Development X'}]}]}]}}
+2025-06-08 08:55:56.974 | INFO     | main:handle_mention:83 - Checking for memory commands in user command: 'list facts...'
+2025-06-08 08:55:56.975 | INFO     | main:handle_mention:105 - No memory command detected, continuing to general processing
+2025-06-08 08:55:56.975 | INFO     | actions.action_framework:__init__:872 - ActionRouter initialized with 7 actions
+2025-06-08 08:55:56.976 | INFO     | actions.action_framework:_get_action_for_text:886 - Selected action ContextResponseAction for message: <@U08RG89NFK7> list facts...
+2025-06-08 08:55:56.976 | INFO     | utils.history_manager:extract_search_topic:306 - Extracting search topic from prompt: list facts
+2025-06-08 08:55:56.976 | INFO     | utils.history_manager:extract_search_topic:396 - No topic could be extracted from the prompt
+2025-06-08 08:55:56.977 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1749387322.164169 (limit: 100)...
+2025-06-08 08:55:57.207 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 5 messages from thread 1749387322.164169.
+2025-06-08 08:55:57.208 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 50)...
+2025-06-08 08:55:57.765 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 50 messages from channel C08SJ5EUTPT.
+2025-06-08 08:55:57.766 | INFO     | utils.history_manager:retrieve_and_filter_history:300 - Retrieved 54 messages for Recent context
+2025-06-08 08:55:57.767 | INFO     | utils.history_manager:format_history_for_prompt:637 - Formatted message history: 40699 characters
+2025-06-08 08:55:57.771 | INFO     | actions.action_framework:execute:300 - Fetching Notion context for user U089YKL1T4H
+2025-06-08 08:55:57.771 | INFO     | services.cached_notion_service:get_user_page_content:313 - Cache hit for user page content: U089YKL1T4H
+2025-06-08 08:55:57.772 | INFO     | services.cached_notion_service:get_user_page_content:313 - Cache hit for user page content: U089YKL1T4H
+2025-06-08 08:55:57.772 | INFO     | utils.context_builder:get_enhanced_user_context:22 - Building enhanced context for user U089YKL1T4H
+2025-06-08 08:55:57.772 | INFO     | utils.context_builder:get_enhanced_user_context:24 - Using preferred name: NewNameForTest
+2025-06-08 08:55:57.772 | INFO     | utils.context_builder:get_enhanced_user_context:27 - Page content length: 1210 chars
+2025-06-08 08:55:57.772 | INFO     | utils.context_builder:get_enhanced_user_context:33 - Language preference: English
+2025-06-08 08:55:57.772 | INFO     | utils.context_builder:get_enhanced_user_context:107 - Generated enhanced context length: 2269 chars
+2025-06-08 08:55:57.772 | INFO     | utils.context_builder:get_enhanced_user_context:108 - Language preference featured prominently: English
+2025-06-08 08:55:57.773 | INFO     | actions.action_framework:execute:340 - History retrieval mode: unknown
+2025-06-08 08:55:57.773 | INFO     | actions.action_framework:execute:341 - Retrieved 54 relevant messages
+2025-06-08 08:55:57.773 | INFO     | handler.openai_service:_prepare_messages:258 - Retrieved language preference for user U089YKL1T4H: English
+2025-06-08 08:55:57.773 | INFO     | handler.openai_service:_prepare_messages:303 - Language preference prominently featured in prompt: English
+2025-06-08 08:55:57.773 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-08 08:55:57.781 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-08 08:55:57.788 | INFO     | handler.openai_service:get_completion_async:167 - Sending 6508 tokens to OpenAI async. Model: gpt-4o
+2025-06-08 08:56:00.808 | INFO     | handler.openai_service:get_completion_async:187 - OpenAI response received successfully in 1 attempt(s)
+2025-06-08 08:56:01.300 | INFO     | main:handle_mention:166 - Sending action response message (length: 586)
+2025-06-08 08:56:01.305 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 586 chars):
+Here are some facts about you, NewNameForTest:
+
+- You love emojis.
+- You are a senior developer with 10 years of Python experience.
+- You have a cat named Yo Yo Ma.
+- Your favorite color is green.
+- You believe you are the world's best juggler.
+- Your child is named Roberto Dante Sebastián.
+- You like to drink Piña Coladas with ketchup in them.
+- You enjoy the music of Juan Luis Guerra y 440.
+- Meatloaf is KING to you.
+- You have a background in film and tech.
+- You like AI tools that integrate with Slack and Gmail.
+
+Projects:
+- 测试中文项目名称
+- Project Gamma
+- Mobile App Development X
+2025-06-08 08:56:01.731 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1749387361.964879', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1749387361.964879', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': "Here are some facts about you, NewNameForTest:\n\n- You love emojis.\n- You are a senior developer with 10 years of Python experience.\n- You have a cat named Yo Yo Ma.\n- Your favorite color is green.\n- You believe you are the world's best juggler.\n- Your child is named Roberto Dante Sebastián.\n- You like to drink Piña Coladas with ketchup in them.\n- You enjoy the music of Juan Luis Guerra y 440.\n- Meatloaf is KING to you.\n- You have a background in film and tech.\n- You like AI tools that integrate with Slack and Gmail.\n\nProjects:\n- 测试中文项目名称\n- Project Gamma\n- Mobile App Development X", 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1749387322.164169', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': '/M+G', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': "Here are some facts about you, NewNameForTest:\n\n- You love emojis.\n- You are a senior developer with 10 years of Python experience.\n- You have a cat named Yo Yo Ma.\n- Your favorite color is green.\n- You believe you are the world's best juggler.\n- Your child is named Roberto Dante Sebastián.\n- You like to drink Piña Coladas with ketchup in them.\n- You enjoy the music of Juan Luis Guerra y 440.\n- Meatloaf is KING to you.\n- You have a background in film and tech.\n- You like AI tools that integrate with Slack and Gmail.\n\nProjects:\n- 测试中文项目名称\n- Project Gamma\n- Mobile App Development X"}]}]}]}}
+2025-06-08 08:56:13.477 | INFO     | main:handle_mention:83 - Checking for memory commands in user command: 'summarize this thread...'
+2025-06-08 08:56:13.482 | INFO     | main:handle_mention:105 - No memory command detected, continuing to general processing
+2025-06-08 08:56:13.482 | INFO     | actions.action_framework:__init__:872 - ActionRouter initialized with 7 actions
+2025-06-08 08:56:13.483 | INFO     | actions.action_framework:_get_action_for_text:886 - Selected action ContextResponseAction for message: <@U08RG89NFK7> summarize this thread...
+2025-06-08 08:56:13.483 | INFO     | utils.history_manager:extract_search_topic:306 - Extracting search topic from prompt: summarize this thread
+2025-06-08 08:56:13.483 | INFO     | utils.history_manager:extract_search_topic:396 - No topic could be extracted from the prompt
+2025-06-08 08:56:13.483 | INFO     | utils.history_manager:retrieve_and_filter_history:52 - Summary request detected - thread: True, channel: False
+2025-06-08 08:56:13.483 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1749387322.164169 (limit: 100)...
+2025-06-08 08:56:13.715 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 7 messages from thread 1749387322.164169.
+2025-06-08 08:56:13.716 | INFO     | utils.history_manager:retrieve_and_filter_history:300 - Retrieved 7 messages for Thread summary (thread_ts: 1749387322.164169)
+2025-06-08 08:56:13.716 | INFO     | utils.history_manager:format_history_for_prompt:637 - Formatted message history: 4143 characters
+2025-06-08 08:56:13.717 | INFO     | actions.action_framework:execute:300 - Fetching Notion context for user U089YKL1T4H
+2025-06-08 08:56:13.717 | INFO     | services.cached_notion_service:get_user_page_content:313 - Cache hit for user page content: U089YKL1T4H
+2025-06-08 08:56:13.717 | INFO     | services.cached_notion_service:get_user_page_content:313 - Cache hit for user page content: U089YKL1T4H
+2025-06-08 08:56:13.718 | INFO     | utils.context_builder:get_enhanced_user_context:22 - Building enhanced context for user U089YKL1T4H
+2025-06-08 08:56:13.718 | INFO     | utils.context_builder:get_enhanced_user_context:24 - Using preferred name: NewNameForTest
+2025-06-08 08:56:13.718 | INFO     | utils.context_builder:get_enhanced_user_context:27 - Page content length: 1210 chars
+2025-06-08 08:56:13.718 | INFO     | utils.context_builder:get_enhanced_user_context:33 - Language preference: English
+2025-06-08 08:56:13.718 | INFO     | utils.context_builder:get_enhanced_user_context:107 - Generated enhanced context length: 2269 chars
+2025-06-08 08:56:13.718 | INFO     | utils.context_builder:get_enhanced_user_context:108 - Language preference featured prominently: English
+2025-06-08 08:56:13.718 | INFO     | actions.action_framework:execute:340 - History retrieval mode: unknown
+2025-06-08 08:56:13.718 | INFO     | actions.action_framework:execute:341 - Retrieved 7 relevant messages
+2025-06-08 08:56:13.719 | INFO     | handler.openai_service:_prepare_messages:258 - Retrieved language preference for user U089YKL1T4H: English
+2025-06-08 08:56:13.719 | INFO     | handler.openai_service:_prepare_messages:303 - Language preference prominently featured in prompt: English
+2025-06-08 08:56:13.719 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-08 08:56:13.721 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-08 08:56:13.723 | INFO     | handler.openai_service:get_completion_async:167 - Sending 1354 tokens to OpenAI async. Model: gpt-4o
+2025-06-08 08:56:17.095 | INFO     | handler.openai_service:get_completion_async:187 - OpenAI response received successfully in 1 attempt(s)
+2025-06-08 08:56:17.683 | INFO     | main:handle_mention:166 - Sending action response message (length: 832)
+2025-06-08 08:56:17.683 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 832 chars):
+This thread includes a series of interactions where NewNameForTest requested assistance with managing information. Initially, they sought help on how to manage personal data using a virtual assistant, including adding, viewing, and deleting facts, projects, and preferences. Subsequently, they requested a list of their current projects and known facts. The listed projects included "测试中文项目名称", "Project Gamma", and "Mobile App Development X." Some known facts about NewNameForTest were shared, such as their love for emojis, being a senior developer, and having a cat named Yo Yo Ma. Preferences include enjoying Piña Coladas with ketchup, a liking for Juan Luis Guerra y 440's music, and valuing Meatloaf as KING. Finally, NewNameForTest requested a summary of this interaction thread. Remember to document any outcomes in Notion.
+2025-06-08 08:56:17.990 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1749387378.255099', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1749387378.255099', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': 'This thread includes a series of interactions where NewNameForTest requested assistance with managing information. Initially, they sought help on how to manage personal data using a virtual assistant, including adding, viewing, and deleting facts, projects, and preferences. Subsequently, they requested a list of their current projects and known facts. The listed projects included "测试中文项目名称", "Project Gamma", and "Mobile App Development X." Some known facts about NewNameForTest were shared, such as their love for emojis, being a senior developer, and having a cat named Yo Yo Ma. Preferences include enjoying Piña Coladas with ketchup, a liking for Juan Luis Guerra y 440\'s music, and valuing Meatloaf as KING. Finally, NewNameForTest requested a summary of this interaction thread. Remember to document any outcomes in Notion.', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1749387322.164169', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'XQCW', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': 'This thread includes a series of interactions where NewNameForTest requested assistance with managing information. Initially, they sought help on how to manage personal data using a virtual assistant, including adding, viewing, and deleting facts, projects, and preferences. Subsequently, they requested a list of their current projects and known facts. The listed projects included "测试中文项目名称", "Project Gamma", and "Mobile App Development X." Some known facts about NewNameForTest were shared, such as their love for emojis, being a senior developer, and having a cat named Yo Yo Ma. Preferences include enjoying Piña Coladas with ketchup, a liking for Juan Luis Guerra y 440\'s music, and valuing Meatloaf as KING. Finally, NewNameForTest requested a summary of this interaction thread. Remember to document any outcomes in Notion.'}]}]}]}}
+2025-06-08 08:57:26.523 | INFO     | main:handle_mention:83 - Checking for memory commands in user command: 'summarize this in 7 bullets:...'
+2025-06-08 08:57:26.560 | INFO     | main:handle_mention:105 - No memory command detected, continuing to general processing
+2025-06-08 08:57:26.579 | INFO     | actions.action_framework:__init__:872 - ActionRouter initialized with 7 actions
+2025-06-08 08:57:26.580 | INFO     | actions.action_framework:_get_action_for_text:886 - Selected action SimpleSummarizeAction for message: <@U08RG89NFK7> summarize this in 7 bullets:...
+2025-06-08 08:57:26.581 | INFO     | handler.openai_service:_prepare_messages:303 - Language preference prominently featured in prompt: English
+2025-06-08 08:57:26.582 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-08 08:57:26.589 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-08 08:57:26.591 | INFO     | handler.openai_service:get_completion_async:167 - Sending 212 tokens to OpenAI async. Model: gpt-4o
+2025-06-08 08:57:28.363 | INFO     | handler.openai_service:get_completion_async:187 - OpenAI response received successfully in 1 attempt(s)
+2025-06-08 08:57:28.883 | INFO     | main:handle_mention:166 - Sending action response message (length: 149)
+2025-06-08 08:57:28.886 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 149 chars):
+I apologize, but I need the actual content you'd like summarized in 7 bullets. Please provide the text or information, and I'll summarize it for you.
+2025-06-08 08:57:29.176 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1749387449.451269', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1749387449.451269', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': "I apologize, but I need the actual content you'd like summarized in 7 bullets. Please provide the text or information, and I'll summarize it for you.", 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1749387322.164169', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'y7Rl', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': "I apologize, but I need the actual content you'd like summarized in 7 bullets. Please provide the text or information, and I'll summarize it for you."}]}]}]}}
+2025-06-08 09:06:31.135 | INFO     | main:handle_mention:83 - Checking for memory commands in user command: 'summarize this in 7 bullets:
+*The Case for Reparations (Expanded Condensed Version)*
+_Based on the a...'
+2025-06-08 09:06:31.175 | INFO     | main:handle_mention:105 - No memory command detected, continuing to general processing
+2025-06-08 09:06:31.185 | INFO     | actions.action_framework:__init__:872 - ActionRouter initialized with 7 actions
+2025-06-08 09:06:31.272 | INFO     | actions.action_framework:_get_action_for_text:886 - Selected action ContextResponseAction for message: <@U08RG89NFK7> summarize this in 7 bullets:
+*The C...
+2025-06-08 09:06:31.273 | INFO     | utils.history_manager:extract_search_topic:306 - Extracting search topic from prompt: summarize this in 7 bullets:
+*The Case for Reparations (Expanded Condensed Version)*
+_Based on the article by Ta-Nehisi Coates_
+Ta-Nehisi Coates's "The Case for Reparations" meticulously argues that America's foundation and continued prosperity are inextricably linked to centuries of systematic plunder of Black labor, wealth, and lives. This exploitation did not end with slavery but evolved through Jim Crow, terrorism, and discriminatory federal policies, particularly in housing. Coates posits that until America fully reckons with these "compounding moral debts," its claim to being a just and whole nation remains compromised.
+The narrative pivotally features Clyde Ross, whose life story encapsulates the enduring legacy of this plunder. Born in Mississippi in 1923, Ross's family owned and farmed 40 acres, only to have it seized by white authorities under false pretenses—a common fate for Black landowners in the kleptocratic Jim Crow South, where the law offered no protection. Ross experienced the denial of education, the theft of personal property, and the constant threat of violence. Seeking refuge and opportunity, he migrated to Chicago in 1947. There, in 1961, when attempting to achieve the American dream of homeownership in North Lawndale, he was ensnared in a predatory "contract sale." Denied a legitimate mortgage due to his race, Ross was forced to buy his house at an inflated price from a speculator, paying high interest and bearing all homeowner responsibilities without building any equity. A single missed payment meant forfeiture of his down payment, all monthly installments, and the property itself. This was not an isolated incident but a widespread practice.
+The systemic denial of legitimate home financing to Black Americans was official government policy. The Federal Housing Administration (FHA), established in 1934, institutionalized racial discrimination through "redlining"—mapping Black neighborhoods as "hazardous" (colored red) and thus ineligible for federally insured mortgages. These policies, combined with restrictive covenants (clauses in deeds forbidding sale to non-whites) and organized racial violence, effectively barred Black people from participating in the post-war housing boom, the single greatest engine of middle-class wealth accumulation in American history. While government-backed loans fueled white suburbanization, Black families were confined to ghettos and preyed upon by speculators who profited immensely from this dual, segregated housing market.
+Clyde Ross, along with other victims, formed the Contract Buyers League (CBL) in 1968. They organized, withheld payments, and sued the contract sellers, accusing them of unjust enrichment and violating their civil rights. Though their lawsuit ultimately failed in court, the CBL's struggle starkly illustrated the calculated, legal, and extralegal theft perpetrated against Black communities. They sought not just equality, but reparations for the immense harm inflicted.
+Coates meticulously demonstrates that the dire socioeconomic conditions in Black communities like North Lawndale today—characterized by high poverty, unemployment, residential segregation, and violence—are not the result of inherent cultural deficiencies or mere misfortune. They are the direct, predictable outcomes of this long history of targeted disinvestment and exploitation. The staggering wealth gap, with white households possessing roughly 20 times the wealth of Black households, is the most telling statistic. This disparity persists across income levels; even upper-middle-class Black families possess significantly less wealth and reside in poorer, more segregated neighborhoods than their white income-equivalents, starkly illustrating the intergenerational impact of denied opportunities.
+The plunder's origins lie in 250 years of chattel slavery. Enslaved Africans were not merely a source of unpaid labor; they were themselves capital. By 1860, the financial value of enslaved people exceeded the combined value of all American manufacturing, railroads, and productive capacity. This slave economy, built on the violent destruction of Black families and bodies, financed the nascent American republic and its democratic ideals—a democracy largely for white men, built upon Black subjugation.
+The abolition of slavery did not end the plunder. Reconstruction's brief promise of Black citizenship and equality was systematically dismantled by a brutal campaign of "Redemption," led by white supremacist terror groups like the Ku Klux Klan. This era reinstituted a racial caste system. Throughout the late 19th and 20th centuries, Black ambition was met with violence: Black schools and businesses were burned, voters intimidated and murdered, and entire communities, like Tulsa's "Black Wall Street" (1921) and Rosewood, Florida (1923), were destroyed.
+Even landmark progressive reforms often perpetuated or exacerbated racial inequality. The New Deal programs, foundational to the modern American safety net, were crafted to appease Southern segregationists. Social Security, for instance, initially excluded agricultural and domestic workers—sectors where Black Americans were overwhelmingly concentrated. The G.I. Bill of Rights, celebrated for democratizing higher education and homeownership for returning WWII veterans, largely failed Black veterans. Its benefits, particularly for housing, were administered at the local level by the same discriminatory banks and VA officials who had long denied Black people credit. Thus, Black veterans were largely shut out of the low-interest loans that enabled millions of white veterans to buy homes in newly developing, segregated suburbs like Levittown.
+Federal housing policy was explicit in its aim to create and maintain racial segregation. The Home Owners' Loan Corporation (HOLC) pioneered redlining. Millions in federal funds were channeled into segregated white neighborhoods while Black communities were starved of investment. White flight was not a spontaneous phenomenon but a calculated response to federal policies that ensured property values would decline if Black families moved in, thereby legitimizing racist fears.
+Coates challenges the pervasive myth that individual responsibility and adherence to middle-class norms can overcome centuries of systemic oppression. He argues that such adherence often made Black individuals and families more attractive targets for exploitation, as seen with the contract buyers who had worked hard to save down payments.
+The call for reparations, Coates notes, is not a radical new idea but one with a long history in America, from early petitions by freed slaves like Belinda Royall in 1783 to contemporary efforts like Congressman John Conyers Jr.'s H.R. 40. This bill, consistently introduced since 1989, simply proposes a commission to study the legacy of slavery and subsequent racial discrimination and to recommend appropriate remedies. Its consistent failure to even reach the House floor for a vote, Coates suggests, indicates that the resistance is not primarily about the practicalities of reparations but about a profound unwillingness to confront the full, uncomfortable truth of American history and its implications for national identity.
+Disavowing the actions of ancestors or claiming recent immigration does not absolve current generations, Coates argues, as a nation’s obligations and identity transcend individual lifetimes. "To proudly claim the veteran and disown the slaveholder is patriotism à la carte." The deep wounds of this history continue to fester, impacting everything from health and education to economic inequality.
+Coates draws a compelling parallel with Germany's post-Holocaust reparations. Despite significant initial domestic opposition and complex moral considerations, West Germany ultimately agreed to pay substantial reparations to Israel and individual Jewish survivors. This process, however imperfect, was crucial for Germany's moral reckoning and its path toward becoming a more responsible global citizen.
+For Coates, reparations are far more than a simple financial transaction. They represent a "national reckoning that would lead to spiritual renewal." It means transcending the "childhood myth of its innocence" and embracing a mature understanding of America as a nation built by fallible humans, whose prosperity was often "ill-gotten and selective in its distribution." Such a reckoning would involve a full acceptance of the nation's collective biography and its enduring consequences.
+The pattern of plunder is not confined to the distant past. Coates points to the 2008 financial crisis, where predatory subprime lending practices disproportionately targeted Black communities. Major financial institutions, like Wells Fargo, were found to have systematically steered Black borrowers into high-cost, risky loans, irrespective of their creditworthiness, sometimes referring to these clients and products in overtly racist terms. Segregation, a legacy of past policies, created a vulnerable, captive market for this modern form of exploitation, demonstrating how racism reifies itself.
+In conclusion, Coates asserts that an America willing to seriously confront what it owes its most vulnerable citizens—those systematically harmed by its policies and practices—is an America striving for genuine improvement and humanity. The debate and study proposed by H.R. 40 are essential first steps. More important than any specific sum, the act of wrestling with these historical truths and their present-day manifestations is what can lead to a "revolution of the American consciousness" and the building of a new, more just country.
+2025-06-08 09:06:32.612 | INFO     | utils.history_manager:extract_search_topic:364 - Extracted topic from direct pattern: 'the practicalities of reparations but about a profound unwillingness to confront the full'
+2025-06-08 09:06:32.612 | INFO     | utils.history_manager:retrieve_and_filter_history:52 - Summary request detected - thread: False, channel: True
+2025-06-08 09:06:32.613 | INFO     | utils.history_manager:retrieve_and_filter_history:58 - Performing deep historical search for topic: 'the practicalities of reparations but about a profound unwillingness to confront the full'
+2025-06-08 09:06:32.613 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 2000)...
+2025-06-08 09:06:34.625 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 221 messages from channel C08SJ5EUTPT.
+2025-06-08 09:06:34.625 | INFO     | utils.history_manager:retrieve_and_filter_history:67 - Retrieved 221 main channel messages
+2025-06-08 09:06:34.627 | INFO     | utils.history_manager:retrieve_and_filter_history:107 - Identified 10 thread parent messages to search
+2025-06-08 09:06:34.628 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1749331627.439429 (limit: 100)...
+2025-06-08 09:06:35.018 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 77 messages from thread 1749331627.439429.
+2025-06-08 09:06:35.018 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748880636.264139 (limit: 100)...
+2025-06-08 09:06:35.465 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 30 messages from thread 1748880636.264139.
+2025-06-08 09:06:35.465 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747229885.082289 (limit: 100)...
+2025-06-08 09:06:36.268 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 16 messages from thread 1747229885.082289.
+2025-06-08 09:06:36.268 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748906225.557339 (limit: 100)...
+2025-06-08 09:06:36.900 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 15 messages from thread 1748906225.557339.
+2025-06-08 09:06:36.916 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1749321381.451899 (limit: 100)...
+2025-06-08 09:06:37.575 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 14 messages from thread 1749321381.451899.
+2025-06-08 09:06:37.575 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1749240990.409219 (limit: 100)...
+2025-06-08 09:06:38.378 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1749240990.409219.
+2025-06-08 09:06:38.379 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748879439.071809 (limit: 100)...
+2025-06-08 09:06:39.069 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1748879439.071809.
+2025-06-08 09:06:39.072 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748627857.900709 (limit: 100)...
+2025-06-08 09:06:39.542 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1748627857.900709.
+2025-06-08 09:06:39.542 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747735398.888529 (limit: 100)...
+2025-06-08 09:06:39.900 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747735398.888529.
+2025-06-08 09:06:39.901 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1747398469.291069 (limit: 100)...
+2025-06-08 09:06:40.368 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 10 messages from thread 1747398469.291069.
+2025-06-08 09:06:40.369 | INFO     | utils.history_manager:retrieve_and_filter_history:128 - Retrieved 202 total messages from 10 threads
+2025-06-08 09:06:40.369 | INFO     | utils.history_manager:retrieve_and_filter_history:148 - Combined into 413 unique messages after deduplication
+2025-06-08 09:06:40.370 | INFO     | utils.history_manager:retrieve_and_filter_history:153 - Filtering messages containing topic: 'the practicalities of reparations but about a profound unwillingness to confront the full'
+2025-06-08 09:06:40.370 | INFO     | utils.history_manager:find_messages_containing_topic:421 - Searching for topic 'the practicalities of reparations but about a profound unwillingness to confront the full' in 413 messages
+2025-06-08 09:06:40.374 | INFO     | utils.history_manager:find_messages_containing_topic:478 - 📊 Search results for topic 'the practicalities of reparations but about a profound unwillingness to confront the full':
+2025-06-08 09:06:40.375 | INFO     | utils.history_manager:find_messages_containing_topic:479 -   - Total matches: 0
+2025-06-08 09:06:40.375 | INFO     | utils.history_manager:find_messages_containing_topic:480 -   - Skipped self-referential messages: 0
+2025-06-08 09:06:40.375 | INFO     | utils.history_manager:find_messages_containing_topic:481 -   - Matches in text field: 0
+2025-06-08 09:06:40.375 | INFO     | utils.history_manager:find_messages_containing_topic:482 -   - Matches only in blocks: 0
+2025-06-08 09:06:40.375 | INFO     | utils.history_manager:find_messages_containing_topic:483 -   - Matches only in attachments: 0
+2025-06-08 09:06:40.375 | INFO     | utils.history_manager:retrieve_and_filter_history:159 - FOUND 0 MESSAGES CONTAINING TOPIC 'the practicalities of reparations but about a profound unwillingness to confront the full'
+2025-06-08 09:06:40.375 | INFO     | utils.history_manager:retrieve_and_filter_history:160 - Search ratio: 0/413 messages matched
+2025-06-08 09:06:40.375 | WARNING  | utils.history_manager:retrieve_and_filter_history:168 - No matches found for topic 'the practicalities of reparations but about a profound unwillingness to confront the full'. Trying looser matching...
+2025-06-08 09:06:40.376 | INFO     | utils.history_manager:retrieve_and_filter_history:177 - Trying variation: 'the practicalities of reparations but about a profound unwillingness to confront the full'
+2025-06-08 09:06:40.377 | INFO     | utils.history_manager:retrieve_and_filter_history:177 - Trying variation: 'The Practicalities Of Reparations But About A Profound Unwillingness To Confront The Full'
+2025-06-08 09:06:40.379 | INFO     | utils.history_manager:retrieve_and_filter_history:177 - Trying variation: 'THE PRACTICALITIES OF REPARATIONS BUT ABOUT A PROFOUND UNWILLINGNESS TO CONFRONT THE FULL'
+2025-06-08 09:06:40.382 | INFO     | utils.history_manager:retrieve_and_filter_history:300 - Retrieved 0 messages for Deep search for: the practicalities of reparations but about a profound unwillingness to confront the full
+2025-06-08 09:06:40.383 | INFO     | actions.action_framework:execute:300 - Fetching Notion context for user U089YKL1T4H
+2025-06-08 09:06:42.074 | INFO     | services.cached_notion_service:get_user_page_content:377 - Retrieved Notion page content for user U089YKL1T4H (length: 1210)
+2025-06-08 09:06:42.761 | INFO     | services.cached_notion_service:get_user_page_content:313 - Cache hit for user page content: U089YKL1T4H
+2025-06-08 09:06:42.761 | INFO     | utils.context_builder:get_enhanced_user_context:22 - Building enhanced context for user U089YKL1T4H
+2025-06-08 09:06:42.761 | INFO     | utils.context_builder:get_enhanced_user_context:24 - Using preferred name: NewNameForTest
+2025-06-08 09:06:42.762 | INFO     | utils.context_builder:get_enhanced_user_context:27 - Page content length: 1210 chars
+2025-06-08 09:06:42.762 | INFO     | utils.context_builder:get_enhanced_user_context:33 - Language preference: English
+2025-06-08 09:06:42.763 | INFO     | utils.context_builder:get_enhanced_user_context:107 - Generated enhanced context length: 2269 chars
+2025-06-08 09:06:42.763 | INFO     | utils.context_builder:get_enhanced_user_context:108 - Language preference featured prominently: English
+2025-06-08 09:06:42.763 | INFO     | actions.action_framework:execute:340 - History retrieval mode: unknown
+2025-06-08 09:06:42.764 | INFO     | actions.action_framework:execute:341 - Retrieved 0 relevant messages
+2025-06-08 09:06:42.764 | INFO     | services.cached_notion_service:get_user_language_preference:1577 - Language preference for user U089YKL1T4H: English
+2025-06-08 09:06:42.764 | INFO     | handler.openai_service:_prepare_messages:258 - Retrieved language preference for user U089YKL1T4H: English
+2025-06-08 09:06:42.764 | INFO     | handler.openai_service:_prepare_messages:303 - Language preference prominently featured in prompt: English
+2025-06-08 09:06:42.765 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-08 09:06:42.800 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-08 09:06:42.804 | INFO     | handler.openai_service:get_completion_async:167 - Sending 2547 tokens to OpenAI async. Model: gpt-4o
+2025-06-08 09:06:48.693 | INFO     | handler.openai_service:get_completion_async:187 - OpenAI response received successfully in 1 attempt(s)
+2025-06-08 09:06:49.217 | INFO     | main:handle_mention:166 - Sending action response message (length: 1504)
+2025-06-08 09:06:49.218 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 1504 chars):
+Here are seven bullet points summarizing Ta-Nehisi Coates's "The Case for Reparations":
+
+1. **Legacy of Exploitation**: Coates argues America's prosperity is rooted in centuries of exploitation of Black labor and wealth, continuing beyond slavery through Jim Crow laws and discriminatory policies.
+   
+2. **Clyde Ross's Story**: Clyde Ross symbolizes the enduring legacy of racial plunder, facing land theft, educational denial, and predatory housing practices, common to Black Americans.
+
+3. **Government-Sanctioned Discrimination**: Federal policies like redlining institutionalized racial segregation, barring Black families from wealth accumulation opportunities like the post-war housing boom.
+
+4. **Resistance and Struggle**: The Contract Buyers League, formed by victims like Ross, fought legal and extralegal theft, seeking not only equality but reparations for inflicted harm, though their lawsuit failed.
+
+5. **Systemic Inequality**: Coates highlights the historical exploitation directly causing modern socioeconomic disparities, illustrated by the vast wealth gap between Black and white families.
+
+6. **Historical Plunder**: The monetary worth of enslaved individuals in 1860 surpassed other sectors, highlighting slavery’s economic significance and its foundational role in American prosperity.
+
+7. **Call for Reparations**: Coates calls for a national reckoning, likening it to Germany's post-Holocaust reparations, advocating a transformative reflection on America's history and identity.
+2025-06-08 09:06:49.527 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1749388011.463919', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1749388011.463919', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': 'Here are seven bullet points summarizing Ta-Nehisi Coates\'s "The Case for Reparations":\n\n1. **Legacy of Exploitation**: Coates argues America\'s prosperity is rooted in centuries of exploitation of Black labor and wealth, continuing beyond slavery through Jim Crow laws and discriminatory policies.\n   \n2. **Clyde Ross\'s Story**: Clyde Ross symbolizes the enduring legacy of racial plunder, facing land theft, educational denial, and predatory housing practices, common to Black Americans.\n\n3. **Government-Sanctioned Discrimination**: Federal policies like redlining institutionalized racial segregation, barring Black families from wealth accumulation opportunities like the post-war housing boom.\n\n4. **Resistance and Struggle**: The Contract Buyers League, formed by victims like Ross, fought legal and extralegal theft, seeking not only equality but reparations for inflicted harm, though their lawsuit failed.\n\n5. **Systemic Inequality**: Coates highlights the historical exploitation directly causing modern socioeconomic disparities, illustrated by the vast wealth gap between Black and white families.\n\n6. **Historical Plunder**: The monetary worth of enslaved individuals in 1860 surpassed other sectors, highlighting slavery’s economic significance and its foundational role in American prosperity.\n\n7. **Call for Reparations**: Coates calls for a national reckoning, likening it to Germany\'s post-Holocaust reparations, advocating a transformative reflection on America\'s history and identity.', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1749387322.164169', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'v9XP', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': 'Here are seven bullet points summarizing Ta-Nehisi Coates\'s "The Case for Reparations":\n\n1. **Legacy of Exploitation**: Coates argues America\'s prosperity is rooted in centuries of exploitation of Black labor and wealth, continuing beyond slavery through Jim Crow laws and discriminatory policies.\n   \n2. **Clyde Ross\'s Story**: Clyde Ross symbolizes the enduring legacy of racial plunder, facing land theft, educational denial, and predatory housing practices, common to Black Americans.\n\n3. **Government-Sanctioned Discrimination**: Federal policies like redlining institutionalized racial segregation, barring Black families from wealth accumulation opportunities like the post-war housing boom.\n\n4. **Resistance and Struggle**: The Contract Buyers League, formed by victims like Ross, fought legal and extralegal theft, seeking not only equality but reparations for inflicted harm, though their lawsuit failed.\n\n5. **Systemic Inequality**: Coates highlights the historical exploitation directly causing modern socioeconomic disparities, illustrated by the vast wealth gap between Black and white families.\n\n6. **Historical Plunder**: The monetary worth of enslaved individuals in 1860 surpassed other sectors, highlighting slavery’s economic significance and its foundational role in American prosperity.\n\n7. **Call for Reparations**: Coates calls for a national reckoning, likening it to Germany\'s post-Holocaust reparations, advocating a transformative reflection on America\'s history and identity.'}]}]}]}}
