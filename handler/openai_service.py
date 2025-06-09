@@ -244,69 +244,52 @@ class OpenAIService:
         system_prompt: Optional[str] = None,
         slack_user_id: Optional[str] = None,
         notion_service=None
-        # REMOVE: task_type: str = "general"  # DELETE THIS PARAMETER
     ) -> List[Dict[str, str]]:
         
         settings = get_settings()
-        
-        # REMOVE: All the task_limits dictionary and task-specific logic
-        # REPLACE WITH: Simple default limits
         max_context_tokens = settings.max_context_tokens_general - settings.max_tokens_response
 
         # Load the SYSTEM INSTRUCTIONS
         system_prompt_content = system_prompt if system_prompt else settings.openai_system_prompt if settings.openai_system_prompt else ""
 
-        # KEEP: Get user's language preference and inject it at the very beginning
-        language_preference = "English"  # Default
-        if slack_user_id and notion_service and hasattr(notion_service, 'get_user_language_preference'):
-            try:
-                language_preference = notion_service.get_user_language_preference(slack_user_id)
-                logger.info(f"Retrieved language preference for user {slack_user_id}: {language_preference}")
-            except Exception as e:
-                logger.warning(f"Could not get language preference for user {slack_user_id}: {e}")
+        # 1. Add the SYSTEM INSTRUCTIONS
+        full_prompt = "=== SYSTEM INSTRUCTIONS ===\n" + system_prompt_content + "\n\n"
 
-        # 1. Start building the prompt string with CRITICAL language instruction
-        full_prompt = "=" * 80 + "\n"
-        full_prompt += "🌍 CRITICAL LANGUAGE INSTRUCTION 🌍\n"
-        full_prompt += f"ALWAYS RESPOND IN: {language_preference.upper()}\n"
-        full_prompt += f"USER'S LANGUAGE PREFERENCE: {language_preference}\n"
-        full_prompt += "This is MANDATORY - all responses must be in this language.\n"
-        full_prompt += "=" * 80 + "\n\n"
+        # 2. Add the USER'S CURRENT QUESTION
+        full_prompt += "=== USER'S QUESTION ===\n" + prompt + "\n\n"
 
-        # 2. Add the SYSTEM INSTRUCTIONS
-        full_prompt += "=== SYSTEM INSTRUCTIONS ===\n" + system_prompt_content + "\n\n"
-
-        # 3. Add the USER PROMPT
-        full_prompt += "===USER PROMPT ===\n" + prompt + "\n\n"
-
-        # 4. Format CHANNEL HISTORY, extract data and combine as a string
-        history_string = ""
+        # 3. Create unified knowledge pool from all available context
+        full_prompt += "=== KNOWLEDGE POOL ===\n"
+        full_prompt += "Use the following information to answer the user's question:\n\n"
+        
+        # Add user's personal facts from Notion
+        if user_specific_context:
+            full_prompt += "**User's Personal Facts:**\n"
+            full_prompt += user_specific_context + "\n\n"
+        
+        # Add linked Notion content
+        if linked_notion_content:
+            full_prompt += "**Additional User Documents:**\n"
+            full_prompt += linked_notion_content + "\n\n"
+        
+        # Add conversation history
         if conversation_history:
-            history_string += "===CHANNEL HISTORY===\n"
-            for msg in conversation_history:  # Format conversation in a readable way
+            full_prompt += "**Recent Conversation History:**\n"
+            for msg in conversation_history:
                 role = msg.get("role", "unknown")
                 content = msg.get("content", "")
-                history_string += f"[[{role.upper()}]]: {content}\n"
-            full_prompt += history_string + "\n\n"
+                full_prompt += f"[{role.upper()}]: {content}\n"
+            full_prompt += "\n"
+        
+        full_prompt += "=== END KNOWLEDGE POOL ===\n\n"
 
-        # 5. Add the USER INSTRUCTIONS and PREFERENCES
-        if user_specific_context:
-            full_prompt += "===USER INSTRUCTIONS & PREFERENCES===\n" + user_specific_context + "\n\n"
-
-        # 6. Add Linked Notion Content
-        if linked_notion_content:
-            full_prompt += "===LINKED NOTION CONTENT===\n" + linked_notion_content + "\n\n"
-
-        # 7. Add final language reminder
-        full_prompt += "FINAL REMINDERS:\n"
-        full_prompt += f"1. 🌍 ALWAYS respond in {language_preference} - this is MANDATORY\n"
-        full_prompt += "2. Always respect this user's stated preferences in your responses.\n\n"
+        # Simple instruction
+        full_prompt += "Please answer the user's question based on the knowledge pool above."
 
         # Create a SINGLE MESSAGE with role "user" containing the FULL PROMPT
         messages = [{"role": "user", "content": full_prompt}]
 
         logger.debug(f"FULL OpenAI prompt (first 500 chars): {full_prompt[:500]}...")
-        logger.info(f"Language preference prominently featured in prompt: {language_preference}")
 
         # Truncate if necessary
         messages = ensure_messages_within_limit(messages, self.model, max_context_tokens)
