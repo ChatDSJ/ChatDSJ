@@ -17959,3 +17959,139 @@ In Tarantino's hands, stories interwove.
 2025-06-08 20:44:32.834 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 61 chars):
 It's currently October 17, 2023, in your timezone, Quasimodo.
 2025-06-08 20:44:33.129 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1749429879.861499', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1749429879.861499', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': "It's currently October 17, 2023, in your timezone, Quasimodo.", 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1749429872.429979', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'HUW', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': "It's currently October 17, 2023, in your timezone, Quasimodo."}]}]}]}}
+2025-06-08 20:51:25.223 | INFO     | main:<module>:28 - Starting application in development mode
+2025-06-08 20:51:25.431 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-06-08 20:51:25.431 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-06-08 20:51:25.614 | INFO     | services.cached_notion_service:__init__:69 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-06-08 20:51:26.283 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-06-08 20:51:26.500 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-06-08 20:51:26.500 | INFO     | actions.action_framework:__init__:30 - ServiceContainer initialized with available services
+2025-06-08 20:51:26.505 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-06-08 20:51:26.505 | INFO     | main:startup_event:278 - Slack bot started in socket mode.
+2025-06-08 20:51:26.522 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-06-08 20:55:33.407 | INFO     | main:handle_name_command:81 - Processing /name command for user U089YKL1T4H: 'Awesomeness'
+2025-06-08 20:55:34.687 | INFO     | services.cached_notion_service:store_user_nickname:412 - Updating Notion page for user U089YKL1T4H with nickname: Awesomeness
+2025-06-08 20:55:36.102 | INFO     | services.cached_notion_service:invalidate_user_cache:114 - Cache invalidated for user U089YKL1T4H
+2025-06-08 20:55:36.834 | INFO     | services.cached_notion_service:invalidate_user_cache:114 - Cache invalidated for user U089YKL1T4H
+2025-06-08 20:55:36.835 | INFO     | services.cached_notion_service:store_user_nickname:592 - Successfully processed nickname 'Awesomeness' for user U089YKL1T4H
+2025-06-08 22:03:19.336 | INFO     | actions.action_framework:__init__:474 - ActionRouter initialized with 3 actions
+2025-06-08 22:03:19.338 | INFO     | actions.action_framework:_get_action_for_text:480 - Selected action ContextResponseAction for message: <@U08RG89NFK7> summarize thread...
+2025-06-08 22:03:19.429 | INFO     | utils.simple_history_manager:get_recent_history:37 - Fetching recent history for channel C08SJ5EUTPT, thread_ts: 1749331627.439429, limit: 200
+2025-06-08 22:03:19.435 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 200)...
+2025-06-08 22:03:20.450 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 200 messages from channel C08SJ5EUTPT.
+2025-06-08 22:03:20.451 | INFO     | utils.simple_history_manager:get_recent_history:49 - Retrieved 200 channel messages
+2025-06-08 22:03:20.451 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1749331627.439429 (limit: 100)...
+2025-06-08 22:03:20.889 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 80 messages from thread 1749331627.439429.
+2025-06-08 22:03:20.890 | INFO     | utils.simple_history_manager:get_recent_history:69 - Added 80 thread messages (79 new)
+2025-06-08 22:03:20.890 | INFO     | utils.simple_history_manager:get_recent_history:86 - Returning 279 total unique messages
+2025-06-08 22:03:22.657 | INFO     | services.cached_notion_service:get_user_page_content:373 - Retrieved Notion page content for user U089YKL1T4H (length: 188)
+2025-06-08 22:03:23.092 | INFO     | utils.context_builder:get_enhanced_user_context:22 - Building context for user U089YKL1T4H
+2025-06-08 22:03:23.092 | INFO     | utils.context_builder:get_enhanced_user_context:24 - Using preferred name: Awesomeness
+2025-06-08 22:03:23.093 | INFO     | utils.context_builder:get_enhanced_user_context:27 - Page content length: 188 chars
+2025-06-08 22:03:23.093 | INFO     | utils.context_builder:get_enhanced_user_context:61 - Generated context length: 582 chars
+2025-06-08 22:03:23.101 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-08 22:03:23.592 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-08 22:03:23.608 | INFO     | handler.openai_service:get_completion_async:193 - Sending 15751 tokens to OpenAI async. Model: gpt-4o
+2025-06-08 22:03:26.629 | INFO     | handler.openai_service:get_completion_async:213 - OpenAI response received successfully in 1 attempt(s)
+2025-06-08 22:03:27.149 | INFO     | main:handle_mention:214 - Sending action response message (length: 458)
+2025-06-08 22:03:27.149 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 458 chars):
+The thread involves NewNameForTest managing preferences and projects, making changes to language and format preferences, such as using rhymed verse or bullet points. They added and removed projects like "Mobile App Development X." Additionally, the thread covered a workplace conflict between two team members, Mark and Chloe, regarding project deadlines and quality issues. NewNameForTest sought advice on resolving the conflict and improving team dynamics.
+2025-06-08 22:03:27.561 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1749434612.711869', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1749434612.711869', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': 'The thread involves NewNameForTest managing preferences and projects, making changes to language and format preferences, such as using rhymed verse or bullet points. They added and removed projects like "Mobile App Development X." Additionally, the thread covered a workplace conflict between two team members, Mark and Chloe, regarding project deadlines and quality issues. NewNameForTest sought advice on resolving the conflict and improving team dynamics.', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1749331627.439429', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'v4P', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': 'The thread involves NewNameForTest managing preferences and projects, making changes to language and format preferences, such as using rhymed verse or bullet points. They added and removed projects like "Mobile App Development X." Additionally, the thread covered a workplace conflict between two team members, Mark and Chloe, regarding project deadlines and quality issues. NewNameForTest sought advice on resolving the conflict and improving team dynamics.'}]}]}]}}
+2025-06-08 22:10:33.454 | INFO     | main:<module>:28 - Starting application in development mode
+2025-06-08 22:10:33.595 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-06-08 22:10:33.595 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-06-08 22:10:33.616 | INFO     | services.cached_notion_service:__init__:69 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-06-08 22:10:34.173 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-06-08 22:10:34.378 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-06-08 22:10:34.386 | INFO     | actions.action_framework:__init__:30 - ServiceContainer initialized with available services
+2025-06-08 22:10:34.398 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-06-08 22:10:34.435 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-06-08 22:10:34.773 | INFO     | main:startup_event:278 - Slack bot started in socket mode.
+2025-06-08 22:11:42.624 | INFO     | main:<module>:28 - Starting application in development mode
+2025-06-08 22:11:42.732 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-06-08 22:11:42.732 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-06-08 22:11:42.758 | INFO     | services.cached_notion_service:__init__:69 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-06-08 22:11:43.270 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-06-08 22:11:43.469 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-06-08 22:11:43.469 | INFO     | actions.action_framework:__init__:30 - ServiceContainer initialized with available services
+2025-06-08 22:11:43.473 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-06-08 22:11:43.473 | INFO     | main:startup_event:278 - Slack bot started in socket mode.
+2025-06-08 22:11:43.505 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-06-08 22:12:06.523 | INFO     | main:<module>:28 - Starting application in development mode
+2025-06-08 22:12:06.615 | INFO     | handler.openai_service:_init_clients:54 - OpenAI clients initialized successfully
+2025-06-08 22:12:06.615 | INFO     | handler.openai_service:__init__:47 - OpenAI service initialized with model gpt-4o
+2025-06-08 22:12:06.635 | INFO     | services.cached_notion_service:__init__:69 - CachedNotionService initialized with TTL=300s, max_size=1000
+2025-06-08 22:12:07.200 | INFO     | services.slack_service:_initialize_app:55 - Slack app initialized successfully.
+2025-06-08 22:12:07.411 | INFO     | services.slack_service:_initialize_app:60 - Bot User ID: U08RG89NFK7
+2025-06-08 22:12:07.412 | INFO     | actions.action_framework:__init__:30 - ServiceContainer initialized with available services
+2025-06-08 22:12:07.416 | INFO     | services.slack_service:start_socket_mode:85 - Slack Socket Mode thread started.
+2025-06-08 22:12:07.416 | INFO     | main:startup_event:278 - Slack bot started in socket mode.
+2025-06-08 22:12:07.458 | INFO     | services.slack_service:socket_mode_runner:78 - Starting Slack SocketModeHandler...
+2025-06-08 22:12:44.075 | INFO     | actions.action_framework:__init__:678 - ActionRouter initialized with 4 actions
+2025-06-08 22:12:44.099 | INFO     | actions.action_framework:_get_action_for_text:684 - Selected action ThreadSummaryAction for message: <@U08RG89NFK7> summarize thread...
+2025-06-08 22:12:44.101 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1749331627.439429 (limit: 100)...
+2025-06-08 22:12:44.476 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 82 messages from thread 1749331627.439429.
+2025-06-08 22:12:44.477 | INFO     | actions.action_framework:execute:290 - Summarizing 42 thread messages (filtered from 82 total)
+2025-06-08 22:12:46.032 | INFO     | services.cached_notion_service:get_user_page_content:373 - Retrieved Notion page content for user U089YKL1T4H (length: 188)
+2025-06-08 22:12:47.029 | INFO     | utils.context_builder:get_enhanced_user_context:22 - Building context for user U089YKL1T4H
+2025-06-08 22:12:47.029 | INFO     | utils.context_builder:get_enhanced_user_context:24 - Using preferred name: Awesomeness
+2025-06-08 22:12:47.030 | INFO     | utils.context_builder:get_enhanced_user_context:27 - Page content length: 188 chars
+2025-06-08 22:12:47.030 | INFO     | utils.context_builder:get_enhanced_user_context:61 - Generated context length: 582 chars
+2025-06-08 22:12:47.030 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-08 22:12:47.378 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-08 22:12:47.379 | INFO     | handler.openai_service:get_completion_async:193 - Sending 937 tokens to OpenAI async. Model: gpt-4o
+2025-06-08 22:12:50.288 | INFO     | handler.openai_service:get_completion_async:213 - OpenAI response received successfully in 1 attempt(s)
+2025-06-08 22:12:50.798 | INFO     | main:handle_mention:214 - Sending action response message (length: 471)
+2025-06-08 22:12:50.798 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 471 chars):
+**Thread Summary** (42 messages, participants: roberto, ChatDSJ Bot)
+
+The thread primarily consists of Awesomeness managing preferences and projects. Key points include changing language and format preferences such as rhymed verse and bullet points, adding and removing projects like "Mobile App Development X" and "Website Rebuild Initiative," and updating known facts about tea-drinking habits. There was also a brief discussion about what could be causing weight gain.
+2025-06-08 22:12:51.105 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1749435176.312959', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1749435176.312959', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': '**Thread Summary** (42 messages, participants: roberto, ChatDSJ Bot)\n\nThe thread primarily consists of Awesomeness managing preferences and projects. Key points include changing language and format preferences such as rhymed verse and bullet points, adding and removing projects like "Mobile App Development X" and "Website Rebuild Initiative," and updating known facts about tea-drinking habits. There was also a brief discussion about what could be causing weight gain.', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1749331627.439429', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': 'oShq0', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': '**Thread Summary** (42 messages, participants: roberto, ChatDSJ Bot)\n\nThe thread primarily consists of Awesomeness managing preferences and projects. Key points include changing language and format preferences such as rhymed verse and bullet points, adding and removing projects like "Mobile App Development X" and "Website Rebuild Initiative," and updating known facts about tea-drinking habits. There was also a brief discussion about what could be causing weight gain.'}]}]}]}}
+2025-06-08 22:13:49.995 | INFO     | actions.action_framework:__init__:678 - ActionRouter initialized with 4 actions
+2025-06-08 22:13:49.999 | INFO     | actions.action_framework:_get_action_for_text:684 - Selected action ThreadSummaryAction for message: <@U08RG89NFK7> what is this thread about?...
+2025-06-08 22:13:50.000 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1748906225.557339 (limit: 100)...
+2025-06-08 22:13:50.569 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 16 messages from thread 1748906225.557339.
+2025-06-08 22:13:50.569 | INFO     | actions.action_framework:execute:290 - Summarizing 9 thread messages (filtered from 16 total)
+2025-06-08 22:13:50.570 | INFO     | services.cached_notion_service:get_user_page_content:309 - Cache hit for user page content: U089YKL1T4H
+2025-06-08 22:13:50.570 | INFO     | utils.context_builder:get_enhanced_user_context:22 - Building context for user U089YKL1T4H
+2025-06-08 22:13:50.570 | INFO     | utils.context_builder:get_enhanced_user_context:24 - Using preferred name: Awesomeness
+2025-06-08 22:13:50.571 | INFO     | utils.context_builder:get_enhanced_user_context:27 - Page content length: 188 chars
+2025-06-08 22:13:50.571 | INFO     | utils.context_builder:get_enhanced_user_context:61 - Generated context length: 582 chars
+2025-06-08 22:13:50.572 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-08 22:13:50.573 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-08 22:13:50.574 | INFO     | handler.openai_service:get_completion_async:193 - Sending 457 tokens to OpenAI async. Model: gpt-4o
+2025-06-08 22:13:53.450 | INFO     | handler.openai_service:get_completion_async:213 - OpenAI response received successfully in 1 attempt(s)
+2025-06-08 22:13:54.052 | INFO     | main:handle_mention:214 - Sending action response message (length: 435)
+2025-06-08 22:13:54.052 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 435 chars):
+**Thread Summary** (9 messages, participants: roberto)
+
+The thread conversation involves "Awesomeness" experimenting with language preferences. Various preferences are mentioned, such as Mandarin and Mexican Spanish, with a request for responses in Italian. There are playful interaction prompts like "when I say jump you answer How High?" with no significant decisions or outcomes. The focus is on language preference experimentation.
+2025-06-08 22:13:54.378 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1749435239.579599', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1749435239.579599', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': '**Thread Summary** (9 messages, participants: roberto)\n\nThe thread conversation involves "Awesomeness" experimenting with language preferences. Various preferences are mentioned, such as Mandarin and Mexican Spanish, with a request for responses in Italian. There are playful interaction prompts like "when I say jump you answer How High?" with no significant decisions or outcomes. The focus is on language preference experimentation.', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1748906225.557339', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': '7Yv', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': '**Thread Summary** (9 messages, participants: roberto)\n\nThe thread conversation involves "Awesomeness" experimenting with language preferences. Various preferences are mentioned, such as Mandarin and Mexican Spanish, with a request for responses in Italian. There are playful interaction prompts like "when I say jump you answer How High?" with no significant decisions or outcomes. The focus is on language preference experimentation.'}]}]}]}}
+2025-06-08 22:14:23.424 | INFO     | actions.action_framework:__init__:678 - ActionRouter initialized with 4 actions
+2025-06-08 22:14:23.430 | INFO     | actions.action_framework:_get_action_for_text:684 - Selected action ContextResponseAction for message: <@U08RG89NFK7> summarize channel in 6 bullet point...
+2025-06-08 22:14:23.431 | INFO     | utils.simple_history_manager:get_recent_history:37 - Fetching recent history for channel C08SJ5EUTPT, thread_ts: 1749435267.097649, limit: 200
+2025-06-08 22:14:23.431 | INFO     | services.slack_service:fetch_channel_history:231 - Fetching channel history for C08SJ5EUTPT (limit: 200)...
+2025-06-08 22:14:24.209 | INFO     | services.slack_service:fetch_channel_history:251 - Fetched 200 messages from channel C08SJ5EUTPT.
+2025-06-08 22:14:24.210 | INFO     | utils.simple_history_manager:get_recent_history:49 - Retrieved 200 channel messages
+2025-06-08 22:14:24.210 | INFO     | services.slack_service:fetch_thread_history:263 - Fetching thread history for C08SJ5EUTPT, ts: 1749435267.097649 (limit: 100)...
+2025-06-08 22:14:24.448 | INFO     | services.slack_service:fetch_thread_history:284 - Fetched 1 messages from thread 1749435267.097649.
+2025-06-08 22:14:24.449 | INFO     | utils.simple_history_manager:get_recent_history:69 - Added 1 thread messages (0 new)
+2025-06-08 22:14:24.449 | INFO     | utils.simple_history_manager:get_recent_history:86 - Returning 200 total unique messages
+2025-06-08 22:14:24.660 | INFO     | services.cached_notion_service:get_user_page_content:309 - Cache hit for user page content: U089YKL1T4H
+2025-06-08 22:14:24.660 | INFO     | utils.context_builder:get_enhanced_user_context:22 - Building context for user U089YKL1T4H
+2025-06-08 22:14:24.660 | INFO     | utils.context_builder:get_enhanced_user_context:24 - Using preferred name: Awesomeness
+2025-06-08 22:14:24.660 | INFO     | utils.context_builder:get_enhanced_user_context:27 - Page content length: 188 chars
+2025-06-08 22:14:24.660 | INFO     | utils.context_builder:get_enhanced_user_context:61 - Generated context length: 582 chars
+2025-06-08 22:14:24.661 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-08 22:14:24.678 | WARNING  | utils.token_management:get_encoder_for_model:19 - Model gpt-4o not found in tiktoken. Falling back to cl100k_base.
+2025-06-08 22:14:24.692 | INFO     | handler.openai_service:get_completion_async:193 - Sending 13280 tokens to OpenAI async. Model: gpt-4o
+2025-06-08 22:14:28.228 | INFO     | handler.openai_service:get_completion_async:213 - OpenAI response received successfully in 1 attempt(s)
+2025-06-08 22:14:28.817 | INFO     | main:handle_mention:214 - Sending action response message (length: 705)
+2025-06-08 22:14:28.818 | INFO     | services.slack_service:send_message:172 - [Slack] Sending message to channel C08SJ5EUTPT (length: 705 chars):
+- Awesomeness frequently requests summaries and trend analyses of the channel discussions.
+- There is a recurring interest in cultural and historical topics, such as the American Revolution and film discussions.
+- Awesomeness continually updates personal preferences, such as language preferences and quirky responses to specific words.
+- The user frequently asks about fact management, request deletions, and the addition of personal information.
+- Conversations often revolve around day-to-day inquiries, humor, and general curiosity about various topics.
+- Recent discussions have included workplace conflict resolution and project management, specifically related to development and testing processes.
+2025-06-08 22:14:29.132 | INFO     | services.slack_service:send_message:180 - [Slack] Slack API response: {'ok': True, 'channel': 'C08SJ5EUTPT', 'ts': '1749435274.334029', 'message': {'user': 'U08RG89NFK7', 'type': 'message', 'ts': '1749435274.334029', 'bot_id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'text': '- Awesomeness frequently requests summaries and trend analyses of the channel discussions.\n- There is a recurring interest in cultural and historical topics, such as the American Revolution and film discussions.\n- Awesomeness continually updates personal preferences, such as language preferences and quirky responses to specific words.\n- The user frequently asks about fact management, request deletions, and the addition of personal information.\n- Conversations often revolve around day-to-day inquiries, humor, and general curiosity about various topics.\n- Recent discussions have included workplace conflict resolution and project management, specifically related to development and testing processes.', 'team': 'T08A8P4T05N', 'bot_profile': {'id': 'B08RG89MFTP', 'app_id': 'A08RLDFMEBU', 'user_id': 'U08RG89NFK7', 'name': 'TestChatDSJ Bot', 'icons': {'image_36': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_36.png', 'image_48': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_48.png', 'image_72': 'https://avatars.slack-edge.com/2025-05-14/8882690736871_2f6d9852ef9cd8ff6bc2_72.png'}, 'deleted': False, 'updated': 1747235842, 'team_id': 'T08A8P4T05N'}, 'thread_ts': '1749435267.097649', 'parent_user_id': 'U089YKL1T4H', 'blocks': [{'type': 'rich_text', 'block_id': '/fr', 'elements': [{'type': 'rich_text_section', 'elements': [{'type': 'text', 'text': '- Awesomeness frequently requests summaries and trend analyses of the channel discussions.\n- There is a recurring interest in cultural and historical topics, such as the American Revolution and film discussions.\n- Awesomeness continually updates personal preferences, such as language preferences and quirky responses to specific words.\n- The user frequently asks about fact management, request deletions, and the addition of personal information.\n- Conversations often revolve around day-to-day inquiries, humor, and general curiosity about various topics.\n- Recent discussions have included workplace conflict resolution and project management, specifically related to development and testing processes.'}]}]}]}}

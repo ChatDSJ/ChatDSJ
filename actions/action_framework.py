@@ -199,6 +199,209 @@ class ContextResponseAction(Action):
                 thread_ts=request.thread_ts
             )
 
+class ThreadSummaryAction(Action):
+    """Action specifically for summarizing thread conversations."""
+    
+    def get_required_services(self) -> List[str]:
+        return ["slack", "openai", "notion"]
+    
+    def can_handle(self, text: str) -> bool:
+        """Check if this is a thread summarization request."""
+        # Look for explicit thread summary requests - comprehensive patterns
+        summary_patterns = [
+            # Direct summarization requests
+            r"summarize\s+(?:this\s+)?thread",
+            r"(?:give\s+me\s+a\s+)?summary\s+of\s+(?:this\s+)?thread",
+            r"thread\s+summary",
+            r"sum\s+up\s+(?:this\s+)?thread",
+            r"recap\s+(?:this\s+)?thread",
+            r"(?:thread\s+)?recap",
+            
+            # Question-based requests
+            r"what\s+(?:is|was)\s+(?:this\s+)?thread\s+about",
+            r"what's\s+(?:this\s+)?thread\s+about",
+            r"what\s+(?:happened|was\s+discussed|went\s+on)\s+in\s+(?:this\s+)?thread",
+            r"what\s+(?:happened|was\s+discussed|went\s+on)\s+here",
+            r"what\s+did\s+(?:we|you\s+(?:all|guys))\s+discuss\s+(?:in\s+)?(?:this\s+)?thread",
+            
+            # Can/could variations
+            r"can\s+you\s+summarize\s+(?:this\s+)?thread",
+            r"could\s+you\s+(?:summarize|sum\s+up)\s+(?:this\s+)?thread",
+            
+            # Catch-all for "thread" + summary-related words
+            r"thread.*(?:summary|recap|overview|rundown)",
+            r"(?:summary|recap|overview|rundown).*thread"
+        ]
+        
+        for pattern in summary_patterns:
+            if re.search(pattern, text, re.IGNORECASE):
+                return True
+        return False
+    
+    async def execute(self, request: ActionRequest) -> ActionResponse:
+        """Execute thread summarization with thread-only context."""
+        try:
+            if not self.services.validate_required_services(self.get_required_services()):
+                return ActionResponse(
+                    success=False,
+                    error="Required services not available"
+                )
+            
+            # Check if we're actually in a thread
+            if not request.thread_ts:
+                return ActionResponse(
+                    success=False,
+                    message="I can only summarize threads when you're actually in a thread conversation.",
+                    thread_ts=request.thread_ts
+                )
+            
+            # Fetch ONLY thread messages - no channel history
+            try:
+                thread_messages = await asyncio.to_thread(
+                    self.services.slack_service.fetch_thread_history,
+                    request.channel_id,
+                    request.thread_ts,
+                    limit=100  # Reasonable limit for thread summary
+                )
+                
+                if not thread_messages:
+                    return ActionResponse(
+                        success=False,
+                        message="I couldn't find any messages in this thread to summarize.",
+                        thread_ts=request.thread_ts
+                    )
+                
+                # Filter to just the main conversation (exclude bot messages, system messages)
+                conversation_messages = []
+                for msg in thread_messages:
+                    if (msg.get("type") == "message" and 
+                        not msg.get("subtype") and 
+                        msg.get("text") and
+                        msg.get("user") != self.services.slack_service.bot_user_id):
+                        conversation_messages.append(msg)
+                
+                if not conversation_messages:
+                    return ActionResponse(
+                        success=False,
+                        message="This thread doesn't seem to have any user messages to summarize.",
+                        thread_ts=request.thread_ts
+                    )
+                
+                logger.info(f"Summarizing {len(conversation_messages)} thread messages (filtered from {len(thread_messages)} total)")
+                
+            except Exception as fetch_error:
+                logger.error(f"Error fetching thread messages: {fetch_error}")
+                return ActionResponse(
+                    success=False,
+                    error=f"Thread fetch error: {str(fetch_error)}",
+                    message="I couldn't retrieve the thread messages to summarize.",
+                    thread_ts=request.thread_ts
+                )
+            
+            # Build user display names for thread participants
+            user_display_names = {}
+            for msg in conversation_messages:
+                user_id = msg.get("user")
+                if user_id and user_id not in user_display_names:
+                    try:
+                        user_display_names[user_id] = await asyncio.to_thread(
+                            self.services.slack_service.get_user_display_name,
+                            user_id
+                        )
+                    except Exception as name_error:
+                        logger.warning(f"Failed to get display name for user {user_id}: {name_error}")
+                        user_display_names[user_id] = f"User {user_id}"
+            
+            # Format thread conversation for summarization
+            formatted_conversation = []
+            for msg in conversation_messages:
+                user_id = msg.get("user")
+                text = msg.get("text", "")
+                username = user_display_names.get(user_id, f"User {user_id}")
+                
+                # Clean up text (remove mentions, etc.)
+                clean_text = self.services.slack_service.clean_prompt_text(text)
+                if clean_text:
+                    formatted_conversation.append(f"{username}: {clean_text}")
+            
+            if not formatted_conversation:
+                return ActionResponse(
+                    success=False,
+                    message="After filtering, there are no meaningful messages to summarize in this thread.",
+                    thread_ts=request.thread_ts
+                )
+            
+            # Create summarization prompt
+            thread_content = "\n".join(formatted_conversation)
+            summary_prompt = (
+                f"Please provide a concise summary of this thread conversation. "
+                f"Focus on the main topics discussed, key decisions made, and important outcomes.\n\n"
+                f"Thread conversation:\n{thread_content}"
+            )
+            
+            # Get user context for personalization (optional)
+            try:
+                from utils.context_builder import get_enhanced_user_context
+                user_specific_context = await asyncio.to_thread(
+                    get_enhanced_user_context,
+                    self.services.notion_service,
+                    request.user_id,
+                    ""
+                )
+            except Exception as context_error:
+                logger.warning(f"Could not get user context for summary: {context_error}")
+                user_specific_context = ""
+            
+            # Generate summary using OpenAI
+            try:
+                summary, usage = await self.services.openai_service.get_completion_async(
+                    prompt=summary_prompt,
+                    conversation_history=None,  # No conversation history needed for summary
+                    user_specific_context=user_specific_context,
+                    max_tokens=500,  # Reasonable limit for summaries
+                    slack_user_id=request.user_id,
+                    notion_service=self.services.notion_service
+                )
+            except Exception as openai_error:
+                logger.error(f"OpenAI summarization error: {openai_error}")
+                return ActionResponse(
+                    success=False,
+                    error=f"Summarization error: {str(openai_error)}",
+                    message="I encountered an error while generating the summary. Please try again.",
+                    thread_ts=request.thread_ts
+                )
+            
+            if not summary:
+                return ActionResponse(
+                    success=False,
+                    message="I couldn't generate a summary for this thread. Please try again.",
+                    thread_ts=request.thread_ts
+                )
+            
+            # Format the response
+            participant_list = ", ".join(set(user_display_names.values()))
+            message_count = len(conversation_messages)
+            
+            response_message = (
+                f"**Thread Summary** ({message_count} messages, participants: {participant_list})\n\n"
+                f"{summary}"
+            )
+            
+            return ActionResponse(
+                success=True,
+                message=response_message,
+                thread_ts=request.thread_ts
+            )
+            
+        except Exception as e:
+            logger.error(f"Error in ThreadSummaryAction: {e}", exc_info=True)
+            return ActionResponse(
+                success=False,
+                error=str(e),
+                message="I encountered an error while summarizing this thread. Please try again.",
+                thread_ts=request.thread_ts
+            )
+
 class RetrieveSummarizeAction(Action):
     """Action for retrieving and summarizing web content."""
     
@@ -466,6 +669,7 @@ class ActionRouter:
         
         # Simple action list - order matters!
         self.actions = [
+            ThreadSummaryAction(services),       # Thread summaries first
             YoutubeSummarizeAction(services),    # YouTube URLs first
             RetrieveSummarizeAction(services),   # Other URLs second  
             ContextResponseAction(services)      # Everything else (default)
