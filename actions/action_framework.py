@@ -4,6 +4,8 @@ import asyncio
 from abc import ABC, abstractmethod
 from loguru import logger
 from pydantic import BaseModel, Field
+from config.settings import get_settings
+from utils.token_management import count_messages_tokens
 
 class ServiceContainer:
     """Container for all service dependencies required by actions."""
@@ -97,14 +99,22 @@ class ContextResponseAction(Action):
         return ["slack", "openai", "notion"]
     
     def can_handle(self, text: str) -> bool:
-        """This is the default action, handles everything except URLs."""
-        # Don't handle URLs - let specialized actions handle those
-        url_pattern = r'https?://(?:[-\w.]|(?:%[\da-fA-F]{2}))+'
-        has_url = bool(re.search(url_pattern, text))
-        return not has_url
+        # Only exclude specific thread summary requests
+        thread_summary_patterns = [
+            r"summarize\s+(?:this\s+)?thread",
+            r"(?:give\s+me\s+a\s+)?summary\s+of\s+(?:this\s+)?thread", 
+            r"thread\s+summary",
+            r"what\s+(?:is|was)\s+(?:this\s+)?thread\s+about",
+            r"recap\s+(?:this\s+)?thread"
+        ]
+        
+        is_thread_summary = any(re.search(pattern, text, re.IGNORECASE) for pattern in thread_summary_patterns)
+        
+        # Handle everything except thread summaries (which need special handling)
+        return not is_thread_summary
     
     async def execute(self, request: ActionRequest) -> ActionResponse:
-        """Execute with full context gathering - no filtering or search logic."""
+        """Execute with structured thread context awareness."""
         try:
             if not self.services.validate_required_services(self.get_required_services()):
                 return ActionResponse(
@@ -112,16 +122,15 @@ class ContextResponseAction(Action):
                     error="Required services not available"
                 )
             
-            # Simple history gathering - NO FILTERING OR SEARCH LOGIC
+            # Get conversation history
             from utils.simple_history_manager import SimpleHistoryManager
             history_manager = SimpleHistoryManager()
             
-            # Get recent channel and thread history
             all_messages = await history_manager.get_recent_history(
                 self.services.slack_service,
                 request.channel_id,
                 request.thread_ts,
-                limit=200  # Simple limit, no complex logic
+                limit=500
             )
             
             # Build user display names
@@ -138,13 +147,53 @@ class ContextResponseAction(Action):
                         logger.warning(f"Failed to get display name for user {user_id}: {name_error}")
                         user_display_names[user_id] = f"User {user_id}"
             
-            # Format history for OpenAI
-            formatted_history = await asyncio.to_thread(
-                self.services.openai_service._format_conversation_for_openai,
-                all_messages,
-                user_display_names,
-                self.services.slack_service.bot_user_id
-            )
+            # NEW: Structure context based on thread vs channel
+            thread_context = None
+            conversation_history = None
+            
+            if request.thread_ts:
+                # IN A THREAD: Separate channel and thread context
+                channel_messages = []
+                thread_messages = []
+                
+                for msg in all_messages:
+                    if msg.get("thread_ts") == request.thread_ts:
+                        thread_messages.append(msg)
+                    else:
+                        channel_messages.append(msg)
+                
+                logger.info(f"Thread mode: {len(thread_messages)} thread, {len(channel_messages)} channel messages")
+                
+                # Format both contexts separately
+                formatted_channel = await asyncio.to_thread(
+                    self.services.openai_service._format_conversation_for_openai,
+                    channel_messages[-50:],  # Recent channel context
+                    user_display_names,
+                    self.services.slack_service.bot_user_id
+                )
+                
+                formatted_thread = await asyncio.to_thread(
+                    self.services.openai_service._format_conversation_for_openai,
+                    thread_messages,  # ALL thread messages
+                    user_display_names,
+                    self.services.slack_service.bot_user_id
+                )
+                
+                # Create structured thread context
+                thread_context = {
+                    'channel_messages': formatted_channel,
+                    'thread_messages': formatted_thread
+                }
+                
+            else:
+                # REGULAR CHANNEL: Use normal conversation history
+                conversation_history = await asyncio.to_thread(
+                    self.services.openai_service._format_conversation_for_openai,
+                    all_messages,
+                    user_display_names,
+                    self.services.slack_service.bot_user_id
+                )
+                logger.info(f"Channel mode: {len(conversation_history)} total messages")
             
             # Get user context from Notion
             try:
@@ -159,15 +208,32 @@ class ContextResponseAction(Action):
                 logger.error(f"Error building user context: {context_error}")
                 user_specific_context = ""
             
-            # Send to LLM with full context - no special handling
+            # NEW: Use the structured message preparation
             try:
-                response_text, usage = await self.services.openai_service.get_completion_async(
+                # Build messages with thread context structure
+                messages = self.services.openai_service._prepare_messages(
                     prompt=request.prompt,
-                    conversation_history=formatted_history,
+                    conversation_history=conversation_history,
                     user_specific_context=user_specific_context,
                     slack_user_id=request.user_id,
-                    notion_service=self.services.notion_service
+                    notion_service=self.services.notion_service,
+                    thread_context=thread_context  # NEW: Pass thread context
                 )
+                
+                # Send directly to OpenAI (messages are already prepared)
+                from utils.token_management import count_messages_tokens
+                token_count = count_messages_tokens(messages, self.services.openai_service.model)
+                logger.info(f"Sending {token_count} tokens to OpenAI with structured thread context")
+                
+                response = await self.services.openai_service.async_client.chat.completions.create(
+                    model=self.services.openai_service.model,
+                    messages=messages,
+                    max_tokens=self.services.openai_service.max_tokens,
+                )
+                
+                response_text = response.choices[0].message.content
+                usage = response.usage.model_dump() if hasattr(response, "usage") else None
+                
             except Exception as openai_error:
                 logger.error(f"OpenAI API error: {openai_error}")
                 return ActionResponse(
@@ -198,7 +264,7 @@ class ContextResponseAction(Action):
                 message="I encountered an error processing your request. Please try again.",
                 thread_ts=request.thread_ts
             )
-
+    
 class ThreadSummaryAction(Action):
     """Action specifically for summarizing thread conversations."""
     
@@ -404,14 +470,65 @@ class ThreadSummaryAction(Action):
 
 class RetrieveSummarizeAction(Action):
     """Action for retrieving and summarizing web content."""
-    
     def get_required_services(self) -> List[str]:
         return ["slack", "openai", "notion", "web"]
     
     def can_handle(self, text: str) -> bool:
-        """Check if the text contains a web URL (excluding YouTube)."""
+        """
+        MUCH MORE RESTRICTIVE: Only handle direct URL fetch requests.
+        Don't handle text summarization that happens to contain URLs.
+        """
+        # Must contain a URL
         url_pattern = r'https?://(?:[-\w.]|(?:%[\da-fA-F]{2}))+'
-        return bool(re.search(url_pattern, text)) and "youtube.com" not in text and "youtu.be" not in text
+        has_url = bool(re.search(url_pattern, text))
+        
+        if not has_url:
+            return False
+        
+        # Don't handle YouTube URLs
+        if "youtube.com" in text or "youtu.be" in text:
+            return False
+        
+        # RESTRICTIVE: Only handle if this looks like a direct URL request
+        # Examples that should be handled:
+        # - "summarize https://example.com"
+        # - "https://example.com"
+        # - "check out https://example.com"
+        
+        # Examples that should NOT be handled (go to ContextResponseAction):
+        # - "summarize this: [long pasted text that contains URLs]"
+        # - "analyze this document: [text with embedded URLs]"
+        
+        url_match = re.search(url_pattern, text)
+        if not url_match:
+            return False
+        
+        url = url_match.group(0)
+        
+        # If the message is mostly just the URL (with minimal other text), handle it
+        text_without_url = re.sub(url_pattern, '', text).strip()
+        text_without_url = re.sub(r'<@\w+>', '', text_without_url).strip()  # Remove mentions
+        
+        # If what's left is very short, this is probably a URL request
+        if len(text_without_url) < 30:
+            return True
+        
+        # Check for explicit URL fetch requests
+        fetch_patterns = [
+            f"summarize {url}",
+            f"summary of {url}",
+            f"analyze {url}",
+            f"what does {url} say",
+            f"check {url}",
+            f"look at {url}"
+        ]
+        
+        for pattern in fetch_patterns:
+            if pattern.lower() in text.lower():
+                return True
+        
+        # Otherwise, let ContextResponseAction handle it
+        return False
     
     async def execute(self, request: ActionRequest) -> ActionResponse:
         """Execute web content retrieval and summarization."""

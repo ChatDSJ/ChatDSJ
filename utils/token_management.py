@@ -5,6 +5,7 @@ from loguru import logger
 def get_encoder_for_model(model: str) -> tiktoken.Encoding:
     """
     Get the appropriate token encoder for a given model.
+    FIXED: Use correct encoding for GPT-4o models.
     
     Args:
         model: The model name (e.g., 'gpt-4o', 'gpt-4-turbo')
@@ -12,12 +13,20 @@ def get_encoder_for_model(model: str) -> tiktoken.Encoding:
     Returns:
         The appropriate tiktoken encoder
     """
+    # Handle GPT-4o models specifically
+    if model.startswith("gpt-4o"):
+        return tiktoken.get_encoding("o200k_base")
+    
     try:
         return tiktoken.encoding_for_model(model)
     except KeyError:
-        # Fall back to cl100k_base for newer models not directly supported
-        logger.warning(f"Model {model} not found in tiktoken. Falling back to cl100k_base.")
-        return tiktoken.get_encoding("cl100k_base")
+        # Fall back based on model type
+        if model.startswith("gpt-4"):
+            logger.warning(f"Model {model} not found in tiktoken. Using cl100k_base for GPT-4.")
+            return tiktoken.get_encoding("cl100k_base")
+        else:
+            logger.warning(f"Model {model} not found in tiktoken. Falling back to cl100k_base.")
+            return tiktoken.get_encoding("cl100k_base")
 
 def count_tokens(text: str, model: str = "gpt-4o") -> int:
     """

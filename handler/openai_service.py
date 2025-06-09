@@ -151,90 +151,6 @@ class OpenAIService:
             logger.error(f"Error getting async OpenAI response: {e}", exc_info=True)
             return "I'm sorry, I encountered an error when processing your request. Please try again.", None
         
-    async def get_completion_async(
-        self,
-        prompt: str,
-        conversation_history: Optional[List[Dict[str, str]]] = None,
-        user_specific_context: Optional[str] = None,
-        linked_notion_content: Optional[str] = None,
-        system_prompt: Optional[str] = None,
-        max_tokens: Optional[int] = None,
-        timeout: float = 30.0, 
-        slack_user_id: Optional[str] = None,
-        notion_service=None
-        # REMOVE: task_type: str = "general"  # DELETE THIS PARAMETER
-    ) -> Tuple[Optional[str], Optional[Dict[str, Any]]]:
-        """
-        Asynchronously get a completion from OpenAI with full context injection and language preference support.
-        """
-        if not self.is_available():
-            logger.error("OpenAI async client not initialized")
-            return None, None
-
-        try:
-            # Construct full message list using the context-aware helper with language preference
-            messages = self._prepare_messages(
-                prompt=prompt,
-                conversation_history=conversation_history,
-                user_specific_context=user_specific_context,
-                linked_notion_content=linked_notion_content,
-                system_prompt=system_prompt,
-                slack_user_id=slack_user_id,
-                notion_service=notion_service
-                # REMOVE: task_type=task_type  # DELETE THIS LINE
-            )
-
-            # Log payload being sent to OpenAI (for debugging only)
-            logger.debug("Full OpenAI prompt:\n" + "\n".join(f"{m['role'].upper()}: {m['content']}" for m in messages))
-
-            # Track usage stats
-            self.usage_stats["request_count"] += 1
-            token_count = count_messages_tokens(messages, self.model)
-            logger.info(f"Sending {token_count} tokens to OpenAI async. Model: {self.model}")
-
-            for attempt in range(3):
-                try:
-                    # Use asyncio.wait_for to implement timeout
-                    response = await asyncio.wait_for(
-                        self.async_client.chat.completions.create(
-                            model=self.model,
-                            messages=messages,
-                            max_tokens=max_tokens or self.max_tokens,
-                        ),
-                        timeout=timeout
-                    )
-                    
-                    content = response.choices[0].message.content
-                    usage = response.usage.model_dump() if hasattr(response, "usage") else None
-
-                    if usage:
-                        self._update_usage_tracking(usage)
-
-                    logger.info(f"OpenAI response received successfully in {attempt+1} attempt(s)")
-                    return content, usage
-
-                except asyncio.TimeoutError:
-                    logger.error(f"OpenAI request timed out after {timeout} seconds (attempt {attempt+1}/3)")
-                    if attempt == 2:  # Last attempt
-                        return "I'm sorry, but I timed out while processing your request. Please try again.", None
-                    # Otherwise retry with longer timeout
-                    timeout *= 1.5  # Increase timeout for next attempt
-                    continue
-                    
-                except (TimeoutError, ConnectionError) as e:
-                    if attempt < 2:
-                        wait_time = 2 ** attempt
-                        logger.warning(f"Retrying after error: {e}. Attempt {attempt+1}/3. Waiting {wait_time}s")
-                        await asyncio.sleep(wait_time)
-                    else:
-                        logger.error(f"Failed after 3 attempts: {e}")
-                        raise
-
-        except Exception as e:
-            self.usage_stats["error_count"] += 1
-            logger.error(f"Error getting async OpenAI response: {e}", exc_info=True)
-            return "I'm sorry, I encountered an error when processing your request. Please try again.", None
-
     def _prepare_messages(
         self,
         prompt: str,
@@ -243,143 +159,76 @@ class OpenAIService:
         linked_notion_content: Optional[str] = None,
         system_prompt: Optional[str] = None,
         slack_user_id: Optional[str] = None,
-        notion_service=None
+        notion_service=None,
+        thread_context: Optional[Dict] = None  # NEW: Thread context info
     ) -> List[Dict[str, str]]:
-        
+        """
+        UPDATED: Prepare messages with clear thread vs channel context hierarchy.
+        """
         settings = get_settings()
         max_context_tokens = settings.max_context_tokens_general - settings.max_tokens_response
 
-        # Load the SYSTEM INSTRUCTIONS
-        system_prompt_content = system_prompt if system_prompt else settings.openai_system_prompt if settings.openai_system_prompt else ""
+        # Build system prompt
+        system_prompt_content = system_prompt if system_prompt else settings.openai_system_prompt
 
-        # 1. Add the SYSTEM INSTRUCTIONS
+        # NEW: Structure the prompt to make thread context explicit
         full_prompt = "=== SYSTEM INSTRUCTIONS ===\n" + system_prompt_content + "\n\n"
 
-        # 2. Add the USER'S CURRENT QUESTION
-        full_prompt += "=== USER'S QUESTION ===\n" + prompt + "\n\n"
-
-        # 3. Create unified knowledge pool from all available context
-        full_prompt += "=== KNOWLEDGE POOL ===\n"
-        full_prompt += "Use the following information to answer the user's question:\n\n"
-        
-        # Add user's personal facts from Notion
+        # Add user context if available
         if user_specific_context:
-            full_prompt += "**User's Personal Facts:**\n"
-            full_prompt += user_specific_context + "\n\n"
-        
-        # Add linked Notion content
-        if linked_notion_content:
-            full_prompt += "**Additional User Documents:**\n"
-            full_prompt += linked_notion_content + "\n\n"
-        
-        # Add conversation history
-        if conversation_history:
-            full_prompt += "**Recent Conversation History:**\n"
-            for msg in conversation_history:
-                role = msg.get("role", "unknown")
-                content = msg.get("content", "")
-                full_prompt += f"[{role.upper()}]: {content}\n"
-            full_prompt += "\n"
-        
-        full_prompt += "=== END KNOWLEDGE POOL ===\n\n"
+            full_prompt += "=== USER CONTEXT ===\n" + user_specific_context + "\n\n"
 
-        # Simple instruction
-        full_prompt += "Please answer the user's question based on the knowledge pool above."
+        # NEW: Make thread vs channel context explicit
+        if thread_context:
+            full_prompt += "=== CONTEXT HIERARCHY ===\n"
+            full_prompt += "You are participating in a Slack thread conversation.\n\n"
+            
+            # Channel context (background)
+            if thread_context.get('channel_messages'):
+                full_prompt += "BACKGROUND CHANNEL CONTEXT (for general reference):\n"
+                for msg in thread_context['channel_messages']:
+                    role = msg.get("role", "unknown")
+                    content = msg.get("content", "")
+                    full_prompt += f"[{role.upper()}]: {content}\n"
+                full_prompt += "\n"
+            
+            # Thread context (current conversation)
+            if thread_context.get('thread_messages'):
+                full_prompt += "CURRENT THREAD CONVERSATION (your immediate context):\n"
+                full_prompt += "This is the specific thread conversation you are participating in.\n"
+                full_prompt += "When the user refers to anything from our conversation, they are referring to content in THIS thread.\n\n"
+                for msg in thread_context['thread_messages']:
+                    role = msg.get("role", "unknown")
+                    content = msg.get("content", "")
+                    full_prompt += f"[THREAD {role.upper()}]: {content}\n"
+                full_prompt += "\n"
+            
+            full_prompt += "=== END CONTEXT HIERARCHY ===\n\n"
+        else:
+            # Regular conversation history (non-thread)
+            if conversation_history:
+                full_prompt += "=== CONVERSATION HISTORY ===\n"
+                for msg in conversation_history:
+                    role = msg.get("role", "unknown")
+                    content = msg.get("content", "")
+                    full_prompt += f"[{role.upper()}]: {content}\n"
+                full_prompt += "=== END CONVERSATION HISTORY ===\n\n"
 
-        # Create a SINGLE MESSAGE with role "user" containing the FULL PROMPT
+        # Add the current user question
+        full_prompt += "=== USER'S CURRENT QUESTION ===\n" + prompt + "\n\n"
+
+        # Final instruction
+        if thread_context:
+            full_prompt += "Please respond based on the context hierarchy above. When the user references anything from our conversation, look to the CURRENT THREAD CONVERSATION section."
+        else:
+            full_prompt += "Please respond based on the conversation history above."
+
+        # Create single message
         messages = [{"role": "user", "content": full_prompt}]
 
-        logger.debug(f"FULL OpenAI prompt (first 500 chars): {full_prompt[:500]}...")
-
-        # Truncate if necessary
+        # Apply token limits
         messages = ensure_messages_within_limit(messages, self.model, max_context_tokens)
 
-        return messages
-
-    def _prepare_structured_messages(
-        self,
-        prompt: str,
-        conversation_history: Optional[List[Dict[str, str]]] = None,
-        user_specific_context: Optional[str] = None,
-        linked_notion_content: Optional[str] = None,
-        system_prompt: Optional[str] = None,
-        preferred_name: Optional[str] = None,
-        slack_user_id: Optional[str] = None,
-        notion_service=None
-    ) -> List[Dict[str, str]]:
-        """
-        Prepare messages for the OpenAI API with structured Notion context and language preference.
-        
-        NOTE: This method is now simplified. Consider using _prepare_messages directly 
-        for most use cases as it handles everything in a single user message.
-        """
-        # Get settings for default system prompt
-        settings = get_settings()
-        
-        # Use provided system prompt or default
-        base_system_prompt = system_prompt if system_prompt else settings.openai_system_prompt
-        
-        # Get user's language preference
-        language_preference = "English"  # Default
-        if slack_user_id and notion_service and hasattr(notion_service, 'get_user_language_preference'):
-            try:
-                language_preference = notion_service.get_user_language_preference(slack_user_id)
-                logger.info(f"Retrieved language preference for user {slack_user_id}: {language_preference}")
-            except Exception as e:
-                logger.warning(f"Could not get language preference for user {slack_user_id}: {e}")
-
-        # Process Notion content if available
-        if user_specific_context:
-            # Build a structured system prompt with the Notion context and language preference
-            system_prompt_content = self.notion_context_manager.build_openai_system_prompt(
-                base_prompt=base_system_prompt,
-                notion_content=user_specific_context,
-                preferred_name=preferred_name
-            )
-            logger.info("Built structured system prompt with Notion context and language preference")
-        else:
-            # Even without user context, include language preference
-            system_prompt_content = "=" * 80 + "\n"
-            system_prompt_content += "🌍 CRITICAL LANGUAGE INSTRUCTION 🌍\n"
-            system_prompt_content += f"ALWAYS RESPOND IN: {language_preference.upper()}\n"
-            system_prompt_content += f"USER'S LANGUAGE PREFERENCE: {language_preference}\n"
-            system_prompt_content += "This is MANDATORY - all responses must be in this language.\n"
-            system_prompt_content += "=" * 80 + "\n\n"
-            system_prompt_content += base_system_prompt
-        
-        # Add linked Notion content if available
-        if linked_notion_content:
-            system_prompt_content += (
-                f"\n\n--- REFERENCED NOTION PAGES CONTENT ---\n"
-                f"{linked_notion_content.strip()}\n"
-                f"--- END REFERENCED NOTION PAGES CONTENT ---"
-            )
-        
-        # SIMPLIFIED: Just create a system message and user message
-        messages = [
-            {"role": "system", "content": system_prompt_content}
-        ]
-        
-        # Add conversation history if available
-        if conversation_history:
-            messages.extend(conversation_history)
-        
-        # Add the user's prompt
-        user_instruction = (
-            f"Use the context above to respond to the user's message: \"{prompt}\".\n"
-            f"Provide a concise, helpful response as if participating in the same Slack conversation.\n"
-            f"IMPORTANT: Respond in {language_preference}."
-        )
-        messages.append({"role": "user", "content": user_instruction})
-        
-        # Log the system prompt (first 500 chars) to help with debugging
-        logger.debug(f"System prompt (first 500 chars): {system_prompt_content[:500]}...")
-        logger.info(f"Language preference prominently featured: {language_preference}")
-        
-        # SIMPLIFIED: Use default token limits
-        max_context_tokens = settings.max_context_tokens_general - settings.max_tokens_response
-        messages = ensure_messages_within_limit(messages, self.model, max_context_tokens)
-        
         return messages
 
     def _update_usage_tracking(self, usage: Dict[str, int]) -> None:
