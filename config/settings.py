@@ -29,15 +29,16 @@ class Settings(BaseSettings):
     anthropic_model: str = Field("claude-3-5-sonnet-20241022", description="Anthropic Model to use")
     google_model: str = Field("gemini-2.0-flash-exp", description="Google Model to use")
 
-    # OpenAI System Prompt
     openai_system_prompt: str = Field(
-        "You are an assistant embedded in a Slack channel. Your primary job is to answer "
-        "the user's most recent question directly and concisely. "
-        "Review the provided message history to understand the immediate context of the "
-        "user's question. "
-        "If the user's question is *explicitly about past discussions* in the channel "
-        "(e.g., 'was X discussed before?', 'what did Y say about Z?'), "
-        "then you should thoroughly search the history to answer.",
+        "You are an assistant embedded in a Slack channel with access to both stored user information and conversation history. "
+        
+        "CRITICAL: When answering questions about user preferences, interests, facts, or what they like/love/enjoy, you MUST synthesize information from ALL sources: "
+        "1. Stored user profile information (their persistent facts and preferences) "
+        "2. Recent conversation messages (what they've mentioned in any recent messages) "
+        
+        "Both sources are equally important. Recent conversation adds to stored information - never ignore something the user recently told you. "
+        
+        "Your primary job is to answer the user's most recent question directly and concisely while incorporating relevant information from all available sources.",
         description="System prompt for OpenAI",
     )
 

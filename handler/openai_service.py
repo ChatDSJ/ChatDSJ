@@ -160,10 +160,10 @@ class OpenAIService:
         system_prompt: Optional[str] = None,
         slack_user_id: Optional[str] = None,
         notion_service=None,
-        thread_context: Optional[Dict] = None  # NEW: Thread context info
+        thread_context: Optional[Dict] = None
     ) -> List[Dict[str, str]]:
         """
-        UPDATED: Prepare messages with clear thread vs channel context hierarchy.
+        UPDATED: Enhanced context synthesis for natural information combination.
         """
         settings = get_settings()
         max_context_tokens = settings.max_context_tokens_general - settings.max_tokens_response
@@ -171,14 +171,15 @@ class OpenAIService:
         # Build system prompt
         system_prompt_content = system_prompt if system_prompt else settings.openai_system_prompt
 
-        # NEW: Structure the prompt to make thread context explicit
+        # UPDATED: Enhanced structure for natural synthesis
         full_prompt = "=== SYSTEM INSTRUCTIONS ===\n" + system_prompt_content + "\n\n"
 
-        # Add user context if available
+        # UPDATED: Present user context as one of multiple information sources (not authoritative)
         if user_specific_context:
-            full_prompt += "=== USER CONTEXT ===\n" + user_specific_context + "\n\n"
+            full_prompt += "=== USER PROFILE INFORMATION ===\n"
+            full_prompt += user_specific_context + "\n\n"
 
-        # NEW: Make thread vs channel context explicit
+        # PRESERVE CRITICAL THREAD LOGIC - Don't change this working code!
         if thread_context:
             full_prompt += "=== CONTEXT HIERARCHY ===\n"
             full_prompt += "You are participating in a Slack thread conversation.\n\n"
@@ -217,12 +218,22 @@ class OpenAIService:
         # Add the current user question
         full_prompt += "=== USER'S CURRENT QUESTION ===\n" + prompt + "\n\n"
 
-        # Final instruction
+        # ENHANCED: Preserve thread logic + add information synthesis
         if thread_context:
-            full_prompt += "Please respond based on the context hierarchy above. When the user references anything from our conversation, look to the CURRENT THREAD CONVERSATION section."
-        else:
-            full_prompt += "Please respond based on the conversation history above."
+            full_prompt += """Please respond based on the context hierarchy above. When the user references anything from our conversation, look to the CURRENT THREAD CONVERSATION section.
 
+    IMPORTANT: When answering questions about user preferences, facts, or interests, naturally combine information from:
+    - User background information (their stored profile)
+    - Current thread conversation (what they've said in THIS thread)
+    Both sources are equally valid - synthesize them naturally."""
+        else:
+            full_prompt += """Please respond by synthesizing information from ALL sources above - both your stored profile information and recent conversation history.
+
+    IMPORTANT: When answering questions about user preferences, facts, or interests, naturally combine information from:
+    - User background information (their stored profile)  
+    - Recent conversation activity (what they've mentioned anywhere recently, including in threads)
+    Both sources are equally valid - synthesize them naturally."""
+        
         # Create single message
         messages = [{"role": "user", "content": full_prompt}]
 
