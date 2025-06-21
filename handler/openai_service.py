@@ -213,16 +213,17 @@ class OpenAIService:
             # Use the responses.create method with web search tool
             kwargs = {
                 "model": self.model,
-                "input": full_prompt  # Use the comprehensive prompt instead of raw query
+                "input": full_prompt
             }
             
             # Only add web search for supported models
             if self.model in ("gpt-4o", "gpt-4.1"):
                 kwargs["tools"] = [{"type": "web_search"}]
             
+            # FIX: Use sync client with asyncio.to_thread (matches working test script)
             response = await asyncio.wait_for(
                 asyncio.to_thread(
-                    self.async_client.responses.create,
+                    self.client.responses.create,  # Use sync client, not async client
                     **kwargs
                 ),
                 timeout=timeout
