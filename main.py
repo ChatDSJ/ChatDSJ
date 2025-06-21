@@ -144,6 +144,9 @@ def handle_web_command(ack, respond, command):
         
         logger.info(f"Processing /web command for user {user_id}: '{query}'")
         
+        # Immediate response to user
+        respond(f"🔍 Searching the web for: **{query}**\nResults coming up...")
+        
         # Run the web search asynchronously
         async def run_web_search():
             try:
@@ -172,27 +175,35 @@ def handle_web_command(ack, respond, command):
                 )
                 
                 if response_text:
-                    # Format the response
+                    # Format the response - send as follow-up message
                     formatted_response = f"🔍 **Web Search Results for:** {query}\n\n{response_text}"
-                    respond(formatted_response)
+                    
+                    # Send follow-up message using slack service
+                    channel_id = command.get("channel_id")
+                    if channel_id:
+                        slack_service.send_message(channel_id, formatted_response)
+                    
                     logger.info(f"Web search completed successfully for user {user_id}")
                 else:
-                    respond("❌ I couldn't find any results for that search. Please try a different query.")
+                    # Send error as follow-up message
+                    channel_id = command.get("channel_id")
+                    if channel_id:
+                        slack_service.send_message(channel_id, "❌ I couldn't find any results for that search. Please try a different query.")
                     
             except Exception as e:
                 logger.error(f"Error in web search: {e}")
-                respond("❌ I encountered an error during the web search. Please try again.")
+                # Send error as follow-up message
+                channel_id = command.get("channel_id")
+                if channel_id:
+                    slack_service.send_message(channel_id, "❌ I encountered an error during the web search. Please try again.")
         
-        # Run the async function
-        asyncio.create_task(run_web_search())
-        
-        # Immediate response to user
-        respond(f"🔍 Searching the web for: **{query}**\nResults coming up...")
+        # Run the async function properly
+        asyncio.run(run_web_search())
         
     except Exception as e:
         logger.error(f"Error handling /web command: {e}")
         respond("❌ I encountered an error. Please try again.")
-
+        
 def add_fact_to_notion(slack_user_id: str, fact_text: str) -> bool:
     """Add a fact to the user's Notion page."""
     try:
