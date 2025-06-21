@@ -124,6 +124,75 @@ def handle_fact_command(ack, respond, command):
         logger.error(f"Error handling /fact command: {e}")
         respond("❌ I encountered an error. Please try again.")
 
+@slack_service.app.command("/web")
+def handle_web_command(ack, respond, command):
+    """Handle /web slash command for web search."""
+    ack()  # Acknowledge the command immediately
+    
+    try:
+        user_id = command["user_id"]
+        query = command["text"].strip()
+        
+        # Validate query
+        if not query:
+            respond("❌ Please provide a search query. Usage: `/web What's the latest news about AI?`")
+            return
+            
+        if len(query) > 500:
+            respond("❌ Search query is too long. Please use a shorter query.")
+            return
+        
+        logger.info(f"Processing /web command for user {user_id}: '{query}'")
+        
+        # Run the web search asynchronously
+        async def run_web_search():
+            try:
+                # Get user context for personalization (optional)
+                try:
+                    from utils.context_builder import get_enhanced_user_context
+                    user_specific_context = get_enhanced_user_context(
+                        notion_service,
+                        user_id,
+                        ""
+                    )
+                except Exception as context_error:
+                    logger.warning(f"Could not get user context for web search: {context_error}")
+                    user_specific_context = ""
+                
+                # Add context to the search query if available
+                enhanced_query = query
+                if user_specific_context:
+                    enhanced_query = f"Context about the user: {user_specific_context[:200]}...\n\nUser's question: {query}"
+                
+                # Perform web search
+                response_text, usage = await openai_service.get_web_search_completion_async(
+                    enhanced_query,
+                    slack_user_id=user_id,
+                    notion_service=notion_service
+                )
+                
+                if response_text:
+                    # Format the response
+                    formatted_response = f"🔍 **Web Search Results for:** {query}\n\n{response_text}"
+                    respond(formatted_response)
+                    logger.info(f"Web search completed successfully for user {user_id}")
+                else:
+                    respond("❌ I couldn't find any results for that search. Please try a different query.")
+                    
+            except Exception as e:
+                logger.error(f"Error in web search: {e}")
+                respond("❌ I encountered an error during the web search. Please try again.")
+        
+        # Run the async function
+        asyncio.create_task(run_web_search())
+        
+        # Immediate response to user
+        respond(f"🔍 Searching the web for: **{query}**\nResults coming up...")
+        
+    except Exception as e:
+        logger.error(f"Error handling /web command: {e}")
+        respond("❌ I encountered an error. Please try again.")
+
 def add_fact_to_notion(slack_user_id: str, fact_text: str) -> bool:
     """Add a fact to the user's Notion page."""
     try:
@@ -300,12 +369,19 @@ async def test_openai():
         return {"status": "error", "message": "OpenAI client not initialized"}
     
     try:
+        # Test regular completion
         content, usage = await openai_service.get_completion_async("Say hello world")
+        
+        # Test web search completion
+        web_content, web_usage = await openai_service.get_web_search_completion_async("Current weather in San Francisco")
+        
         return {
             "status": "success",
-            "response": content,
+            "regular_response": content,
+            "web_search_response": web_content,
             "model": openai_service.model,
-            "usage": usage
+            "regular_usage": usage,
+            "web_search_usage": web_usage
         }
     except Exception as e:
         logger.error(f"OpenAI API test error: {e}")

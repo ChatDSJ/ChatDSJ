@@ -67,6 +67,7 @@ class OpenAIService:
         wait=wait_exponential(multiplier=1, min=2, max=10),
         reraise=True
     )
+    
     async def get_completion_async(
         self,
         prompt: str,
@@ -150,7 +151,77 @@ class OpenAIService:
             self.usage_stats["error_count"] += 1
             logger.error(f"Error getting async OpenAI response: {e}", exc_info=True)
             return "I'm sorry, I encountered an error when processing your request. Please try again.", None
-        
+
+    async def get_web_search_completion_async(
+        self,
+        prompt: str,
+        timeout: float = 60.0,  # Web search takes longer
+        slack_user_id: Optional[str] = None,
+        notion_service=None
+    ) -> Tuple[Optional[str], Optional[Dict[str, Any]]]:
+        """
+        Get a completion with web search using OpenAI's responses API.
+        """
+        if not self.is_available():
+            logger.error("OpenAI async client not initialized")
+            return None, None
+
+        try:
+            # Track usage stats
+            self.usage_stats["request_count"] += 1
+            logger.info(f"Sending web search request to OpenAI. Model: {self.model}")
+
+            # Use the responses.create method with web search tool
+            kwargs = {
+                "model": self.model,
+                "input": prompt
+            }
+            
+            # Only add web search for supported models
+            if self.model in ("gpt-4o", "gpt-4.1"):
+                kwargs["tools"] = [{"type": "web_search"}]
+            
+            response = await asyncio.wait_for(
+                asyncio.to_thread(
+                    self.async_client.responses.create,
+                    **kwargs
+                ),
+                timeout=timeout
+            )
+            
+            # Extract response text
+            response_text = ""
+            if hasattr(response, 'output_text'):
+                response_text = response.output_text
+            elif hasattr(response, 'output'):
+                response_text = str(response.output)
+            
+            # Create usage dict (simplified since responses API may not provide detailed usage)
+            usage = {
+                "prompt_tokens": self._estimate_tokens(prompt),
+                "completion_tokens": self._estimate_tokens(response_text),
+                "total_tokens": self._estimate_tokens(prompt) + self._estimate_tokens(response_text)
+            }
+            
+            if usage:
+                self._update_usage_tracking(usage)
+
+            logger.info(f"Web search response received successfully")
+            return response_text, usage
+
+        except asyncio.TimeoutError:
+            logger.error(f"Web search request timed out after {timeout} seconds")
+            return "I'm sorry, the web search took too long. Please try again.", None
+        except Exception as e:
+            self.usage_stats["error_count"] += 1
+            logger.error(f"Error getting web search response: {e}", exc_info=True)
+            return "I'm sorry, I encountered an error during the web search. Please try again.", None
+
+    def _estimate_tokens(self, text: str) -> int:
+        """Estimate tokens for usage tracking when not provided by API."""
+        from utils.token_management import count_tokens
+        return count_tokens(text or "", self.model)
+
     def _prepare_messages(
         self,
         prompt: str,
