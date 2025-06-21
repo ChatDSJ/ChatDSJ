@@ -155,26 +155,65 @@ class OpenAIService:
     async def get_web_search_completion_async(
         self,
         prompt: str,
+        user_specific_context: Optional[str] = None,
         timeout: float = 60.0,  # Web search takes longer
         slack_user_id: Optional[str] = None,
         notion_service=None
     ) -> Tuple[Optional[str], Optional[Dict[str, Any]]]:
         """
-        Get a completion with web search using OpenAI's responses API.
+        Get a completion with web search using OpenAI's responses API with full context.
         """
         if not self.is_available():
             logger.error("OpenAI async client not initialized")
             return None, None
 
         try:
+            # Build comprehensive prompt using similar structure to _prepare_messages
+            settings = get_settings()
+            
+            # Build system prompt for web search
+            web_search_system_prompt = (
+                "You are an assistant with web search capabilities embedded in a Slack channel. "
+                "You have access to current information from the web and stored user information. "
+                
+                "CRITICAL: When answering questions, you MUST synthesize information from ALL sources: "
+                "1. Current web search results (for up-to-date information) "
+                "2. Stored user profile information (their persistent facts and preferences) "
+                
+                "Both sources are equally important. Use web search for current/factual information, "
+                "but incorporate user preferences and context to personalize your response. "
+                
+                "Your primary job is to answer the user's question directly and concisely while "
+                "incorporating relevant information from all available sources."
+            )
+            
+            # Build the comprehensive prompt
+            full_prompt = "=== SYSTEM INSTRUCTIONS ===\n" + web_search_system_prompt + "\n\n"
+            
+            # Add user context if available
+            if user_specific_context:
+                full_prompt += "=== USER PROFILE INFORMATION ===\n"
+                full_prompt += user_specific_context + "\n\n"
+            
+            # Add the current user question
+            full_prompt += "=== USER'S CURRENT QUESTION (WITH WEB SEARCH) ===\n" + prompt + "\n\n"
+            
+            # Add web search specific instructions
+            full_prompt += """Please search the web for current information to answer this question, then provide a comprehensive response that:
+    - Uses the most up-to-date information from your web search
+    - Incorporates relevant user preferences/context from their profile
+    - Is direct, helpful, and personalized to this specific user
+    - Includes citations or sources when referencing specific web results"""
+
             # Track usage stats
             self.usage_stats["request_count"] += 1
             logger.info(f"Sending web search request to OpenAI. Model: {self.model}")
+            logger.debug(f"Web search prompt length: {len(full_prompt)} characters")
 
             # Use the responses.create method with web search tool
             kwargs = {
                 "model": self.model,
-                "input": prompt
+                "input": full_prompt  # Use the comprehensive prompt instead of raw query
             }
             
             # Only add web search for supported models
@@ -198,9 +237,9 @@ class OpenAIService:
             
             # Create usage dict (simplified since responses API may not provide detailed usage)
             usage = {
-                "prompt_tokens": self._estimate_tokens(prompt),
+                "prompt_tokens": self._estimate_tokens(full_prompt),
                 "completion_tokens": self._estimate_tokens(response_text),
-                "total_tokens": self._estimate_tokens(prompt) + self._estimate_tokens(response_text)
+                "total_tokens": self._estimate_tokens(full_prompt) + self._estimate_tokens(response_text)
             }
             
             if usage:
@@ -216,7 +255,7 @@ class OpenAIService:
             self.usage_stats["error_count"] += 1
             logger.error(f"Error getting web search response: {e}", exc_info=True)
             return "I'm sorry, I encountered an error during the web search. Please try again.", None
-
+    
     def _estimate_tokens(self, text: str) -> int:
         """Estimate tokens for usage tracking when not provided by API."""
         from utils.token_management import count_tokens

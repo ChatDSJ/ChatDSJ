@@ -167,9 +167,22 @@ def handle_web_command(ack, respond, command):
                 if user_specific_context:
                     enhanced_query = f"Context about the user: {user_specific_context[:200]}...\n\nUser's question: {query}"
                 
-                # Perform web search
+                # Get user context for personalization
+                try:
+                    from utils.context_builder import get_enhanced_user_context
+                    user_specific_context = get_enhanced_user_context(
+                        notion_service,
+                        user_id,
+                        ""
+                    )
+                except Exception as context_error:
+                    logger.warning(f"Could not get user context for web search: {context_error}")
+                    user_specific_context = ""
+                
+                # Perform web search with full context
                 response_text, usage = await openai_service.get_web_search_completion_async(
-                    enhanced_query,
+                    query,  # Just pass the raw query
+                    user_specific_context=user_specific_context,
                     slack_user_id=user_id,
                     notion_service=notion_service
                 )
@@ -203,7 +216,7 @@ def handle_web_command(ack, respond, command):
     except Exception as e:
         logger.error(f"Error handling /web command: {e}")
         respond("❌ I encountered an error. Please try again.")
-        
+
 def add_fact_to_notion(slack_user_id: str, fact_text: str) -> bool:
     """Add a fact to the user's Notion page."""
     try:
