@@ -778,6 +778,222 @@ class YoutubeSummarizeAction(Action):
                 thread_ts=request.thread_ts
             )
 
+class WebSearchAction(Action):
+    """Action for performing web searches when explicitly requested."""
+    
+    def get_required_services(self) -> List[str]:
+        return ["slack", "openai", "notion"]
+    
+    def can_handle(self, text: str) -> bool:
+        """Check if this is a web search request."""
+        search_patterns = [
+            r"search\s+(?:the\s+)?web",
+            r"web\s+search", 
+            r"google\s+(?:this|that|it)",
+            r"look\s+(?:this|that|it)\s+up\s+(?:on\s+)?(?:the\s+)?(?:web|internet)",
+            r"find\s+(?:on\s+)?(?:the\s+)?(?:web|internet)"
+        ]
+        
+        for pattern in search_patterns:
+            if re.search(pattern, text, re.IGNORECASE):
+                return True
+        return False
+    
+    def _extract_search_query(self, text: str) -> str:
+        """Extract the search query from the message, removing trigger phrases."""
+        search_patterns = [
+            r"search\s+(?:the\s+)?web\s+(?:for\s+)?",
+            r"web\s+search\s+(?:for\s+)?",
+            r"google\s+",
+            r"look\s+(?:this|that|it)\s+up\s+(?:on\s+)?(?:the\s+)?(?:web|internet)\s*:?\s*",
+            r"find\s+(?:on\s+)?(?:the\s+)?(?:web|internet)\s+"
+        ]
+        
+        clean_text = text
+        for pattern in search_patterns:
+            clean_text = re.sub(pattern, "", clean_text, flags=re.IGNORECASE)
+        
+        # Remove mentions and clean up
+        clean_text = re.sub(r'<@\w+>', '', clean_text).strip()
+        clean_text = re.sub(r'\s+', ' ', clean_text).strip()
+        
+        return clean_text if clean_text else text
+    
+    def _build_conversation_context_string(self, formatted_messages: List[Dict[str, str]]) -> str:
+        """Convert formatted messages to context string for web search."""
+        context_parts = []
+        for msg in formatted_messages:
+            role = msg.get("role", "unknown").upper()
+            content = msg.get("content", "")
+            context_parts.append(f"[{role}]: {content}")
+        return "\n".join(context_parts)
+    
+    async def execute(self, request: ActionRequest) -> ActionResponse:
+        """Execute web search with appropriate context based on channel vs thread."""
+        try:
+            if not self.services.validate_required_services(self.get_required_services()):
+                return ActionResponse(
+                    success=False,
+                    error="Required services not available"
+                )
+            
+            # Extract search query
+            search_query = self._extract_search_query(request.prompt)
+            if not search_query:
+                return ActionResponse(
+                    success=False,
+                    message="I need a search query. Try 'search the web for <your question>'",
+                    thread_ts=request.thread_ts
+                )
+            
+            # Context handling: Thread-specific vs comprehensive (following existing patterns)
+            conversation_context = ""
+            
+            if request.thread_ts:
+                # THREAD CONTEXT: Like ThreadSummaryAction - thread messages only
+                try:
+                    thread_messages = await asyncio.to_thread(
+                        self.services.slack_service.fetch_thread_history,
+                        request.channel_id,
+                        request.thread_ts,
+                        limit=100
+                    )
+                    
+                    if not thread_messages:
+                        conversation_context = "No thread conversation history available."
+                    else:
+                        # Build user display names for thread participants
+                        user_display_names = {}
+                        for msg in thread_messages:
+                            user_id = msg.get("user")
+                            if user_id and user_id not in user_display_names:
+                                try:
+                                    user_display_names[user_id] = await asyncio.to_thread(
+                                        self.services.slack_service.get_user_display_name,
+                                        user_id
+                                    )
+                                except Exception as name_error:
+                                    logger.warning(f"Failed to get display name for user {user_id}: {name_error}")
+                                    user_display_names[user_id] = f"User {user_id}"
+                        
+                        # Format thread conversation
+                        formatted_thread = await asyncio.to_thread(
+                            self.services.openai_service._format_conversation_for_openai,
+                            thread_messages,
+                            user_display_names,
+                            self.services.slack_service.bot_user_id
+                        )
+                        
+                        conversation_context = f"=== THREAD CONVERSATION ===\n{self._build_conversation_context_string(formatted_thread)}"
+                        
+                except Exception as thread_error:
+                    logger.error(f"Error fetching thread context: {thread_error}")
+                    conversation_context = "Error retrieving thread conversation."
+            
+            else:
+                # CHANNEL CONTEXT: Like ContextResponseAction - comprehensive history
+                try:
+                    from utils.simple_history_manager import SimpleHistoryManager
+                    history_manager = SimpleHistoryManager()
+                    
+                    all_messages = await history_manager.get_recent_history(
+                        self.services.slack_service,
+                        request.channel_id,
+                        None,  # No thread_ts for channel context
+                        limit=500
+                    )
+                    
+                    # Build user display names
+                    user_display_names = {}
+                    for msg in all_messages:
+                        user_id = msg.get("user") or msg.get("bot_id")
+                        if user_id and user_id not in user_display_names:
+                            try:
+                                user_display_names[user_id] = await asyncio.to_thread(
+                                    self.services.slack_service.get_user_display_name,
+                                    user_id
+                                )
+                            except Exception as name_error:
+                                logger.warning(f"Failed to get display name for user {user_id}: {name_error}")
+                                user_display_names[user_id] = f"User {user_id}"
+                    
+                    # Format conversation history
+                    conversation_history = await asyncio.to_thread(
+                        self.services.openai_service._format_conversation_for_openai,
+                        all_messages,
+                        user_display_names,
+                        self.services.slack_service.bot_user_id
+                    )
+                    
+                    conversation_context = f"=== CHANNEL CONVERSATION HISTORY ===\n{self._build_conversation_context_string(conversation_history)}"
+                    
+                except Exception as channel_error:
+                    logger.error(f"Error fetching channel context: {channel_error}")
+                    conversation_context = "Error retrieving channel conversation."
+            
+            # Get user context from Notion (same as existing actions)
+            try:
+                from utils.context_builder import get_enhanced_user_context
+                notion_context = await asyncio.to_thread(
+                    get_enhanced_user_context,
+                    self.services.notion_service,
+                    request.user_id,
+                    ""
+                )
+            except Exception as context_error:
+                logger.error(f"Error building user context: {context_error}")
+                notion_context = ""
+            
+            # Combine contexts for web search
+            full_context = ""
+            if notion_context:
+                full_context += notion_context + "\n\n"
+            if conversation_context:
+                full_context += conversation_context
+            
+            # Perform web search using existing method
+            try:
+                response_text, usage = await self.services.openai_service.get_web_search_completion_async(
+                    prompt=search_query,
+                    user_specific_context=full_context,
+                    timeout=60.0,
+                    slack_user_id=request.user_id,
+                    notion_service=self.services.notion_service
+                )
+            except Exception as search_error:
+                logger.error(f"Web search error: {search_error}")
+                return ActionResponse(
+                    success=False,
+                    error=f"Web search error: {str(search_error)}",
+                    message="I encountered an error during the web search. Please try again.",
+                    thread_ts=request.thread_ts
+                )
+            
+            if not response_text:
+                return ActionResponse(
+                    success=False,
+                    message="I couldn't find any results for that search. Please try a different query.",
+                    thread_ts=request.thread_ts
+                )
+            
+            # Format response with search query context
+            formatted_response = f"🔍 **Web Search Results for:** {search_query}\n\n{response_text}"
+            
+            return ActionResponse(
+                success=True,
+                message=formatted_response,
+                thread_ts=request.thread_ts
+            )
+            
+        except Exception as e:
+            logger.error(f"Error in WebSearchAction: {e}", exc_info=True)
+            return ActionResponse(
+                success=False,
+                error=str(e),
+                message="I encountered an error during the web search. Please try again.",
+                thread_ts=request.thread_ts
+            )
+
 class ActionRouter:
     """Simplified router for determining and executing actions."""
     
@@ -788,7 +1004,8 @@ class ActionRouter:
         self.actions = [
             ThreadSummaryAction(services),       # Thread summaries first
             YoutubeSummarizeAction(services),    # YouTube URLs first
-            RetrieveSummarizeAction(services),   # Other URLs second  
+            RetrieveSummarizeAction(services),   # Other URLs second
+            WebSearchAction(services),           # Web search requests third
             ContextResponseAction(services)      # Everything else (default)
         ]
         
