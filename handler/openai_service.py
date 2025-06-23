@@ -140,7 +140,12 @@ class OpenAIService:
                     )
                     
                     content = response.choices[0].message.content
-                    usage = response.usage.model_dump() if hasattr(response, "usage") else None
+                    if usage:
+                        self._update_usage_tracking(usage)
+                        logger.info(f"✅ RECEIVED RESPONSE - Length: {len(content)} chars")
+                        logger.info(f"📊 LLM usage data: {usage}")
+                    else:
+                        logger.warning("⚠️ No usage data returned from OpenAI API. Cost tracking skipped.")
 
                     if usage:
                         self._update_usage_tracking(usage)
