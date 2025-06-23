@@ -292,7 +292,7 @@ class OpenAIService:
         tool_cost = 0.03  # OpenAI flat fee for using web_search tool (as of June 2025)
         total_cost = llm_cost + tool_cost
         
-        total_cost = llm_cost + tool_cost_actual
+        total_cost = llm_cost + tool_cost
         
         return {
             "prompt_tokens": final_tokens,
