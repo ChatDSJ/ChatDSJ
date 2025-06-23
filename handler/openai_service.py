@@ -245,11 +245,12 @@ class OpenAIService:
                 response_text = str(response.output)
             
             # 🎯 STEP 2: Extract REAL usage data from OpenAI
-            actual_usage = None
-            if hasattr(response, 'usage'):
-                actual_usage = response.usage
-            
-            if actual_usage and hasattr(actual_usage, 'prompt_tokens'):
+            try:
+                actual_usage = response.usage  # SDK-dependent; may be response['usage'] in others
+            except AttributeError:
+                actual_usage = getattr(response, 'usage', None)
+
+            if isinstance(actual_usage, dict) and "prompt_tokens" in actual_usage:
                 # 🎯 STEP 3: Calculate REAL web search overhead
                 final_prompt_tokens = actual_usage.prompt_tokens
                 output_tokens = actual_usage.completion_tokens
