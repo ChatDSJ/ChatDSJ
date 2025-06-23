@@ -289,8 +289,8 @@ class OpenAIService:
         )
         
         # Web search tool costs (real vs advertised)
-        tool_cost_actual = 0.10      # $100 per 1k (real cost)
-        tool_cost_advertised = 0.03  # $30 per 1k (advertised)
+        tool_cost = 0.03  # OpenAI flat fee for using web_search tool (as of June 2025)
+        total_cost = llm_cost + tool_cost
         
         total_cost = llm_cost + tool_cost_actual
         
@@ -301,9 +301,9 @@ class OpenAIService:
             "initial_prompt_tokens": initial_tokens,
             "web_overhead_tokens": web_overhead,
             "llm_cost": llm_cost,
-            "tool_cost_actual": tool_cost_actual,
+            "tool_cost": tool_cost,
             "total_cost": total_cost,
-        }
+                }
 
     def _update_web_search_tracking(self, usage):
         """Update tracking with web search specific costs."""
@@ -315,7 +315,7 @@ class OpenAIService:
         logger.info(
             f"💰 WEB SEARCH COST BREAKDOWN:\n"
             f"   LLM Cost: ${usage.get('llm_cost', 0):.4f}\n"
-            f"   Web Tool Cost: ${usage.get('tool_cost_actual', 0):.4f}\n"
+            f"   Web Tool Cost: ${usage.get('tool_cost', 0):.4f}\n"
             f"   TOTAL: ${usage.get('total_cost', 0):.4f}\n"
             f"   Session Total: ${self.usage_stats['total_cost']:.2f}"
         )
