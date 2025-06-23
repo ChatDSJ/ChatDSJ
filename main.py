@@ -385,6 +385,28 @@ async def health_check():
         }
     }
 
+@app.get("/api/cost-summary")
+async def get_cost_summary():
+    """Get current cost summary with updated pricing."""
+    if not openai_service.is_available():
+        return {"error": "OpenAI service not available"}
+    
+    stats = openai_service.get_usage_stats()
+    
+    return {
+        "current_costs": {
+            "total_cost_usd": round(stats["total_cost"], 2),
+            "total_requests": stats["request_count"],
+            "avg_cost_per_request": round(stats["total_cost"] / max(stats["request_count"], 1), 4),
+            "total_tokens": stats["total_tokens"]
+        },
+        "pricing_used": {
+            "model": openai_service.model,
+            "pricing_per_million": openai_service.model_pricing.get(openai_service.model, {})
+        },
+        "status": "success"
+    }
+
 # Test OpenAI endpoint
 @app.get("/test-openai")
 async def test_openai():

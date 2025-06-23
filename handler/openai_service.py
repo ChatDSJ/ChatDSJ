@@ -29,9 +29,11 @@ class OpenAIService:
         
         # Model pricing for usage tracking
         self.model_pricing = {
-            "gpt-4o": {"prompt": 5.00, "completion": 15.00},
+            "gpt-4o": {"prompt": 3.00, "completion": 10.00},  # UPDATED from 5.00/15.00
             "gpt-4-turbo": {"prompt": 10.00, "completion": 30.00},
             "gpt-3.5-turbo-0125": {"prompt": 0.50, "completion": 1.50},
+            "gpt-4.1": {"prompt": 2.00, "completion": 8.00},  # NEW
+            "gpt-4.1-mini": {"prompt": 0.15, "completion": 0.60},  # NEW
         }
         
         # Usage statistics
@@ -45,7 +47,23 @@ class OpenAIService:
         }
         
         logger.info(f"OpenAI service initialized with model {self.model}")
-    
+        
+    def _extract_prompt_for_logging(self, messages: List[Dict[str, str]]) -> str:
+            """Extract the actual prompt content for logging purposes."""
+            prompt_parts = []
+            
+            for message in messages:
+                role = message.get("role", "unknown").upper()
+                content = message.get("content", "")
+                
+                # Truncate very long content for logging
+                if len(content) > 2000:
+                    content = content[:1500] + f"\n\n... [TRUNCATED - Total length: {len(content)} chars] ..."
+                
+                prompt_parts.append(f"[{role}]: {content}")
+            
+            return "\n\n".join(prompt_parts)
+
     def _init_clients(self):
         """Initialize both synchronous and asynchronous OpenAI clients."""
         try:
@@ -79,7 +97,6 @@ class OpenAIService:
         timeout: float = 30.0, 
         slack_user_id: Optional[str] = None,
         notion_service=None
-        # REMOVE: task_type: str = "general"  # DELETE THIS PARAMETER
     ) -> Tuple[Optional[str], Optional[Dict[str, Any]]]:
         """
         Asynchronously get a completion from OpenAI with full context injection and language preference support.
@@ -98,11 +115,12 @@ class OpenAIService:
                 system_prompt=system_prompt,
                 slack_user_id=slack_user_id,
                 notion_service=notion_service
-                # REMOVE: task_type=task_type  # DELETE THIS LINE
             )
 
-            # Log payload being sent to OpenAI (for debugging only)
-            logger.debug("Full OpenAI prompt:\n" + "\n".join(f"{m['role'].upper()}: {m['content']}" for m in messages))
+            # 🎯 NEW: Log the prompt being sent (instead of results)
+            prompt_text = self._extract_prompt_for_logging(messages)
+            logger.info(f"📤 REGULAR LLM CALL - Model: {self.model}")
+            logger.info(f"📝 PROMPT ({len(prompt_text)} chars):\n{prompt_text}")
 
             # Track usage stats
             self.usage_stats["request_count"] += 1
@@ -127,7 +145,10 @@ class OpenAIService:
                     if usage:
                         self._update_usage_tracking(usage)
 
-                    logger.info(f"OpenAI response received successfully in {attempt+1} attempt(s)")
+                    # 🎯 NEW: Log response received (NOT the content)
+                    response_length = len(content) if content else 0
+                    logger.info(f"✅ RECEIVED RESPONSE - Length: {response_length} chars")
+
                     return content, usage
 
                 except asyncio.TimeoutError:
@@ -156,22 +177,18 @@ class OpenAIService:
         self,
         prompt: str,
         user_specific_context: Optional[str] = None,
-        timeout: float = 60.0,  # Web search takes longer
+        timeout: float = 60.0,
         slack_user_id: Optional[str] = None,
         notion_service=None
     ) -> Tuple[Optional[str], Optional[Dict[str, Any]]]:
-        """
-        Get a completion with web search using OpenAI's responses API with full context.
-        """
+        """Web search with REAL token tracking - no estimation."""
         if not self.is_available():
             logger.error("OpenAI async client not initialized")
             return None, None
 
         try:
-            # Build comprehensive prompt using similar structure to _prepare_messages
+            # Build prompt (SAME AS BEFORE)
             settings = get_settings()
-            
-            # Build system prompt for web search
             web_search_system_prompt = (
                 "You are an assistant with web search capabilities embedded in a Slack channel. "
                 "You have access to current information from the web and stored user information. "
@@ -181,82 +198,127 @@ class OpenAIService:
                 "2. Stored user profile information (their persistent facts and preferences) "
                 
                 "Both sources are equally important. Use web search for current/factual information, "
-                "but incorporate user preferences and context to personalize your response. "
-                
-                "Your primary job is to answer the user's question directly and concisely while "
-                "incorporating relevant information from all available sources."
+                "but incorporate user preferences and context to personalize your response."
             )
             
-            # Build the comprehensive prompt
             full_prompt = "=== SYSTEM INSTRUCTIONS ===\n" + web_search_system_prompt + "\n\n"
             
-            # Add user context if available
             if user_specific_context:
                 full_prompt += "=== USER PROFILE INFORMATION ===\n"
                 full_prompt += user_specific_context + "\n\n"
             
-            # Add the current user question
             full_prompt += "=== USER'S CURRENT QUESTION (WITH WEB SEARCH) ===\n" + prompt + "\n\n"
+            full_prompt += """Please search the web for current information to answer this question, then provide a comprehensive response."""
+
+            # 🎯 STEP 1: Count initial prompt tokens
+            from utils.token_management import count_tokens
+            initial_prompt_tokens = count_tokens(full_prompt, self.model)
             
-            # Add web search specific instructions
-            full_prompt += """Please search the web for current information to answer this question, then provide a comprehensive response that:
-    - Uses the most up-to-date information from your web search
-    - Incorporates relevant user preferences/context from their profile
-    - Is direct, helpful, and personalized to this specific user
-    - Includes citations or sources when referencing specific web results"""
+            logger.info(f"🔍 WEB SEARCH REQUEST - Model: {self.model}")
+            logger.info(f"📝 INITIAL PROMPT ({initial_prompt_tokens} tokens):")
+            if len(full_prompt) > 2000:
+                logger.info(f"{full_prompt[:1500]}\n\n... [TRUNCATED - Total: {len(full_prompt)} chars]")
+            else:
+                logger.info(full_prompt)
 
-            # Track usage stats
             self.usage_stats["request_count"] += 1
-            logger.info(f"Sending web search request to OpenAI. Model: {self.model}")
-            logger.debug(f"Web search prompt length: {len(full_prompt)} characters")
 
-            # Use the responses.create method with web search tool
+            # Send to OpenAI
             kwargs = {
                 "model": self.model,
                 "input": full_prompt
             }
             
-            # Only add web search for supported models
             if self.model in ("gpt-4o", "gpt-4.1"):
                 kwargs["tools"] = [{"type": "web_search"}]
             
-            # FIX: Use sync client with asyncio.to_thread (matches working test script)
             response = await asyncio.wait_for(
-                asyncio.to_thread(
-                    self.client.responses.create,  # Use sync client, not async client
-                    **kwargs
-                ),
+                asyncio.to_thread(self.client.responses.create, **kwargs),
                 timeout=timeout
             )
             
-            # Extract response text
+            # Extract response
             response_text = ""
             if hasattr(response, 'output_text'):
                 response_text = response.output_text
             elif hasattr(response, 'output'):
                 response_text = str(response.output)
             
-            # Create usage dict (simplified since responses API may not provide detailed usage)
-            usage = {
-                "prompt_tokens": self._estimate_tokens(full_prompt),
-                "completion_tokens": self._estimate_tokens(response_text),
-                "total_tokens": self._estimate_tokens(full_prompt) + self._estimate_tokens(response_text)
-            }
+            # 🎯 STEP 2: Extract REAL usage data from OpenAI
+            actual_usage = None
+            if hasattr(response, 'usage'):
+                actual_usage = response.usage
             
-            if usage:
-                self._update_usage_tracking(usage)
+            if actual_usage and hasattr(actual_usage, 'prompt_tokens'):
+                # 🎯 STEP 3: Calculate REAL web search overhead
+                final_prompt_tokens = actual_usage.prompt_tokens
+                output_tokens = actual_usage.completion_tokens
+                web_search_overhead = final_prompt_tokens - initial_prompt_tokens
+                
+                logger.info(f"✅ REAL WEB SEARCH TOKEN BREAKDOWN:")
+                logger.info(f"   Initial prompt: {initial_prompt_tokens:,} tokens")
+                logger.info(f"   Final prompt (OpenAI charged): {final_prompt_tokens:,} tokens")
+                logger.info(f"   Web search overhead: {web_search_overhead:,} tokens ({final_prompt_tokens/initial_prompt_tokens:.1f}x)")
+                logger.info(f"   Output tokens: {output_tokens:,} tokens")
+                
+                # Calculate real costs
+                real_usage = self._calculate_real_web_search_cost(
+                    initial_prompt_tokens, final_prompt_tokens, output_tokens, web_search_overhead
+                )
+                
+                self._update_web_search_tracking(real_usage)
+                return response_text, real_usage
+            
+            else:
+                logger.warning("⚠️ Could not extract usage data from responses API")
+                return response_text, {"usage_available": False}
 
-            logger.info(f"Web search response received successfully")
-            return response_text, usage
-
-        except asyncio.TimeoutError:
-            logger.error(f"Web search request timed out after {timeout} seconds")
-            return "I'm sorry, the web search took too long. Please try again.", None
         except Exception as e:
             self.usage_stats["error_count"] += 1
-            logger.error(f"Error getting web search response: {e}", exc_info=True)
+            logger.error(f"Error in web search: {e}", exc_info=True)
             return "I'm sorry, I encountered an error during the web search. Please try again.", None
-    
+
+    def _calculate_real_web_search_cost(self, initial_tokens, final_tokens, output_tokens, web_overhead):
+        """Calculate real web search costs using actual OpenAI data."""
+        pricing = self.model_pricing.get(self.model, {"prompt": 3.00, "completion": 10.00})
+        
+        llm_cost = (
+            (final_tokens / 1_000_000) * pricing["prompt"] +
+            (output_tokens / 1_000_000) * pricing["completion"]
+        )
+        
+        # Web search tool costs (real vs advertised)
+        tool_cost_actual = 0.10      # $100 per 1k (real cost)
+        tool_cost_advertised = 0.03  # $30 per 1k (advertised)
+        
+        total_cost = llm_cost + tool_cost_actual
+        
+        return {
+            "prompt_tokens": final_tokens,
+            "completion_tokens": output_tokens,
+            "total_tokens": final_tokens + output_tokens,
+            "initial_prompt_tokens": initial_tokens,
+            "web_overhead_tokens": web_overhead,
+            "llm_cost": llm_cost,
+            "tool_cost_actual": tool_cost_actual,
+            "total_cost": total_cost,
+        }
+
+    def _update_web_search_tracking(self, usage):
+        """Update tracking with web search specific costs."""
+        self.usage_stats["prompt_tokens"] += usage.get("prompt_tokens", 0)
+        self.usage_stats["completion_tokens"] += usage.get("completion_tokens", 0)
+        self.usage_stats["total_tokens"] += usage.get("total_tokens", 0)
+        self.usage_stats["total_cost"] += usage.get("total_cost", 0)
+        
+        logger.info(
+            f"💰 WEB SEARCH COST BREAKDOWN:\n"
+            f"   LLM Cost: ${usage.get('llm_cost', 0):.4f}\n"
+            f"   Web Tool Cost: ${usage.get('tool_cost_actual', 0):.4f}\n"
+            f"   TOTAL: ${usage.get('total_cost', 0):.4f}\n"
+            f"   Session Total: ${self.usage_stats['total_cost']:.2f}"
+        )
+
     def _estimate_tokens(self, text: str) -> int:
         """Estimate tokens for usage tracking when not provided by API."""
         from utils.token_management import count_tokens
@@ -367,10 +429,17 @@ class OpenAIService:
         cost = self._calculate_cost(usage)
         self.usage_stats["total_cost"] += cost
         
-        logger.debug(
-            f"OpenAI request: {usage.get('prompt_tokens', 0)} prompt tokens, "
-            f"{usage.get('completion_tokens', 0)} completion tokens. "
-            f"Cost: ${cost:.6f}. Total cost: ${self.usage_stats['total_cost']:.6f}"
+         # 🎯 UPDATED: Enhanced logging at INFO level (not DEBUG)
+        prompt_tokens = usage.get("prompt_tokens", 0)
+        completion_tokens = usage.get("completion_tokens", 0)
+        pricing = self.model_pricing.get(self.model, {"prompt": 3.00, "completion": 10.00})
+        
+        logger.info(
+            f"💰 LLM CALL COST BREAKDOWN:\n"
+            f"   Model: {self.model}\n"
+            f"   Input: {prompt_tokens:,} tokens × ${pricing['prompt']:.2f}/M = ${(prompt_tokens/1000000) * pricing['prompt']:.4f}\n"
+            f"   Output: {completion_tokens:,} tokens × ${pricing['completion']:.2f}/M = ${(completion_tokens/1000000) * pricing['completion']:.4f}\n"
+            f"   This Call: ${cost:.4f} | Session Total: ${self.usage_stats['total_cost']:.2f}"
         )
     
     def _calculate_cost(self, usage: Dict[str, int]) -> float:
