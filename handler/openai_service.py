@@ -271,6 +271,7 @@ class OpenAIService:
                 return response_text, real_usage
             
             else:
+                logger.info(f"🔍 Raw usage data: {getattr(response, 'usage', 'No usage returned')}")
                 logger.warning("⚠️ Could not extract usage data from responses API")
                 return response_text, {"usage_available": False}
 
