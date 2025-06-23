@@ -385,7 +385,7 @@ async def health_check():
         }
     }
 
-@router.get("/api/cost-summary")
+@app.get("/api/cost-summary")
 async def get_cost_summary():
     """Get current LLM usage cost summary with updated pricing."""
     if not openai_service.is_available():
@@ -412,7 +412,6 @@ async def get_cost_summary():
             "output_tokens": stats.get("completion_tokens", 0),
         }
     }
-
 # Test OpenAI endpoint
 @app.get("/test-openai")
 async def test_openai():
