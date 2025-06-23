@@ -252,8 +252,8 @@ class OpenAIService:
 
             if isinstance(actual_usage, dict) and "prompt_tokens" in actual_usage:
                 # 🎯 STEP 3: Calculate REAL web search overhead
-                final_prompt_tokens = actual_usage.prompt_tokens
-                output_tokens = actual_usage.completion_tokens
+                final_prompt_tokens = actual_usage.get("prompt_tokens", 0)
+                output_tokens = actual_usage.get("completion_tokens", 0)
                 web_search_overhead = final_prompt_tokens - initial_prompt_tokens
                 
                 logger.info(f"✅ REAL WEB SEARCH TOKEN BREAKDOWN:")
