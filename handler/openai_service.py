@@ -250,10 +250,9 @@ class OpenAIService:
             except AttributeError:
                 actual_usage = getattr(response, 'usage', None)
 
-            if isinstance(actual_usage, dict) and "prompt_tokens" in actual_usage:
-                # 🎯 STEP 3: Calculate REAL web search overhead
-                final_prompt_tokens = actual_usage.get("prompt_tokens", 0)
-                output_tokens = actual_usage.get("completion_tokens", 0)
+            if actual_usage and hasattr(actual_usage, "input_tokens") and hasattr(actual_usage, "output_tokens"):
+                final_prompt_tokens = actual_usage.input_tokens
+                output_tokens = actual_usage.output_tokens
                 web_search_overhead = final_prompt_tokens - initial_prompt_tokens
                 
                 logger.info(f"✅ REAL WEB SEARCH TOKEN BREAKDOWN:")
@@ -271,7 +270,7 @@ class OpenAIService:
                 return response_text, real_usage
             
             else:
-                logger.info(f"🔍 Raw usage data: {getattr(response, 'usage', 'No usage returned')}")
+                logger.info(f"🔍 Raw usage data: {actual_usage}")
                 logger.warning("⚠️ Could not extract usage data from responses API")
                 return response_text, {"usage_available": False}
 
