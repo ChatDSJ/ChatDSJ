@@ -43,31 +43,10 @@ class OpenAIService:
             "completion_tokens": 0,
             "total_cost": 0.0,
             "request_count": 0,
-            "error_count": 0,
-            "recent_prompts": []
+            "error_count": 0
         }
         
         logger.info(f"OpenAI service initialized with model {self.model}")
-
-    def _store_prompt_for_debugging(self, messages: List[Dict[str, str]], call_type: str = "regular"):
-        """Store recent prompts for the cost-summary endpoint."""
-        from datetime import datetime
-        
-        prompt_text = self._extract_prompt_for_logging(messages)
-        
-        prompt_entry = {
-            "timestamp": datetime.now().isoformat(),
-            "call_type": call_type,
-            "model": self.model,
-            "prompt_preview": prompt_text[:200] + "..." if len(prompt_text) > 200 else prompt_text,
-            "full_prompt": prompt_text,
-            "prompt_length": len(prompt_text)
-        }
-        
-        # Keep only last 5 prompts
-        self.usage_stats["recent_prompts"].append(prompt_entry)
-        if len(self.usage_stats["recent_prompts"]) > 5:
-            self.usage_stats["recent_prompts"].pop(0)
 
     def _extract_prompt_for_logging(self, messages: List[Dict[str, str]]) -> str:
             """Extract the actual prompt content for logging purposes."""
@@ -137,8 +116,6 @@ class OpenAIService:
                 slack_user_id=slack_user_id,
                 notion_service=notion_service
             )
-
-            self._store_prompt_for_debugging(messages, "regular")
 
             # 🎯 NEW: Log the prompt being sent (instead of results)
             prompt_text = self._extract_prompt_for_logging(messages)
@@ -240,9 +217,6 @@ class OpenAIService:
             
             full_prompt += "=== USER'S CURRENT QUESTION (WITH WEB SEARCH) ===\n" + prompt + "\n\n"
             full_prompt += """Please search the web for current information to answer this question, then provide a comprehensive response."""
-
-            fake_messages = [{"role": "user", "content": full_prompt}]
-            self._store_prompt_for_debugging(fake_messages, "web_search")
 
             # 🎯 STEP 1: Count initial prompt tokens
             from utils.token_management import count_tokens
