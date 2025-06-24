@@ -225,6 +225,9 @@ class ContextResponseAction(Action):
                 token_count = count_messages_tokens(messages, self.services.openai_service.model)
                 logger.info(f"Sending {token_count} tokens to OpenAI with structured thread context")
                 
+                # Track usage stats
+                self.services.openai_service.usage_stats["request_count"] += 1
+                
                 response = await self.services.openai_service.async_client.chat.completions.create(
                     model=self.services.openai_service.model,
                     messages=messages,
@@ -233,6 +236,14 @@ class ContextResponseAction(Action):
                 
                 response_text = response.choices[0].message.content
                 usage = response.usage.model_dump() if hasattr(response, "usage") else None
+                
+                # Add tracking and logging that was missing
+                if usage:
+                    self.services.openai_service._update_usage_tracking(usage)
+                    logger.info(f"✅ RECEIVED RESPONSE - Length: {len(response_text) if response_text else 0} chars")
+                else:
+                    logger.warning("⚠️ No usage data returned by OpenAI for non-web call")
+                    self.services.openai_service.usage_stats["error_count"] += 1
                 
             except Exception as openai_error:
                 logger.error(f"OpenAI API error: {openai_error}")

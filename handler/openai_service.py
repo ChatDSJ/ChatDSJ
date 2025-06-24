@@ -140,18 +140,17 @@ class OpenAIService:
                     )
                     
                     content = response.choices[0].message.content
-                    usage = response.usage.model_dump() if hasattr(response, "usage") else None
+                    try:
+                        usage = response.usage.model_dump() if hasattr(response, "usage") and response.usage else None
+                    except Exception as e:
+                        logger.warning(f"Failed to extract usage data: {e}")
+                        usage = None
 
                     if usage:
                         self._update_usage_tracking(usage)
-                        logger.info(f"💰 LLM CALL COST BREAKDOWN:\n"
-                                    f"   Prompt tokens: {usage.get('prompt_tokens', 0)}\n"
-                                    f"   Completion tokens: {usage.get('completion_tokens', 0)}\n"
-                                    f"   Total tokens: {usage.get('total_tokens', 0)}\n"
-                                    f"   Cost this call: ${self._calculate_cost(usage):.4f}\n"
-                                    f"   Session total: ${self.usage_stats['total_cost']:.2f}")
                     else:
                         logger.warning("⚠️ No usage data returned by OpenAI for non-web call")
+                        self.usage_stats["error_count"] += 1
 
                     # 🎯 NEW: Log response received (NOT the content)
                     response_length = len(content) if content else 0
