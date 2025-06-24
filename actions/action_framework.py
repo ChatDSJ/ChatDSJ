@@ -227,6 +227,11 @@ class ContextResponseAction(Action):
                 
                 # Track usage stats
                 self.services.openai_service.usage_stats["request_count"] += 1
+
+                prompt_text = self.services.openai_service._extract_prompt_for_logging(messages)
+                logger.info(f"📤 REGULAR LLM CALL - Model: {self.services.openai_service.model}")
+                logger.info(f"📝 INITIAL PROMPT ({len(prompt_text)} chars):")
+                logger.info(prompt_text)
                 
                 response = await self.services.openai_service.async_client.chat.completions.create(
                     model=self.services.openai_service.model,

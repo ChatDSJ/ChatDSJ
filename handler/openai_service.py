@@ -120,7 +120,8 @@ class OpenAIService:
             # 🎯 NEW: Log the prompt being sent (instead of results)
             prompt_text = self._extract_prompt_for_logging(messages)
             logger.info(f"📤 REGULAR LLM CALL - Model: {self.model}")
-            logger.info(f"📝 PROMPT ({len(prompt_text)} chars):\n{prompt_text}")
+            logger.info(f"📝 INITIAL PROMPT ({len(prompt_text)} chars):")
+            logger.info(prompt_text)
 
             # Track usage stats
             self.usage_stats["request_count"] += 1
