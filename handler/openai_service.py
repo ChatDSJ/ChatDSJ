@@ -44,27 +44,29 @@ class OpenAIService:
             "total_cost": 0.0,
             "request_count": 0,
             "error_count": 0,
-            "recent_prompts": []  # NEW: Store last 5 prompts
+            "recent_prompts": []
         }
         
         logger.info(f"OpenAI service initialized with model {self.model}")
 
     def _store_prompt_for_debugging(self, messages: List[Dict[str, str]], call_type: str = "regular"):
         """Store recent prompts for the cost-summary endpoint."""
+        from datetime import datetime
+        
         prompt_text = self._extract_prompt_for_logging(messages)
         
         prompt_entry = {
             "timestamp": datetime.now().isoformat(),
-            "call_type": call_type,  # "regular" or "web_search"
+            "call_type": call_type,
             "model": self.model,
             "prompt_preview": prompt_text[:200] + "..." if len(prompt_text) > 200 else prompt_text,
             "full_prompt": prompt_text,
             "prompt_length": len(prompt_text)
         }
         
-        # Keep only last 2 prompts to avoid memory issues
+        # Keep only last 5 prompts
         self.usage_stats["recent_prompts"].append(prompt_entry)
-        if len(self.usage_stats["recent_prompts"]) > 2:
+        if len(self.usage_stats["recent_prompts"]) > 5:
             self.usage_stats["recent_prompts"].pop(0)
 
     def _extract_prompt_for_logging(self, messages: List[Dict[str, str]]) -> str:

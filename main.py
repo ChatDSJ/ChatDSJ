@@ -11,6 +11,7 @@ from handler.openai_service import OpenAIService
 from services.cached_notion_service import CachedNotionService
 from services.slack_service import SlackService
 from actions.action_framework import ServiceContainer, ActionRequest, ActionRouter
+from fastapi.responses import JSONResponse
 
 # Configure settings and logging
 settings = get_settings()
@@ -418,7 +419,6 @@ async def get_cost_summary(include_prompts: bool = False, prompt_preview_only: b
         recent_prompts = stats.get("recent_prompts", [])
         
         if prompt_preview_only:
-            # Just show previews + metadata
             response_data["recent_prompts"] = [
                 {
                     "timestamp": p["timestamp"],
@@ -430,7 +430,6 @@ async def get_cost_summary(include_prompts: bool = False, prompt_preview_only: b
                 for p in recent_prompts
             ]
         else:
-            # Include full prompts (could be large!)
             response_data["recent_prompts"] = recent_prompts
     
     return response_data
