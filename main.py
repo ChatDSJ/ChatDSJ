@@ -386,8 +386,8 @@ async def health_check():
     }
 
 @app.get("/api/cost-summary")
-async def get_cost_summary():
-    """Get current LLM usage cost summary with updated pricing."""
+async def get_cost_summary(include_prompts: bool = False, prompt_preview_only: bool = True):
+    """Get LLM usage cost summary with optional prompt data."""
     if not openai_service.is_available():
         return JSONResponse(status_code=503, content={"error": "OpenAI service not available"})
 
@@ -399,7 +399,7 @@ async def get_cost_summary():
     total_cost = stats.get("total_cost", 0.0)
     avg_cost = total_cost / request_count if request_count > 0 else 0.0
 
-    return {
+    response_data = {
         "status": "success",
         "model": model,
         "pricing_per_million_tokens": pricing,
@@ -412,6 +412,29 @@ async def get_cost_summary():
             "output_tokens": stats.get("completion_tokens", 0),
         }
     }
+    
+    # Add prompt data if requested
+    if include_prompts:
+        recent_prompts = stats.get("recent_prompts", [])
+        
+        if prompt_preview_only:
+            # Just show previews + metadata
+            response_data["recent_prompts"] = [
+                {
+                    "timestamp": p["timestamp"],
+                    "call_type": p["call_type"], 
+                    "model": p["model"],
+                    "prompt_preview": p["prompt_preview"],
+                    "prompt_length": p["prompt_length"]
+                }
+                for p in recent_prompts
+            ]
+        else:
+            # Include full prompts (could be large!)
+            response_data["recent_prompts"] = recent_prompts
+    
+    return response_data
+
 # Test OpenAI endpoint
 @app.get("/test-openai")
 async def test_openai():
