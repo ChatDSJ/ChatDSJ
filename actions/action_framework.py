@@ -15,13 +15,13 @@ class ServiceContainer:
         slack_service=None,
         notion_service=None,
         openai_service=None,
-        web_service=None,
+        web_service=None,  # ADD THIS
         youtube_service=None
     ):
         self.slack_service = slack_service
         self.notion_service = notion_service
         self.openai_service = openai_service
-        self.web_service = web_service
+        self.web_service = web_service  # ADD THIS
         self.youtube_service = youtube_service
         
         # Inject the NotionContextManager into OpenAIService if both services are available
@@ -697,25 +697,46 @@ class RetrieveSummarizeAction(Action):
                     thread_ts=request.thread_ts
                 )
             
-            # Store in Notion
+            # Store in Notion with dual summary approach
+            notion_page_id = None
             try:
+                # Generate shorter summary for Slack
+                if summary:
+                    short_summary_prompt = f"Create a 2-3 sentence summary of this summary:\n\n{summary}"
+                    short_summary, _ = await self.services.openai_service.get_completion_async(
+                        prompt=short_summary_prompt,
+                        max_tokens=100,
+                        slack_user_id=request.user_id,
+                        notion_service=self.services.notion_service
+                    )
+                else:
+                    short_summary = "Could not generate summary."
+                
+                # Create Notion page with full content
+                page_title = f"Article Summary: {url}"
+                page_content = f"# {page_title}\n\n**URL:** {url}\n\n## Summary\n\n{summary}\n\n## Full Content\n\n{content[:10000]}"
+                
                 notion_page_id = await asyncio.to_thread(
                     self.services.notion_service.create_content_page,
-                    f"Summary of {url}",
-                    f"# Summary of {url}\n\n{summary}\n\n## Full Content\n\n{content[:20000]}..."
+                    page_title,
+                    page_content
                 )
             except Exception as notion_error:
                 logger.error(f"Notion page creation error: {notion_error}")
-                notion_page_id = None
             
-            # Construct response
+            # Construct response with short summary + Notion link
             if notion_page_id:
+                notion_url = self.services.notion_service.get_page_url(notion_page_id)
                 response_message = (
-                    f"*Summary of {url}*\n\n{summary}\n\n"
-                    f"Full summary saved in Notion: {self.services.notion_service.get_page_url(notion_page_id)}"
+                    f"📄 **Article Summary**\n\n"
+                    f"{short_summary or summary[:200]+'...'}\n\n"
+                    f"📝 [View full summary in Notion]({notion_url})"
                 )
             else:
-                response_message = f"*Summary of {url}*\n\n{summary}"
+                response_message = (
+                    f"📄 **Article Summary**\n\n"
+                    f"{short_summary or summary}"
+                )
             
             return ActionResponse(
                 success=True,

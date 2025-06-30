@@ -667,3 +667,48 @@ class CachedNotionService:
         except Exception as e:
             logger.error(f"Error adding TODO item for user {slack_user_id}: {e}", exc_info=True)
             return False
+        
+    def create_content_page(self, title: str, content: str) -> Optional[str]:
+        """Create a new Notion page with content."""
+        if not self.is_available():
+            return None
+        
+        try:
+            # Create as child of user database with content title pattern
+            properties = {
+                "UserID": {"title": [{"type": "text", "text": {"content": f"Article: {title}"}}]}
+            }
+            
+            # Convert content to blocks (simple paragraphs)
+            children = []
+            for paragraph in content.split('\n\n'):
+                if paragraph.strip():
+                    children.append({
+                        "object": "block",
+                        "type": "paragraph",
+                        "paragraph": {
+                            "rich_text": [{
+                                "type": "text",
+                                "text": {"content": paragraph.strip()[:2000]}  # Notion limit
+                            }]
+                        }
+                    })
+            
+            result = self.client.pages.create(
+                parent={"database_id": self.user_db_id},
+                properties=properties,
+                children=children[:100]  # Notion limit
+            )
+            
+            page_id = result.get("id")
+            logger.info(f"Created Notion page: {page_id}")
+            return page_id
+            
+        except Exception as e:
+            logger.error(f"Error creating Notion page: {e}")
+            return None
+
+    def get_page_url(self, page_id: str) -> str:
+        """Generate public URL for Notion page."""
+        clean_id = page_id.replace('-', '')
+        return f"https://www.notion.so/{clean_id}"

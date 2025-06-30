@@ -10,6 +10,7 @@ from config.settings import get_settings
 from handler.openai_service import OpenAIService
 from services.cached_notion_service import CachedNotionService
 from services.slack_service import SlackService
+from services.web_service import WebService
 from actions.action_framework import ServiceContainer, ActionRequest, ActionRouter
 
 # Configure settings and logging
@@ -53,11 +54,15 @@ slack_service = SlackService(
     app_token=settings.slack_app_token.get_secret_value() if settings.slack_app_token else None
 )
 
-# Create service container
+# ADD THIS:
+web_service = WebService(llm_service=openai_service)  # Add Anthropic service later
+
+# UPDATE THIS:
 services = ServiceContainer(
     slack_service=slack_service,
     notion_service=notion_service,
-    openai_service=openai_service
+    openai_service=openai_service,
+    web_service=web_service  # ADD THIS LINE
 )
 
 @slack_service.app.command("/name")
