@@ -15,13 +15,13 @@ class ServiceContainer:
         slack_service=None,
         notion_service=None,
         openai_service=None,
-        web_service=None,  # ADD THIS
+        web_service=None,
         youtube_service=None
     ):
         self.slack_service = slack_service
         self.notion_service = notion_service
         self.openai_service = openai_service
-        self.web_service = web_service  # ADD THIS
+        self.web_service = web_service
         self.youtube_service = youtube_service
         
         # Inject the NotionContextManager into OpenAIService if both services are available
@@ -699,6 +699,8 @@ class RetrieveSummarizeAction(Action):
             
             # Store in Notion with dual summary approach
             notion_page_id = None
+            short_summary = summary  # Default fallback
+            
             try:
                 # Generate shorter summary for Slack
                 if summary:
@@ -709,8 +711,6 @@ class RetrieveSummarizeAction(Action):
                         slack_user_id=request.user_id,
                         notion_service=self.services.notion_service
                     )
-                else:
-                    short_summary = "Could not generate summary."
                 
                 # Create Notion page with full content
                 page_title = f"Article Summary: {url}"
@@ -752,7 +752,7 @@ class RetrieveSummarizeAction(Action):
                 message="I encountered an error retrieving and summarizing that URL.",
                 thread_ts=request.thread_ts
             )
-
+    
 class YoutubeSummarizeAction(Action):
     """Action for retrieving and summarizing YouTube videos."""
     
