@@ -665,7 +665,8 @@ class RetrieveSummarizeAction(Action):
                     message=f"I couldn't fetch content from {url}. The site may be unavailable or blocked.",
                     thread_ts=request.thread_ts
                 )
-            
+
+            # FIXED: Better content validation
             if not content:
                 return ActionResponse(
                     success=False,
@@ -673,7 +674,32 @@ class RetrieveSummarizeAction(Action):
                     message=f"I couldn't fetch content from {url}. The site may be unavailable or have access restrictions.",
                     thread_ts=request.thread_ts
                 )
-            
+
+            # FIXED: Validate content quality before processing
+            if len(content.strip()) < 100:
+                return ActionResponse(
+                    success=False,
+                    error=f"Insufficient content from {url}",
+                    message=f"I was able to access {url} but couldn't extract meaningful content. The page might be mostly images, videos, or require JavaScript.",
+                    thread_ts=request.thread_ts
+                )
+
+            # FIXED: Check for obvious encoding issues
+            try:
+                content.encode('utf-8')
+                # Check for high ratio of non-printable characters
+                printable_chars = sum(1 for char in content[:1000] if char.isprintable())
+                if printable_chars / min(len(content), 1000) < 0.7:  # Less than 70% printable
+                    raise ValueError("Content appears corrupted or encoded")
+            except (UnicodeError, ValueError) as e:
+                logger.error(f"Content validation failed for {url}: {e}")
+                return ActionResponse(
+                    success=False,
+                    error=f"Content encoding error from {url}",
+                    message=f"I fetched content from {url} but it appears to be corrupted or in an unsupported format.",
+                    thread_ts=request.thread_ts
+                )
+
             logger.info(f"📄 Successfully fetched {len(content)} characters from {url}")
             
             # Generate summary
