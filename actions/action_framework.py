@@ -673,11 +673,14 @@ class RetrieveSummarizeAction(Action):
                 
                 # Create a prompt for GPT-4o to read the URL directly
                 direct_url_prompt = (
-                    f"Please read and summarize the content from this URL: {url}\n\n"
-                    f"Provide a comprehensive summary focusing on:\n"
-                    f"- Main points and key facts\n"
-                    f"- Important details and context\n"
-                    f"- Any significant implications or takeaways\n\n"
+                    f"Please read and SUMMARIZE the content from this URL: {url}\n\n"
+                    f"IMPORTANT: Provide a SUMMARY, not the full article content.\n\n"
+                    f"Your summary should:\n"
+                    f"- Be 3-5 paragraphs long\n"
+                    f"- Cover the main points and key facts\n"
+                    f"- Include important details and context\n"
+                    f"- Highlight any significant implications or takeaways\n"
+                    f"- Be substantially shorter than the original article\n\n"
                     f"If you cannot access this URL, please say 'I cannot access this URL' and I'll try an alternative method."
                 )
                 
@@ -691,7 +694,10 @@ class RetrieveSummarizeAction(Action):
                 )
                 
                 # Check if GPT-4o successfully read the URL
-                if llm_response and "I cannot access this URL" not in llm_response and len(llm_response.strip()) > 100:
+                if (llm_response and 
+                    "I cannot access this URL" not in llm_response and 
+                    len(llm_response.strip()) > 100 and 
+                    len(llm_response.strip()) < 5000):  # Summary should be reasonable length, not full article
                     logger.info(f"✅ GPT-4o successfully read URL directly (length: {len(llm_response)})")
                     
                     # Create Notion page with LLM summary
@@ -805,8 +811,13 @@ class RetrieveSummarizeAction(Action):
                     user_specific_context = ""
                 
                 summary_prompt = (
-                    f"Please provide a comprehensive summary of the following web content from {url}.\n"
-                    f"Focus on the main points, key facts, and important details.\n"
+                    f"Please provide a comprehensive SUMMARY of the following web content from {url}.\n"
+                    f"Focus on the main points, key facts, and important details.\n\n"
+                    f"Your summary should:\n"
+                    f"- Be 3-5 paragraphs long\n"
+                    f"- Cover the main points and key facts\n"
+                    f"- Include important details and context\n"
+                    f"- Be substantially shorter than the original content\n\n"
                     f"Content length: {len(content)} characters\n\n"
                     f"Content:\n{content[:15000]}..."
                 )
