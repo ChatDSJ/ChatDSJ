@@ -162,6 +162,13 @@ class ContextResponseAction(Action):
                 notion_page_ids = extract_notion_links(all_messages)
                 logger.info(f"🔍 DEBUG: extract_notion_links returned: {notion_page_ids}")
 
+                # TEMPORARY DEBUG - Remove after testing
+                logger.info(f"🔍 DEBUG: Sample message text: {all_messages[0].get('text', 'NO TEXT') if all_messages else 'NO MESSAGES'}")
+                for i, msg in enumerate(all_messages[:3]):
+                    text = msg.get('text', '')
+                    if 'notion.so' in text:
+                        logger.info(f"🔍 DEBUG: Message {i} contains notion.so: {text}")
+                
                 if notion_page_ids:
                     logger.info(f"Found {len(notion_page_ids)} Notion page links in conversation")
                     

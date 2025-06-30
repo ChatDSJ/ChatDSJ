@@ -14,16 +14,17 @@ def extract_notion_links(messages: List[Dict[str, Any]]) -> Set[str]:
     Extract unique Notion page IDs from Slack messages.
     Handles both plain URLs and Slack's angle bracket format.
     """
-    # Updated patterns to handle Slack's angle bracket unfurling: <https://notion.so/xyz>
+    # FIXED: Updated patterns to handle actual Notion URL formats
     notion_patterns = [
-        r'<https://www\.notion\.so/[^/>]+/([a-f0-9]{32})[^>]*>',  # Slack unfurled standard
-        r'<https://notion\.so/[^/>]+/([a-f0-9]{32})[^>]*>',       # Slack unfurled short
-        r'<https://www\.notion\.so/([a-f0-9]{32})[^>]*>',         # Slack unfurled direct
-        r'<https://notion\.so/([a-f0-9]{32})[^>]*>',              # Slack unfurled direct short
-        r'https://www\.notion\.so/[^/\s]+/([a-f0-9]{32})',        # Plain standard format
-        r'https://notion\.so/[^/\s]+/([a-f0-9]{32})',             # Plain short format  
-        r'https://www\.notion\.so/([a-f0-9]{32})',                # Plain direct page
-        r'https://notion\.so/([a-f0-9]{32})'                      # Plain direct page short
+        # Slack unfurled links (angle brackets)
+        r'<https://www\.notion\.so/[^/>]*?([a-f0-9]{32})[^>]*>',  # Slack unfurled standard
+        r'<https://notion\.so/[^/>]*?([a-f0-9]{32})[^>]*>',       # Slack unfurled short
+        
+        # Plain links (no angle brackets) - FIXED PATTERNS
+        r'https://www\.notion\.so/[^/\s]*?([a-f0-9]{32})',        # Standard format: notion.so/Title-32chars
+        r'https://notion\.so/[^/\s]*?([a-f0-9]{32})',             # Short format: notion.so/Title-32chars
+        r'https://www\.notion\.so/[^/\s]+/[^/\s]*?([a-f0-9]{32})', # With workspace: notion.so/workspace/Title-32chars  
+        r'https://notion\.so/[^/\s]+/[^/\s]*?([a-f0-9]{32})',     # With workspace short
     ]
     
     page_ids = set()
