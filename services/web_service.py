@@ -10,7 +10,6 @@ class WebService:
     
     def __init__(self, llm_service=None):  # Changed parameter name
         self.llm_service = llm_service      # Use any LLM service
-        self.anthropic_service = anthropic_service
         self.session = requests.Session()
         self.session.headers.update({
             'User-Agent': 'ChatDSJ Bot 1.0',
