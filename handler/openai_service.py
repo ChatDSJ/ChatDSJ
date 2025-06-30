@@ -397,6 +397,13 @@ class OpenAIService:
                     full_prompt += f"[{role.upper()}]: {content}\n"
                 full_prompt += "=== END CONVERSATION HISTORY ===\n\n"
 
+        # Add linked Notion content if available
+        if linked_notion_content:
+            full_prompt += "=== LINKED NOTION PAGES ===\n"
+            full_prompt += "The following Notion pages were referenced in the conversation:\n\n"
+            full_prompt += linked_notion_content
+            full_prompt += "=== END LINKED NOTION PAGES ===\n\n"
+
         # Add the current user question
         full_prompt += "=== USER'S CURRENT QUESTION ===\n" + prompt + "\n\n"
 

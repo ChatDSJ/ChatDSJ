@@ -147,6 +147,70 @@ class ContextResponseAction(Action):
                         logger.warning(f"Failed to get display name for user {user_id}: {name_error}")
                         user_display_names[user_id] = f"User {user_id}"
             
+            # NEW: Extract and fetch Notion page content
+            linked_notion_content = ""
+            notion_page_info = []  # For enhanced logging
+            
+            try:
+                from utils.notion_link_extractor import extract_notion_links, format_notion_page_id, extract_page_title_from_content
+                
+                notion_page_ids = extract_notion_links(all_messages)
+                if notion_page_ids:
+                    logger.info(f"Found {len(notion_page_ids)} Notion page links in conversation")
+                    
+                    notion_contents = []
+                    
+                    # Limit to 10 pages to prevent token explosion
+                    for page_id in list(notion_page_ids)[:10]:
+                        formatted_id = format_notion_page_id(page_id)
+                        
+                        try:
+                            content = await asyncio.to_thread(
+                                self.services.notion_service.get_notion_page_content,
+                                formatted_id
+                            )
+                            
+                            if content and content.strip():
+                                # Extract title for logging
+                                page_title = extract_page_title_from_content(content, page_id)
+                                content_length = len(content)
+                                
+                                # Format content with metadata for LLM
+                                page_section = (
+                                    f"=== NOTION PAGE: {page_title} (ID: {formatted_id}) ===\n"
+                                    f"{content.strip()}\n"
+                                    f"=== END NOTION PAGE ===\n"
+                                )
+                                notion_contents.append(page_section)
+                                
+                                # Track for logging
+                                notion_page_info.append({
+                                    'title': page_title,
+                                    'id': formatted_id,
+                                    'length': content_length
+                                })
+                                
+                                logger.debug(f"Retrieved Notion page: {page_title} ({content_length} chars)")
+                            else:
+                                logger.warning(f"Empty or inaccessible Notion page: {formatted_id}")
+                                
+                        except Exception as page_error:
+                            logger.error(f"Error fetching Notion page {formatted_id}: {page_error}")
+                            continue  # Skip broken pages, continue processing
+                    
+                    if notion_contents:
+                        linked_notion_content = "\n".join(notion_contents)
+                        
+                        # Enhanced logging as requested
+                        total_chars = sum(info['length'] for info in notion_page_info)
+                        logger.info(f"Included {len(notion_page_info)} Notion pages in prompt (total {total_chars:,} characters)")
+                        for info in notion_page_info:
+                            logger.info(f"  - \"{info['title']}\" ({info['length']:,} chars)")
+                
+            except Exception as notion_error:
+                logger.error(f"Error processing Notion links: {notion_error}")
+                linked_notion_content = ""  # Continue without Notion content
+
             # NEW: Structure context based on thread vs channel
             thread_context = None
             conversation_history = None
@@ -215,9 +279,10 @@ class ContextResponseAction(Action):
                     prompt=request.prompt,
                     conversation_history=conversation_history,
                     user_specific_context=user_specific_context,
+                    linked_notion_content=linked_notion_content,  # ADD THIS LINE
                     slack_user_id=request.user_id,
                     notion_service=self.services.notion_service,
-                    thread_context=thread_context  # NEW: Pass thread context
+                    thread_context=thread_context
                 )
                 
                 # Send directly to OpenAI (messages are already prepared)
