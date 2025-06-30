@@ -1,10 +1,13 @@
-# =============================================================================
-# FILE 1: utils/notion_link_extractor.py (NEW FILE)
-# =============================================================================
-
 import re
 from typing import List, Dict, Any, Set, Tuple
-from loguru import logger
+
+# Handle loguru import gracefully
+try:
+    from loguru import logger
+except ImportError:
+    # Fallback to standard logging if loguru not available
+    import logging
+    logger = logging.getLogger(__name__)
 
 def extract_notion_links(messages: List[Dict[str, Any]]) -> Set[str]:
     """
