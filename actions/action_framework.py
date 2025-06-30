@@ -1,6 +1,7 @@
 from typing import Dict, Any, List, Optional, Tuple, Union, Protocol
 import re
 import asyncio
+from datetime import datetime
 from abc import ABC, abstractmethod
 from loguru import logger
 from pydantic import BaseModel, Field
@@ -573,59 +574,60 @@ class RetrieveSummarizeAction(Action):
     
     def can_handle(self, text: str) -> bool:
         """
-        MUCH MORE RESTRICTIVE: Only handle direct URL fetch requests.
-        Don't handle text summarization that happens to contain URLs.
+        FIXED: More robust URL detection for shared links.
         """
-        # Must contain a URL
-        url_pattern = r'https?://(?:[-\w.]|(?:%[\da-fA-F]{2}))+'
+        # FIXED: Better URL pattern that handles real URLs
+        url_pattern = r'https?://[^\s<>"\']+'
         has_url = bool(re.search(url_pattern, text))
         
         if not has_url:
             return False
         
-        # Don't handle YouTube URLs
+        # Don't handle YouTube URLs (they have their own action)
         if "youtube.com" in text or "youtu.be" in text:
             return False
         
-        # RESTRICTIVE: Only handle if this looks like a direct URL request
-        # Examples that should be handled:
-        # - "summarize https://example.com"
-        # - "https://example.com"
-        # - "check out https://example.com"
-        
-        # Examples that should NOT be handled (go to ContextResponseAction):
-        # - "summarize this: [long pasted text that contains URLs]"
-        # - "analyze this document: [text with embedded URLs]"
-        
+        # FIXED: More robust detection of URL-sharing messages
         url_match = re.search(url_pattern, text)
         if not url_match:
             return False
         
         url = url_match.group(0)
         
-        # If the message is mostly just the URL (with minimal other text), handle it
-        text_without_url = re.sub(url_pattern, '', text).strip()
-        text_without_url = re.sub(r'<@\w+>', '', text_without_url).strip()  # Remove mentions
+        # FIXED: Better text analysis after removing URLs and Slack formatting
+        # Remove the URL and any Slack formatting around it
+        text_without_url = re.sub(r'<' + re.escape(url) + r'>', '', text)  # Remove <URL>
+        text_without_url = re.sub(url_pattern, '', text_without_url)        # Remove any remaining URLs
+        text_without_url = re.sub(r'<@\w+>', '', text_without_url)          # Remove mentions
+        text_without_url = re.sub(r'<[^>]*>', '', text_without_url)         # Remove other Slack formatting
+        text_without_url = text_without_url.strip()
         
-        # If what's left is very short, this is probably a URL request
-        if len(text_without_url) < 30:
+        # FIXED: More lenient threshold and better patterns
+        # If what's left is very short, this is probably a URL share
+        if len(text_without_url) <= 50:  # Increased from 30 to 50
+            logger.info(f"🔗 URL share detected. Remaining text: '{text_without_url}' (length: {len(text_without_url)})")
             return True
         
-        # Check for explicit URL fetch requests
+        # Check for explicit URL fetch requests (case insensitive)
         fetch_patterns = [
-            f"summarize {url}",
-            f"summary of {url}",
-            f"analyze {url}",
-            f"what does {url} say",
-            f"check {url}",
-            f"look at {url}"
+            "summarize",
+            "summary",
+            "analyze",
+            "what does",
+            "check out",
+            "look at",
+            "read this",
+            "tell me about"
         ]
         
+        text_lower = text.lower()
         for pattern in fetch_patterns:
-            if pattern.lower() in text.lower():
+            if pattern in text_lower:
+                logger.info(f"🔗 URL fetch request detected with pattern: '{pattern}'")
                 return True
         
-        # Otherwise, let ContextResponseAction handle it
+        # Log why we're not handling this
+        logger.info(f"🔗 URL found but not handling. Remaining text too long: '{text_without_url[:100]}...' (length: {len(text_without_url)})")
         return False
     
     async def execute(self, request: ActionRequest) -> ActionResponse:
@@ -637,8 +639,8 @@ class RetrieveSummarizeAction(Action):
                     error="Required services not available"
                 )
             
-            # Extract URL
-            url_pattern = r'https?://(?:[-\w.]|(?:%[\da-fA-F]{2}))+'
+            # FIXED: Better URL extraction
+            url_pattern = r'https?://[^\s<>"\']+'
             match = re.search(url_pattern, request.text)
             
             if not match:
@@ -650,6 +652,7 @@ class RetrieveSummarizeAction(Action):
                 )
             
             url = match.group(0)
+            logger.info(f"🔗 Extracting content from: {url}")
             
             # Fetch web content
             try:
@@ -659,7 +662,7 @@ class RetrieveSummarizeAction(Action):
                 return ActionResponse(
                     success=False,
                     error=f"Web fetch error: {str(web_error)}",
-                    message=f"I couldn't fetch content from {url}. The site may be unavailable.",
+                    message=f"I couldn't fetch content from {url}. The site may be unavailable or blocked.",
                     thread_ts=request.thread_ts
                 )
             
@@ -667,76 +670,109 @@ class RetrieveSummarizeAction(Action):
                 return ActionResponse(
                     success=False,
                     error=f"Failed to fetch content from {url}",
-                    message=f"I couldn't fetch content from {url}.",
+                    message=f"I couldn't fetch content from {url}. The site may be unavailable or have access restrictions.",
                     thread_ts=request.thread_ts
                 )
             
+            logger.info(f"📄 Successfully fetched {len(content)} characters from {url}")
+            
             # Generate summary
             try:
-                summary_prompt = f"Please summarize the following web content from {url}:\n\n{content[:10000]}..."
+                # ENHANCED: Better summarization prompt
+                summary_prompt = (
+                    f"Please provide a comprehensive summary of the following web content from {url}.\n"
+                    f"Focus on the main points, key facts, and important details.\n"
+                    f"Content length: {len(content)} characters\n\n"
+                    f"Content:\n{content[:15000]}..."  # Increased from 10000 to 15000
+                )
+                
                 summary, _ = await self.services.openai_service.get_completion_async(
                     prompt=summary_prompt,
-                    max_tokens=500,
+                    max_tokens=800,  # Increased from 500 to 800 for more detailed summaries
                     slack_user_id=request.user_id,
                     notion_service=self.services.notion_service
                 )
+                
+                if not summary:
+                    raise Exception("Empty summary returned from OpenAI")
+                    
+                logger.info(f"📝 Generated summary of {len(summary)} characters")
+                
             except Exception as openai_error:
                 logger.error(f"OpenAI summarization error: {openai_error}")
                 return ActionResponse(
                     success=False,
                     error=f"Summarization error: {str(openai_error)}",
-                    message="I fetched the content but couldn't generate a summary.",
+                    message="I fetched the content but couldn't generate a summary. Please try again.",
                     thread_ts=request.thread_ts
                 )
             
-            if not summary:
-                return ActionResponse(
-                    success=False,
-                    error="Failed to generate summary",
-                    message="I fetched the content but couldn't generate a summary.",
-                    thread_ts=request.thread_ts
-                )
-            
-            # Store in Notion with dual summary approach
+            # ENHANCED: Better Notion page creation
             notion_page_id = None
             short_summary = summary  # Default fallback
             
             try:
-                # Generate shorter summary for Slack
-                if summary:
-                    short_summary_prompt = f"Create a 2-3 sentence summary of this summary:\n\n{summary}"
+                # Generate shorter summary for Slack if the summary is very long
+                if len(summary) > 500:
+                    short_summary_prompt = f"Create a concise 2-3 sentence summary of this longer summary:\n\n{summary}"
                     short_summary, _ = await self.services.openai_service.get_completion_async(
                         prompt=short_summary_prompt,
-                        max_tokens=100,
+                        max_tokens=150,
                         slack_user_id=request.user_id,
                         notion_service=self.services.notion_service
                     )
+                    logger.info(f"📝 Generated short summary of {len(short_summary)} characters")
                 
-                # Create Notion page with full content
-                page_title = f"Article Summary: {url}"
-                page_content = f"# {page_title}\n\n**URL:** {url}\n\n## Summary\n\n{summary}\n\n## Full Content\n\n{content[:10000]}"
+                # ENHANCED: Create Notion page with better formatting
+                from urllib.parse import urlparse
+                parsed_url = urlparse(url)
+                domain = parsed_url.netloc.replace('www.', '')
+                
+                page_title = f"Article Summary from {domain}"
+                page_content = (
+                    f"# {page_title}\n\n"
+                    f"**Source URL:** {url}\n"
+                    f"**Domain:** {domain}\n"
+                    f"**Content Length:** {len(content):,} characters\n"
+                    f"**Summary Length:** {len(summary):,} characters\n"
+                    f"**Processed:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n"
+                    f"## Summary\n\n{summary}\n\n"
+                    f"## Full Content (First 20,000 characters)\n\n{content[:20000]}"
+                    f"{'...\n\n[Content truncated]' if len(content) > 20000 else ''}"
+                )
                 
                 notion_page_id = await asyncio.to_thread(
                     self.services.notion_service.create_content_page,
                     page_title,
                     page_content
                 )
+                
+                if notion_page_id:
+                    logger.info(f"📋 Created Notion page: {notion_page_id}")
+                
             except Exception as notion_error:
                 logger.error(f"Notion page creation error: {notion_error}")
+                # Continue without Notion page - don't fail the whole operation
             
-            # Construct response with short summary + Notion link
+            # ENHANCED: Better response formatting
+            domain = urlparse(url).netloc.replace('www.', '')
+            
             if notion_page_id:
                 notion_url = self.services.notion_service.get_page_url(notion_page_id)
                 response_message = (
-                    f"📄 **Article Summary**\n\n"
-                    f"{short_summary or summary[:200]+'...'}\n\n"
-                    f"📝 [View full summary in Notion]({notion_url})"
+                    f"📄 **Article Summary from {domain}**\n\n"
+                    f"{short_summary or summary[:400]+'...' if len(summary) > 400 else summary}\n\n"
+                    f"🔗 **Source:** {url}\n"
+                    f"📋 **[Full summary & content in Notion]({notion_url})**"
                 )
             else:
                 response_message = (
-                    f"📄 **Article Summary**\n\n"
-                    f"{short_summary or summary}"
+                    f"📄 **Article Summary from {domain}**\n\n"
+                    f"{short_summary or summary}\n\n"
+                    f"🔗 **Source:** {url}"
                 )
+            
+            logger.info(f"✅ Successfully processed URL: {url}")
             
             return ActionResponse(
                 success=True,
@@ -749,10 +785,10 @@ class RetrieveSummarizeAction(Action):
             return ActionResponse(
                 success=False,
                 error=str(e),
-                message="I encountered an error retrieving and summarizing that URL.",
+                message="I encountered an error retrieving and summarizing that URL. Please try again.",
                 thread_ts=request.thread_ts
             )
-    
+        
 class YoutubeSummarizeAction(Action):
     """Action for retrieving and summarizing YouTube videos."""
     
