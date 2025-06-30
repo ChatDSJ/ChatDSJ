@@ -147,14 +147,21 @@ class ContextResponseAction(Action):
                         logger.warning(f"Failed to get display name for user {user_id}: {name_error}")
                         user_display_names[user_id] = f"User {user_id}"
             
+            # DEBUG: Force a log to confirm we reach this point
+            logger.info("🔍 DEBUG: About to start Notion link extraction")
+
             # NEW: Extract and fetch Notion page content
             linked_notion_content = ""
             notion_page_info = []  # For enhanced logging
-            
+
             try:
+                logger.info("🔍 DEBUG: Attempting import of notion_link_extractor")
                 from utils.notion_link_extractor import extract_notion_links, format_notion_page_id, extract_page_title_from_content
+                logger.info("🔍 DEBUG: Import successful, about to extract links")
                 
                 notion_page_ids = extract_notion_links(all_messages)
+                logger.info(f"🔍 DEBUG: extract_notion_links returned: {notion_page_ids}")
+
                 if notion_page_ids:
                     logger.info(f"Found {len(notion_page_ids)} Notion page links in conversation")
                     
@@ -208,8 +215,11 @@ class ContextResponseAction(Action):
                             logger.info(f"  - \"{info['title']}\" ({info['length']:,} chars)")
                 
             except Exception as notion_error:
-                logger.error(f"Error processing Notion links: {notion_error}")
-                linked_notion_content = ""  # Continue without Notion content
+                logger.error(f"🔍 DEBUG: Exception in Notion extraction: {notion_error}")
+                logger.error(f"🔍 DEBUG: Exception type: {type(notion_error)}")
+                import traceback
+                logger.error(f"🔍 DEBUG: Full traceback: {traceback.format_exc()}")
+                linked_notion_content = "" 
 
             # NEW: Structure context based on thread vs channel
             thread_context = None
