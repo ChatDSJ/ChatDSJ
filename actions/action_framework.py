@@ -654,23 +654,26 @@ class RetrieveSummarizeAction(Action):
             url = match.group(0)
             logger.info(f"🔗 Processing URL: {url}")
             
+            # Get user context for personalization (used by both paths)
+            try:
+                from utils.context_builder import get_enhanced_user_context
+                user_specific_context = await asyncio.to_thread(
+                    get_enhanced_user_context,
+                    self.services.notion_service,
+                    request.user_id,
+                    ""
+                )
+            except Exception as context_error:
+                logger.warning(f"Could not get user context: {context_error}")
+                user_specific_context = ""
+            
+            summary = None
+            method_used = "unknown"
+            
             # STRATEGY 1: Try GPT-4o web browsing first
             logger.info(f"🤖 Attempting to read URL directly with GPT-4o: {url}")
             
             try:
-                # Get user context for personalization
-                try:
-                    from utils.context_builder import get_enhanced_user_context
-                    user_specific_context = await asyncio.to_thread(
-                        get_enhanced_user_context,
-                        self.services.notion_service,
-                        request.user_id,
-                        ""
-                    )
-                except Exception as context_error:
-                    logger.warning(f"Could not get user context: {context_error}")
-                    user_specific_context = ""
-                
                 # Create a prompt for GPT-4o to read the URL directly
                 direct_url_prompt = (
                     f"Please read and SUMMARIZE the content from this URL: {url}\n\n"
@@ -697,64 +700,11 @@ class RetrieveSummarizeAction(Action):
                 if (llm_response and 
                     "I cannot access this URL" not in llm_response and 
                     len(llm_response.strip()) > 100 and 
-                    len(llm_response.strip()) < 5000):  # Summary should be reasonable length, not full article
-                    logger.info(f"✅ GPT-4o successfully read URL directly (length: {len(llm_response)})")
+                    len(llm_response.strip()) < 5000):  # Summary should be reasonable length
                     
-                    # Create Notion page with LLM summary
-                    notion_page_id = None
-                    try:
-                        from urllib.parse import urlparse
-                        parsed_url = urlparse(url)
-                        domain = parsed_url.netloc.replace('www.', '')
-                        
-                        page_title = f"Article Summary from {domain}"
-                        page_content = (
-                            f"# {page_title}\n\n"
-                            f"**Source URL:** {url}\n"
-                            f"**Domain:** {domain}\n"
-                            f"**Processed:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n"
-                            f"**Method:** GPT-4o Direct Web Access\n\n"
-                            f"## Summary\n\n{llm_response}"
-                        )
-                        
-                        notion_page_id = await asyncio.to_thread(
-                            self.services.notion_service.create_content_page,
-                            page_title,
-                            page_content
-                        )
-                        
-                        if notion_page_id:
-                            logger.info(f"📋 Created Notion page: {notion_page_id}")
-                    
-                    except Exception as notion_error:
-                        logger.error(f"Notion page creation error: {notion_error}")
-                    
-                    # Format response
-                    domain = urlparse(url).netloc.replace('www.', '')
-                    
-                    if notion_page_id:
-                        notion_url = self.services.notion_service.get_page_url(notion_page_id)
-                        response_message = (
-                            f"📄 **Article Summary from {domain}**\n\n"
-                            f"{llm_response}\n\n"
-                            f"🔗 **Source:** {url}\n"
-                            f"📋 **[Full summary in Notion]({notion_url})**"
-                        )
-                    else:
-                        response_message = (
-                            f"📄 **Article Summary from {domain}**\n\n"
-                            f"{llm_response}\n\n"
-                            f"🔗 **Source:** {url}"
-                        )
-                    
-                    logger.info(f"✅ Successfully processed URL with GPT-4o: {url}")
-                    
-                    return ActionResponse(
-                        success=True,
-                        message=response_message,
-                        thread_ts=request.thread_ts
-                    )
-                
+                    summary = llm_response.strip()
+                    method_used = "GPT-4o Direct Web Access"
+                    logger.info(f"✅ GPT-4o successfully read URL directly (length: {len(summary)})")
                 else:
                     logger.info(f"❌ GPT-4o could not access URL directly, falling back to scraping: {url}")
                     
@@ -762,105 +712,146 @@ class RetrieveSummarizeAction(Action):
                 logger.warning(f"GPT-4o web browsing failed: {llm_error}")
                 logger.info(f"🕷️ Falling back to web scraping for: {url}")
             
-            # STRATEGY 2: Fallback to web scraping
-            logger.info(f"🕷️ Attempting web scraping for: {url}")
-            
-            try:
-                content = await self.services.web_service.fetch_content(url)
-            except Exception as web_error:
-                logger.error(f"Web service error: {web_error}")
-                return ActionResponse(
-                    success=False,
-                    error=f"Web fetch error: {str(web_error)}",
-                    message=f"I couldn't access content from {url} using either direct access or web scraping. The site may be unavailable or blocked.",
-                    thread_ts=request.thread_ts
-                )
-            
-            if not content:
-                return ActionResponse(
-                    success=False,
-                    error=f"Failed to fetch content from {url}",
-                    message=f"I couldn't access content from {url} using either method. The site may be unavailable or have access restrictions.",
-                    thread_ts=request.thread_ts
-                )
-            
-            # Validate scraped content quality
-            if len(content.strip()) < 100:
-                return ActionResponse(
-                    success=False,
-                    error=f"Insufficient content from {url}",
-                    message=f"I was able to access {url} but couldn't extract meaningful content. The page might be mostly images, videos, or require JavaScript.",
-                    thread_ts=request.thread_ts
-                )
-            
-            logger.info(f"📄 Successfully scraped {len(content)} characters from {url}")
-            
-            # Generate summary using scraped content
-            try:
-                # Get user context
+            # STRATEGY 2: Fallback to web scraping if GPT-4o failed
+            if not summary:
+                logger.info(f"🕷️ Attempting web scraping for: {url}")
+                
                 try:
-                    from utils.context_builder import get_enhanced_user_context
-                    user_specific_context = await asyncio.to_thread(
-                        get_enhanced_user_context,
-                        self.services.notion_service,
-                        request.user_id,
-                        ""
+                    content = await self.services.web_service.fetch_content(url)
+                except Exception as web_error:
+                    logger.error(f"Web service error: {web_error}")
+                    return ActionResponse(
+                        success=False,
+                        error=f"Web fetch error: {str(web_error)}",
+                        message=f"I couldn't access content from {url} using either direct access or web scraping. The site may be unavailable or blocked.",
+                        thread_ts=request.thread_ts
                     )
-                except Exception as context_error:
-                    logger.warning(f"Could not get user context for summary: {context_error}")
-                    user_specific_context = ""
                 
-                summary_prompt = (
-                    f"Please provide a comprehensive SUMMARY of the following web content from {url}.\n"
-                    f"Focus on the main points, key facts, and important details.\n\n"
-                    f"Your summary should:\n"
-                    f"- Be 3-5 paragraphs long\n"
-                    f"- Cover the main points and key facts\n"
-                    f"- Include important details and context\n"
-                    f"- Be substantially shorter than the original content\n\n"
-                    f"Content length: {len(content)} characters\n\n"
-                    f"Content:\n{content[:15000]}..."
-                )
+                if not content:
+                    return ActionResponse(
+                        success=False,
+                        error=f"Failed to fetch content from {url}",
+                        message=f"I couldn't access content from {url} using either method. The site may be unavailable or have access restrictions.",
+                        thread_ts=request.thread_ts
+                    )
                 
-                summary, _ = await self.services.openai_service.get_completion_async(
-                    prompt=summary_prompt,
-                    user_specific_context=user_specific_context,
-                    max_tokens=800,
-                    slack_user_id=request.user_id,
-                    notion_service=self.services.notion_service
-                )
+                # Validate scraped content quality
+                if len(content.strip()) < 100:
+                    return ActionResponse(
+                        success=False,
+                        error=f"Insufficient content from {url}",
+                        message=f"I was able to access {url} but couldn't extract meaningful content. The page might be mostly images, videos, or require JavaScript.",
+                        thread_ts=request.thread_ts
+                    )
                 
-                if not summary:
-                    raise Exception("Empty summary returned from OpenAI")
+                logger.info(f"📄 Successfully scraped {len(content)} characters from {url}")
+                
+                # Generate summary using scraped content
+                try:
+                    summary_prompt = (
+                        f"Please provide a comprehensive SUMMARY of the following web content from {url}.\n"
+                        f"Focus on the main points, key facts, and important details.\n\n"
+                        f"Your summary should:\n"
+                        f"- Be 3-5 paragraphs long\n"
+                        f"- Cover the main points and key facts\n"
+                        f"- Include important details and context\n"
+                        f"- Be substantially shorter than the original content\n\n"
+                        f"Content length: {len(content)} characters\n\n"
+                        f"Content:\n{content[:15000]}..."
+                    )
                     
-                logger.info(f"📝 Generated summary of {len(summary)} characters using scraped content")
-                
-            except Exception as openai_error:
-                logger.error(f"OpenAI summarization error: {openai_error}")
-                return ActionResponse(
-                    success=False,
-                    error=f"Summarization error: {str(openai_error)}",
-                    message="I fetched the content but couldn't generate a summary. Please try again.",
-                    thread_ts=request.thread_ts
-                )
-            
-            # Create Notion page with scraped content
-            notion_page_id = None
-            short_summary = summary
-            
-            try:
-                # Generate shorter summary for Slack if needed
-                if len(summary) > 500:
-                    short_summary_prompt = f"Create a concise 2-3 sentence summary of this longer summary:\n\n{summary}"
-                    short_summary, _ = await self.services.openai_service.get_completion_async(
-                        prompt=short_summary_prompt,
-                        max_tokens=150,
+                    summary, _ = await self.services.openai_service.get_completion_async(
+                        prompt=summary_prompt,
+                        user_specific_context=user_specific_context,
+                        max_tokens=800,
                         slack_user_id=request.user_id,
                         notion_service=self.services.notion_service
                     )
-                    logger.info(f"📝 Generated short summary of {len(short_summary)} characters")
-                
-                # Create Notion page
+                    
+                    if not summary:
+                        raise Exception("Empty summary returned from OpenAI")
+                    
+                    method_used = "Web Scraping + LLM Summary"
+                    logger.info(f"📝 Generated summary of {len(summary)} characters using scraped content")
+                    
+                except Exception as openai_error:
+                    logger.error(f"OpenAI summarization error: {openai_error}")
+                    return ActionResponse(
+                        success=False,
+                        error=f"Summarization error: {str(openai_error)}",
+                        message="I fetched the content but couldn't generate a summary. Please try again.",
+                        thread_ts=request.thread_ts
+                    )
+            
+            # At this point we should have a summary from either path
+            if not summary:
+                return ActionResponse(
+                    success=False,
+                    error="Failed to generate summary",
+                    message="I couldn't generate a summary from that URL. Please try again.",
+                    thread_ts=request.thread_ts
+                )
+            
+            # STEP 2: Create SHORT summary for Slack (BOTH PATHS USE THIS)
+            logger.info(f"📝 Creating short summary for Slack from {len(summary)} char summary")
+            
+            short_summary = summary  # Default fallback
+            
+            try:
+                # Always create short summary if longer than 200 chars
+                if len(summary) > 200:
+                    short_summary_prompt = (
+                        f"Create a very brief 1-2 sentence summary of this article summary for Slack.\n\n"
+                        f"REQUIREMENTS:\n"
+                        f"- Maximum 150 characters\n"
+                        f"- 1-2 sentences only\n"
+                        f"- Focus on the single most important point\n"
+                        f"- No links or formatting\n\n"
+                        f"Article summary to condense:\n{summary}"
+                    )
+                    
+                    short_summary_response, _ = await self.services.openai_service.get_completion_async(
+                        prompt=short_summary_prompt,
+                        max_tokens=50,  # Very limited tokens to force brevity
+                        slack_user_id=request.user_id,
+                        notion_service=self.services.notion_service
+                    )
+                    
+                    if short_summary_response and len(short_summary_response.strip()) > 10:
+                        candidate_short = short_summary_response.strip()
+                        
+                        # Validate that it's actually short
+                        if len(candidate_short) <= 200:  # Must be under 200 chars
+                            short_summary = candidate_short
+                            logger.info(f"📝 Generated short summary: {len(short_summary)} chars: '{short_summary[:50]}...'")
+                        else:
+                            logger.warning(f"Generated 'short' summary too long ({len(candidate_short)} chars), using truncation")
+                            short_summary = summary[:150] + "..."
+                    else:
+                        logger.warning("Short summary generation returned empty/invalid result")
+                        short_summary = summary[:150] + "..."
+                else:
+                    # Summary is already short enough
+                    short_summary = summary
+                    logger.info(f"📝 Summary already short enough ({len(summary)} chars)")
+            
+            except Exception as short_summary_error:
+                logger.error(f"Short summary generation failed: {short_summary_error}")
+                # More aggressive truncation as fallback
+                short_summary = summary[:150] + "..."
+            
+            # Final safety check - ensure short_summary is actually short
+            if len(short_summary) > 200:
+                logger.warning(f"Short summary still too long ({len(short_summary)} chars), forcing truncation")
+                short_summary = short_summary[:150] + "..."
+            
+            logger.info(f"📝 Final short summary length: {len(short_summary)} chars")
+            
+            # STEP 3: Create Notion page with full summary
+            logger.info(f"📋 Creating Notion page with summary (length: {len(summary)})")
+            
+            notion_page_id = None
+            try:
                 from urllib.parse import urlparse
                 parsed_url = urlparse(url)
                 domain = parsed_url.netloc.replace('www.', '')
@@ -870,13 +861,10 @@ class RetrieveSummarizeAction(Action):
                     f"# {page_title}\n\n"
                     f"**Source URL:** {url}\n"
                     f"**Domain:** {domain}\n"
-                    f"**Content Length:** {len(content):,} characters\n"
-                    f"**Summary Length:** {len(summary):,} characters\n"
                     f"**Processed:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n"
-                    f"**Method:** Web Scraping + LLM Summary\n\n"
-                    f"## Summary\n\n{summary}\n\n"
-                    f"## Full Content (First 20,000 characters)\n\n{content[:20000]}"
-                    f"{'...\n\n[Content truncated]' if len(content) > 20000 else ''}"
+                    f"**Method:** {method_used}\n"
+                    f"**Summary Length:** {len(summary):,} characters\n\n"
+                    f"## Summary\n\n{summary}"
                 )
                 
                 notion_page_id = await asyncio.to_thread(
@@ -887,29 +875,33 @@ class RetrieveSummarizeAction(Action):
                 
                 if notion_page_id:
                     logger.info(f"📋 Created Notion page: {notion_page_id}")
-                
+                else:
+                    logger.warning("Failed to create Notion page")
+            
             except Exception as notion_error:
                 logger.error(f"Notion page creation error: {notion_error}")
             
-            # Format final response
+            # STEP 4: Format final response for Slack (using SHORT summary)
+            from urllib.parse import urlparse
             domain = urlparse(url).netloc.replace('www.', '')
             
             if notion_page_id:
                 notion_url = self.services.notion_service.get_page_url(notion_page_id)
                 response_message = (
-                    f"📄 **Article Summary from {domain}** (via web scraping)\n\n"
-                    f"{short_summary or summary[:400]+'...' if len(summary) > 400 else summary}\n\n"
+                    f"📄 **Article Summary from {domain}**\n\n"
+                    f"{short_summary}\n\n"
                     f"🔗 **Source:** {url}\n"
-                    f"📋 **[Full summary & content in Notion]({notion_url})**"
+                    f"📋 **[Full summary in Notion]({notion_url})**"
                 )
             else:
                 response_message = (
-                    f"📄 **Article Summary from {domain}** (via web scraping)\n\n"
-                    f"{short_summary or summary}\n\n"
-                    f"🔗 **Source:** {url}"
+                    f"📄 **Article Summary from {domain}**\n\n"
+                    f"{short_summary}\n\n"
+                    f"🔗 **Source:** {url}\n"
+                    f"📋 *Notion page creation failed*"
                 )
             
-            logger.info(f"✅ Successfully processed URL via scraping: {url}")
+            logger.info(f"✅ Successfully processed URL with proper summarization: {url}")
             
             return ActionResponse(
                 success=True,
@@ -925,7 +917,7 @@ class RetrieveSummarizeAction(Action):
                 message="I encountered an error processing that URL. Please try again.",
                 thread_ts=request.thread_ts
             )
-      
+    
 class YoutubeSummarizeAction(Action):
     """Action for retrieving and summarizing YouTube videos."""
     
