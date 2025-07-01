@@ -206,7 +206,6 @@ class ContextResponseAction(Action):
                                 })
                                 
                                 logger.info(f"✅ Successfully retrieved Notion page: {page_title} ({content_length} chars)")
-                                break  # SUCCESS - don't try other IDs from same URL
                                 
                             else:
                                 logger.warning(f"Empty Notion page: {formatted_id}")
