@@ -512,11 +512,18 @@ class CachedNotionService:
         """
         cache_key = f"page_content_{page_id}"
         
-        # Check cache first
-        with self.page_content_lock:
-            if cache_key in self.page_content_cache:
-                self.cache_stats["hits"] += 1
-                return self.page_content_cache[cache_key]
+        # Check cache first with thread safety
+        try:
+            with self.page_content_lock:
+                if cache_key in self.page_content_cache:
+                    cached_value = self.page_content_cache[cache_key]
+                    self.cache_stats["hits"] += 1
+                    logger.debug(f"Cache hit for page content: {page_id}")
+                    return cached_value
+        except Exception as cache_error:
+            logger.warning(f"Cache read error for page {page_id}: {cache_error}")
+            self.log_cache_status()  # Only log when there's an error
+            # Continue to fetch from API if cache fails
         
         if not self.is_available():
             return None
@@ -565,11 +572,16 @@ class CachedNotionService:
             # Join all text parts
             full_content = "\n".join(filter(None, all_text_parts)).strip()
             
-            # Cache the result
-            with self.page_content_lock:
-                self.page_content_cache[cache_key] = full_content if full_content else ""
-                self.cache_stats["misses"] += 1
-            
+            # Cache the result with error handling
+            try:
+                with self.page_content_lock:
+                    self.page_content_cache[cache_key] = full_content if full_content else ""
+                    self.cache_stats["misses"] += 1
+            except Exception as cache_error:
+                logger.warning(f"Failed to cache page content for {page_id}: {cache_error}")
+                self.log_cache_status()  # Only log when there's an error
+                # Continue without caching - the content was still fetched successfully
+
             if full_content:
                 logger.info(f"Retrieved Notion page content for page {page_id} (length: {len(full_content)})")
                 return full_content
@@ -711,3 +723,25 @@ class CachedNotionService:
         """Generate public URL for Notion page."""
         clean_id = page_id.replace('-', '')
         return f"https://www.notion.so/{clean_id}"
+    
+    def log_cache_status(self) -> None:
+        """Log current cache status for debugging."""
+        try:
+            with self.cache_lock:
+                cache_size = len(self.cache)
+                cache_maxsize = self.cache.maxsize
+            
+            with self.page_content_lock:
+                page_cache_size = len(self.page_content_cache)
+                page_cache_maxsize = self.page_content_cache.maxsize
+            
+            stats = self.cache_stats.copy()
+            hit_ratio = stats["hits"] / (stats["hits"] + stats["misses"]) if (stats["hits"] + stats["misses"]) > 0 else 0
+            
+            logger.info(
+                f"📊 Cache Status: Main={cache_size}/{cache_maxsize}, "
+                f"Pages={page_cache_size}/{page_cache_maxsize}, "
+                f"Hit ratio={hit_ratio:.2%}, Errors={stats['errors']}"
+            )
+        except Exception as e:
+            logger.warning(f"Failed to log cache status: {e}")

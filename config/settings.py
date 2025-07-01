@@ -58,7 +58,7 @@ class Settings(BaseSettings):
     
     # Caching Configuration
     cache_ttl: int = Field(300, description="Cache time-to-live in seconds")
-    cache_max_size: int = Field(1000, description="Maximum number of items in cache")
+    cache_max_size: int = Field(5000, description="Maximum number of items in cache")
 
 @lru_cache()
 def get_settings():

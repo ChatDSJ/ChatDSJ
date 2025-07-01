@@ -595,6 +595,10 @@ class RetrieveSummarizeAction(Action):
         if "youtube.com" in text or "youtu.be" in text:
             return False
         
+        # ADD THIS: Don't handle Notion URLs (they should use Notion API in ContextResponseAction)
+        if "notion.so" in text or "notion.site" in text:
+            return False
+        
         # FIXED: More robust detection of URL-sharing messages
         url_match = re.search(url_pattern, text)
         if not url_match:
