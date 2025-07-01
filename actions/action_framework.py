@@ -205,13 +205,19 @@ class ContextResponseAction(Action):
                                     'length': content_length
                                 })
                                 
-                                logger.debug(f"Retrieved Notion page: {page_title} ({content_length} chars)")
+                                logger.info(f"✅ Successfully retrieved Notion page: {page_title} ({content_length} chars)")
+                                break  # SUCCESS - don't try other IDs from same URL
+                                
                             else:
-                                logger.warning(f"Empty or inaccessible Notion page: {formatted_id}")
+                                logger.warning(f"Empty Notion page: {formatted_id}")
                                 
                         except Exception as page_error:
-                            logger.error(f"Error fetching Notion page {formatted_id}: {page_error}")
-                            continue  # Skip broken pages, continue processing
+                            error_msg = str(page_error).lower()
+                            if "could not find block" in error_msg or "make sure the relevant pages" in error_msg:
+                                logger.warning(f"❌ Access denied for Notion page {formatted_id} - trying next ID if available")
+                            else:
+                                logger.error(f"❌ Error fetching Notion page {formatted_id}: {page_error}")
+                            continue  # Try the next page ID
                     
                     if notion_contents:
                         linked_notion_content = "\n".join(notion_contents)
@@ -221,7 +227,9 @@ class ContextResponseAction(Action):
                         logger.info(f"Included {len(notion_page_info)} Notion pages in prompt (total {total_chars:,} characters)")
                         for info in notion_page_info:
                             logger.info(f"  - \"{info['title']}\" ({info['length']:,} chars)")
-                
+                    else:
+                        logger.warning(f"⚠️  Could not access any of the {len(notion_page_ids)} Notion pages found in conversation")
+
             except Exception as notion_error:
                 logger.error(f"🔍 DEBUG: Exception in Notion extraction: {notion_error}")
                 logger.error(f"🔍 DEBUG: Exception type: {type(notion_error)}")

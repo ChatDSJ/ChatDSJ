@@ -509,13 +509,6 @@ class CachedNotionService:
     def get_notion_page_content(self, page_id: str) -> Optional[str]:
         """
         Retrieve content from any Notion page by ID with caching.
-        
-        Args:
-            page_id: The Notion page ID
-            
-        Returns:
-            The page content if found, empty string if page exists but is empty,
-            None if error occurs
         """
         cache_key = f"page_content_{page_id}"
         
@@ -585,10 +578,16 @@ class CachedNotionService:
                 return ""  # Return empty string for empty page
                 
         except Exception as e:
-            logger.error(f"Error fetching Notion content for page {page_id}: {e}", exc_info=True)
+            # BETTER ERROR LOGGING
+            error_msg = str(e)
+            if "could not find block" in error_msg.lower():
+                logger.error(f"❌ NOTION ACCESS ERROR for page {page_id}: {error_msg}")
+            else:
+                logger.error(f"❌ NOTION API ERROR for page {page_id}: {error_msg}", exc_info=True)
+            
             self.cache_stats["errors"] += 1
             return None
-
+    
     def get_cache_stats(self) -> Dict[str, Any]:
         """
         Get cache statistics.
