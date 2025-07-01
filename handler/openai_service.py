@@ -386,7 +386,10 @@ class OpenAIService:
                     full_prompt += f"[THREAD {role.upper()}]: {content}\n"
                 full_prompt += "\n"
             
+            # ADD THIS: Make Notion content prominence clear
             full_prompt += "=== END CONTEXT HIERARCHY ===\n\n"
+            full_prompt += "IMPORTANT: Any Notion page content provided above in LINKED NOTION PAGES sections is directly accessible to you and should be used to answer questions.\n\n"
+       
         else:
             # Regular conversation history (non-thread)
             if conversation_history:
