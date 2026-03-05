@@ -694,14 +694,14 @@ files = [
 
 [[package]]
 name = "nltk"
-version = "3.9.1"
+version = "3.9.3"
 description = "Natural Language Toolkit"
 optional = false
-python-versions = ">=3.8"
+python-versions = ">=3.10"
 groups = ["main"]
 files = [
-    {file = "nltk-3.9.1-py3-none-any.whl", hash = "sha256:4fa26829c5b00715afe3061398a8989dc643b92ce7dd93fb4585a70930d168a1"},
-    {file = "nltk-3.9.1.tar.gz", hash = "sha256:87d127bd3de4bd89a4f81265e5fa59cb1b199b27440175370f7417d2bc7ae868"},
+    {file = "nltk-3.9.3-py3-none-any.whl", hash = "sha256:60b3db6e9995b3dd976b1f0fa7dec22069b2677e759c28eb69b62ddd44870522"},
+    {file = "nltk-3.9.3.tar.gz", hash = "sha256:cb5945d6424a98d694c2b9a0264519fab4363711065a46aa0ae7a2195b92e71f"},
 ]
 
 [package.dependencies]
@@ -1728,4 +1728,4 @@ dev = ["black (>=19.3b0) ; python_version >= \"3.6\"", "pytest (>=4.6.2)"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.12"
-content-hash = "775e7ddda8c1c6fce7b5a0e44ad7c6dede59753b4c6c1bb226f1dc031ccddf5b"
+content-hash = "b3907d23fdc5ab9e2d73b69714539fd892988f375acbfe13db1dd6fa9f2100bf"
